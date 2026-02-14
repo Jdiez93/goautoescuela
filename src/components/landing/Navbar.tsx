@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Car } from "lucide-react";
+import { Menu, X, Car, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { label: "Inicio", href: "/" },
@@ -15,6 +16,7 @@ const navItems = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
@@ -43,14 +45,27 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/login">
-              <Button variant="ghost" size="sm">Iniciar sesión</Button>
-            </Link>
-            <Link to="/registro">
-              <Button size="sm" className="bg-hero-gradient hover:opacity-90 text-primary-foreground">
-                Empieza tu carnet
-              </Button>
-            </Link>
+            {user ? (
+              <>
+                <Link to="/dashboard">
+                  <Button variant="ghost" size="sm">Mi panel</Button>
+                </Link>
+                <Button variant="ghost" size="sm" onClick={signOut}>
+                  <LogOut className="w-4 h-4 mr-1" /> Salir
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" size="sm">Iniciar sesión</Button>
+                </Link>
+                <Link to="/registro">
+                  <Button size="sm" className="bg-hero-gradient hover:opacity-90 text-primary-foreground">
+                    Empieza tu carnet
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile toggle */}
@@ -81,12 +96,25 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-2 border-t border-border mt-2">
-                <Link to="/login" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" className="w-full">Iniciar sesión</Button>
-                </Link>
-                <Link to="/registro" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full bg-hero-gradient text-primary-foreground">Empieza tu carnet</Button>
-                </Link>
+                {user ? (
+                  <>
+                    <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                      <Button variant="outline" className="w-full">Mi panel</Button>
+                    </Link>
+                    <Button className="w-full" variant="ghost" onClick={() => { signOut(); setIsOpen(false); }}>
+                      <LogOut className="w-4 h-4 mr-1" /> Cerrar sesión
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setIsOpen(false)}>
+                      <Button variant="outline" className="w-full">Iniciar sesión</Button>
+                    </Link>
+                    <Link to="/registro" onClick={() => setIsOpen(false)}>
+                      <Button className="w-full bg-hero-gradient text-primary-foreground">Empieza tu carnet</Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
