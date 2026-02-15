@@ -82,9 +82,12 @@ export default function Pagos() {
       if (error) throw error;
       if (data?.url) {
         window.location.href = data.url;
+      } else {
+        throw new Error("No se recibió la URL de pago");
       }
     } catch (err: any) {
       toast({ title: "Error", description: err.message || "No se pudo iniciar el pago", variant: "destructive" });
+    } finally {
       setPurchasingPack(null);
     }
   };
