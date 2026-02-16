@@ -45,7 +45,7 @@ export default function Services() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Nuestros servicios</span>
+          <span className="text-sm font-semibold text-secondary uppercase tracking-wider">Nuestros servicios</span>
           <h2 className="text-3xl sm:text-4xl font-bold mt-3 mb-4">Todo lo que necesitas para tu carnet</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Ofrecemos formación completa, flexible y adaptada a ti.

@@ -39,7 +39,7 @@ export default function Hero() {
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
               Tu carnet de conducir
               <br />
-              <span className="text-gradient">empieza aquí</span>
+              <span className="text-secondary">empieza aquí</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed">
@@ -74,7 +74,7 @@ export default function Hero() {
               { value: "15+", label: "Años de experiencia" },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="text-2xl sm:text-3xl font-bold text-gradient">{stat.value}</div>
+                <div className="text-2xl sm:text-3xl font-bold text-secondary">{stat.value}</div>
                 <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
               </div>
             ))}

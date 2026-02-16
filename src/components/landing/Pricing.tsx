@@ -54,10 +54,10 @@ export default function Pricing() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
             >
-              <Card className={`h-full relative border-border/50 shadow-[var(--card-shadow)] hover:shadow-[var(--card-shadow-hover)] transition-all duration-300 ${plan.popular ? "border-primary ring-2 ring-primary/20" : ""}`}>
+              <Card className={`h-full relative border-border/50 shadow-[var(--card-shadow)] hover:shadow-[var(--card-shadow-hover)] transition-all duration-300 ${plan.popular ? "border-secondary ring-2 ring-secondary/20" : ""}`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-hero-gradient text-primary-foreground text-xs font-semibold">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-semibold">
                       <Zap className="w-3 h-3" /> Más popular
                     </span>
                   </div>
@@ -80,7 +80,7 @@ export default function Pricing() {
                   </ul>
                   <Link to="/registro">
                     <Button
-                      className={`w-full ${plan.popular ? "bg-hero-gradient text-primary-foreground hover:opacity-90" : ""}`}
+                      className={`w-full ${plan.popular ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" : ""}`}
                       variant={plan.popular ? "default" : "outline"}
                     >
                       Elegir plan
