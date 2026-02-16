@@ -1,0 +1,7 @@
+
+ALTER TABLE public.profiles
+ADD COLUMN IF NOT EXISTS dni text DEFAULT '',
+ADD COLUMN IF NOT EXISTS date_of_birth date,
+ADD COLUMN IF NOT EXISTS residence text DEFAULT '',
+ADD COLUMN IF NOT EXISTS city text DEFAULT '',
+ADD COLUMN IF NOT EXISTS postal_code text DEFAULT '';
