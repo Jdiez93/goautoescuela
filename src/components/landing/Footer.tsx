@@ -25,7 +25,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-background mb-4 text-sm uppercase tracking-wider">Navegación</h4>
             <ul className="space-y-2 text-sm">
-              {["Inicio", "Servicios", "Precios", "Blog", "Contacto"].map((l) => (
+              {["Inicio", "Servicios", "Precios", "Contacto"].map((l) => (
                 <li key={l}>
                   <a href={l === "Inicio" ? "/" : `/${l.toLowerCase()}`} className="hover:text-background transition-colors">
                     {l}
