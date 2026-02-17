@@ -30,7 +30,7 @@ const plans = [
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0 } },
 };
 
 const cardVariants = {
