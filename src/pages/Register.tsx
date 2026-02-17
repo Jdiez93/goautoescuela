@@ -5,13 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Car, Loader2 } from "lucide-react";
+import { Car, Loader2, Mail, Lock, Eye, EyeOff, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -44,45 +46,113 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
-      <Card className="w-full max-w-md shadow-[var(--card-shadow)]">
-        <CardHeader className="text-center">
-          <Link to="/" className="inline-flex items-center gap-2 mx-auto mb-4">
-            <div className="w-10 h-10 rounded-xl bg-hero-gradient flex items-center justify-center">
-              <Car className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold font-['Space_Grotesk']">
-              Autoescuela<span className="text-gradient">GO</span>
-            </span>
-          </Link>
-          <CardTitle>Crear cuenta</CardTitle>
-          <CardDescription>Regístrate para empezar tu carnet</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleRegister} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Nombre completo</Label>
-              <Input id="name" placeholder="Tu nombre" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" placeholder="Mínimo 6 caracteres" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </div>
-            <Button type="submit" className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90" disabled={loading}>
-              {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              Crear cuenta
-            </Button>
-          </form>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            ¿Ya tienes cuenta?{" "}
-            <Link to="/login" className="text-primary hover:underline">Inicia sesión</Link>
-          </p>
-        </CardContent>
-      </Card>
+    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4 relative overflow-hidden">
+      {/* Decorative background shapes */}
+      <div className="absolute top-[-120px] right-[-80px] w-[300px] h-[300px] rounded-full bg-primary/5 blur-3xl" />
+      <div className="absolute bottom-[-100px] left-[-60px] w-[250px] h-[250px] rounded-full bg-accent/30 blur-3xl" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-full max-w-md"
+      >
+        <Card className="shadow-[var(--card-shadow)]">
+          <CardHeader className="text-center">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.4 }}
+            >
+              <Link to="/" className="inline-flex items-center gap-2 mx-auto mb-4">
+                <div className="w-10 h-10 rounded-xl bg-hero-gradient flex items-center justify-center">
+                  <Car className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-xl font-bold font-['Space_Grotesk']">
+                  Autoescuela<span className="text-gradient">GO</span>
+                </span>
+              </Link>
+            </motion.div>
+            <CardTitle>Crear cuenta</CardTitle>
+            <CardDescription>Regístrate para empezar tu carnet</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleRegister} className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.35 }}
+                className="space-y-2"
+              >
+                <Label htmlFor="name">Nombre completo</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input id="name" placeholder="Tu nombre" className="pl-10" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.35 }}
+                className="space-y-2"
+              >
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input id="email" type="email" placeholder="tu@email.com" className="pl-10" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.35 }}
+                className="space-y-2"
+              >
+                <Label htmlFor="password">Contraseña</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Mínimo 6 caracteres"
+                    className="pl-10 pr-10"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.35 }}
+              >
+                <Button type="submit" className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90" disabled={loading}>
+                  {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                  Crear cuenta
+                </Button>
+              </motion.div>
+            </form>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
+              className="mt-4 text-center text-sm text-muted-foreground"
+            >
+              ¿Ya tienes cuenta?{" "}
+              <Link to="/login" className="text-primary hover:underline">Inicia sesión</Link>
+            </motion.p>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }
