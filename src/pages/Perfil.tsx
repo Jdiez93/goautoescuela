@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Navigate, Link } from "react-router-dom";
-import { Car, ArrowLeft, Save, Loader2 } from "lucide-react";
+import { Car, ArrowLeft, Save, Loader2, User, Mail, Phone, MapPin, Calendar, CreditCard } from "lucide-react";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface ProfileForm {
   full_name: string;
@@ -98,86 +99,113 @@ export default function Perfil() {
     }
   };
 
+  const fields = [
+    { id: "full_name", label: "Nombre completo", icon: User, placeholder: "Tu nombre", type: "text" },
+    { id: "email", label: "Email", icon: Mail, placeholder: "", type: "email", disabled: true },
+    { id: "dni", label: "DNI / NIE", icon: CreditCard, placeholder: "12345678A", type: "text", maxLength: 15 },
+    { id: "phone", label: "Teléfono", icon: Phone, placeholder: "+34 600 000 000", type: "text" },
+    { id: "date_of_birth", label: "Fecha de nacimiento", icon: Calendar, placeholder: "", type: "date" },
+    { id: "residence", label: "Dirección", icon: MapPin, placeholder: "Calle, número, piso...", type: "text", full: true },
+    { id: "city", label: "Ciudad", icon: MapPin, placeholder: "Madrid", type: "text" },
+    { id: "postal_code", label: "Código Postal", icon: MapPin, placeholder: "28001", type: "text", maxLength: 10 },
+  ];
+
   return (
-    <div className="min-h-screen bg-muted/30">
-      <header className="bg-background border-b border-border">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-hero-gradient flex items-center justify-center">
+          <Link to="/dashboard" className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+            <ArrowLeft className="w-4 h-4" />
+            <span className="text-sm">Volver al panel</span>
+          </Link>
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
               <Car className="w-4 h-4 text-primary-foreground" />
             </div>
             <span className="text-lg font-bold font-['Space_Grotesk']">
-              Autoescuela<span className="text-gradient">GO</span>
+              AutoescuelaGO
             </span>
-          </Link>
-          <Link to="/dashboard">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="w-4 h-4 mr-1" /> Volver
-            </Button>
           </Link>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-10 max-w-2xl">
-        <h1 className="text-3xl font-bold mb-2">Mi Perfil</h1>
-        <p className="text-muted-foreground mb-8">Completa y actualiza tu información personal</p>
+      {/* Hero */}
+      <div className="bg-primary pb-24 pt-8 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-[-50px] right-[-100px] w-[300px] h-[300px] rounded-full border-[40px] border-primary-foreground" />
+        </div>
+        <div className="container mx-auto px-4 max-w-2xl relative">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <h1 className="text-3xl font-bold text-primary-foreground mb-1">Mi Perfil</h1>
+            <p className="text-primary-foreground/70">Completa y actualiza tu información personal</p>
+          </motion.div>
+        </div>
+      </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Datos personales</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="full_name">Nombre completo</Label>
-                  <Input id="full_name" name="full_name" value={form.full_name} onChange={handleChange} placeholder="Tu nombre" />
+      <main className="container mx-auto px-4 max-w-2xl -mt-16 relative z-10 pb-16">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.4 }}>
+          <Card className="border-border/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center">
+                  <User className="w-5 h-5 text-primary" />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" name="email" value={form.email} disabled className="bg-muted" />
+                Datos personales
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {fields.filter(f => !f.full).map((field) => (
+                    <div key={field.id} className="space-y-2">
+                      <Label htmlFor={field.id}>{field.label}</Label>
+                      <div className="relative">
+                        <field.icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <Input
+                          id={field.id}
+                          name={field.id}
+                          type={field.type}
+                          value={(form as any)[field.id]}
+                          onChange={handleChange}
+                          placeholder={field.placeholder}
+                          disabled={field.disabled}
+                          maxLength={field.maxLength}
+                          className={`pl-10 ${field.disabled ? "bg-muted" : ""}`}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
 
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="dni">DNI / NIE</Label>
-                  <Input id="dni" name="dni" value={form.dni} onChange={handleChange} placeholder="12345678A" maxLength={15} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Teléfono</Label>
-                  <Input id="phone" name="phone" value={form.phone} onChange={handleChange} placeholder="+34 600 000 000" />
-                </div>
-              </div>
+                {fields.filter(f => f.full).map((field) => (
+                  <div key={field.id} className="space-y-2">
+                    <Label htmlFor={field.id}>{field.label}</Label>
+                    <div className="relative">
+                      <field.icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        id={field.id}
+                        name={field.id}
+                        type={field.type}
+                        value={(form as any)[field.id]}
+                        onChange={handleChange}
+                        placeholder={field.placeholder}
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+                ))}
 
-              <div className="space-y-2">
-                <Label htmlFor="date_of_birth">Fecha de nacimiento</Label>
-                <Input id="date_of_birth" name="date_of_birth" type="date" value={form.date_of_birth} onChange={handleChange} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="residence">Dirección</Label>
-                <Input id="residence" name="residence" value={form.residence} onChange={handleChange} placeholder="Calle, número, piso..." />
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="city">Ciudad</Label>
-                  <Input id="city" name="city" value={form.city} onChange={handleChange} placeholder="Madrid" />
+                <div className="pt-2">
+                  <Button type="submit" disabled={saving} className="w-full bg-primary hover:bg-primary/90">
+                    {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                    Guardar cambios
+                  </Button>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="postal_code">Código Postal</Label>
-                  <Input id="postal_code" name="postal_code" value={form.postal_code} onChange={handleChange} placeholder="28001" maxLength={10} />
-                </div>
-              </div>
-
-              <Button type="submit" disabled={saving} className="w-full">
-                {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                Guardar cambios
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
       </main>
     </div>
   );
