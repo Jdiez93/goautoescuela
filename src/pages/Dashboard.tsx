@@ -144,7 +144,7 @@ export default function Dashboard() {
               <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Villanueva del Pardillo</span>
               <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> 918 15 XX XX</span>
               <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5" /> info@autoescuelago.es</span>
-              <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Lunes-Viernes: 10:00-13:00 y 16:00-20:00 · Sábados y domingos: Cerrados</span>
+              <span className="flex items-start gap-1.5"><Clock className="w-3.5 h-3.5 mt-0.5" /><span className="flex flex-col"><span>Lunes-Viernes: 10:00-13:00 y 16:00-20:00</span><span>Sábados y domingos: <span className="text-red-400 font-semibold">Cerrados</span></span></span></span>
             </div>
           </div>
           <div className="border-t border-background/10 mt-5 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-50">
