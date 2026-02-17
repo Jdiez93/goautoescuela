@@ -131,22 +131,28 @@ export default function Dashboard() {
       </main>
 
       {/* Compact Footer */}
-      <footer className="bg-foreground text-background/80 py-6">
+      <footer className="bg-foreground text-background/80 py-8">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-                <Car className="w-3.5 h-3.5 text-primary-foreground" />
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                <Car className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="text-sm font-bold text-background font-['Space_Grotesk']">AutoescuelaGO</span>
+              <span className="text-base font-bold text-background font-['Space_Grotesk']">AutoescuelaGO</span>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs opacity-70">
-              <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> Villanueva del Pardillo</span>
-              <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> 918 15 XX XX</span>
-              <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> info@autoescuelago.es</span>
-              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Lun-Vie 9-21h</span>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5 text-sm opacity-70">
+              <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Villanueva del Pardillo</span>
+              <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> 918 15 XX XX</span>
+              <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5" /> info@autoescuelago.es</span>
+              <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Lun-Vie 9-21h</span>
             </div>
-            <span className="text-xs opacity-50">© 2026 AutoescuelaGO</span>
+          </div>
+          <div className="border-t border-background/10 mt-5 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-50">
+            <span>© 2026 AutoescuelaGO. Todos los derechos reservados.</span>
+            <div className="flex gap-4">
+              <Link to="/politica-de-privacidad" className="hover:opacity-100 hover:text-background transition-colors">Política de privacidad</Link>
+              <Link to="/aviso-legal" className="hover:opacity-100 hover:text-background transition-colors">Aviso legal</Link>
+            </div>
           </div>
         </div>
       </footer>
