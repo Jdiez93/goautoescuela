@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link, Navigate } from "react-router-dom";
-import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield } from "lucide-react";
+import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Dashboard() {
@@ -129,6 +129,27 @@ export default function Dashboard() {
           ))}
         </div>
       </main>
+
+      {/* Compact Footer */}
+      <footer className="bg-foreground text-background/80 py-6">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+                <Car className="w-3.5 h-3.5 text-primary-foreground" />
+              </div>
+              <span className="text-sm font-bold text-background font-['Space_Grotesk']">AutoescuelaGO</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs opacity-70">
+              <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> Villanueva del Pardillo</span>
+              <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> 918 15 XX XX</span>
+              <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> info@autoescuelago.es</span>
+              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Lun-Vie 9-21h</span>
+            </div>
+            <span className="text-xs opacity-50">© 2026 AutoescuelaGO</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
