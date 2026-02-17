@@ -142,7 +142,7 @@ export default function Dashboard() {
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5 text-sm opacity-70">
               <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> Villanueva del Pardillo</span>
-              <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> 918 15 XX XX</span>
+              <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> 658474814</span>
               <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5" /> info@autoescuelago.es</span>
               <span className="flex items-start gap-1.5"><Clock className="w-3.5 h-3.5 mt-0.5" /><span className="flex flex-col"><span>Lunes-Viernes: 10:00-13:00 y 16:00-20:00</span><span>Sábados y domingos: <span className="text-red-400 font-semibold">Cerrados</span></span></span></span>
             </div>
