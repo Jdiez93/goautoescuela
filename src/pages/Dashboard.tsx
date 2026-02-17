@@ -20,7 +20,7 @@ export default function Dashboard() {
 
   const studentCards = [
     { icon: Calendar, title: "Mis Reservas", desc: "Ver y gestionar tus clases programadas", href: "/reservas", accent: "primary" as const },
-    { icon: CreditCard, title: "Mis Pagos", desc: "Historial de pagos y saldo de clases", href: "/pagos", accent: "secondary" as const },
+    { icon: CreditCard, title: "Mis Pagos", desc: "Historial de pagos, compra y saldo de clases", href: "/pagos", accent: "secondary" as const },
     { icon: User, title: "Mi Perfil", desc: "Editar tus datos personales", href: "/perfil", accent: "primary" as const },
   ];
 
