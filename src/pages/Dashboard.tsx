@@ -41,7 +41,7 @@ export default function Dashboard() {
   const roleLabel = role === "admin" ? "Administrador" : role === "teacher" ? "Profesor" : "Alumno";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
@@ -91,7 +91,7 @@ export default function Dashboard() {
       </div>
 
       {/* Cards section - overlaps the hero */}
-      <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10">
+      <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {cards.map((card, i) => (
             <motion.div
