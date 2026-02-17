@@ -5,7 +5,7 @@ import { Users, Award, MapPin, Car } from "lucide-react";
 
 const team = [
   { name: "Valentín", role: "Director y profesor", years: 15 },
-  { name: "Valentín", role: "Profesora de prácticas", years: 8 },
+  { name: "Joaquín", role: "Profesora de prácticas", years: 8 },
   { name: "David López", role: "Profesor de prácticas", years: 10 },
 ];
 
