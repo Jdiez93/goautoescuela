@@ -14,15 +14,18 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setPasswordError(false);
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
+      setPasswordError(true);
       toast({ title: "Error al iniciar sesión", description: error.message, variant: "destructive" });
     } else {
       navigate("/dashboard");
@@ -82,14 +85,14 @@ export default function Login() {
               >
                 <Label htmlFor="password">Contraseña</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Lock className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 ${passwordError ? 'text-destructive' : 'text-muted-foreground'}`} />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="pl-10 pr-10"
+                    className={`pl-10 pr-10 ${passwordError ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => { setPassword(e.target.value); setPasswordError(false); }}
                     required
                   />
                   <button
@@ -101,6 +104,9 @@ export default function Login() {
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
+                {passwordError && (
+                  <p className="text-sm text-destructive mt-1">Contraseña incorrecta</p>
+                )}
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
