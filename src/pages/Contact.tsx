@@ -68,7 +68,7 @@ export default function Contact() {
 
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-6">
               {[
-                { icon: MapPin, title: "Dirección", text: "Villanueva del Pardillo, Madrid" },
+                { icon: MapPin, title: "Dirección", text: "Calle Concepción, 61 · 28229 Villanueva del Pardillo (Madrid)" },
                 { icon: Phone, title: "Teléfono", text: "918 15 XX XX" },
                 { icon: Mail, title: "Email", text: "info@autoescuelago.es" },
                 { icon: Clock, title: "Horario", text: "Lun-Vie: 9:00-21:00 · Sáb: 9:00-14:00" },
@@ -86,7 +86,7 @@ export default function Contact() {
 
               <div className="rounded-xl overflow-hidden border border-border/50 h-64">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12149.5!2d-3.97!3d40.48!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd41870a2a6d5c67%3A0x400f7634e53c510!2sVillanueva%20del%20Pardillo%2C%20Madrid!5e0!3m2!1ses!2ses!4v1"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.5!2d-3.9742!3d40.4468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418f0a2a6d5c67%3A0x400f7634e53c510!2sCalle%20Concepci%C3%B3n%2C%2061%2C%2028229%20Villanueva%20del%20Pardillo%2C%20Madrid!5e0!3m2!1ses!2ses!4v1"
                   width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade" title="Ubicación AutoescuelaGO"
                 />
