@@ -57,7 +57,7 @@ const stepVariants = {
 };
 
 export default function Reservas() {
-  const { user, loading } = useAuth();
+  const { user, profile, loading } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -310,6 +310,14 @@ export default function Reservas() {
             <span className="font-bold font-['Space_Grotesk'] text-lg">AutoescuelaGO</span>
           </Link>
           <div className="flex items-center gap-3">
+            {profile?.full_name && (
+              <div className="hidden sm:flex items-center gap-2 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl px-3 py-2">
+                <div className="w-6 h-6 rounded-md bg-primary-foreground/20 flex items-center justify-center text-[10px] font-bold text-primary-foreground">
+                  {profile.full_name.charAt(0).toUpperCase()}
+                </div>
+                <span className="text-sm font-medium text-primary-foreground/90">{profile.full_name}</span>
+              </div>
+            )}
             <div className="bg-primary-foreground/15 backdrop-blur-sm px-4 py-2 rounded-xl border border-primary-foreground/10">
               <span className="text-sm font-medium flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
