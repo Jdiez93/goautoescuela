@@ -665,60 +665,75 @@ export default function Reservas() {
             </motion.div>
 
             {/* Completed classes */}
-            {completedBookings.length > 0 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5 }}>
-                <Card className="shadow-[var(--card-shadow)] overflow-hidden">
-                  <CardHeader className="pb-4 border-b border-border/50 bg-green-500/5">
-                    <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
-                      <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
-                        <CheckCircle2 className="w-4 h-4 text-green-600" />
-                      </div>
-                      Clases realizadas
-                      <span className="ml-auto text-xs font-medium bg-green-500/10 text-green-600 px-2.5 py-1 rounded-full">
-                        {completedBookings.length}
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5 }}>
+              <Card className="shadow-[var(--card-shadow)] overflow-hidden border-border/60">
+                <CardHeader className="pb-4 border-b border-border/50">
+                  <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500/15 to-teal-500/10 flex items-center justify-center shadow-sm">
+                      <CheckCircle2 className="w-[18px] h-[18px] text-emerald-600" />
+                    </div>
+                    <div>
+                      <span className="block">Clases realizadas</span>
+                      <span className="text-xs font-normal text-muted-foreground">Historial de tus clases completadas</span>
+                    </div>
+                    {completedBookings.length > 0 && (
+                      <span className="ml-auto text-xs font-semibold bg-emerald-500/10 text-emerald-600 px-3 py-1 rounded-full">
+                        {completedBookings.length} {completedBookings.length === 1 ? "clase" : "clases"}
                       </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-4">
-                    <div className="space-y-2.5">
+                    )}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-5">
+                  {completedBookings.length === 0 ? (
+                    <div className="text-center py-10">
+                      <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-3">
+                        <CheckCircle2 className="w-6 h-6 text-muted-foreground/40" />
+                      </div>
+                      <p className="text-sm font-medium text-muted-foreground">Aún no has completado clases</p>
+                      <p className="text-xs text-muted-foreground/60 mt-1">Aquí aparecerán tus clases una vez finalizadas</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
                       {completedBookings.map((booking, i) => (
                         <motion.div
                           key={booking.id}
                           initial={{ opacity: 0, x: 10 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.05 }}
-                          className="p-3.5 rounded-xl border border-green-500/20 bg-green-500/5 flex items-center justify-between gap-3"
+                          transition={{ delay: i * 0.04 }}
+                          className="p-3.5 rounded-xl border border-emerald-500/15 bg-gradient-to-r from-emerald-500/[0.04] to-transparent hover:from-emerald-500/[0.07] flex items-center justify-between gap-3 transition-colors duration-200"
                         >
                           <div className="min-w-0 flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-green-500/10 flex flex-col items-center justify-center shrink-0">
-                              <span className="text-[10px] font-bold text-green-600 uppercase leading-none">
+                            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex flex-col items-center justify-center shrink-0 border border-emerald-500/10">
+                              <span className="text-[10px] font-bold text-emerald-600 uppercase leading-none">
                                 {format(new Date(booking.booking_date + "T00:00:00"), "MMM", { locale: es })}
                               </span>
-                              <span className="text-sm font-bold text-green-600 leading-tight">
+                              <span className="text-sm font-bold text-emerald-700 leading-tight">
                                 {format(new Date(booking.booking_date + "T00:00:00"), "d")}
                               </span>
                             </div>
                             <div className="min-w-0">
-                              <p className="font-medium text-sm capitalize text-foreground/80">
-                                {format(new Date(booking.booking_date + "T00:00:00"), "EEEE", { locale: es })}
+                              <p className="font-medium text-sm capitalize text-foreground/85">
+                                {format(new Date(booking.booking_date + "T00:00:00"), "EEEE d 'de' MMMM", { locale: es })}
                               </p>
-                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                              <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
                                 <Clock className="w-3 h-3" />
-                                {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)} · {booking.notes || "Profesor"}
+                                {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)}
+                                <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+                                {booking.notes || "Profesor"}
                               </p>
                             </div>
                           </div>
-                          <span className="text-[10px] font-medium text-green-600 shrink-0 bg-green-500/10 px-2.5 py-1 rounded-full flex items-center gap-1">
-                            <CheckCircle2 className="w-3 h-3" />
-                            Realizada
+                          <span className="text-[11px] font-semibold text-emerald-600 shrink-0 bg-emerald-500/10 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 border border-emerald-500/10">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            Completada
                           </span>
                         </motion.div>
                       ))}
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </main>
