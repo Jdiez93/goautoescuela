@@ -96,16 +96,15 @@ export default function Reservas() {
     enabled: !!selectedTeacherName && !!dateStr,
   });
 
-  // Get student's upcoming bookings
+  // Get student's bookings (upcoming + past completed)
   const today = format(new Date(), "yyyy-MM-dd");
-  const { data: myBookings = [] } = useQuery({
+  const { data: allBookings = [] } = useQuery({
     queryKey: ["my-bookings", user?.id],
     queryFn: async () => {
       const { data } = await supabase
         .from("bookings")
         .select("*")
         .eq("student_id", user!.id)
-        .gte("booking_date", today)
         .in("status", ["confirmed", "pending"])
         .order("booking_date", { ascending: true })
         .order("start_time", { ascending: true });
@@ -113,6 +112,24 @@ export default function Reservas() {
     },
     enabled: !!user,
   });
+
+  // Split bookings into upcoming and completed based on end time
+  const now = new Date();
+  const myBookings = allBookings.filter((b) => {
+    const endDateTime = new Date(`${b.booking_date}T${b.end_time}`);
+    return endDateTime > now;
+  });
+  const completedBookings = allBookings
+    .filter((b) => {
+      const endDateTime = new Date(`${b.booking_date}T${b.end_time}`);
+      return endDateTime <= now;
+    })
+    .sort((a, b) => {
+      // Most recent first
+      const dateA = new Date(`${a.booking_date}T${a.end_time}`);
+      const dateB = new Date(`${b.booking_date}T${b.end_time}`);
+      return dateB.getTime() - dateA.getTime();
+    });
 
   // Visible slots for selected date (includes taken ones, excludes past)
   const visibleSlots = useMemo(() => {
@@ -573,13 +590,13 @@ export default function Reservas() {
           </div>
 
           {/* RIGHT: Upcoming bookings */}
-          <div>
+          <div className="space-y-6">
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
               <Card className="shadow-[var(--card-shadow)] overflow-hidden sticky top-8">
                 <CardHeader className="pb-4 border-b border-border/50 bg-accent/30">
                   <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
                     <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
+                      <CalendarDays className="w-4 h-4 text-primary" />
                     </div>
                     Próximas clases
                     {myBookings.length > 0 && (
@@ -646,6 +663,62 @@ export default function Reservas() {
                 </CardContent>
               </Card>
             </motion.div>
+
+            {/* Completed classes */}
+            {completedBookings.length > 0 && (
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5 }}>
+                <Card className="shadow-[var(--card-shadow)] overflow-hidden">
+                  <CardHeader className="pb-4 border-b border-border/50 bg-green-500/5">
+                    <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
+                      <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                        <CheckCircle2 className="w-4 h-4 text-green-600" />
+                      </div>
+                      Clases realizadas
+                      <span className="ml-auto text-xs font-medium bg-green-500/10 text-green-600 px-2.5 py-1 rounded-full">
+                        {completedBookings.length}
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-4">
+                    <div className="space-y-2.5">
+                      {completedBookings.map((booking, i) => (
+                        <motion.div
+                          key={booking.id}
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.05 }}
+                          className="p-3.5 rounded-xl border border-green-500/20 bg-green-500/5 flex items-center justify-between gap-3"
+                        >
+                          <div className="min-w-0 flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-green-500/10 flex flex-col items-center justify-center shrink-0">
+                              <span className="text-[10px] font-bold text-green-600 uppercase leading-none">
+                                {format(new Date(booking.booking_date + "T00:00:00"), "MMM", { locale: es })}
+                              </span>
+                              <span className="text-sm font-bold text-green-600 leading-tight">
+                                {format(new Date(booking.booking_date + "T00:00:00"), "d")}
+                              </span>
+                            </div>
+                            <div className="min-w-0">
+                              <p className="font-medium text-sm capitalize text-foreground/80">
+                                {format(new Date(booking.booking_date + "T00:00:00"), "EEEE", { locale: es })}
+                              </p>
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)} · {booking.notes || "Profesor"}
+                              </p>
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-medium text-green-600 shrink-0 bg-green-500/10 px-2.5 py-1 rounded-full flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" />
+                            Realizada
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
           </div>
         </div>
       </main>
