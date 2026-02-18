@@ -171,6 +171,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          assigned_teacher_id: string | null
           avatar_url: string | null
           city: string | null
           created_at: string
@@ -186,6 +187,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          assigned_teacher_id?: string | null
           avatar_url?: string | null
           city?: string | null
           created_at?: string
@@ -201,6 +203,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          assigned_teacher_id?: string | null
           avatar_url?: string | null
           city?: string | null
           created_at?: string
