@@ -39,7 +39,7 @@ const PACKS = [
 ];
 
 export default function Pagos() {
-  const { user, loading: authLoading } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   const [purchasingPack, setPurchasingPack] = useState<string | null>(null);
@@ -129,8 +129,16 @@ export default function Pagos() {
         </div>
         <div className="container mx-auto px-4 max-w-5xl relative">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <h1 className="text-3xl font-bold text-primary-foreground mb-1">Mis Pagos</h1>
+            <h1 className="text-3xl font-bold text-primary-foreground mb-1 font-['Space_Grotesk']">Mis Pagos</h1>
             <p className="text-primary-foreground/70">Gestiona tu saldo y compra clases</p>
+            {profile?.full_name && (
+              <div className="mt-4 inline-flex items-center gap-2.5 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl px-4 py-2">
+                <div className="w-7 h-7 rounded-lg bg-primary-foreground/20 flex items-center justify-center text-xs font-bold text-primary-foreground">
+                  {profile.full_name.charAt(0).toUpperCase()}
+                </div>
+                <span className="text-sm font-medium text-primary-foreground/90">{profile.full_name}</span>
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
