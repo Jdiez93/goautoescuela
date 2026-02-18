@@ -11,6 +11,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import Pagos from "./pages/Pagos";
+import Reservas from "./pages/Reservas";
 import Perfil from "./pages/Perfil";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/pagos" element={<Pagos />} />
+            <Route path="/reservas" element={<Reservas />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/sobre-nosotros" element={<About />} />
             <Route path="/contacto" element={<Contact />} />
