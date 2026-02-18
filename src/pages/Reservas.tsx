@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Link, Navigate } from "react-router-dom";
 import { Car, ArrowLeft, Clock, User, CalendarDays, X, AlertTriangle, CheckCircle2, Sparkles, BookOpen } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { motion, AnimatePresence } from "framer-motion";
 import { format, isBefore, startOfDay, isToday } from "date-fns";
 import { es } from "date-fns/locale";
@@ -64,6 +65,7 @@ export default function Reservas() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const [cancelBookingId, setCancelBookingId] = useState<string | null>(null);
+  const [cancellationReason, setCancellationReason] = useState("");
 
   // Get student's remaining classes
   const { data: balance = 0 } = useQuery({
@@ -227,7 +229,7 @@ export default function Reservas() {
 
       const { error } = await supabase
         .from("bookings")
-        .update({ status: "cancelled" })
+        .update({ status: "cancelled", cancellation_reason: cancellationReason || null })
         .eq("id", bookingId);
       if (error) throw error;
 
@@ -249,6 +251,7 @@ export default function Reservas() {
     onSuccess: () => {
       toast({ title: "Clase cancelada", description: "Se ha devuelto la clase a tu saldo." });
       setCancelBookingId(null);
+      setCancellationReason("");
       queryClient.invalidateQueries({ queryKey: ["my-bookings"] });
       queryClient.invalidateQueries({ queryKey: ["class-balance"] });
       queryClient.invalidateQueries({ queryKey: ["taken-slots"] });
@@ -256,9 +259,9 @@ export default function Reservas() {
     onError: (err: Error) => {
       toast({ title: "Error al cancelar", description: err.message, variant: "destructive" });
       setCancelBookingId(null);
+      setCancellationReason("");
     },
   });
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -648,7 +651,7 @@ export default function Reservas() {
       </main>
 
       {/* Cancel dialog */}
-      <AlertDialog open={!!cancelBookingId} onOpenChange={() => setCancelBookingId(null)}>
+      <AlertDialog open={!!cancelBookingId} onOpenChange={(open) => { if (!open) { setCancelBookingId(null); setCancellationReason(""); } }}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="font-['Space_Grotesk']">¿Cancelar esta clase?</AlertDialogTitle>
@@ -656,6 +659,16 @@ export default function Reservas() {
               Se devolverá la clase a tu saldo disponible. Esta acción no se puede deshacer.
             </AlertDialogDescription>
           </AlertDialogHeader>
+          <div className="py-2">
+            <label className="text-sm font-medium text-foreground mb-1.5 block">Motivo de cancelación (opcional)</label>
+            <Textarea
+              placeholder="Escribe el motivo por el que no puedes asistir..."
+              value={cancellationReason}
+              onChange={(e) => setCancellationReason(e.target.value)}
+              className="resize-none"
+              rows={3}
+            />
+          </div>
           <AlertDialogFooter>
             <AlertDialogCancel>Volver</AlertDialogCancel>
             <AlertDialogAction
