@@ -306,6 +306,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_taken_slots: {
+        Args: { _booking_date: string; _teacher_name: string }
+        Returns: {
+          end_time: string
+          start_time: string
+        }[]
+      }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]

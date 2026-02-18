@@ -85,12 +85,11 @@ export default function Reservas() {
     queryKey: ["taken-slots", selectedTeacherName, dateStr],
     queryFn: async () => {
       const { data } = await supabase
-        .from("bookings")
-        .select("start_time, end_time")
-        .eq("booking_date", dateStr!)
-        .eq("notes", selectedTeacherName!)
-        .in("status", ["confirmed", "pending"]);
-      return (data ?? []).map((b) => b.start_time.slice(0, 5));
+        .rpc("get_taken_slots", {
+          _booking_date: dateStr!,
+          _teacher_name: selectedTeacherName!,
+        });
+      return (data ?? []).map((b: { start_time: string }) => b.start_time.slice(0, 5));
     },
     enabled: !!selectedTeacherName && !!dateStr,
   });
@@ -156,12 +155,25 @@ export default function Reservas() {
       if (!user || !selectedDate || !selectedTeacherName || selectedSlots.length === 0) throw new Error("Datos incompletos");
       if (balance < selectedSlots.length) throw new Error("Saldo insuficiente");
 
+      // Re-check availability to prevent race conditions
+      const dateFormatted = format(selectedDate, "yyyy-MM-dd");
+      const { data: freshTaken } = await supabase.rpc("get_taken_slots", {
+        _booking_date: dateFormatted,
+        _teacher_name: selectedTeacherName,
+      });
+      const freshTakenStarts = (freshTaken ?? []).map((b: { start_time: string }) => b.start_time.slice(0, 5));
+      const conflict = selectedSlots.find((s) => freshTakenStarts.includes(s));
+      if (conflict) {
+        queryClient.invalidateQueries({ queryKey: ["taken-slots"] });
+        throw new Error("Alguna de las horas seleccionadas ya ha sido reservada por otro alumno. Selecciona otra hora.");
+      }
+
       const bookings = selectedSlots.map((startTime) => {
         const slot = ALL_SLOTS.find((s) => s.start === startTime)!;
         return {
           student_id: user.id,
           teacher_id: user.id,
-          booking_date: format(selectedDate, "yyyy-MM-dd"),
+          booking_date: dateFormatted,
           start_time: slot.start,
           end_time: slot.end,
           status: "confirmed",
