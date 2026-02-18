@@ -389,6 +389,7 @@ export default function Reservas() {
                     </div>
                     Elige tu profesor
                   </CardTitle>
+                  <p className="text-destructive text-sm font-medium mt-1.5">¡POR FAVOR! Seleccione el profesor que te han asignado</p>
                 </CardHeader>
                 <CardContent className="pt-5">
                   <div className="grid grid-cols-3 gap-4">
