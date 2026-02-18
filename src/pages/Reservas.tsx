@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Link, Navigate } from "react-router-dom";
-import { Car, ArrowLeft, Clock, User, CalendarDays, X, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Car, ArrowLeft, Clock, User, CalendarDays, X, AlertTriangle, CheckCircle2, Sparkles, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { format, addHours, isBefore, startOfDay, isToday, isSameDay } from "date-fns";
+import { format, isBefore, startOfDay, isToday } from "date-fns";
 import { es } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -44,10 +44,16 @@ const ALL_SLOTS = (() => {
 })();
 
 const TEACHERS = [
-  { name: "Valentín", id: "valentin" },
-  { name: "Joaquín", id: "joaquin" },
-  { name: "Profesora", id: "profesora" },
+  { name: "Valentín", id: "valentin", avatar: "V" },
+  { name: "Joaquín", id: "joaquin", avatar: "J" },
+  { name: "Profesora", id: "profesora", avatar: "P" },
 ];
+
+const stepVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+  exit: { opacity: 0, y: -10, scale: 0.98, transition: { duration: 0.2 } },
+};
 
 export default function Reservas() {
   const { user, loading } = useAuth();
@@ -133,7 +139,6 @@ export default function Reservas() {
       return;
     }
     const newSlots = [...selectedSlots, slotStart].sort();
-    // Check consecutiveness if 2 slots
     if (newSlots.length === 2) {
       const idx0 = ALL_SLOTS.findIndex((s) => s.start === newSlots[0]);
       const idx1 = ALL_SLOTS.findIndex((s) => s.start === newSlots[1]);
@@ -155,7 +160,7 @@ export default function Reservas() {
         const slot = ALL_SLOTS.find((s) => s.start === startTime)!;
         return {
           student_id: user.id,
-          teacher_id: user.id, // We store teacher name in notes since we don't have teacher user IDs
+          teacher_id: user.id,
           booking_date: format(selectedDate, "yyyy-MM-dd"),
           start_time: slot.start,
           end_time: slot.end,
@@ -164,11 +169,9 @@ export default function Reservas() {
         };
       });
 
-      // Insert bookings
       const { error: bookError } = await supabase.from("bookings").insert(bookings);
       if (bookError) throw bookError;
 
-      // Deduct from balance - find payments with remaining classes and deduct
       let classesToDeduct = selectedSlots.length;
       const { data: payments } = await supabase
         .from("payments")
@@ -206,19 +209,16 @@ export default function Reservas() {
       const booking = myBookings.find((b) => b.id === bookingId);
       if (!booking) throw new Error("Reserva no encontrada");
 
-      // Check 24h rule
       const bookingDateTime = new Date(`${booking.booking_date}T${booking.start_time}`);
       const hoursUntil = (bookingDateTime.getTime() - Date.now()) / (1000 * 60 * 60);
       if (hoursUntil < 24) throw new Error("Solo puedes cancelar con 24 horas de antelación");
 
-      // Cancel booking
       const { error } = await supabase
         .from("bookings")
         .update({ status: "cancelled" })
         .eq("id", bookingId);
       if (error) throw error;
 
-      // Refund 1 class to the most recent payment
       const { data: payments } = await supabase
         .from("payments")
         .select("id, classes_remaining")
@@ -249,7 +249,7 @@ export default function Reservas() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
       </div>
     );
@@ -262,74 +262,160 @@ export default function Reservas() {
     return (bookingDateTime.getTime() - Date.now()) / (1000 * 60 * 60) >= 24;
   };
 
+  const currentStep = !selectedTeacherName ? 1 : !selectedDate ? 2 : 3;
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 flex items-center justify-between h-14">
-          <Link to="/dashboard" className="flex items-center gap-2 text-primary-foreground hover:opacity-80 transition-opacity">
+      <header className="bg-primary text-primary-foreground relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_hsl(215_80%_60%_/_0.3),_transparent_50%)]" />
+        <div className="container mx-auto px-4 flex items-center justify-between h-16 relative z-10">
+          <Link to="/dashboard" className="flex items-center gap-3 text-primary-foreground hover:opacity-80 transition-opacity">
             <ArrowLeft className="w-4 h-4" />
-            <div className="w-8 h-8 rounded-lg bg-primary-foreground/20 flex items-center justify-center">
-              <Car className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
+              <Car className="w-5 h-5" />
             </div>
-            <span className="font-bold font-['Space_Grotesk']">AutoescuelaGO</span>
+            <span className="font-bold font-['Space_Grotesk'] text-lg">AutoescuelaGO</span>
           </Link>
-          <div className="flex items-center gap-3 text-sm">
-            <span className="bg-primary-foreground/20 px-3 py-1 rounded-full font-medium">
-              Saldo: {balance} {balance === 1 ? "clase" : "clases"}
-            </span>
+          <div className="flex items-center gap-3">
+            <div className="bg-primary-foreground/15 backdrop-blur-sm px-4 py-2 rounded-xl border border-primary-foreground/10">
+              <span className="text-sm font-medium flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                {balance} {balance === 1 ? "clase" : "clases"} disponibles
+              </span>
+            </div>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 flex-1">
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-2xl md:text-3xl font-bold mb-1">Mis Reservas</h1>
-          <p className="text-muted-foreground mb-8">Reserva tus clases prácticas</p>
+        {/* Page title */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-8"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">Reservar Clase</h1>
+              <p className="text-muted-foreground text-sm">Sigue los pasos para reservar tu próxima clase práctica</p>
+            </div>
+          </div>
+
+          {/* Step indicator */}
+          <div className="flex items-center gap-2 mt-6">
+            {[
+              { num: 1, label: "Profesor" },
+              { num: 2, label: "Fecha" },
+              { num: 3, label: "Hora" },
+            ].map((step, i) => (
+              <div key={step.num} className="flex items-center gap-2">
+                {i > 0 && (
+                  <div className={cn(
+                    "w-8 h-[2px] rounded-full transition-colors duration-300",
+                    currentStep > i ? "bg-primary" : "bg-border"
+                  )} />
+                )}
+                <div className={cn(
+                  "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300",
+                  currentStep === step.num && "bg-primary text-primary-foreground shadow-md",
+                  currentStep > step.num && "bg-primary/15 text-primary",
+                  currentStep < step.num && "bg-muted text-muted-foreground"
+                )}>
+                  <span className="w-5 h-5 rounded-full bg-current/10 flex items-center justify-center text-[10px] font-bold">
+                    {currentStep > step.num ? "✓" : step.num}
+                  </span>
+                  <span className="hidden sm:inline">{step.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* LEFT: Booking flow */}
           <div className="lg:col-span-2 space-y-6">
             {/* Step 1: Choose teacher */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <User className="w-5 h-5 text-primary" /> 1. Elige tu profesor
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-3">
-                  {TEACHERS.map((t) => (
-                    <Button
-                      key={t.id}
-                      variant={selectedTeacherName === t.name ? "default" : "outline"}
-                      className="h-auto py-3 flex flex-col gap-1"
-                      onClick={() => {
-                        setSelectedTeacherName(t.name);
-                        setSelectedDate(undefined);
-                        setSelectedSlots([]);
-                      }}
-                    >
-                      <User className="w-5 h-5" />
-                      <span className="text-sm font-medium">{t.name}</span>
-                    </Button>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <motion.div variants={stepVariants} initial="hidden" animate="visible">
+              <Card className="shadow-[var(--card-shadow)] hover:shadow-[var(--card-shadow-hover)] transition-shadow duration-300 overflow-hidden">
+                <CardHeader className="pb-4 border-b border-border/50">
+                  <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <User className="w-4 h-4 text-primary" />
+                    </div>
+                    Elige tu profesor
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-5">
+                  <div className="grid grid-cols-3 gap-4">
+                    {TEACHERS.map((t) => {
+                      const isActive = selectedTeacherName === t.name;
+                      return (
+                        <button
+                          key={t.id}
+                          className={cn(
+                            "group relative flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all duration-300 cursor-pointer",
+                            isActive
+                              ? "border-primary bg-primary/5 shadow-md"
+                              : "border-border hover:border-primary/40 hover:bg-accent/50"
+                          )}
+                          onClick={() => {
+                            setSelectedTeacherName(t.name);
+                            setSelectedDate(undefined);
+                            setSelectedSlots([]);
+                          }}
+                        >
+                          <div className={cn(
+                            "w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-bold font-['Space_Grotesk'] transition-all duration-300",
+                            isActive
+                              ? "bg-primary text-primary-foreground shadow-lg"
+                              : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                          )}>
+                            {t.avatar}
+                          </div>
+                          <span className={cn(
+                            "text-sm font-semibold transition-colors",
+                            isActive ? "text-primary" : "text-foreground"
+                          )}>
+                            {t.name}
+                          </span>
+                          {isActive && (
+                            <motion.div
+                              layoutId="teacher-check"
+                              className="absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center"
+                            >
+                              <CheckCircle2 className="w-4 h-4" />
+                            </motion.div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
 
             {/* Step 2: Choose date */}
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
               {selectedTeacherName && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        <CalendarDays className="w-5 h-5 text-primary" /> 2. Elige el día
+                <motion.div variants={stepVariants} initial="hidden" animate="visible" exit="exit">
+                  <Card className="shadow-[var(--card-shadow)] hover:shadow-[var(--card-shadow-hover)] transition-shadow duration-300 overflow-hidden">
+                    <CardHeader className="pb-4 border-b border-border/50">
+                      <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <CalendarDays className="w-4 h-4 text-primary" />
+                        </div>
+                        Elige el día
+                        <span className="ml-auto text-xs font-normal text-muted-foreground bg-muted px-3 py-1 rounded-full">
+                          con {selectedTeacherName}
+                        </span>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="flex justify-center">
+                    <CardContent className="pt-5 flex justify-center">
                       <Calendar
                         mode="single"
                         selected={selectedDate}
@@ -351,70 +437,115 @@ export default function Reservas() {
             </AnimatePresence>
 
             {/* Step 3: Choose time */}
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
               {selectedDate && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        <Clock className="w-5 h-5 text-primary" /> 3. Elige la hora
-                        <span className="ml-auto text-sm font-normal text-muted-foreground">
+                <motion.div variants={stepVariants} initial="hidden" animate="visible" exit="exit">
+                  <Card className="shadow-[var(--card-shadow)] hover:shadow-[var(--card-shadow-hover)] transition-shadow duration-300 overflow-hidden">
+                    <CardHeader className="pb-4 border-b border-border/50">
+                      <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <Clock className="w-4 h-4 text-primary" />
+                        </div>
+                        Elige la hora
+                        <span className="ml-auto text-xs font-normal text-muted-foreground bg-muted px-3 py-1 rounded-full capitalize">
                           {format(selectedDate, "EEEE d 'de' MMMM", { locale: es })}
                         </span>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pt-5">
                       {visibleSlots.length === 0 ? (
-                        <p className="text-center text-muted-foreground py-4">No hay horas disponibles para este día</p>
+                        <div className="text-center py-8">
+                          <CalendarDays className="w-10 h-10 text-muted-foreground/40 mx-auto mb-3" />
+                          <p className="text-muted-foreground font-medium">No hay horas disponibles</p>
+                          <p className="text-muted-foreground/60 text-sm mt-1">Prueba con otro día</p>
+                        </div>
                       ) : (
                         <>
-                          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-4">
+                          {/* Legend */}
+                          <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-1.5">
+                              <div className="w-3 h-3 rounded border-2 border-border" />
+                              <span>Disponible</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <div className="w-3 h-3 rounded bg-primary" />
+                              <span>Seleccionada</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <div className="w-3 h-3 rounded bg-destructive/80" />
+                              <span>Ocupada</span>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-5">
                             {visibleSlots.map((slot) => {
                               const isTaken = takenSlots.includes(slot.start);
                               const isSelected = selectedSlots.includes(slot.start);
                               return (
-                                <Button
-                                  key={slot.start}
-                                  variant={isSelected ? "default" : isTaken ? "destructive" : "outline"}
-                                  size="sm"
-                                  disabled={isTaken}
-                                  className={cn(
-                                    "text-sm transition-all",
-                                    isTaken && "opacity-80 cursor-not-allowed line-through",
-                                    !isTaken && !isSelected && "hover:border-primary hover:text-primary"
-                                  )}
-                                  onClick={() => !isTaken && handleSlotToggle(slot.start)}
-                                >
-                                  {slot.start} - {slot.end}
-                                </Button>
+                                <motion.div key={slot.start} whileHover={!isTaken ? { scale: 1.03 } : {}} whileTap={!isTaken ? { scale: 0.97 } : {}}>
+                                  <Button
+                                    variant={isSelected ? "default" : isTaken ? "destructive" : "outline"}
+                                    size="sm"
+                                    disabled={isTaken}
+                                    className={cn(
+                                      "w-full text-sm font-medium transition-all duration-200 h-10",
+                                      isTaken && "opacity-60 cursor-not-allowed line-through",
+                                      !isTaken && !isSelected && "hover:border-primary hover:text-primary hover:bg-primary/5",
+                                      isSelected && "shadow-md"
+                                    )}
+                                    onClick={() => !isTaken && handleSlotToggle(slot.start)}
+                                  >
+                                    {slot.start} - {slot.end}
+                                  </Button>
+                                </motion.div>
                               );
                             })}
                           </div>
-                          {selectedSlots.length > 0 && (
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-accent">
-                              <div>
-                                <p className="font-medium">
-                                  {selectedSlots.length} {selectedSlots.length === 1 ? "clase" : "clases"} seleccionada{selectedSlots.length > 1 ? "s" : ""}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                  {selectedSlots.map((s) => {
-                                    const slot = ALL_SLOTS.find((sl) => sl.start === s)!;
-                                    return `${slot.start}-${slot.end}`;
-                                  }).join(", ")}
-                                </p>
-                              </div>
-                              <Button
-                                onClick={() => bookMutation.mutate()}
-                                disabled={bookMutation.isPending || balance < selectedSlots.length}
+
+                          {/* Confirm section */}
+                          <AnimatePresence>
+                            {selectedSlots.length > 0 && (
+                              <motion.div
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -8 }}
+                                className="p-5 rounded-2xl bg-primary/5 border border-primary/20"
                               >
-                                {balance < selectedSlots.length ? "Saldo insuficiente" : bookMutation.isPending ? "Reservando..." : "Confirmar reserva"}
-                              </Button>
-                            </motion.div>
-                          )}
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                  <div>
+                                    <p className="font-semibold text-foreground flex items-center gap-2">
+                                      <CheckCircle2 className="w-4 h-4 text-primary" />
+                                      {selectedSlots.length} {selectedSlots.length === 1 ? "clase seleccionada" : "clases seleccionadas"}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                      {selectedSlots.map((s) => {
+                                        const slot = ALL_SLOTS.find((sl) => sl.start === s)!;
+                                        return `${slot.start} - ${slot.end}`;
+                                      }).join("  ·  ")}
+                                      {" · "}{selectedTeacherName}
+                                    </p>
+                                  </div>
+                                  <Button
+                                    size="lg"
+                                    className="shadow-lg font-semibold"
+                                    onClick={() => bookMutation.mutate()}
+                                    disabled={bookMutation.isPending || balance < selectedSlots.length}
+                                  >
+                                    {balance < selectedSlots.length
+                                      ? "Saldo insuficiente"
+                                      : bookMutation.isPending
+                                        ? "Reservando..."
+                                        : "Confirmar reserva"}
+                                  </Button>
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+
                           {balance < 1 && (
-                            <div className="mt-3 flex items-center gap-2 text-sm text-destructive">
-                              <AlertTriangle className="w-4 h-4" />
-                              <span>No tienes clases disponibles. <Link to="/pagos" className="underline font-medium">Compra clases aquí</Link></span>
+                            <div className="mt-4 flex items-center gap-2 text-sm p-3 rounded-xl bg-destructive/5 border border-destructive/20 text-destructive">
+                              <AlertTriangle className="w-4 h-4 shrink-0" />
+                              <span>No tienes clases disponibles. <Link to="/pagos" className="underline font-semibold hover:opacity-80">Compra clases aquí</Link></span>
                             </div>
                           )}
                         </>
@@ -428,50 +559,78 @@ export default function Reservas() {
 
           {/* RIGHT: Upcoming bookings */}
           <div>
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-primary" /> Próximas clases
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {myBookings.length === 0 ? (
-                  <p className="text-sm text-muted-foreground text-center py-6">No tienes clases reservadas</p>
-                ) : (
-                  <div className="space-y-3">
-                    {myBookings.map((booking) => (
-                      <motion.div
-                        key={booking.id}
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="p-3 rounded-xl border border-border bg-card flex items-center justify-between gap-3"
-                      >
-                        <div className="min-w-0">
-                          <p className="font-medium text-sm">
-                            {format(new Date(booking.booking_date + "T00:00:00"), "EEEE d MMM", { locale: es })}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)} · {booking.notes || "Profesor"}
-                          </p>
-                        </div>
-                        {canCancel(booking) ? (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10"
-                            onClick={() => setCancelBookingId(booking.id)}
-                          >
-                            <X className="w-4 h-4" />
-                          </Button>
-                        ) : (
-                          <span className="text-xs text-muted-foreground shrink-0">No cancelable</span>
-                        )}
-                      </motion.div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+              <Card className="shadow-[var(--card-shadow)] overflow-hidden sticky top-8">
+                <CardHeader className="pb-4 border-b border-border/50 bg-accent/30">
+                  <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <CheckCircle2 className="w-4 h-4 text-primary" />
+                    </div>
+                    Próximas clases
+                    {myBookings.length > 0 && (
+                      <span className="ml-auto text-xs font-medium bg-primary/10 text-primary px-2.5 py-1 rounded-full">
+                        {myBookings.length}
+                      </span>
+                    )}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  {myBookings.length === 0 ? (
+                    <div className="text-center py-10">
+                      <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-3">
+                        <CalendarDays className="w-6 h-6 text-muted-foreground/50" />
+                      </div>
+                      <p className="text-sm font-medium text-muted-foreground">Sin clases reservadas</p>
+                      <p className="text-xs text-muted-foreground/60 mt-1">¡Reserva tu primera clase!</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {myBookings.map((booking, i) => (
+                        <motion.div
+                          key={booking.id}
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.05 }}
+                          className="group p-3.5 rounded-xl border border-border/70 bg-card hover:border-primary/30 hover:shadow-sm transition-all duration-200 flex items-center justify-between gap-3"
+                        >
+                          <div className="min-w-0 flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-primary/8 flex flex-col items-center justify-center shrink-0">
+                              <span className="text-[10px] font-bold text-primary uppercase leading-none">
+                                {format(new Date(booking.booking_date + "T00:00:00"), "MMM", { locale: es })}
+                              </span>
+                              <span className="text-sm font-bold text-primary leading-tight">
+                                {format(new Date(booking.booking_date + "T00:00:00"), "d")}
+                              </span>
+                            </div>
+                            <div className="min-w-0">
+                              <p className="font-medium text-sm capitalize">
+                                {format(new Date(booking.booking_date + "T00:00:00"), "EEEE", { locale: es })}
+                              </p>
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {booking.start_time.slice(0, 5)} - {booking.end_time.slice(0, 5)} · {booking.notes || "Profesor"}
+                              </p>
+                            </div>
+                          </div>
+                          {canCancel(booking) ? (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="shrink-0 text-destructive/70 hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-opacity"
+                              onClick={() => setCancelBookingId(booking.id)}
+                            >
+                              <X className="w-4 h-4" />
+                            </Button>
+                          ) : (
+                            <span className="text-[10px] text-muted-foreground/60 shrink-0 bg-muted px-2 py-1 rounded-full">No cancelable</span>
+                          )}
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </main>
@@ -480,7 +639,7 @@ export default function Reservas() {
       <AlertDialog open={!!cancelBookingId} onOpenChange={() => setCancelBookingId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>¿Cancelar esta clase?</AlertDialogTitle>
+            <AlertDialogTitle className="font-['Space_Grotesk']">¿Cancelar esta clase?</AlertDialogTitle>
             <AlertDialogDescription>
               Se devolverá la clase a tu saldo disponible. Esta acción no se puede deshacer.
             </AlertDialogDescription>
