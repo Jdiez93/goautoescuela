@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -106,14 +107,11 @@ export default function Reservas() {
     enabled: !!user,
   });
 
-  // Available slots for selected date
-  const availableSlots = useMemo(() => {
+  // Visible slots for selected date (includes taken ones, excludes past)
+  const visibleSlots = useMemo(() => {
     if (!selectedDate) return [];
     const now = new Date();
     return ALL_SLOTS.filter((slot) => {
-      // Filter out taken slots
-      if (takenSlots.includes(slot.start)) return false;
-      // Filter out past slots if today
       if (isToday(selectedDate)) {
         const [h, m] = slot.start.split(":").map(Number);
         const slotTime = new Date(selectedDate);
@@ -366,20 +364,26 @@ export default function Reservas() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      {availableSlots.length === 0 ? (
+                      {visibleSlots.length === 0 ? (
                         <p className="text-center text-muted-foreground py-4">No hay horas disponibles para este día</p>
                       ) : (
                         <>
                           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-4">
-                            {availableSlots.map((slot) => {
+                            {visibleSlots.map((slot) => {
+                              const isTaken = takenSlots.includes(slot.start);
                               const isSelected = selectedSlots.includes(slot.start);
                               return (
                                 <Button
                                   key={slot.start}
-                                  variant={isSelected ? "default" : "outline"}
+                                  variant={isSelected ? "default" : isTaken ? "destructive" : "outline"}
                                   size="sm"
-                                  className="text-sm"
-                                  onClick={() => handleSlotToggle(slot.start)}
+                                  disabled={isTaken}
+                                  className={cn(
+                                    "text-sm transition-all",
+                                    isTaken && "opacity-80 cursor-not-allowed line-through",
+                                    !isTaken && !isSelected && "hover:border-primary hover:text-primary"
+                                  )}
+                                  onClick={() => !isTaken && handleSlotToggle(slot.start)}
                                 >
                                   {slot.start} - {slot.end}
                                 </Button>
