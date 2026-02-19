@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,26 @@ import { Car, Loader2, Mail, Lock, Eye, EyeOff, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
+const getPasswordStrength = (pass: string): { score: number; label: string } => {
+  if (!pass) return { score: 0, label: "" };
+  let score = 0;
+  if (pass.length >= 6) score++;
+  if (pass.length >= 10) score++;
+  if (/[A-Z]/.test(pass)) score++;
+  if (/[0-9]/.test(pass)) score++;
+  if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+  if (score <= 1) return { score: 1, label: "Débil" };
+  if (score <= 3) return { score: 2, label: "Media" };
+  return { score: 3, label: "Segura" };
+};
+
+const strengthColors = {
+  1: { bar: "bg-destructive", text: "text-destructive" },
+  2: { bar: "bg-yellow-500", text: "text-yellow-600" },
+  3: { bar: "bg-green-500", text: "text-green-600" },
+} as const;
+
 export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,6 +37,8 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const strength = useMemo(() => getPasswordStrength(password), [password]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,6 +151,29 @@ export default function Register() {
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
+                {password && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    className="space-y-1.5 pt-1"
+                  >
+                    <div className="flex gap-1">
+                      {[1, 2, 3].map((i) => (
+                        <div
+                          key={i}
+                          className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+                            i <= strength.score
+                              ? strengthColors[strength.score as 1 | 2 | 3].bar
+                              : "bg-muted"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className={`text-[11px] font-medium ${strengthColors[strength.score as 1 | 2 | 3].text}`}>
+                      Contraseña {strength.label.toLowerCase()}
+                    </p>
+                  </motion.div>
+                )}
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
