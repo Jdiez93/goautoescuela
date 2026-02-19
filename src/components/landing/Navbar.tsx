@@ -39,7 +39,7 @@ export default function Navbar() {
                 </Link>
                 <Link to="/registro">
                   <Button size="sm" className="bg-hero-gradient hover:opacity-90 text-primary-foreground">
-                    Empieza tu carnet
+                    Registrarse
                   </Button>
                 </Link>
               </>
@@ -79,7 +79,7 @@ export default function Navbar() {
                       <Button variant="outline" className="w-full">Iniciar sesión</Button>
                     </Link>
                     <Link to="/registro" onClick={() => setIsOpen(false)}>
-                      <Button className="w-full bg-hero-gradient text-primary-foreground">Empieza tu carnet</Button>
+                      <Button className="w-full bg-hero-gradient text-primary-foreground">Registrarse</Button>
                     </Link>
                   </>
                 )}
