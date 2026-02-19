@@ -321,11 +321,11 @@ export default function Reservas() {
           </Link>
           <div className="flex items-center gap-3">
             {profile?.full_name && (
-              <div className="hidden sm:flex items-center gap-2 text-primary-foreground/50 text-xs tracking-wide">
-                <div className="w-5 h-5 rounded-full bg-primary-foreground/15 flex items-center justify-center text-[9px] font-semibold text-primary-foreground/60">
+              <div className="hidden sm:flex items-center gap-2.5 bg-background/90 backdrop-blur-sm shadow-sm border border-border/60 rounded-full px-3.5 py-1.5">
+                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-primary-foreground shadow-sm">
                   {profile.full_name.charAt(0).toUpperCase()}
                 </div>
-                <span className="font-medium">{profile.full_name}</span>
+                <span className="text-xs font-semibold text-foreground/80">{profile.full_name}</span>
               </div>
             )}
             <div className="bg-primary-foreground/15 backdrop-blur-sm px-4 py-2 rounded-xl border border-primary-foreground/10">
@@ -337,6 +337,18 @@ export default function Reservas() {
           </div>
         </div>
       </header>
+
+      {/* User badge mobile */}
+      {profile?.full_name && (
+        <div className="sm:hidden container mx-auto px-4 pt-3 flex justify-end">
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 py-1.5">
+            <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[9px] font-bold text-primary-foreground">
+              {profile.full_name.charAt(0).toUpperCase()}
+            </div>
+            <span className="text-[11px] font-semibold text-primary">{profile.full_name}</span>
+          </div>
+        </div>
+      )}
 
       <main className="container mx-auto px-4 py-8 flex-1">
         {/* Page title */}
