@@ -5,10 +5,6 @@ import { Menu, X, Car, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 
-const navItems = [
-  { label: "Inicio", href: "/" },
-];
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, signOut } = useAuth();
@@ -25,19 +21,6 @@ export default function Navbar() {
               Autoescuela<span className="text-gradient">GO</span>
             </span>
           </Link>
-
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors rounded-lg hover:bg-accent"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
 
           <div className="hidden md:flex items-center gap-3">
             {user ? (
@@ -80,17 +63,7 @@ export default function Navbar() {
             className="md:hidden bg-background border-b border-border"
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-2">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="px-4 py-3 text-sm font-medium rounded-lg hover:bg-muted transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <div className="flex flex-col gap-2 pt-2 border-t border-border mt-2">
+              <div className="flex flex-col gap-2">
                 {user ? (
                   <>
                     <Link to="/dashboard" onClick={() => setIsOpen(false)}>
