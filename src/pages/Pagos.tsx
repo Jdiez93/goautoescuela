@@ -143,6 +143,22 @@ export default function Pagos() {
           <div className="absolute top-[-50px] right-[-100px] w-[300px] h-[300px] rounded-full border-[40px] border-primary-foreground" />
         </motion.div>
         <div className="container mx-auto px-4 max-w-5xl relative">
+          {/* User badge */}
+          {profile?.full_name && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.15 }}
+              className="flex justify-end mb-4"
+            >
+              <div className="inline-flex items-center gap-2 bg-primary-foreground/20 backdrop-blur-sm border border-primary-foreground/25 rounded-full px-3.5 py-1.5 shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-primary-foreground flex items-center justify-center text-[10px] font-bold text-primary shadow-sm">
+                  {profile.full_name.charAt(0).toUpperCase()}
+                </div>
+                <span className="text-xs font-semibold text-primary-foreground/90">{profile.full_name}</span>
+              </div>
+            </motion.div>
+          )}
           <motion.div variants={heroVariants} initial="hidden" animate="visible">
             <motion.h1
               className="text-3xl font-bold text-primary-foreground mb-1 font-['Space_Grotesk']"
@@ -160,19 +176,6 @@ export default function Pagos() {
             >
               Gestiona tu saldo y compra clases
             </motion.p>
-            {profile?.full_name && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.4 }}
-                className="mt-4 inline-flex items-center gap-2 text-primary-foreground/50 text-xs tracking-wide"
-              >
-                <div className="w-5 h-5 rounded-full bg-primary-foreground/15 flex items-center justify-center text-[9px] font-semibold text-primary-foreground/60">
-                  {profile.full_name.charAt(0).toUpperCase()}
-                </div>
-                <span className="font-medium">{profile.full_name}</span>
-              </motion.div>
-            )}
           </motion.div>
         </div>
       </div>
