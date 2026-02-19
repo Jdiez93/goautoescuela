@@ -44,7 +44,7 @@ export default function HowItWorks() {
           >
             Paso a paso
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mt-4 mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight mt-4 mb-6">
             Empieza en{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               4 pasos

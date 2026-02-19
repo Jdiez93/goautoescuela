@@ -87,7 +87,7 @@ export default function FeaturesShowcase() {
           >
             Funcionalidades
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mt-4 mb-6">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight mt-4 mb-6">
             Todo lo que{" "}
             <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
               necesitas
@@ -112,7 +112,7 @@ export default function FeaturesShowcase() {
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 className="h-full"
               >
-                <div className="relative h-full p-7 sm:p-8 rounded-3xl bg-card/70 backdrop-blur-sm border border-border/40 hover:border-primary/25 transition-all duration-500 group overflow-hidden">
+                <div className="relative h-full p-5 sm:p-8 rounded-3xl bg-card/70 backdrop-blur-sm border border-border/40 hover:border-primary/25 transition-all duration-500 group overflow-hidden">
                   {/* Hover gradient */}
                   <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
                     feat.accent === "secondary"

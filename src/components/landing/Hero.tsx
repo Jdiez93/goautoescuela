@@ -82,7 +82,7 @@ export default function Hero() {
           className="max-w-4xl mx-auto text-center"
         >
           {/* Badge */}
-          <motion.div variants={item} className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-card/80 backdrop-blur-sm text-sm font-medium border border-border/60 mb-10 shadow-sm">
+          <motion.div variants={item} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/80 backdrop-blur-sm text-xs sm:text-sm font-medium border border-border/60 mb-6 sm:mb-10 shadow-sm">
             <Sparkles className="w-4 h-4 text-secondary" />
             <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
               Plataforma de gestión para alumnos
@@ -92,7 +92,7 @@ export default function Hero() {
           {/* Heading */}
           <motion.h1
             variants={item}
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-[-0.03em] leading-[1.05] mb-8"
+            className="text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-[-0.03em] leading-[1.05] mb-6 sm:mb-8"
           >
             <span className="bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text text-transparent">
               Tu autoescuela digital
@@ -102,17 +102,17 @@ export default function Hero() {
           {/* Subtitle */}
           <motion.p
             variants={item}
-            className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed font-light"
+            className="text-base sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed font-light px-2"
           >
             Reserva clases, gestiona pagos y controla tu progreso.
             <span className="text-foreground font-normal"> Todo desde un solo lugar.</span>
           </motion.p>
 
           {/* CTAs */}
-          <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
+          <motion.div variants={item} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-20 px-2">
             <Link to="/registro">
               <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-                <Button size="lg" className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground text-base px-10 h-14 rounded-2xl hover:shadow-xl hover:shadow-primary/25 transition-shadow duration-300 font-medium">
+                <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/90 text-primary-foreground text-sm sm:text-base px-8 sm:px-10 h-12 sm:h-14 rounded-2xl hover:shadow-xl hover:shadow-primary/25 transition-shadow duration-300 font-medium">
                   Crear cuenta
                   <ArrowRight className="w-5 h-5 ml-1" />
                 </Button>
@@ -120,7 +120,7 @@ export default function Hero() {
             </Link>
             <a href="#funcionalidades">
               <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-                <Button variant="outline" size="lg" className="text-base px-10 h-14 rounded-2xl border-border/80 bg-card/50 backdrop-blur-sm hover:bg-card font-medium">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto text-sm sm:text-base px-8 sm:px-10 h-12 sm:h-14 rounded-2xl border-border/80 bg-card/50 backdrop-blur-sm hover:bg-card font-medium">
                   Descubre cómo funciona
                 </Button>
               </motion.div>
@@ -130,7 +130,7 @@ export default function Hero() {
           {/* Stats */}
           <motion.div
             variants={item}
-            className="grid grid-cols-3 gap-4 sm:gap-8 max-w-xl mx-auto"
+            className="grid grid-cols-3 gap-2 sm:gap-8 max-w-xl mx-auto"
           >
             {stats.map((stat, i) => (
               <motion.div
@@ -139,9 +139,9 @@ export default function Hero() {
                 whileHover={{ y: -4 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
-                <div className="relative p-4 sm:p-6 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/40 hover:border-primary/30 transition-colors duration-300">
+                <div className="relative p-3 sm:p-6 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/40 hover:border-primary/30 transition-colors duration-300">
                   <stat.icon className="w-5 h-5 text-primary/60 mx-auto mb-2 hidden sm:block" />
-                  <div className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                  <div className="text-xl sm:text-3xl font-bold tracking-tight text-foreground">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="text-xs sm:text-sm text-muted-foreground mt-1">{stat.label}</div>
