@@ -108,8 +108,8 @@ export default function FeaturesShowcase() {
           {features.map((feat) => (
             <motion.div key={feat.title} variants={cardVariant} className={feat.span}>
               <motion.div
-                whileHover={{ y: -6, scale: 1.01 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                whileHover={{ y: -4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 className="h-full"
               >
                 <div className="relative h-full p-7 sm:p-8 rounded-3xl bg-card/70 backdrop-blur-sm border border-border/40 hover:border-primary/25 transition-all duration-500 group overflow-hidden">

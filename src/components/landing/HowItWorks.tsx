@@ -76,8 +76,8 @@ export default function HowItWorks() {
           {steps.map((step, i) => (
             <motion.div key={step.title} variants={item} className="relative group">
               <motion.div
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 className="relative"
               >
                 {/* Card */}
@@ -88,17 +88,15 @@ export default function HowItWorks() {
                   {/* Step number */}
                   <div className="relative z-10">
                     <div className="relative mx-auto w-16 h-16 mb-6">
-                      <motion.div
+                      <div
                         className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
                           step.color === "secondary"
                             ? "bg-gradient-to-br from-secondary/15 to-secondary/5"
                             : "bg-gradient-to-br from-primary/15 to-primary/5"
                         }`}
-                        whileHover={{ rotate: [0, -5, 5, 0] }}
-                        transition={{ duration: 0.5 }}
                       >
                         <step.icon className={`w-7 h-7 ${step.color === "secondary" ? "text-secondary" : "text-primary"}`} />
-                      </motion.div>
+                      </div>
                       <span className={`absolute -top-2 -right-2 w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center shadow-lg ${
                         step.color === "secondary"
                           ? "bg-secondary text-secondary-foreground shadow-secondary/30"

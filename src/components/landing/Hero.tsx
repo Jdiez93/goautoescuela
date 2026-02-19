@@ -41,13 +41,13 @@ const stats = [
 
 const FloatingOrb = ({ className, delay = 0 }: { className: string; delay?: number }) => (
   <motion.div
-    className={`absolute rounded-full blur-3xl ${className}`}
+    className={`absolute rounded-full blur-3xl will-change-transform ${className}`}
     animate={{
-      scale: [1, 1.3, 0.9, 1.1, 1],
-      x: [0, 30, -20, 15, 0],
-      y: [0, -25, 15, -10, 0],
+      scale: [1, 1.15, 0.95, 1.05, 1],
+      x: [0, 20, -15, 10, 0],
+      y: [0, -15, 10, -8, 0],
     }}
-    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay }}
+    transition={{ duration: 18, repeat: Infinity, ease: "linear", delay }}
   />
 );
 
@@ -69,11 +69,9 @@ export default function Hero() {
       }} />
 
       {/* Animated gradient line */}
-      <motion.div
-        className="absolute top-0 left-0 right-0 h-px"
+      <div
+        className="absolute top-0 left-0 right-0 h-px opacity-50"
         style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary)), hsl(var(--secondary)), transparent)' }}
-        animate={{ opacity: [0.3, 0.7, 0.3] }}
-        transition={{ duration: 3, repeat: Infinity }}
       />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -85,12 +83,7 @@ export default function Hero() {
         >
           {/* Badge */}
           <motion.div variants={item} className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-card/80 backdrop-blur-sm text-sm font-medium border border-border/60 mb-10 shadow-sm">
-            <motion.div
-              animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Sparkles className="w-4 h-4 text-secondary" />
-            </motion.div>
+            <Sparkles className="w-4 h-4 text-secondary" />
             <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
               Plataforma de gestión para alumnos
             </span>
