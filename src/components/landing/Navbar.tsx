@@ -7,8 +7,6 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { label: "Inicio", href: "/" },
-  { label: "Sobre Nosotros", href: "/sobre-nosotros" },
-  { label: "Contacto", href: "/contacto" },
 ];
 
 export default function Navbar() {
