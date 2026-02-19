@@ -21,6 +21,45 @@ interface ProfileForm {
   postal_code: string;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+} as const;
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
+  },
+};
+
+const heroVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring" as const, stiffness: 200, damping: 20, mass: 0.8 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { type: "spring" as const, stiffness: 200, damping: 22, delay: 0.15 },
+  },
+};
+
 export default function Perfil() {
   const { user, profile: authProfile, loading: authLoading } = useAuth();
   const { toast } = useToast();
@@ -113,7 +152,12 @@ export default function Perfil() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground">
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="bg-primary text-primary-foreground"
+      >
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <Link to="/dashboard" className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors">
             <ArrowLeft className="w-4 h-4" />
@@ -128,47 +172,89 @@ export default function Perfil() {
             </span>
           </Link>
         </div>
-      </header>
+      </motion.header>
 
       {/* Hero */}
       <div className="bg-primary pb-24 pt-8 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+        <motion.div
+          className="absolute inset-0 opacity-10"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
           <div className="absolute top-[-50px] right-[-100px] w-[300px] h-[300px] rounded-full border-[40px] border-primary-foreground" />
-        </div>
+        </motion.div>
         <div className="container mx-auto px-4 max-w-2xl relative">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <h1 className="text-3xl font-bold text-primary-foreground mb-1 font-['Space_Grotesk']">Mi Perfil</h1>
-            <p className="text-primary-foreground/70">Completa y actualiza tu información personal</p>
+          <motion.div variants={heroVariants} initial="hidden" animate="visible">
+            <motion.h1
+              className="text-3xl font-bold text-primary-foreground mb-1 font-['Space_Grotesk']"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+            >
+              Mi Perfil
+            </motion.h1>
+            <motion.p
+              className="text-primary-foreground/70"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
+            >
+              Completa y actualiza tu información personal
+            </motion.p>
             {authProfile?.full_name && (
-              <div className="mt-4 inline-flex items-center gap-2.5 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl px-4 py-2">
-                <div className="w-7 h-7 rounded-lg bg-primary-foreground/20 flex items-center justify-center text-xs font-bold text-primary-foreground">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.35 }}
+                className="mt-4 inline-flex items-center gap-2.5 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl px-4 py-2"
+              >
+                <motion.div
+                  className="w-7 h-7 rounded-lg bg-primary-foreground/20 flex items-center justify-center text-xs font-bold text-primary-foreground"
+                  whileHover={{ scale: 1.15, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                >
                   {authProfile.full_name.charAt(0).toUpperCase()}
-                </div>
+                </motion.div>
                 <span className="text-sm font-medium text-primary-foreground/90">{authProfile.full_name}</span>
-              </div>
+              </motion.div>
             )}
           </motion.div>
         </div>
       </div>
 
       <main className="container mx-auto px-4 max-w-2xl -mt-16 relative z-10 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.4 }}>
-          <Card className="border-border/50">
+        <motion.div variants={cardVariants} initial="hidden" animate="visible">
+          <Card className="border-border/50 overflow-hidden">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center">
+                <motion.div
+                  className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center"
+                  whileHover={{ scale: 1.1, rotate: -5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                >
                   <User className="w-5 h-5 text-primary" />
-                </div>
+                </motion.div>
                 Datos personales
               </CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid sm:grid-cols-2 gap-4">
+                <motion.div
+                  className="grid sm:grid-cols-2 gap-4"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
                   {fields.filter(f => !f.full).map((field) => (
-                    <div key={field.id} className="space-y-2">
+                    <motion.div key={field.id} className="space-y-2" variants={itemVariants}>
                       <Label htmlFor={field.id}>{field.label}</Label>
-                      <div className="relative">
+                      <motion.div
+                        className="relative"
+                        whileFocus={{ scale: 1.01 }}
+                        whileHover={{ scale: 1.01 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      >
                         <field.icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <Input
                           id={field.id}
@@ -179,17 +265,27 @@ export default function Perfil() {
                           placeholder={field.placeholder}
                           disabled={field.disabled}
                           maxLength={field.maxLength}
-                          className={`pl-10 ${field.disabled ? "bg-muted" : ""}`}
+                          className={`pl-10 transition-shadow duration-200 focus:shadow-md ${field.disabled ? "bg-muted" : ""}`}
                         />
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
 
-                {fields.filter(f => f.full).map((field) => (
-                  <div key={field.id} className="space-y-2">
+                {fields.filter(f => f.full).map((field, i) => (
+                  <motion.div
+                    key={field.id}
+                    className="space-y-2"
+                    initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ type: "spring", stiffness: 300, damping: 24, delay: 0.5 + i * 0.08 }}
+                  >
                     <Label htmlFor={field.id}>{field.label}</Label>
-                    <div className="relative">
+                    <motion.div
+                      className="relative"
+                      whileHover={{ scale: 1.01 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    >
                       <field.icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                       <Input
                         id={field.id}
@@ -198,18 +294,25 @@ export default function Perfil() {
                         value={(form as any)[field.id]}
                         onChange={handleChange}
                         placeholder={field.placeholder}
-                        className="pl-10"
+                        className="pl-10 transition-shadow duration-200 focus:shadow-md"
                       />
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 ))}
 
-                <div className="pt-2">
-                  <Button type="submit" disabled={saving} className="w-full bg-primary hover:bg-primary/90">
-                    {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                    Guardar cambios
-                  </Button>
-                </div>
+                <motion.div
+                  className="pt-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.6 }}
+                >
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+                    <Button type="submit" disabled={saving} className="w-full bg-primary hover:bg-primary/90">
+                      {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                      Guardar cambios
+                    </Button>
+                  </motion.div>
+                </motion.div>
               </form>
             </CardContent>
           </Card>

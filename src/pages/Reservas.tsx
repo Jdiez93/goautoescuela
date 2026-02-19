@@ -51,9 +51,19 @@ const TEACHERS = [
 ];
 
 const stepVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
-  exit: { opacity: 0, y: -10, scale: 0.98, transition: { duration: 0.2 } },
+  hidden: { opacity: 0, y: 30, scale: 0.96, filter: "blur(6px)" },
+  visible: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 250, damping: 22 } },
+  exit: { opacity: 0, y: -15, scale: 0.96, filter: "blur(4px)", transition: { duration: 0.25, ease: "easeIn" as const } },
+};
+
+const listContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+} as const;
+
+const listItemVariants = {
+  hidden: { opacity: 0, x: 20, scale: 0.95 },
+  visible: { opacity: 1, x: 0, scale: 1, transition: { type: "spring" as const, stiffness: 300, damping: 24 } },
 };
 
 export default function Reservas() {
@@ -331,15 +341,19 @@ export default function Reservas() {
       <main className="container mx-auto px-4 py-8 flex-1">
         {/* Page title */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ type: "spring" as const, stiffness: 200, damping: 20 }}
           className="mb-8"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <motion.div
+              className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
+              whileHover={{ scale: 1.1, rotate: -5 }}
+              transition={{ type: "spring" as const, stiffness: 400, damping: 15 }}
+            >
               <Sparkles className="w-5 h-5 text-primary" />
-            </div>
+            </motion.div>
             <div>
               <h1 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">Reservar Clase</h1>
               <p className="text-muted-foreground text-sm">Sigue los pasos para reservar tu próxima clase práctica</p>
@@ -360,17 +374,22 @@ export default function Reservas() {
                     currentStep > i ? "bg-primary" : "bg-border"
                   )} />
                 )}
-                <div className={cn(
-                  "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300",
-                  currentStep === step.num && "bg-primary text-primary-foreground shadow-md",
-                  currentStep > step.num && "bg-primary/15 text-primary",
-                  currentStep < step.num && "bg-muted text-muted-foreground"
-                )}>
+                <motion.div
+                  className={cn(
+                    "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300",
+                    currentStep === step.num && "bg-primary text-primary-foreground shadow-md",
+                    currentStep > step.num && "bg-primary/15 text-primary",
+                    currentStep < step.num && "bg-muted text-muted-foreground"
+                  )}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: "spring" as const, stiffness: 300, damping: 20, delay: 0.1 + i * 0.08 }}
+                >
                   <span className="w-5 h-5 rounded-full bg-current/10 flex items-center justify-center text-[10px] font-bold">
                     {currentStep > step.num ? "✓" : step.num}
                   </span>
                   <span className="hidden sm:inline">{step.label}</span>
-                </div>
+                </motion.div>
               </div>
             ))}
           </div>
@@ -396,8 +415,11 @@ export default function Reservas() {
                     {TEACHERS.map((t) => {
                       const isActive = selectedTeacherName === t.name;
                       return (
-                        <button
+                        <motion.button
                           key={t.id}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          whileTap={{ scale: 0.97 }}
+                          transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
                           className={cn(
                             "group relative flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all duration-300 cursor-pointer",
                             isActive
@@ -432,7 +454,7 @@ export default function Reservas() {
                               <CheckCircle2 className="w-4 h-4" />
                             </motion.div>
                           )}
-                        </button>
+                        </motion.button>
                       );
                     })}
                   </div>
@@ -600,7 +622,7 @@ export default function Reservas() {
 
           {/* RIGHT: Upcoming bookings */}
           <div className="space-y-6">
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+            <motion.div initial={{ opacity: 0, x: 30, filter: "blur(6px)" }} animate={{ opacity: 1, x: 0, filter: "blur(0px)" }} transition={{ type: "spring" as const, stiffness: 200, damping: 22, delay: 0.2 }}>
               <Card className="shadow-[var(--card-shadow)] overflow-hidden sticky top-8">
                 <CardHeader className="pb-4 border-b border-border/50 bg-accent/30">
                   <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
@@ -625,13 +647,13 @@ export default function Reservas() {
                       <p className="text-xs text-muted-foreground/60 mt-1">¡Reserva tu primera clase!</p>
                     </div>
                   ) : (
-                    <div className="space-y-2.5">
-                      {myBookings.map((booking, i) => (
+                    <motion.div className="space-y-2.5" variants={listContainerVariants} initial="hidden" animate="visible">
+                      {myBookings.map((booking) => (
                         <motion.div
                           key={booking.id}
-                          initial={{ opacity: 0, x: 10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.05 }}
+                          variants={listItemVariants}
+                          whileHover={{ x: 4, scale: 1.01 }}
+                          transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
                           className="group p-3.5 rounded-xl border border-border/70 bg-card hover:border-primary/30 hover:shadow-sm transition-all duration-200 flex items-center justify-between gap-3"
                         >
                           <div className="min-w-0 flex items-center gap-3">
@@ -667,14 +689,14 @@ export default function Reservas() {
                           )}
                         </motion.div>
                       ))}
-                    </div>
+                    </motion.div>
                   )}
                 </CardContent>
               </Card>
             </motion.div>
 
             {/* Completed classes */}
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5 }}>
+            <motion.div initial={{ opacity: 0, x: 30, filter: "blur(6px)" }} animate={{ opacity: 1, x: 0, filter: "blur(0px)" }} transition={{ type: "spring" as const, stiffness: 200, damping: 22, delay: 0.35 }}>
               <Card className="shadow-[var(--card-shadow)] overflow-hidden border-border/60">
                 <CardHeader className="pb-4 border-b border-border/50">
                   <CardTitle className="text-lg flex items-center gap-3 font-['Space_Grotesk']">
@@ -702,13 +724,13 @@ export default function Reservas() {
                       <p className="text-xs text-muted-foreground/60 mt-1">Aquí aparecerán tus clases una vez finalizadas</p>
                     </div>
                   ) : (
-                    <div className="space-y-2">
-                      {completedBookings.map((booking, i) => (
+                    <motion.div className="space-y-2" variants={listContainerVariants} initial="hidden" animate="visible">
+                      {completedBookings.map((booking) => (
                         <motion.div
                           key={booking.id}
-                          initial={{ opacity: 0, x: 10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.04 }}
+                          variants={listItemVariants}
+                          whileHover={{ x: 4, scale: 1.01 }}
+                          transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
                           className="p-3.5 rounded-xl border border-emerald-500/15 bg-gradient-to-r from-emerald-500/[0.04] to-transparent hover:from-emerald-500/[0.07] flex items-center justify-between gap-3 transition-colors duration-200"
                         >
                           <div className="min-w-0 flex items-center gap-3">
@@ -738,7 +760,7 @@ export default function Reservas() {
                           </span>
                         </motion.div>
                       ))}
-                    </div>
+                    </motion.div>
                   )}
                 </CardContent>
               </Card>
