@@ -101,17 +101,8 @@ export default function Hero() {
             variants={item}
             className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-[-0.03em] leading-[1.05] mb-8"
           >
-            <span className="block">Tu autoescuela</span>
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text text-transparent">
-                digital
-              </span>
-              <motion.span
-                className="absolute -bottom-2 left-0 right-0 h-1.5 rounded-full bg-gradient-to-r from-primary to-secondary"
-                initial={{ scaleX: 0, originX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 1, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-              />
+            <span className="bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text text-transparent">
+              Tu autoescuela digital
             </span>
           </motion.h1>
 
@@ -129,7 +120,7 @@ export default function Hero() {
             <Link to="/registro">
               <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
                 <Button size="lg" className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground text-base px-10 h-14 rounded-2xl hover:shadow-xl hover:shadow-primary/25 transition-shadow duration-300 font-medium">
-                  Crear mi cuenta gratis
+                  Crear cuenta
                   <ArrowRight className="w-5 h-5 ml-1" />
                 </Button>
               </motion.div>
