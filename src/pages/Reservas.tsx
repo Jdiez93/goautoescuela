@@ -321,11 +321,11 @@ export default function Reservas() {
           </Link>
           <div className="flex items-center gap-3">
             {profile?.full_name && (
-              <div className="hidden sm:flex items-center gap-2 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl px-3 py-2">
-                <div className="w-6 h-6 rounded-md bg-primary-foreground/20 flex items-center justify-center text-[10px] font-bold text-primary-foreground">
+              <div className="hidden sm:flex items-center gap-2 text-primary-foreground/50 text-xs tracking-wide">
+                <div className="w-5 h-5 rounded-full bg-primary-foreground/15 flex items-center justify-center text-[9px] font-semibold text-primary-foreground/60">
                   {profile.full_name.charAt(0).toUpperCase()}
                 </div>
-                <span className="text-sm font-medium text-primary-foreground/90">{profile.full_name}</span>
+                <span className="font-medium">{profile.full_name}</span>
               </div>
             )}
             <div className="bg-primary-foreground/15 backdrop-blur-sm px-4 py-2 rounded-xl border border-primary-foreground/10">

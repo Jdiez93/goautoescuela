@@ -204,19 +204,15 @@ export default function Perfil() {
             </motion.p>
             {authProfile?.full_name && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.35 }}
-                className="mt-4 inline-flex items-center gap-2.5 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/15 rounded-xl px-4 py-2"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.4 }}
+                className="mt-4 inline-flex items-center gap-2 text-primary-foreground/50 text-xs tracking-wide"
               >
-                <motion.div
-                  className="w-7 h-7 rounded-lg bg-primary-foreground/20 flex items-center justify-center text-xs font-bold text-primary-foreground"
-                  whileHover={{ scale: 1.15, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                >
+                <div className="w-5 h-5 rounded-full bg-primary-foreground/15 flex items-center justify-center text-[9px] font-semibold text-primary-foreground/60">
                   {authProfile.full_name.charAt(0).toUpperCase()}
-                </motion.div>
-                <span className="text-sm font-medium text-primary-foreground/90">{authProfile.full_name}</span>
+                </div>
+                <span className="font-medium">{authProfile.full_name}</span>
               </motion.div>
             )}
           </motion.div>
