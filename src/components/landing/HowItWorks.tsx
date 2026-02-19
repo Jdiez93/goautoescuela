@@ -4,8 +4,8 @@ import { UserPlus, LogIn, CalendarCheck, CreditCard } from "lucide-react";
 const steps = [
   { icon: UserPlus, title: "Regístrate", desc: "Crea tu cuenta con tu nombre, email y contraseña en menos de un minuto." },
   { icon: LogIn, title: "Inicia sesión", desc: "Accede a tu panel personal con tus credenciales de forma segura." },
+  { icon: CreditCard, title: "Compra tus clases", desc: "Adquiere un pack de clases con pago seguro mediante Stripe." },
   { icon: CalendarCheck, title: "Reserva tus clases", desc: "Elige profesor, fecha y hora. Máximo 2 sesiones consecutivas de 45 min." },
-  { icon: CreditCard, title: "Gestiona tus pagos", desc: "Compra packs de clases con Stripe y consulta tu saldo en todo momento." },
 ];
 
 const container = {
