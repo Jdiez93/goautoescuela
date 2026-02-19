@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-foreground text-background/80 pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -19,16 +19,6 @@ export default function Footer() {
             <p className="text-sm leading-relaxed opacity-70">
               Tu autoescuela de confianza en Villanueva del Pardillo. Formación de calidad para obtener tu carnet.
             </p>
-          </div>
-
-          {/* Links */}
-          <div>
-            <h4 className="font-semibold text-background mb-4 text-sm uppercase tracking-wider">Navegación</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="/" className="hover:text-background transition-colors">Inicio</a>
-              </li>
-            </ul>
           </div>
 
           {/* Contact */}
