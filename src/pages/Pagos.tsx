@@ -59,7 +59,7 @@ export default function Pagos() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("payments")
-        .select("*")
+        .select("*, class_packs(name)")
         .eq("user_id", user!.id)
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -379,38 +379,52 @@ export default function Pagos() {
               </Card>
             </motion.div>
           ) : (
-            <motion.div
-              className="space-y-3"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {payments.map((p) => (
-                <motion.div key={p.id} variants={itemVariants}>
-                  <motion.div
-                    whileHover={{ x: 4, scale: 1.01 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  >
-                    <Card className="border-border/50">
-                      <CardContent className="py-4 flex items-center justify-between">
-                        <div>
-                          <p className="font-medium">{p.classes_purchased} clase{p.classes_purchased > 1 ? "s" : ""}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {new Date(p.created_at).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="font-bold">{Number(p.amount).toFixed(2)}€</span>
-                          <Badge variant={p.status === "completed" ? "default" : p.status === "pending" ? "secondary" : "destructive"}>
-                            {p.status === "completed" ? "Completado" : p.status === "pending" ? "Pendiente" : p.status}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </motion.div>
+            <Card className="border-border/50 overflow-hidden">
+              <CardContent className="p-0">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border bg-muted/30 text-left">
+                        <th className="px-4 py-3 font-medium text-muted-foreground">Fecha</th>
+                        <th className="px-4 py-3 font-medium text-muted-foreground">Pack</th>
+                        <th className="px-4 py-3 font-medium text-muted-foreground">Clases</th>
+                        <th className="px-4 py-3 font-medium text-muted-foreground text-right">Importe</th>
+                        <th className="px-4 py-3 font-medium text-muted-foreground text-center">Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {payments.map((p, i) => (
+                        <motion.tr
+                          key={p.id}
+                          variants={itemVariants}
+                          initial="hidden"
+                          animate="visible"
+                          transition={{ delay: i * 0.05 }}
+                          className="border-b border-border/50 last:border-0 hover:bg-muted/20 transition-colors"
+                        >
+                          <td className="px-4 py-3 text-foreground">
+                            {new Date(p.created_at).toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })}
+                          </td>
+                          <td className="px-4 py-3 text-foreground">
+                            {(p as any).class_packs?.name ?? `${p.classes_purchased} clase${p.classes_purchased > 1 ? "s" : ""}`}
+                          </td>
+                          <td className="px-4 py-3 text-foreground">{p.classes_purchased}</td>
+                          <td className="px-4 py-3 text-foreground text-right font-semibold">{Number(p.amount).toFixed(2)} €</td>
+                          <td className="px-4 py-3 text-center">
+                            <Badge
+                              variant={p.status === "completed" ? "default" : "destructive"}
+                              className={p.status === "completed" ? "bg-green-100 text-green-700 hover:bg-green-100 border-0" : ""}
+                            >
+                              {p.status === "completed" ? "Completado" : p.status === "pending" ? "Pendiente" : "Fallido"}
+                            </Badge>
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
           )}
         </motion.div>
       </main>
