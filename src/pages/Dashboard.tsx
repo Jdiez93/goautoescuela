@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 export default function Dashboard() {
   const { user, profile, role, loading, signOut } = useAuth();
@@ -65,14 +65,23 @@ export default function Dashboard() {
     return null;
   }, [bookings]);
 
-  const countdown = useMemo(() => {
-    if (!nextClass) return null;
-    const diff = nextClass.date.getTime() - Date.now();
-    if (diff <= 0) return null;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    return { days, hours, minutes };
+  const [countdown, setCountdown] = useState<{ days: number; hours: number; minutes: number; seconds: number } | null>(null);
+
+  useEffect(() => {
+    if (!nextClass) { setCountdown(null); return; }
+    const tick = () => {
+      const diff = nextClass.date.getTime() - Date.now();
+      if (diff <= 0) { setCountdown(null); return; }
+      setCountdown({
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
   }, [nextClass]);
 
   // Chart data
@@ -274,9 +283,10 @@ export default function Dashboard() {
                             { label: "Días", value: countdown.days },
                             { label: "Horas", value: countdown.hours },
                             { label: "Min", value: countdown.minutes },
+                            { label: "Seg", value: countdown.seconds },
                           ].map((item) => (
-                            <div key={item.label} className="bg-accent rounded-xl px-4 py-3 text-center min-w-[70px]">
-                              <div className="text-2xl font-bold text-primary font-['Space_Grotesk']">{item.value}</div>
+                            <div key={item.label} className="bg-accent rounded-xl px-3 py-3 text-center min-w-[60px]">
+                              <div className="text-2xl font-bold text-primary font-['Space_Grotesk']">{String(item.value).padStart(2, "0")}</div>
                               <div className="text-xs text-muted-foreground">{item.label}</div>
                             </div>
                           ))}
