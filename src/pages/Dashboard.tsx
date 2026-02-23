@@ -1,7 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Link, Navigate } from "react-router-dom";
 import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp } from "lucide-react";
@@ -312,59 +311,6 @@ export default function Dashboard() {
               </motion.div>
             </div>
 
-            {/* Payment History */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4 }}>
-              <Card className="border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <CreditCard className="w-5 h-5 text-primary" />
-                    Historial de pagos
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {!payments?.length ? (
-                    <div className="text-center py-8 space-y-3">
-                      <CreditCard className="w-10 h-10 mx-auto text-muted-foreground/40" />
-                      <p className="text-sm text-muted-foreground">No hay pagos registrados</p>
-                    </div>
-                  ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="border-b border-border text-left">
-                            <th className="pb-3 font-medium text-muted-foreground">Fecha</th>
-                            <th className="pb-3 font-medium text-muted-foreground">Pack</th>
-                            <th className="pb-3 font-medium text-muted-foreground">Clases</th>
-                            <th className="pb-3 font-medium text-muted-foreground text-right">Importe</th>
-                            <th className="pb-3 font-medium text-muted-foreground text-center">Estado</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {payments.slice(0, 10).map((payment) => (
-                            <tr key={payment.id} className="border-b border-border/50 last:border-0">
-                              <td className="py-3 text-foreground">{formatDate(payment.created_at)}</td>
-                              <td className="py-3 text-foreground">
-                                {(payment as any).class_packs?.name ?? `${payment.classes_purchased} clase${payment.classes_purchased > 1 ? "s" : ""}`}
-                              </td>
-                              <td className="py-3 text-foreground">{payment.classes_purchased}</td>
-                              <td className="py-3 text-foreground text-right font-medium">{Number(payment.amount).toFixed(2)} €</td>
-                              <td className="py-3 text-center">
-                                <Badge
-                                  variant={payment.status === "completed" ? "default" : "destructive"}
-                                  className={payment.status === "completed" ? "bg-green-100 text-green-700 hover:bg-green-100 border-0" : ""}
-                                >
-                                  {payment.status === "completed" ? "Completado" : "Fallido"}
-                                </Badge>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
           </>
         )}
       </main>
