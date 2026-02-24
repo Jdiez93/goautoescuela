@@ -103,7 +103,7 @@ export default function MonthlySpendingChart({ payments }: MonthlySpendingChartP
         {/* Chart */}
         <div className="h-52">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} margin={{ top: 8, right: 4, bottom: 0, left: -24 }}>
+            <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: 4 }}>
               <defs>
                 <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={1} />
