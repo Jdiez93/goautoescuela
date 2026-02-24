@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import MonthlySpendingChart from "@/components/dashboard/MonthlySpendingChart";
 import { useMemo, useState, useEffect } from "react";
 
 export default function Dashboard() {
@@ -321,6 +322,10 @@ export default function Dashboard() {
               </motion.div>
             </div>
 
+            {/* Monthly Spending */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4 }}>
+              <MonthlySpendingChart payments={payments} />
+            </motion.div>
           </>
         )}
       </main>
