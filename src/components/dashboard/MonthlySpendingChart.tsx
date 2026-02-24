@@ -35,7 +35,7 @@ export default function MonthlySpendingChart({ payments }: MonthlySpendingChartP
         const [, month] = key.split("-");
         return {
           month: MONTH_LABELS[parseInt(month, 10) - 1],
-          total: Number((total / 100).toFixed(2)),
+          total: Number(total.toFixed(2)),
         };
       });
   }, [payments]);
