@@ -213,24 +213,12 @@ export default function Reservas() {
       const { error: bookError } = await supabase.from("bookings").insert(bookings);
       if (bookError) throw bookError;
 
-      let classesToDeduct = selectedSlots.length;
-      const { data: payments } = await supabase
-        .from("payments")
-        .select("id, classes_remaining")
-        .eq("user_id", user.id)
-        .eq("status", "completed")
-        .gt("classes_remaining", 0)
-        .order("created_at", { ascending: true });
-
-      for (const payment of payments ?? []) {
-        if (classesToDeduct <= 0) break;
-        const deduct = Math.min(classesToDeduct, payment.classes_remaining);
-        await supabase
-          .from("payments")
-          .update({ classes_remaining: payment.classes_remaining - deduct })
-          .eq("id", payment.id);
-        classesToDeduct -= deduct;
-      }
+      // Deduct classes via secure server-side function
+      const { error: deductError } = await supabase.rpc("deduct_classes", {
+        _user_id: user.id,
+        _num_classes: selectedSlots.length,
+      });
+      if (deductError) throw new Error(deductError.message);
     },
     onSuccess: () => {
       toast({ title: "¡Clase reservada!", description: "Tu reserva se ha confirmado correctamente." });
@@ -260,20 +248,11 @@ export default function Reservas() {
         .eq("id", bookingId);
       if (error) throw error;
 
-      const { data: payments } = await supabase
-        .from("payments")
-        .select("id, classes_remaining")
-        .eq("user_id", user!.id)
-        .eq("status", "completed")
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      if (payments && payments.length > 0) {
-        await supabase
-          .from("payments")
-          .update({ classes_remaining: payments[0].classes_remaining + 1 })
-          .eq("id", payments[0].id);
-      }
+      // Refund class via secure server-side function
+      const { error: refundError } = await supabase.rpc("refund_class", {
+        _user_id: user!.id,
+      });
+      if (refundError) throw new Error(refundError.message);
     },
     onSuccess: () => {
       toast({ title: "Clase cancelada", description: "Se ha devuelto la clase a tu saldo." });
