@@ -309,6 +309,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      deduct_classes: {
+        Args: { _num_classes: number; _user_id: string }
+        Returns: undefined
+      }
       get_taken_slots: {
         Args: { _booking_date: string; _teacher_name: string }
         Returns: {
@@ -327,6 +331,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      refund_class: { Args: { _user_id: string }; Returns: undefined }
     }
     Enums: {
       app_role: "student" | "teacher" | "admin"
