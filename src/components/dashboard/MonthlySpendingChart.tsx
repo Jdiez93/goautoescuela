@@ -126,7 +126,7 @@ export default function MonthlySpendingChart({ payments }: MonthlySpendingChartP
                 width={50}
               />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: "hsl(var(--muted) / 0.4)", radius: 8 }} />
-              <Bar dataKey="total" radius={[8, 8, 4, 4]} maxBarSize={44}>
+              <Bar dataKey="total" radius={[8, 8, 4, 4]} maxBarSize={44} animationDuration={1200} animationEasing="ease-out" animationBegin={200}>
                 {chartData.map((entry, index) => (
                   <Cell
                     key={index}
