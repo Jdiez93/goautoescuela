@@ -222,6 +222,22 @@ export default function Reservas() {
     },
     onSuccess: () => {
       toast({ title: "¡Clase reservada!", description: "Tu reserva se ha confirmado correctamente." });
+
+      // Send confirmation email (fire & forget)
+      const slotsData = selectedSlots.map((startTime) => {
+        const slot = ALL_SLOTS.find((s) => s.start === startTime)!;
+        return { start: slot.start, end: slot.end };
+      });
+      supabase.functions.invoke("send-booking-confirmation", {
+        body: {
+          studentName: profile?.full_name || "",
+          studentEmail: profile?.email || user?.email || "",
+          teacherName: selectedTeacherName,
+          bookingDate: format(selectedDate!, "yyyy-MM-dd"),
+          slots: slotsData,
+        },
+      }).catch((err) => console.error("Email confirmation error:", err));
+
       setSelectedSlots([]);
       queryClient.invalidateQueries({ queryKey: ["taken-slots"] });
       queryClient.invalidateQueries({ queryKey: ["my-bookings"] });
