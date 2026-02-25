@@ -270,8 +270,24 @@ export default function Reservas() {
       });
       if (refundError) throw new Error(refundError.message);
     },
-    onSuccess: () => {
+    onSuccess: (_data, bookingId) => {
       toast({ title: "Clase cancelada", description: "Se ha devuelto la clase a tu saldo." });
+
+      // Send cancellation email (fire & forget)
+      const booking = myBookings.find((b) => b.id === bookingId);
+      if (booking) {
+        supabase.functions.invoke("send-cancellation-confirmation", {
+          body: {
+            studentName: profile?.full_name || "",
+            studentEmail: profile?.email || user?.email || "",
+            teacherName: booking.notes || "",
+            bookingDate: booking.booking_date,
+            slots: [{ start: booking.start_time.slice(0, 5), end: booking.end_time.slice(0, 5) }],
+            cancellationReason: cancellationReason || null,
+          },
+        }).catch((err) => console.error("Cancellation email error:", err));
+      }
+
       setCancelBookingId(null);
       setCancellationReason("");
       queryClient.invalidateQueries({ queryKey: ["my-bookings"] });
