@@ -2,6 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Link, Navigate } from "react-router-dom";
 import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
@@ -15,7 +16,7 @@ export default function Dashboard() {
   const { user, profile, role, loading, signOut } = useAuth();
 
   // Fetch payments
-  const { data: payments } = useQuery({
+  const { data: payments, isLoading: paymentsLoading } = useQuery({
     queryKey: ["dashboard-payments", user?.id],
     queryFn: async () => {
       const { data } = await supabase
@@ -29,7 +30,7 @@ export default function Dashboard() {
   });
 
   // Fetch upcoming bookings
-  const { data: bookings } = useQuery({
+  const { data: bookings, isLoading: bookingsLoading } = useQuery({
     queryKey: ["dashboard-bookings", user?.id],
     queryFn: async () => {
       const today = new Date().toISOString().split("T")[0];
@@ -45,6 +46,8 @@ export default function Dashboard() {
     },
     enabled: !!user && role === "student",
   });
+
+  const studentDataLoading = paymentsLoading || bookingsLoading;
 
   // Compute stats
   const stats = useMemo(() => {
@@ -220,7 +223,17 @@ export default function Dashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {stats.totalPurchased === 0 ? (
+                    {studentDataLoading ? (
+                      <div className="flex items-center gap-6">
+                        <Skeleton className="w-32 h-32 rounded-full shrink-0" />
+                        <div className="flex-1 space-y-3">
+                          <Skeleton className="h-4 w-full" />
+                          <Skeleton className="h-2 w-full" />
+                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-4 w-2/3" />
+                        </div>
+                      </div>
+                    ) : stats.totalPurchased === 0 ? (
                       <div className="text-center py-8 space-y-3">
                         <ShoppingCart className="w-10 h-10 mx-auto text-muted-foreground/40" />
                         <p className="text-sm text-muted-foreground">Aún no has comprado clases</p>
@@ -277,7 +290,19 @@ export default function Dashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {nextClass && countdown ? (
+                    {studentDataLoading ? (
+                      <div className="space-y-4">
+                        <div className="flex justify-center gap-3">
+                          {[1, 2, 3, 4].map((i) => (
+                            <Skeleton key={i} className="w-[60px] h-[68px] rounded-xl" />
+                          ))}
+                        </div>
+                        <div className="text-center space-y-2">
+                          <Skeleton className="h-4 w-40 mx-auto" />
+                          <Skeleton className="h-3 w-24 mx-auto" />
+                        </div>
+                      </div>
+                    ) : nextClass && countdown ? (
                       <div className="space-y-4">
                         <div className="flex justify-center gap-3">
                           {[
@@ -324,7 +349,18 @@ export default function Dashboard() {
 
             {/* Monthly Spending */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-              <MonthlySpendingChart payments={payments} />
+              {studentDataLoading ? (
+                <Card className="border-border/50">
+                  <CardHeader>
+                    <Skeleton className="h-6 w-48" />
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="h-[200px] w-full rounded-lg" />
+                  </CardContent>
+                </Card>
+              ) : (
+                <MonthlySpendingChart payments={payments} />
+              )}
             </motion.div>
           </>
         )}
