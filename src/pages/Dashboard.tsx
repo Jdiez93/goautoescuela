@@ -185,21 +185,25 @@ export default function Dashboard() {
       <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1 space-y-8">
         {/* Navigation Cards */}
         {role === "student" && !studentDataLoading && stats.totalPurchased > 0 && stats.totalRemaining <= 2 && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-            <Alert className="border-orange-300 bg-orange-50 dark:border-orange-500/50 dark:bg-orange-950/30">
-              <AlertTriangle className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-              <AlertDescription className="text-orange-800 dark:text-orange-200 flex items-center justify-between flex-wrap gap-2">
-                <span>
-                  {stats.totalRemaining === 0
-                    ? "No te quedan clases disponibles."
-                    : `Solo te ${stats.totalRemaining === 1 ? "queda 1 clase" : `quedan ${stats.totalRemaining} clases`} disponible${stats.totalRemaining === 1 ? "" : "s"}.`}
-                  {" "}¡Compra más para seguir reservando!
-                </span>
-                <Button asChild size="sm" variant="outline" className="border-orange-400 text-orange-700 hover:bg-orange-100 dark:border-orange-500 dark:text-orange-300 dark:hover:bg-orange-900/40">
-                  <Link to="/pagos">Comprar clases</Link>
-                </Button>
-              </AlertDescription>
-            </Alert>
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+            <div className="flex items-center gap-3 rounded-xl border-2 border-yellow-400 bg-yellow-300 px-5 py-3.5 shadow-[0_0_20px_hsl(50,100%,50%,0.25)]">
+              <motion.div
+                animate={{ rotate: [0, -15, 15, -15, 15, 0] }}
+                transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 2.5, ease: "easeInOut" }}
+                className="shrink-0"
+              >
+                <AlertTriangle className="h-6 w-6 text-yellow-900" />
+              </motion.div>
+              <span className="flex-1 text-sm font-semibold text-yellow-900">
+                {stats.totalRemaining === 0
+                  ? "¡No te quedan clases!"
+                  : `¡Solo te ${stats.totalRemaining === 1 ? "queda 1 clase" : `quedan ${stats.totalRemaining} clases`}!`}
+                {" "}Compra más para seguir reservando.
+              </span>
+              <Button asChild size="sm" className="bg-yellow-900 text-yellow-100 hover:bg-yellow-800 font-bold shadow-md">
+                <Link to="/pagos">Comprar clases</Link>
+              </Button>
+            </div>
           </motion.div>
         )}
 
