@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Car, Loader2, Mail, Lock, Eye, EyeOff, User } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
@@ -34,6 +35,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -176,11 +178,29 @@ export default function Register() {
                 )}
               </motion.div>
               <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, duration: 0.35 }}
+                className="flex items-start gap-2"
+              >
+                <Checkbox
+                  id="privacy"
+                  checked={acceptedPrivacy}
+                  onCheckedChange={(checked) => setAcceptedPrivacy(checked === true)}
+                />
+                <Label htmlFor="privacy" className="text-sm text-muted-foreground leading-snug cursor-pointer">
+                  Acepto la{" "}
+                  <Link to="/politica-privacidad" className="text-primary hover:underline" target="_blank">
+                    política de privacidad
+                  </Link>
+                </Label>
+              </motion.div>
+              <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.35 }}
+                transition={{ delay: 0.6, duration: 0.35 }}
               >
-                <Button type="submit" className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90" disabled={loading}>
+                <Button type="submit" className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90" disabled={loading || !acceptedPrivacy}>
                   {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                   Crear cuenta
                 </Button>
