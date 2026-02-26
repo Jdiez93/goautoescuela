@@ -79,7 +79,7 @@ export default function DashboardProfesor() {
       if (studentIds.length === 0) return [];
       const { data } = await supabase
         .from("profiles")
-        .select("user_id, full_name, phone")
+        .select("user_id, full_name, phone, email")
         .in("user_id", studentIds);
       return data ?? [];
     },
@@ -113,12 +113,36 @@ export default function DashboardProfesor() {
       // Refund the student's class
       await supabase.rpc("refund_class", { _user_id: studentId });
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["teacher-bookings"] });
       toast({
         title: "Clase cancelada",
         description: "Se ha cancelado la clase y devuelto el crédito al alumno.",
       });
+
+      // Send cancellation email to the student (fire & forget)
+      const booking = bookings?.find((b) => b.id === variables.bookingId);
+      const student = studentsMap.get(variables.studentId);
+      if (booking && student?.email) {
+        (async () => {
+          try {
+            await supabase.functions.invoke("send-cancellation-confirmation", {
+              body: {
+                studentName: student.full_name || "",
+                studentEmail: student.email,
+                teacherName: profile?.full_name || "",
+                teacherEmail: "",
+                bookingDate: booking.booking_date,
+                slots: [{ start: booking.start_time?.slice(0, 5), end: booking.end_time?.slice(0, 5) }],
+                cancellationReason: `[Profesor] ${variables.reason}`,
+              },
+            });
+          } catch (err) {
+            console.error("Teacher cancellation email error:", err);
+          }
+        })();
+      }
+
       setCancelBooking(null);
       setCancelReason("");
     },
