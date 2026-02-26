@@ -32,7 +32,9 @@ import {
   Mail,
   Clock,
   XCircle,
+  GraduationCap,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -86,6 +88,31 @@ export default function DashboardProfesor() {
     },
     enabled: studentIds.length > 0,
   });
+
+  // Count total completed classes per student with this teacher
+  const { data: classCounts } = useQuery({
+    queryKey: ["student-class-counts", user?.id, studentIds],
+    queryFn: async () => {
+      if (studentIds.length === 0) return [];
+      const { data } = await supabase
+        .from("bookings")
+        .select("student_id, id")
+        .eq("teacher_id", user!.id)
+        .in("student_id", studentIds)
+        .in("status", ["confirmed", "pending"]);
+      // Count per student
+      const counts = new Map<string, number>();
+      (data ?? []).forEach((b) => {
+        counts.set(b.student_id, (counts.get(b.student_id) || 0) + 1);
+      });
+      return Array.from(counts.entries()).map(([id, count]) => ({ student_id: id, count }));
+    },
+    enabled: studentIds.length > 0 && !!user,
+  });
+
+  const classCountMap = new Map(
+    classCounts?.map((c) => [c.student_id, c.count]) ?? []
+  );
 
   const studentsMap = new Map(
     students?.map((s) => [s.user_id, s]) ?? []
@@ -267,6 +294,7 @@ export default function DashboardProfesor() {
                         <TableHead>Fecha</TableHead>
                         <TableHead>Horario</TableHead>
                         <TableHead>Alumno</TableHead>
+                        <TableHead>Clases</TableHead>
                         <TableHead>Teléfono</TableHead>
                         <TableHead className="text-right">Acciones</TableHead>
                       </TableRow>
@@ -288,6 +316,12 @@ export default function DashboardProfesor() {
                                 <User className="w-4 h-4 text-muted-foreground" />
                                 {student?.full_name || "Alumno"}
                               </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="secondary" className="gap-1 font-semibold">
+                                <GraduationCap className="w-3 h-3" />
+                                {classCountMap.get(booking.student_id) || 0}
+                              </Badge>
                             </TableCell>
                             <TableCell className="text-muted-foreground">
                               {student?.phone || "—"}
@@ -329,7 +363,7 @@ export default function DashboardProfesor() {
           transition={{ duration: 0.4, delay: 0.1 }}
           className="mt-6"
         >
-          <WeeklyCalendarCard teacherId={user.id} teacherName={profile?.full_name || ""} />
+          <WeeklyCalendarCard teacherId={user.id} teacherName={profile?.full_name || ""} classCountMap={classCountMap} />
         </motion.div>
 
         {/* Block Slots Section */}

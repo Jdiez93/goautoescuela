@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { addDays, startOfWeek, format, isSameDay, isToday } from "date-fns";
 import { es } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, CalendarDays, User, Lock } from "lucide-react";
+import { ChevronLeft, ChevronRight, CalendarDays, User, Lock, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -17,6 +17,7 @@ import {
 interface WeeklyCalendarCardProps {
   teacherId: string;
   teacherName: string;
+  classCountMap?: Map<string, number>;
 }
 
 // 45-min slots from 9:00 to 20:00
@@ -37,7 +38,7 @@ const HOURS = (() => {
   return slots;
 })();
 
-export default function WeeklyCalendarCard({ teacherId, teacherName }: WeeklyCalendarCardProps) {
+export default function WeeklyCalendarCard({ teacherId, teacherName, classCountMap }: WeeklyCalendarCardProps) {
   const [weekOffset, setWeekOffset] = useState(0);
 
   const weekStart = useMemo(() => {
@@ -110,6 +111,8 @@ export default function WeeklyCalendarCard({ teacherId, teacherName }: WeeklyCal
       return {
         type: "booked" as const,
         studentName: studentsMap.get(booking.student_id) || "Alumno",
+        studentId: booking.student_id,
+        classCount: classCountMap?.get(booking.student_id) || 0,
       };
     }
 
@@ -262,9 +265,13 @@ export default function WeeklyCalendarCard({ teacherId, teacherName }: WeeklyCal
                             {slot.start} - {slot.end}
                           </p>
                           {state.type === "booked" && (
-                            <p className="text-primary">
-                              🎓 {state.studentName}
-                            </p>
+                            <div className="text-primary space-y-0.5">
+                              <p>🎓 {state.studentName}</p>
+                              <p className="flex items-center gap-1 text-muted-foreground">
+                                <GraduationCap className="w-3 h-3" />
+                                {state.classCount} {state.classCount === 1 ? "clase" : "clases"} en total
+                              </p>
+                            </div>
                           )}
                           {state.type === "blocked" && (
                             <p className="text-destructive">
