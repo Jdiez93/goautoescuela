@@ -1,4 +1,5 @@
 import { Car, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Footer() {
@@ -63,7 +64,7 @@ export default function Footer() {
         <div className="border-t border-background/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs opacity-40">
           <span>© 2026 AutoescuelaGO. Todos los derechos reservados.</span>
           <div className="flex gap-6">
-            <a href="#" className="hover:opacity-100 transition-opacity">Política de privacidad</a>
+            <Link to="/politica-privacidad" className="hover:opacity-100 transition-opacity">Política de privacidad</Link>
             <a href="#" className="hover:opacity-100 transition-opacity">Aviso legal</a>
           </div>
         </div>
