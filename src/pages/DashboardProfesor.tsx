@@ -39,6 +39,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import BlockSlotsCard from "@/components/dashboard-profesor/BlockSlotsCard";
+import WeeklyCalendarCard from "@/components/dashboard-profesor/WeeklyCalendarCard";
 
 export default function DashboardProfesor() {
   const { user, profile, role, loading, signOut } = useAuth();
@@ -321,11 +322,21 @@ export default function DashboardProfesor() {
           </Card>
         </motion.div>
 
+        {/* Weekly Calendar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="mt-6"
+        >
+          <WeeklyCalendarCard teacherId={user.id} teacherName={profile?.full_name || ""} />
+        </motion.div>
+
         {/* Block Slots Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           className="mt-6"
         >
           <BlockSlotsCard teacherId={user.id} />
