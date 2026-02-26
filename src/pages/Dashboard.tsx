@@ -106,6 +106,7 @@ export default function Dashboard() {
   }
 
   if (!user) return <Navigate to="/login" replace />;
+  if (role === "teacher") return <Navigate to="/dashboard-profesor" replace />;
 
   const studentCards = [
     { icon: Calendar, title: "Mis Reservas", desc: "Ver y gestionar tus clases programadas", href: "/reservas", accent: "primary" as const },
@@ -126,8 +127,8 @@ export default function Dashboard() {
     { icon: BookOpen, title: "Gestión Blog", desc: "Publicar artículos", href: "/admin/blog", accent: "secondary" as const },
   ];
 
-  const cards = role === "admin" ? adminCards : role === "teacher" ? teacherCards : studentCards;
-  const roleLabel = role === "admin" ? "Administrador" : role === "teacher" ? "Profesor" : "Alumno";
+  const cards = role === "admin" ? adminCards : studentCards;
+  const roleLabel = role === "admin" ? "Administrador" : "Alumno";
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString("es-ES", {

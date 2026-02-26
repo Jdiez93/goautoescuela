@@ -22,13 +22,24 @@ export default function Login() {
     e.preventDefault();
     setPasswordError(false);
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
       setPasswordError(true);
       toast({ title: "Error al iniciar sesión", description: error.message, variant: "destructive" });
     } else {
-      navigate("/dashboard");
+      // Check role to redirect appropriately
+      const { data: roleData } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", data.user.id)
+        .maybeSingle();
+      
+      if (roleData?.role === "teacher") {
+        navigate("/dashboard-profesor");
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
 
