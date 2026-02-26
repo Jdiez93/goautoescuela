@@ -223,20 +223,34 @@ export default function Reservas() {
     onSuccess: () => {
       toast({ title: "¡Clase reservada!", description: "Tu reserva se ha confirmado correctamente." });
 
-      // Send confirmation email (fire & forget)
+      // Send confirmation email to student AND teacher (fire & forget)
       const slotsData = selectedSlots.map((startTime) => {
         const slot = ALL_SLOTS.find((s) => s.start === startTime)!;
         return { start: slot.start, end: slot.end };
       });
-      supabase.functions.invoke("send-booking-confirmation", {
-        body: {
-          studentName: profile?.full_name || "",
-          studentEmail: profile?.email || user?.email || "",
-          teacherName: selectedTeacherName,
-          bookingDate: format(selectedDate!, "yyyy-MM-dd"),
-          slots: slotsData,
-        },
-      }).catch((err) => console.error("Email confirmation error:", err));
+      // Fetch teacher email from profiles
+      (async () => {
+        try {
+          const { data: teacherProfile } = await supabase
+            .from("profiles")
+            .select("email")
+            .eq("full_name", selectedTeacherName!)
+            .limit(1)
+            .single();
+          await supabase.functions.invoke("send-booking-confirmation", {
+            body: {
+              studentName: profile?.full_name || "",
+              studentEmail: profile?.email || user?.email || "",
+              teacherName: selectedTeacherName,
+              teacherEmail: teacherProfile?.email || "",
+              bookingDate: format(selectedDate!, "yyyy-MM-dd"),
+              slots: slotsData,
+            },
+          });
+        } catch (err) {
+          console.error("Email confirmation error:", err);
+        }
+      })();
 
       setSelectedSlots([]);
       queryClient.invalidateQueries({ queryKey: ["taken-slots"] });
@@ -273,19 +287,33 @@ export default function Reservas() {
     onSuccess: (_data, bookingId) => {
       toast({ title: "Clase cancelada", description: "Se ha devuelto la clase a tu saldo." });
 
-      // Send cancellation email (fire & forget)
+      // Send cancellation email to student AND teacher (fire & forget)
       const booking = myBookings.find((b) => b.id === bookingId);
       if (booking) {
-        supabase.functions.invoke("send-cancellation-confirmation", {
-          body: {
-            studentName: profile?.full_name || "",
-            studentEmail: profile?.email || user?.email || "",
-            teacherName: booking.notes || "",
-            bookingDate: booking.booking_date,
-            slots: [{ start: booking.start_time.slice(0, 5), end: booking.end_time.slice(0, 5) }],
-            cancellationReason: cancellationReason || null,
-          },
-        }).catch((err) => console.error("Cancellation email error:", err));
+        const teacherNameForEmail = booking.notes || "";
+        (async () => {
+          try {
+            const { data: teacherProfile } = await supabase
+              .from("profiles")
+              .select("email")
+              .eq("full_name", teacherNameForEmail)
+              .limit(1)
+              .single();
+            await supabase.functions.invoke("send-cancellation-confirmation", {
+              body: {
+                studentName: profile?.full_name || "",
+                studentEmail: profile?.email || user?.email || "",
+                teacherName: teacherNameForEmail,
+                teacherEmail: teacherProfile?.email || "",
+                bookingDate: booking.booking_date,
+                slots: [{ start: booking.start_time.slice(0, 5), end: booking.end_time.slice(0, 5) }],
+                cancellationReason: cancellationReason || null,
+              },
+            });
+          } catch (err) {
+            console.error("Cancellation email error:", err);
+          }
+        })();
       }
 
       setCancelBookingId(null);
