@@ -128,6 +128,7 @@ export default function BlockSlotsCard({ teacherId }: Props) {
       setSelectedSlots([]);
       setReason("");
       queryClient.invalidateQueries({ queryKey: ["teacher-blocked-slots"] });
+      queryClient.invalidateQueries({ queryKey: ["teacher-week-blocks"] });
     },
     onError: (err: Error) => {
       toast({ title: "Error al bloquear", description: err.message, variant: "destructive" });
@@ -143,6 +144,7 @@ export default function BlockSlotsCard({ teacherId }: Props) {
     onSuccess: () => {
       toast({ title: "Hora desbloqueada" });
       queryClient.invalidateQueries({ queryKey: ["teacher-blocked-slots"] });
+      queryClient.invalidateQueries({ queryKey: ["teacher-week-blocks"] });
     },
   });
 
