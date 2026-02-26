@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, Navigate } from "react-router-dom";
-import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp } from "lucide-react";
+import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp, AlertTriangle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -183,6 +184,25 @@ export default function Dashboard() {
       {/* Main content */}
       <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1 space-y-8">
         {/* Navigation Cards */}
+        {role === "student" && !studentDataLoading && stats.totalPurchased > 0 && stats.totalRemaining <= 2 && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+            <Alert className="border-orange-300 bg-orange-50 dark:border-orange-500/50 dark:bg-orange-950/30">
+              <AlertTriangle className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+              <AlertDescription className="text-orange-800 dark:text-orange-200 flex items-center justify-between flex-wrap gap-2">
+                <span>
+                  {stats.totalRemaining === 0
+                    ? "No te quedan clases disponibles."
+                    : `Solo te ${stats.totalRemaining === 1 ? "queda 1 clase" : `quedan ${stats.totalRemaining} clases`} disponible${stats.totalRemaining === 1 ? "" : "s"}.`}
+                  {" "}¡Compra más para seguir reservando!
+                </span>
+                <Button asChild size="sm" variant="outline" className="border-orange-400 text-orange-700 hover:bg-orange-100 dark:border-orange-500 dark:text-orange-300 dark:hover:bg-orange-900/40">
+                  <Link to="/pagos">Comprar clases</Link>
+                </Button>
+              </AlertDescription>
+            </Alert>
+          </motion.div>
+        )}
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {cards.map((card, i) => (
             <motion.div key={card.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.4 }}>
