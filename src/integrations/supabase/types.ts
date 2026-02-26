@@ -253,6 +253,36 @@ export type Database = {
         }
         Relationships: []
       }
+      teacher_blocked_slots: {
+        Row: {
+          blocked_date: string
+          created_at: string
+          end_time: string
+          id: string
+          reason: string | null
+          start_time: string
+          teacher_id: string
+        }
+        Insert: {
+          blocked_date: string
+          created_at?: string
+          end_time: string
+          id?: string
+          reason?: string | null
+          start_time: string
+          teacher_id: string
+        }
+        Update: {
+          blocked_date?: string
+          created_at?: string
+          end_time?: string
+          id?: string
+          reason?: string | null
+          start_time?: string
+          teacher_id?: string
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           approved: boolean

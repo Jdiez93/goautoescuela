@@ -38,6 +38,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import BlockSlotsCard from "@/components/dashboard-profesor/BlockSlotsCard";
 
 export default function DashboardProfesor() {
   const { user, profile, role, loading, signOut } = useAuth();
@@ -294,6 +295,16 @@ export default function DashboardProfesor() {
               )}
             </CardContent>
           </Card>
+        </motion.div>
+
+        {/* Block Slots Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="mt-6"
+        >
+          <BlockSlotsCard teacherId={user.id} />
         </motion.div>
       </main>
 
