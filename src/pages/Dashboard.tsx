@@ -110,9 +110,9 @@ export default function Dashboard() {
   if (role === "teacher") return <Navigate to="/dashboard-profesor" replace />;
 
   const studentCards = [
-    { icon: Calendar, title: "Mis Reservas", desc: "Ver y gestionar tus clases programadas", href: "/reservas", accent: "primary" as const },
-    { icon: CreditCard, title: "Mis Pagos", desc: "Historial de pagos, compra y saldo de clases", href: "/pagos", accent: "secondary" as const },
-    { icon: User, title: "Mi Perfil", desc: "Editar tus datos personales", href: "/perfil", accent: "primary" as const },
+    { icon: Calendar, title: "Mis Reservas", desc: "Ver y gestionar tus clases programadas", href: "/reservas", accent: "primary" as const, borderClass: "border-l-4 border-l-primary" },
+    { icon: CreditCard, title: "Mis Pagos", desc: "Historial de pagos, compra y saldo de clases", href: "/pagos", accent: "secondary" as const, borderClass: "border-l-4 border-l-destructive" },
+    { icon: User, title: "Mi Perfil", desc: "Editar tus datos personales", href: "/perfil", accent: "primary" as const, borderClass: "border-l-4 border-l-primary" },
   ];
 
   const teacherCards = [
@@ -211,7 +211,7 @@ export default function Dashboard() {
           {cards.map((card, i) => (
             <motion.div key={card.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.4 }}>
               <Link to={card.href}>
-                <Card className="h-full group hover:shadow-[var(--card-shadow-hover)] transition-all duration-300 hover:-translate-y-1 cursor-pointer border-border/50 bg-card">
+                <Card className={`h-full group hover:shadow-[var(--card-shadow-hover)] transition-all duration-300 hover:-translate-y-1 cursor-pointer border-border/50 bg-card ${(card as any).borderClass || ''}`}>
                   <CardHeader className="flex flex-row items-start gap-4 pb-2">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${card.accent === "secondary" ? "bg-secondary/10 text-secondary" : "bg-accent text-primary"}`}>
                       <card.icon className="w-6 h-6" />
