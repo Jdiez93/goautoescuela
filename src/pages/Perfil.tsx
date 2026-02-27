@@ -317,26 +317,33 @@ export default function Perfil() {
                 ))}
 
                 <motion.div
-                  className="pt-2 flex gap-3"
+                  className="pt-4 flex flex-col sm:flex-row gap-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.6 }}
                 >
-                  {fieldsLocked ? (
-                    <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
-                      <Button type="button" onClick={() => setEditing(true)} variant="outline" className="w-full">
-                        <Pencil className="w-4 h-4 mr-2" />
-                        Editar datos
-                      </Button>
-                    </motion.div>
-                  ) : (
-                    <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
-                      <Button type="submit" disabled={saving} className="w-full bg-primary hover:bg-primary/90">
-                        {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                        Guardar cambios
-                      </Button>
-                    </motion.div>
-                  )}
+                  <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full"
+                      disabled={!fieldsLocked}
+                      onClick={() => setEditing(true)}
+                    >
+                      <Pencil className="w-4 h-4 mr-2" />
+                      Editar datos
+                    </Button>
+                  </motion.div>
+                  <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+                    <Button
+                      type="submit"
+                      disabled={saving || fieldsLocked}
+                      className="w-full bg-primary hover:bg-primary/90"
+                    >
+                      {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                      Guardar cambios
+                    </Button>
+                  </motion.div>
                 </motion.div>
               </form>
             </CardContent>
