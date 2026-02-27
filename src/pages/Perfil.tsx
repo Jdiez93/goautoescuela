@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Navigate, Link } from "react-router-dom";
-import { Car, ArrowLeft, Save, Loader2, User, Mail, Phone, MapPin, Calendar, CreditCard } from "lucide-react";
+import { Car, ArrowLeft, Save, Loader2, User, Mail, Phone, MapPin, Calendar, CreditCard, Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -65,6 +65,7 @@ export default function Perfil() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [form, setForm] = useState<ProfileForm>({
     full_name: "",
     email: "",
@@ -75,6 +76,20 @@ export default function Perfil() {
     city: "",
     postal_code: "",
   });
+
+  // Check if all required profile fields are filled
+  const isProfileComplete = !!(
+    form.full_name &&
+    form.phone &&
+    form.dni &&
+    form.date_of_birth &&
+    form.residence &&
+    form.city &&
+    form.postal_code
+  );
+
+  // Fields are locked when profile is complete and not in editing mode
+  const fieldsLocked = isProfileComplete && !editing;
 
   useEffect(() => {
     if (!user) return;
@@ -135,6 +150,7 @@ export default function Perfil() {
       toast({ title: "Error", description: "No se pudo actualizar el perfil", variant: "destructive" });
     } else {
       toast({ title: "Perfil actualizado", description: "Tus datos se han guardado correctamente" });
+      setEditing(false);
     }
   };
 
@@ -262,9 +278,9 @@ export default function Perfil() {
                           value={(form as any)[field.id]}
                           onChange={handleChange}
                           placeholder={field.placeholder}
-                          disabled={field.disabled}
+                          disabled={field.disabled || fieldsLocked}
                           maxLength={field.maxLength}
-                          className={`pl-10 transition-shadow duration-200 focus:shadow-md ${field.disabled ? "bg-muted" : ""}`}
+                          className={`pl-10 transition-shadow duration-200 focus:shadow-md ${field.disabled || fieldsLocked ? "bg-muted" : ""}`}
                         />
                       </motion.div>
                     </motion.div>
@@ -293,24 +309,34 @@ export default function Perfil() {
                         value={(form as any)[field.id]}
                         onChange={handleChange}
                         placeholder={field.placeholder}
-                        className="pl-10 transition-shadow duration-200 focus:shadow-md"
+                        disabled={fieldsLocked}
+                        className={`pl-10 transition-shadow duration-200 focus:shadow-md ${fieldsLocked ? "bg-muted" : ""}`}
                       />
                     </motion.div>
                   </motion.div>
                 ))}
 
                 <motion.div
-                  className="pt-2"
+                  className="pt-2 flex gap-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.6 }}
                 >
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
-                    <Button type="submit" disabled={saving} className="w-full bg-primary hover:bg-primary/90">
-                      {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                      Guardar cambios
-                    </Button>
-                  </motion.div>
+                  {fieldsLocked ? (
+                    <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+                      <Button type="button" onClick={() => setEditing(true)} variant="outline" className="w-full">
+                        <Pencil className="w-4 h-4 mr-2" />
+                        Editar datos
+                      </Button>
+                    </motion.div>
+                  ) : (
+                    <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+                      <Button type="submit" disabled={saving} className="w-full bg-primary hover:bg-primary/90">
+                        {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+                        Guardar cambios
+                      </Button>
+                    </motion.div>
+                  )}
                 </motion.div>
               </form>
             </CardContent>
