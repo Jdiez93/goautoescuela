@@ -189,7 +189,7 @@ export default function Register() {
                   onCheckedChange={(checked) => setAcceptedPrivacy(checked === true)}
                 />
                 <Label htmlFor="privacy" className="text-sm text-muted-foreground leading-snug cursor-pointer">
-                  Acepto la{" "}
+                  He leído y acepto la{" "}
                   <Link to="/politica-privacidad" className="text-primary hover:underline" target="_blank">
                     política de privacidad
                   </Link>
