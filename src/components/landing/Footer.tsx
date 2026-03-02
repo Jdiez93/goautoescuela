@@ -34,11 +34,11 @@ export default function Footer() {
             <ul className="space-y-3.5 text-sm">
               <li className="flex items-start gap-3 group">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 opacity-40 group-hover:opacity-70 transition-opacity" />
-                <span className="opacity-70 group-hover:opacity-100 transition-opacity">Villanueva del Pardillo, Madrid</span>
+                <span className="opacity-70 group-hover:opacity-100 transition-opacity">C/ Concepción, 61, 28229 Villanueva del Pardillo (Madrid)</span>
               </li>
               <li className="flex items-center gap-3 group">
                 <Phone className="w-4 h-4 shrink-0 opacity-40 group-hover:opacity-70 transition-opacity" />
-                <span className="opacity-70 group-hover:opacity-100 transition-opacity">918 15 XX XX</span>
+                <span className="opacity-70 group-hover:opacity-100 transition-opacity">658 474 814</span>
               </li>
               <li className="flex items-center gap-3 group">
                 <Mail className="w-4 h-4 shrink-0 opacity-40 group-hover:opacity-70 transition-opacity" />
@@ -53,10 +53,11 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li className="flex items-center gap-3">
                 <Clock className="w-4 h-4 shrink-0 opacity-40" />
-                <span className="opacity-70">Lun - Vie: 9:00 - 21:00</span>
+                <span className="opacity-70">Lunes - Viernes: 10:00 - 13:00 y 16:00 - 20:00</span>
               </li>
-              <li className="pl-7 opacity-70">Sáb: 9:00 - 14:00</li>
-              <li className="pl-7 opacity-70">Dom: Cerrado</li>
+              <li className="pl-7 opacity-70">
+                Sábados y domingos: <span className="text-red-400 font-semibold">Cerrados</span>
+              </li>
             </ul>
           </div>
         </div>
