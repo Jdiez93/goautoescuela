@@ -5,22 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Car, Loader2, Mail, Lock, Eye, EyeOff, User } from "lucide-react";
+import { Car, Loader2, Mail, Lock, Eye, EyeOff, User, Check, X } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
+const passwordChecks = (pass: string) => [
+  { label: "Mínimo 6 caracteres", met: pass.length >= 6 },
+  { label: "Al menos 10 caracteres", met: pass.length >= 10 },
+  { label: "Una letra mayúscula", met: /[A-Z]/.test(pass) },
+  { label: "Un número", met: /[0-9]/.test(pass) },
+  { label: "Un carácter especial (!@#…)", met: /[^A-Za-z0-9]/.test(pass) },
+];
+
 const getPasswordStrength = (pass: string): { score: number; label: string } => {
   if (!pass) return { score: 0, label: "" };
-  let score = 0;
-  if (pass.length >= 6) score++;
-  if (pass.length >= 10) score++;
-  if (/[A-Z]/.test(pass)) score++;
-  if (/[0-9]/.test(pass)) score++;
-  if (/[^A-Za-z0-9]/.test(pass)) score++;
+  const checks = passwordChecks(pass);
+  const met = checks.filter((c) => c.met).length;
 
-  if (score <= 1) return { score: 1, label: "Débil" };
-  if (score <= 3) return { score: 2, label: "Media" };
+  if (met <= 1) return { score: 1, label: "Débil" };
+  if (met <= 3) return { score: 2, label: "Media" };
   return { score: 3, label: "Segura" };
 };
 
@@ -40,6 +44,7 @@ export default function Register() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const checks = useMemo(() => passwordChecks(password), [password]);
   const strength = useMemo(() => getPasswordStrength(password), [password]);
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -157,13 +162,14 @@ export default function Register() {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
-                    className="space-y-1.5 pt-1"
+                    className="space-y-2.5 pt-1"
                   >
+                    {/* Strength bars */}
                     <div className="flex gap-1">
                       {[1, 2, 3].map((i) => (
                         <div
                           key={i}
-                          className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+                          className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
                             i <= strength.score
                               ? strengthColors[strength.score as 1 | 2 | 3].bar
                               : "bg-muted"
@@ -171,9 +177,25 @@ export default function Register() {
                         />
                       ))}
                     </div>
-                    <p className={`text-[11px] font-medium ${strengthColors[strength.score as 1 | 2 | 3].text}`}>
+                    <p className={`text-xs font-semibold ${strengthColors[strength.score as 1 | 2 | 3].text}`}>
                       Contraseña {strength.label.toLowerCase()}
                     </p>
+
+                    {/* Requirements checklist */}
+                    <ul className="space-y-1 pt-0.5">
+                      {checks.map((check, idx) => (
+                        <li key={idx} className="flex items-center gap-1.5 text-xs">
+                          {check.met ? (
+                            <Check className="w-3.5 h-3.5 text-green-500 shrink-0" />
+                          ) : (
+                            <X className="w-3.5 h-3.5 text-muted-foreground/50 shrink-0" />
+                          )}
+                          <span className={check.met ? "text-green-600" : "text-muted-foreground"}>
+                            {check.label}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </motion.div>
                 )}
               </motion.div>
