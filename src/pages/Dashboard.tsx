@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import MonthlySpendingChart from "@/components/dashboard/MonthlySpendingChart";
+import NotificationBell from "@/components/dashboard/NotificationBell";
 import { useMemo, useState, useEffect } from "react";
 
 export default function Dashboard() {
@@ -150,10 +151,11 @@ export default function Dashboard() {
             </div>
             <span className="text-lg font-bold font-['Space_Grotesk']">AutoescuelaGO</span>
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <span className="text-sm text-primary-foreground/80 hidden sm:inline">
               {profile?.full_name || user.email}
             </span>
+            {role === "student" && <NotificationBell />}
             <Button variant="ghost" size="sm" onClick={signOut} className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
               <LogOut className="w-4 h-4 mr-1" /> Salir
             </Button>

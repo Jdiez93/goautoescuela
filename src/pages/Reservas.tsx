@@ -223,6 +223,15 @@ export default function Reservas() {
     onSuccess: () => {
       toast({ title: "¡Clase reservada!", description: "Tu reserva se ha confirmado correctamente." });
 
+      // Create notification
+      const dateFormatted = format(selectedDate!, "dd/MM/yyyy");
+      const slotsStr = selectedSlots.map((s) => s).join(" y ");
+      supabase.from("notifications").insert({
+        user_id: user!.id,
+        type: "booking_confirmed",
+        message: `Clase confirmada el ${dateFormatted} a las ${slotsStr} con ${selectedTeacherName}`,
+      }).then(() => queryClient.invalidateQueries({ queryKey: ["notifications"] }));
+
       // Send confirmation email to student AND teacher (fire & forget)
       const slotsData = selectedSlots.map((startTime) => {
         const slot = ALL_SLOTS.find((s) => s.start === startTime)!;
@@ -287,8 +296,18 @@ export default function Reservas() {
     onSuccess: (_data, bookingId) => {
       toast({ title: "Clase cancelada", description: "Se ha devuelto la clase a tu saldo." });
 
-      // Send cancellation email to student AND teacher (fire & forget)
+      // Create notification
       const booking = myBookings.find((b) => b.id === bookingId);
+      if (booking) {
+        const dateFormatted = new Date(booking.booking_date).toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" });
+        supabase.from("notifications").insert({
+          user_id: user!.id,
+          type: "booking_cancelled_by_student",
+          message: `Has cancelado tu clase del ${dateFormatted} a las ${booking.start_time.slice(0, 5)} con ${booking.notes || "tu profesor"}`,
+        }).then(() => queryClient.invalidateQueries({ queryKey: ["notifications"] }));
+      }
+
+      // Send cancellation email to student AND teacher (fire & forget)
       if (booking) {
         const teacherNameForEmail = booking.notes || "";
         (async () => {
