@@ -343,6 +343,11 @@ export default function Dashboard() {
                           ))}
                         </div>
                         <div className="text-center space-y-1">
+                          {nextClass.booking.notes && (
+                            <p className="text-xs font-medium text-primary">
+                              con {nextClass.booking.notes}
+                            </p>
+                          )}
                           <p className="text-sm font-medium">
                             {new Date(nextClass.booking.booking_date).toLocaleDateString("es-ES", {
                               weekday: "long",
