@@ -42,6 +42,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import BlockSlotsCard from "@/components/dashboard-profesor/BlockSlotsCard";
 import WeeklyCalendarCard from "@/components/dashboard-profesor/WeeklyCalendarCard";
+import DailySummaryCard from "@/components/dashboard-profesor/DailySummaryCard";
 
 export default function DashboardProfesor() {
   const { user, profile, role, loading, signOut } = useAuth();
@@ -260,101 +261,111 @@ export default function DashboardProfesor() {
 
       {/* Content */}
       <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <Card className="border-border/50">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-primary" />
-                Mis clases programadas
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {bookingsLoading ? (
-                <div className="space-y-3">
-                  {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-14 w-full rounded-lg" />
-                  ))}
-                </div>
-              ) : !bookings?.length ? (
-                <div className="text-center py-12 space-y-3">
-                  <Calendar className="w-12 h-12 mx-auto text-muted-foreground/40" />
-                  <p className="text-muted-foreground">
-                    No tienes clases programadas próximamente
-                  </p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Fecha</TableHead>
-                        <TableHead>Horario</TableHead>
-                        <TableHead>Alumno</TableHead>
-                        <TableHead>Clases</TableHead>
-                        <TableHead>Teléfono</TableHead>
-                        <TableHead className="text-right">Acciones</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {bookings.map((booking) => {
-                        const student = studentsMap.get(booking.student_id);
-                        return (
-                          <TableRow key={booking.id}>
-                            <TableCell className="font-medium">
-                              {formatDate(booking.booking_date)}
-                            </TableCell>
-                            <TableCell>
-                              {booking.start_time?.slice(0, 5)} -{" "}
-                              {booking.end_time?.slice(0, 5)}
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <User className="w-4 h-4 text-muted-foreground" />
-                                {student?.full_name || "Alumno"}
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant="secondary" className="gap-1 font-semibold">
-                                <GraduationCap className="w-3 h-3" />
-                                {classCountMap.get(booking.student_id) || 0}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">
-                              {student?.phone || "—"}
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-destructive border-destructive/30 hover:bg-destructive/10"
-                                onClick={() =>
-                                  setCancelBooking({
-                                    id: booking.id,
-                                    studentName:
-                                      student?.full_name || "Alumno",
-                                    date: formatDate(booking.booking_date),
-                                    time: `${booking.start_time?.slice(0, 5)} - ${booking.end_time?.slice(0, 5)}`,
-                                  })
-                                }
-                              >
-                                <XCircle className="w-4 h-4 mr-1" />
-                                Cancelar
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Card className="border-border/50 h-full">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-primary" />
+                  Mis clases programadas
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {bookingsLoading ? (
+                  <div className="space-y-3">
+                    {[1, 2, 3].map((i) => (
+                      <Skeleton key={i} className="h-14 w-full rounded-lg" />
+                    ))}
+                  </div>
+                ) : !bookings?.length ? (
+                  <div className="text-center py-12 space-y-3">
+                    <Calendar className="w-12 h-12 mx-auto text-muted-foreground/40" />
+                    <p className="text-muted-foreground">
+                      No tienes clases programadas próximamente
+                    </p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Fecha</TableHead>
+                          <TableHead>Horario</TableHead>
+                          <TableHead>Alumno</TableHead>
+                          <TableHead>Clases</TableHead>
+                          <TableHead>Teléfono</TableHead>
+                          <TableHead className="text-right">Acciones</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {bookings.map((booking) => {
+                          const student = studentsMap.get(booking.student_id);
+                          return (
+                            <TableRow key={booking.id}>
+                              <TableCell className="font-medium">
+                                {formatDate(booking.booking_date)}
+                              </TableCell>
+                              <TableCell>
+                                {booking.start_time?.slice(0, 5)} -{" "}
+                                {booking.end_time?.slice(0, 5)}
+                              </TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-2">
+                                  <User className="w-4 h-4 text-muted-foreground" />
+                                  {student?.full_name || "Alumno"}
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                <Badge variant="secondary" className="gap-1 font-semibold">
+                                  <GraduationCap className="w-3 h-3" />
+                                  {classCountMap.get(booking.student_id) || 0}
+                                </Badge>
+                              </TableCell>
+                              <TableCell className="text-muted-foreground">
+                                {student?.phone || "—"}
+                              </TableCell>
+                              <TableCell className="text-right">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-destructive border-destructive/30 hover:bg-destructive/10"
+                                  onClick={() =>
+                                    setCancelBooking({
+                                      id: booking.id,
+                                      studentName:
+                                        student?.full_name || "Alumno",
+                                      date: formatDate(booking.booking_date),
+                                      time: `${booking.start_time?.slice(0, 5)} - ${booking.end_time?.slice(0, 5)}`,
+                                    })
+                                  }
+                                >
+                                  <XCircle className="w-4 h-4 mr-1" />
+                                  Cancelar
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Daily Summary */}
+          <div className="lg:sticky lg:top-4 self-start">
+            <DailySummaryCard
+              bookings={bookings ?? []}
+              studentsMap={studentsMap}
+            />
+          </div>
+        </div>
 
         {/* Weekly Calendar */}
         <motion.div
