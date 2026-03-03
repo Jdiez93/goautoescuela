@@ -42,6 +42,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import BlockSlotsCard from "@/components/dashboard-profesor/BlockSlotsCard";
 import WeeklyCalendarCard from "@/components/dashboard-profesor/WeeklyCalendarCard";
+import DailySummaryCard from "@/components/dashboard-profesor/DailySummaryCard";
 
 export default function DashboardProfesor() {
   const { user, profile, role, loading, signOut } = useAuth();
