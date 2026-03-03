@@ -66,6 +66,13 @@ export default function NotificationBell() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notifications"] }),
   });
 
+  const deleteAllMutation = useMutation({
+    mutationFn: async () => {
+      await supabase.from("notifications").delete().eq("user_id", user!.id);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+  });
+
   const handleOpen = () => {
     setOpen(!open);
     if (!open && unreadCount > 0) {
@@ -125,7 +132,14 @@ export default function NotificationBell() {
             <div className="px-4 py-3 border-b border-border flex items-center justify-between">
               <h3 className="text-sm font-semibold text-foreground">Notificaciones</h3>
               {notifications.length > 0 && (
-                <span className="text-xs text-muted-foreground">{notifications.length}</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => deleteAllMutation.mutate()}
+                  className="text-xs text-muted-foreground hover:text-destructive h-auto py-1 px-2"
+                >
+                  Borrar todas
+                </Button>
               )}
             </div>
 
