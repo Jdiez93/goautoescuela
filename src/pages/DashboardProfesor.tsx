@@ -482,7 +482,7 @@ export default function DashboardProfesor() {
             <span>© 2026 AutoescuelaGO. Todos los derechos reservados.</span>
             <div className="flex gap-4">
               <Link
-                to="/politica-de-privacidad"
+                to="/politica-privacidad"
                 className="hover:opacity-100 hover:text-background transition-colors"
               >
                 Política de privacidad
