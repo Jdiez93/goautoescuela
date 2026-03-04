@@ -42,7 +42,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import BlockSlotsCard from "@/components/dashboard-profesor/BlockSlotsCard";
 import WeeklyCalendarCard from "@/components/dashboard-profesor/WeeklyCalendarCard";
-import DailySummaryCard from "@/components/dashboard-profesor/DailySummaryCard";
+
 
 export default function DashboardProfesor() {
   const { user, profile, role, loading, signOut } = useAuth();
@@ -261,7 +261,7 @@ export default function DashboardProfesor() {
 
       {/* Content */}
       <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+        <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -358,13 +358,6 @@ export default function DashboardProfesor() {
             </Card>
           </motion.div>
 
-          {/* Daily Summary */}
-          <div className="lg:sticky lg:top-4 self-start">
-            <DailySummaryCard
-              bookings={bookings ?? []}
-              studentsMap={studentsMap}
-            />
-          </div>
         </div>
 
         {/* Weekly Calendar */}
