@@ -261,7 +261,7 @@ export default function DashboardProfesor() {
 
       {/* Content */}
       <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+        <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
