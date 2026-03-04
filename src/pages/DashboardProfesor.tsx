@@ -358,13 +358,6 @@ export default function DashboardProfesor() {
             </Card>
           </motion.div>
 
-          {/* Daily Summary */}
-          <div className="lg:sticky lg:top-4 self-start">
-            <DailySummaryCard
-              bookings={bookings ?? []}
-              studentsMap={studentsMap}
-            />
-          </div>
         </div>
 
         {/* Weekly Calendar */}
