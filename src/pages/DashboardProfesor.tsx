@@ -223,7 +223,7 @@ export default function DashboardProfesor() {
               variant="ghost"
               size="sm"
               onClick={signOut}
-              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              className="text-primary-foreground hover:bg-destructive hover:text-destructive-foreground"
             >
               <LogOut className="w-4 h-4 mr-1" /> Salir
             </Button>
