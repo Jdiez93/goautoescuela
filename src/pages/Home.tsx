@@ -105,24 +105,24 @@ function HeroCarousel() {
 function WhySection() {
   const reasons = [
     {
+      emoji: "🎯",
+      title: "Método Ready2Go",
+      desc: "Nos adaptamos a ti, de una manera innovadora, clara y práctica que acelera tu progreso, refuerza tu seguridad y te lleva al carnet con acompañamiento cercano y recursos útiles.",
+    },
+    {
       emoji: "📱",
-      title: "100% Online",
-      desc: "Reserva y gestiona tus clases desde cualquier dispositivo.",
+      title: "App Ready2Go",
+      desc: "Desde el primer día tendrás un área personal donde gestionar tu carnet: test propios con vídeos y temario digital, seguimiento del progreso y reserva de prácticas con elección de día y hora. Todo en el mismo sitio para facilitar cada paso.",
     },
     {
-      emoji: "💰",
-      title: "Mejores precios",
-      desc: "Packs de clases con descuentos exclusivos.",
+      emoji: "📊",
+      title: "Plan y gestión personalizada",
+      desc: "Verás tu progreso en tiempo real, en teoría y práctica. Nuestros profes te acompañan, evalúan y guían. Así sabrás exactamente cuándo estás listo para presentarte al examen.",
     },
     {
-      emoji: "📅",
-      title: "Horarios flexibles",
-      desc: "Elige el día y la hora que mejor te venga.",
-    },
-    {
-      emoji: "🚗",
-      title: "Profesores expertos",
-      desc: "Formadores titulados con años de experiencia.",
+      emoji: "✅",
+      title: "Aprueba sin vueltas",
+      desc: "¡Sí, sí! Si has seguido el método y no apruebas en primera convocatoria ¡Te devolvemos el dinero del curso teórico! Los requisitos son fáciles: conseguir 85% en nuestro barómetro general en menos de dos meses.",
     },
   ];
 
