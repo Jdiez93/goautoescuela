@@ -212,6 +212,7 @@ export default function Home() {
           <main className="pt-20">
             <HeroCarousel />
             <WhySection />
+            <CoursesSection />
           </main>
           <Footer />
         </div>
