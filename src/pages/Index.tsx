@@ -1,5 +1,4 @@
-import { useState, useCallback } from "react";
-import { AnimatePresence } from "framer-motion";
+import Navbar from "@/components/landing/Navbar";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import HowItWorks from "@/components/landing/HowItWorks";
