@@ -164,6 +164,39 @@ function WhySection() {
   );
 }
 
+function CoursesSection() {
+  const courses = [
+    { title: "La Teórica", id: "teorica" },
+    { title: "La Práctica", id: "practica" },
+  ];
+
+  return (
+    <section className="pb-16 sm:pb-24 px-4">
+      <div className="max-w-6xl mx-auto grid sm:grid-cols-2 gap-6">
+        {courses.map((course, i) => (
+          <motion.div
+            key={course.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.15 }}
+            className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[4/3] flex flex-col justify-between p-6 sm:p-8"
+          >
+            <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground font-['Space_Grotesk']">
+              {course.title}
+            </h3>
+            <div>
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 h-10 text-sm font-semibold">
+                Saber más
+              </Button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   const handleFinish = useCallback(() => setShowSplash(false), []);
