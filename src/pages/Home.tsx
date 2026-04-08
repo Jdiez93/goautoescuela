@@ -61,7 +61,7 @@ function HeroCarousel() {
                 </Button>
               </Link>
               <a href="#packs">
-                <Button variant="outline" size="lg" className="border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
+                <Button size="lg" className="border border-primary-foreground/40 bg-transparent text-primary-foreground hover:border-primary-foreground hover:bg-transparent rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
                   Ver packs
                 </Button>
               </a>
@@ -139,7 +139,7 @@ function WhySection() {
             ¿Por qué AutoescuelaGO?
           </h2>
           <p className="text-muted-foreground mt-2 mb-10 sm:mb-14 text-base sm:text-lg">
-            Aprender a conducir fácil, flexible y a tu ritmo
+            Porque aprender a conducir tiene que ser compatible con tu agenda, fácil y divertido
           </p>
         </motion.div>
 
