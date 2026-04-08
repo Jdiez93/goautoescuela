@@ -139,7 +139,7 @@ function WhySection() {
             ¿Por qué AutoescuelaGO?
           </h2>
           <p className="text-muted-foreground mt-2 mb-10 sm:mb-14 text-base sm:text-lg">
-            Aprender a conducir fácil, flexible y a tu ritmo
+            Porque aprender a conducir tiene que ser compatible con tu agenda, fácil y divertido
           </p>
         </motion.div>
 
