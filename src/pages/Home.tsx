@@ -61,7 +61,7 @@ function HeroCarousel() {
                 </Button>
               </Link>
               <a href="#packs">
-                <Button variant="outline" size="lg" className="border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
+                <Button size="lg" className="border border-primary-foreground/40 bg-transparent text-primary-foreground hover:border-primary-foreground hover:bg-transparent rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
                   Ver packs
                 </Button>
               </a>
