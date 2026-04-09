@@ -253,6 +253,7 @@ export default function Home() {
             <HeroCarousel />
             <WhySection />
             <CoursesSection />
+            <PromoBanner />
           </main>
           <Footer />
         </div>
