@@ -39,14 +39,14 @@ const staggerContainer = {
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
+  viewport: { once: false, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
 
 const scaleIn = {
   initial: { opacity: 0, scale: 0.92 },
   whileInView: { opacity: 1, scale: 1 },
-  viewport: { once: true, margin: "-40px" },
+  viewport: { once: false, margin: "-40px" },
   transition: { duration: 0.6, ease: easeCurve },
 };
 
@@ -201,7 +201,7 @@ function WhySection() {
           variants={staggerContainer}
           initial="initial"
           whileInView="animate"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: false, margin: "-60px" }}
         >
           {reasons.map((r, i) => (
             <motion.div
@@ -218,13 +218,7 @@ function WhySection() {
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
               className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default"
             >
-              <motion.span
-                className="text-3xl mb-4 block"
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 400, damping: 12 }}
-              >
-                {r.emoji}
-              </motion.span>
+              <span className="text-3xl mb-4 block">{r.emoji}</span>
               <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
@@ -249,7 +243,7 @@ function CoursesSection() {
             key={course.id}
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-40px" }}
+            viewport={{ once: false, margin: "-40px" }}
             transition={{ duration: 0.6, delay: i * 0.15, ease: easeCurve }}
             whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
             className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex flex-col justify-between p-6 sm:p-8 cursor-pointer"
@@ -334,7 +328,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.7, ease: easeCurve }}
           >
             <Footer />
