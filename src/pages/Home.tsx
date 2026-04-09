@@ -22,10 +22,12 @@ const carouselSlides = [
   },
 ];
 
+const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const pageTransition = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  transition: { duration: 0.6, ease: easeCurve },
 };
 
 const staggerContainer = {
@@ -38,14 +40,14 @@ const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  transition: { duration: 0.7, ease: easeCurve },
 };
 
 const scaleIn = {
   initial: { opacity: 0, scale: 0.92 },
   whileInView: { opacity: 1, scale: 1 },
   viewport: { once: true, margin: "-40px" },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  transition: { duration: 0.6, ease: easeCurve },
 };
 
 function HeroCarousel() {
