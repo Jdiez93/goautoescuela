@@ -39,14 +39,14 @@ const staggerContainer = {
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
+  viewport: { once: false, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
 
 const scaleIn = {
   initial: { opacity: 0, scale: 0.92 },
   whileInView: { opacity: 1, scale: 1 },
-  viewport: { once: true, margin: "-40px" },
+  viewport: { once: false, margin: "-40px" },
   transition: { duration: 0.6, ease: easeCurve },
 };
 
@@ -201,7 +201,7 @@ function WhySection() {
           variants={staggerContainer}
           initial="initial"
           whileInView="animate"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: false, margin: "-60px" }}
         >
           {reasons.map((r, i) => (
             <motion.div
@@ -243,7 +243,7 @@ function CoursesSection() {
             key={course.id}
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-40px" }}
+            viewport={{ once: false, margin: "-40px" }}
             transition={{ duration: 0.6, delay: i * 0.15, ease: easeCurve }}
             whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
             className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex flex-col justify-between p-6 sm:p-8 cursor-pointer"
@@ -328,7 +328,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.7, ease: easeCurve }}
           >
             <Footer />
