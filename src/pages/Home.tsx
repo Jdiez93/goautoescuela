@@ -68,7 +68,7 @@ function HeroCarousel() {
       className="relative w-full max-w-6xl mx-auto px-4 pt-8"
       initial={{ opacity: 0, y: 30, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
     >
       <div className="relative overflow-hidden rounded-3xl aspect-[16/7] sm:aspect-[16/6]">
         <AnimatePresence mode="wait">
@@ -77,7 +77,7 @@ function HeroCarousel() {
             initial={{ opacity: 0, scale: 1.05, x: 60 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.97, x: -60 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: easeCurve }}
             className={`absolute inset-0 bg-gradient-to-br ${carouselSlides[current].bg} flex flex-col justify-end p-6 sm:p-10 lg:p-14`}
           >
             <motion.h2
@@ -150,7 +150,7 @@ function HeroCarousel() {
                 opacity: i === current ? 1 : 0.4,
               }}
               whileHover={{ opacity: 0.8 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.4, ease: easeCurve }}
               className="h-2.5 rounded-full bg-primary-foreground"
             />
           ))}
@@ -212,7 +212,7 @@ function WhySection() {
                   opacity: 1,
                   y: 0,
                   scale: 1,
-                  transition: { duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] },
+                  transition: { duration: 0.6, delay: i * 0.1, ease: easeCurve },
                 },
               }}
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
@@ -250,7 +250,7 @@ function CoursesSection() {
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: i * 0.15, ease: easeCurve }}
             whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
             className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex flex-col justify-between p-6 sm:p-8 cursor-pointer"
           >
@@ -335,7 +335,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, ease: easeCurve }}
           >
             <Footer />
           </motion.div>
