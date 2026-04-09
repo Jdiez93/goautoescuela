@@ -218,13 +218,7 @@ function WhySection() {
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
               className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default"
             >
-              <motion.span
-                className="text-3xl mb-4 block"
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 400, damping: 12 }}
-              >
-                {r.emoji}
-              </motion.span>
+              <span className="text-3xl mb-4 block">{r.emoji}</span>
               <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
