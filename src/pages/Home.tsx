@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -22,6 +22,34 @@ const carouselSlides = [
   },
 ];
 
+const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const pageTransition = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.6, ease: easeCurve },
+};
+
+const staggerContainer = {
+  animate: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const fadeUp = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.7, ease: easeCurve },
+};
+
+const scaleIn = {
+  initial: { opacity: 0, scale: 0.92 },
+  whileInView: { opacity: 1, scale: 1 },
+  viewport: { once: true, margin: "-40px" },
+  transition: { duration: 0.6, ease: easeCurve },
+};
+
 function HeroCarousel() {
   const [current, setCurrent] = useState(0);
 
@@ -36,69 +64,99 @@ function HeroCarousel() {
   const next = () => setCurrent((c) => (c + 1) % carouselSlides.length);
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-4 pt-8">
+    <motion.div
+      className="relative w-full max-w-6xl mx-auto px-4 pt-8"
+      initial={{ opacity: 0, y: 30, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
+    >
       <div className="relative overflow-hidden rounded-3xl aspect-[16/7] sm:aspect-[16/6]">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0, x: 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -80 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, scale: 1.05, x: 60 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.97, x: -60 }}
+            transition={{ duration: 0.6, ease: easeCurve }}
             className={`absolute inset-0 bg-gradient-to-br ${carouselSlides[current].bg} flex flex-col justify-end p-6 sm:p-10 lg:p-14`}
           >
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground font-['Space_Grotesk'] tracking-tight mb-2 sm:mb-3 max-w-xl">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-2xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground font-['Space_Grotesk'] tracking-tight mb-2 sm:mb-3 max-w-xl"
+            >
               {carouselSlides[current].title}
-            </h2>
-            <p className="text-sm sm:text-lg text-primary-foreground/80 max-w-md mb-6 sm:mb-8">
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-sm sm:text-lg text-primary-foreground/80 max-w-md mb-6 sm:mb-8"
+            >
               {carouselSlides[current].subtitle}
-            </p>
+            </motion.p>
 
-            <div className="flex gap-3">
+            <motion.div
+              className="flex gap-3"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               <Link to="/registro">
-                <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
-                  Empezar ahora
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                  <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
+                    Empezar ahora
+                  </Button>
+                </motion.div>
               </Link>
               <a href="#packs">
-                <Button size="lg" className="border border-primary-foreground/40 bg-transparent text-primary-foreground hover:border-primary-foreground hover:bg-transparent rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
-                  Ver packs
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                  <Button size="lg" className="border border-primary-foreground/40 bg-transparent text-primary-foreground hover:border-primary-foreground hover:bg-transparent rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
+                    Ver packs
+                  </Button>
+                </motion.div>
               </a>
-            </div>
+            </motion.div>
           </motion.div>
         </AnimatePresence>
 
         {/* Navigation arrows */}
-        <button
+        <motion.button
           onClick={prev}
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
           className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center text-primary-foreground hover:bg-background/40 transition-colors z-10"
         >
           <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
+        </motion.button>
+        <motion.button
           onClick={next}
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
           className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center text-primary-foreground hover:bg-background/40 transition-colors z-10"
         >
           <ChevronRight className="w-5 h-5" />
-        </button>
+        </motion.button>
 
         {/* Dots */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {carouselSlides.map((_, i) => (
-            <button
+            <motion.button
               key={i}
               onClick={() => setCurrent(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                i === current
-                  ? "bg-primary-foreground w-7"
-                  : "bg-primary-foreground/40 hover:bg-primary-foreground/60"
-              }`}
+              animate={{
+                width: i === current ? 28 : 10,
+                opacity: i === current ? 1 : 0.4,
+              }}
+              whileHover={{ opacity: 0.8 }}
+              transition={{ duration: 0.4, ease: easeCurve }}
+              className="h-2.5 rounded-full bg-primary-foreground"
             />
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -129,12 +187,7 @@ function WhySection() {
   return (
     <section className="py-16 sm:py-24 px-4">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <motion.div {...fadeUp}>
           <h2 className="text-2xl sm:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground">
             ¿Por qué AutoescuelaGO?
           </h2>
@@ -143,22 +196,40 @@ function WhySection() {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-60px" }}
+        >
           {reasons.map((r, i) => (
             <motion.div
               key={r.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+              variants={{
+                initial: { opacity: 0, y: 40, scale: 0.95 },
+                animate: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: { duration: 0.6, delay: i * 0.1, ease: easeCurve },
+                },
+              }}
+              whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
+              className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default"
             >
-              <span className="text-3xl mb-4 block">{r.emoji}</span>
+              <motion.span
+                className="text-3xl mb-4 block"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 12 }}
+              >
+                {r.emoji}
+              </motion.span>
               <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -176,19 +247,22 @@ function CoursesSection() {
         {courses.map((course, i) => (
           <motion.div
             key={course.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.15 }}
-            className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex flex-col justify-between p-6 sm:p-8"
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: i * 0.15, ease: easeCurve }}
+            whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
+            className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex flex-col justify-between p-6 sm:p-8 cursor-pointer"
           >
             <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground font-['Space_Grotesk']">
               {course.title}
             </h3>
             <div>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 h-10 text-sm font-semibold">
-                Saber más
-              </Button>
+              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.96 }}>
+                <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 h-10 text-sm font-semibold">
+                  Saber más
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         ))}
@@ -203,33 +277,32 @@ function PromoBanner() {
       <div className="max-w-6xl mx-auto">
         {/* Text + button row */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          {...fadeUp}
           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8"
         >
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground max-w-2xl">
             Únete a Ready2Go de forma digital y descubre los beneficios exclusivos de nuestros descuentos online
           </h2>
-          <Button variant="outline" className="rounded-full px-6 h-11 text-sm font-semibold border-foreground text-foreground hover:bg-foreground hover:text-background shrink-0">
-            Saber más
-          </Button>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
+            <Button variant="outline" className="rounded-full px-6 h-11 text-sm font-semibold border-foreground text-foreground hover:bg-foreground hover:text-background shrink-0">
+              Saber más
+            </Button>
+          </motion.div>
         </motion.div>
 
         {/* Image placeholder */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          {...scaleIn}
+          whileHover={{ scale: 1.005, transition: { duration: 0.3 } }}
           className="relative rounded-3xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[21/9] flex flex-col items-center justify-center"
         >
           <span className="text-primary-foreground/60 text-sm mb-auto mt-[30%]">Imagen creada coche rotulado</span>
           <div className="mb-8">
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-11 text-sm font-semibold">
-              Me interesa
-            </Button>
+            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-11 text-sm font-semibold">
+                Me interesa
+              </Button>
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -247,7 +320,10 @@ export default function Home() {
         {showSplash && <SplashScreen onFinish={handleFinish} />}
       </AnimatePresence>
       {!showSplash && (
-        <div className="min-h-screen bg-background">
+        <motion.div
+          className="min-h-screen bg-background"
+          {...pageTransition}
+        >
           <Navbar />
           <main className="pt-20">
             <HeroCarousel />
@@ -255,8 +331,15 @@ export default function Home() {
             <CoursesSection />
             <PromoBanner />
           </main>
-          <Footer />
-        </div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: easeCurve }}
+          >
+            <Footer />
+          </motion.div>
+        </motion.div>
       )}
     </>
   );
