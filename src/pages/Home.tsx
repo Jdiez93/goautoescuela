@@ -180,7 +180,7 @@ function CoursesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.15 }}
-            className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[4/3] flex flex-col justify-between p-6 sm:p-8"
+            className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex flex-col justify-between p-6 sm:p-8"
           >
             <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground font-['Space_Grotesk']">
               {course.title}
