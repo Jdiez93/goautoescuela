@@ -197,6 +197,46 @@ function CoursesSection() {
   );
 }
 
+function PromoBanner() {
+  return (
+    <section className="pb-16 sm:pb-24 px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Text + button row */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8"
+        >
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground max-w-2xl">
+            Únete a Ready2Go de forma digital y descubre los beneficios exclusivos de nuestros descuentos online
+          </h2>
+          <Button variant="outline" className="rounded-full px-6 h-11 text-sm font-semibold border-foreground text-foreground hover:bg-foreground hover:text-background shrink-0">
+            Saber más
+          </Button>
+        </motion.div>
+
+        {/* Image placeholder */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="relative rounded-3xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[21/9] flex flex-col items-center justify-center"
+        >
+          <span className="text-primary-foreground/60 text-sm mb-auto mt-[30%]">Imagen creada coche rotulado</span>
+          <div className="mb-8">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-11 text-sm font-semibold">
+              Me interesa
+            </Button>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   const handleFinish = useCallback(() => setShowSplash(false), []);
