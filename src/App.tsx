@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Home from "./pages/Home";
 import Index from "./pages/Index";
+import LaTeorica from "./pages/LaTeorica";
+import LasPracticas from "./pages/LasPracticas";
+import AutoescuelasReady2Go from "./pages/AutoescuelasReady2Go";
+import AutoescuelaOnline from "./pages/AutoescuelaOnline";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -31,6 +35,10 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/plataforma" element={<Index />} />
+            <Route path="/la-teorica" element={<LaTeorica />} />
+            <Route path="/las-practicas" element={<LasPracticas />} />
+            <Route path="/autoescuelas-ready2go" element={<AutoescuelasReady2Go />} />
+            <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />
             <Route path="/recuperar-password" element={<ForgotPassword />} />

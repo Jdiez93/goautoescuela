@@ -1,14 +1,23 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Car, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { cn } from "@/lib/utils";
+
+const navLinks = [
+  { label: "La Teórica", to: "/la-teorica" },
+  { label: "Las Prácticas", to: "/las-practicas" },
+  { label: "Autoescuelas Ready2Go", to: "/autoescuelas-ready2go" },
+  { label: "Autoescuela Online", to: "/autoescuela-online" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { user, signOut } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -30,7 +39,8 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-3 sm:px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2 group">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
             <motion.div
               className="w-10 h-10 rounded-xl bg-hero-gradient flex items-center justify-center"
               whileHover={{ scale: 1.08, rotate: -3 }}
@@ -43,7 +53,36 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-2">
+          {/* Center nav links — desktop */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.to;
+              return (
+                <Link key={link.to} to={link.to}>
+                  <span
+                    className={cn(
+                      "relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200",
+                      isActive
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-underline"
+                        className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Right actions — desktop */}
+          <div className="hidden md:flex items-center gap-2 shrink-0">
             {user ? (
               <>
                 <Link to="/dashboard">
@@ -71,7 +110,7 @@ export default function Navbar() {
 
           {/* Mobile toggle */}
           <motion.button
-            className="md:hidden p-2 rounded-xl hover:bg-muted transition-colors"
+            className="lg:hidden p-2 rounded-xl hover:bg-muted transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.9 }}
           >
@@ -98,9 +137,27 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden bg-background/80 backdrop-blur-2xl border-b border-border/40"
+            className="lg:hidden bg-background/80 backdrop-blur-2xl border-b border-border/40"
           >
-            <div className="container mx-auto px-4 py-4 flex flex-col gap-2">
+            <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.to;
+                return (
+                  <Link key={link.to} to={link.to} onClick={() => setIsOpen(false)}>
+                    <div
+                      className={cn(
+                        "px-4 py-2.5 rounded-xl text-sm font-medium transition-colors",
+                        isActive
+                          ? "bg-primary/10 text-foreground"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      )}
+                    >
+                      {link.label}
+                    </div>
+                  </Link>
+                );
+              })}
+              <div className="h-px bg-border/60 my-2" />
               {user ? (
                 <>
                   <Link to="/dashboard" onClick={() => setIsOpen(false)}>
