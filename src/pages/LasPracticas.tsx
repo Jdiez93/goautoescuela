@@ -10,38 +10,62 @@ const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const features = [
   {
     icon: CalendarCheck,
-    title: "Prácticas a un click",
-    bullets: ["Reserva desde tu móvil", "Elige día y hora", "Cancela si no puedes asistir"],
+    title: "¡Tus prácticas a un click!",
+    bullets: [
+      "Resérvalas fácilmente desde tu móvil",
+      "Elige día y hora en tu espacio personal",
+      "Y si no puedes asistir, recuerda cancelar con 24h de antelación",
+    ],
   },
   {
     icon: Video,
     title: "Maniobras de examen",
-    bullets: ["Vídeos explicativos"],
+    bullets: [
+      "Tendrás acceso a videos de cada maniobra con su explicación y los errores habituales que suelen cometerse en el examen",
+    ],
   },
   {
     icon: MapPin,
-    title: "Recorridos reales",
-    bullets: ["Itinerarios detallados", "Reconoce zonas", "Interioriza hábitos"],
+    title: "Recorridos de Examen, al detalle",
+    bullets: [
+      "Accede a los vídeos de los itinerarios más habituales",
+      "Reconoce las zonas y sus intersecciones antes de enfrentarte a ellas",
+      "Interioriza buenos hábitos de conducción para ir más seguro, más tranquilo y aprobar con más facilidad",
+    ],
   },
   {
     icon: TrendingUp,
-    title: "Tu progreso",
-    bullets: ["Coche Ready2Go", "Evolución"],
+    title: "Tu progreso siempre contigo",
+    bullets: [
+      "Cada coche Ready2Go lleva una tablet donde tu profe evalúa la clase",
+      "Tendrás tu evolución guardada al instante, para que veas cómo mejoras día a día",
+    ],
   },
   {
     icon: Car,
-    title: "TestDrive",
-    bullets: ["Simulacros reales", "Simulacros 100%", "Sin nervios"],
+    title: "TestDrive!",
+    bullets: [
+      "Ponemos a prueba tu nivel como si fuera el día oficial",
+      "Simulacros 100% reales para que llegues con confianza",
+      "Sin nervios, sin sorpresas… y con muchas más opciones de aprobar a la primera",
+    ],
   },
   {
     icon: Package,
-    title: "Ahorra con packs",
-    bullets: ["Mejor precio por clase", "Desde el alta", "Empieza de cero"],
+    title: "AHORRA CON LOS PACKS",
+    bullets: [
+      "Elige uno de nuestros packs y paga menos por cada clase",
+      "En cuanto te des de alta podrás empezar a reservar",
+      "¿Empiezas de cero? Llévate un pack completo de teórica + prácticas y ahorra todavía más",
+    ],
   },
   {
     icon: RefreshCw,
-    title: "Reciclaje",
-    bullets: ["Recupera seguridad", "Disfruta volver a conducir"],
+    title: "Prácticas de Reciclaje",
+    bullets: [
+      "Recupera la seguridad con nuestras clases de reciclaje personalizadas",
+      "Con Ready2Go volverás a disfrutar de conducir",
+    ],
   },
 ];
 
@@ -54,30 +78,32 @@ function FeatureCard({ icon: Icon, title, bullets, index }: { icon: typeof Calen
       transition={{ duration: 0.5, delay: index * 0.07, ease: easeCurve }}
       className="group relative rounded-2xl bg-card p-6 cursor-default overflow-hidden"
     >
-      {/* Animated border */}
-      <div className="absolute inset-0 rounded-2xl border border-border/40 group-hover:border-transparent transition-colors duration-300" />
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <rect
-            x="0.5" y="0.5"
-            width="calc(100% - 1px)" height="calc(100% - 1px)"
-            rx="16" ry="16"
-            fill="none"
-            stroke="hsl(var(--primary))"
-            strokeWidth="2"
-            strokeDasharray="800"
-            strokeDashoffset="800"
-            className="group-hover:animate-[borderDraw_1.2s_ease-out_forwards]"
-          />
-        </svg>
+      {/* Static border */}
+      <div className="absolute inset-0 rounded-2xl border border-border/40 group-hover:border-transparent transition-colors duration-300 pointer-events-none" />
+
+      {/* Animated border using conic-gradient approach */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <div
+          className="absolute inset-0 rounded-2xl"
+          style={{
+            padding: "2px",
+            background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary)/0.3), hsl(var(--primary)))",
+            backgroundSize: "200% 100%",
+            mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            maskComposite: "exclude",
+            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            animation: "borderShimmer 2s linear infinite",
+          }}
+        />
       </div>
 
       <div className="relative flex items-start justify-between gap-4">
         <div className="flex-1">
           <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3">{title}</h3>
           <ul className="space-y-1.5">
-            {bullets.map((b) => (
-              <li key={b} className="text-sm text-muted-foreground">{b}</li>
+            {bullets.map((b, i) => (
+              <li key={i} className="text-sm text-muted-foreground leading-relaxed">{b}</li>
             ))}
           </ul>
         </div>
@@ -159,10 +185,10 @@ export default function LasPracticas() {
       </main>
       <Footer />
 
-      {/* Keyframe for border draw animation */}
       <style>{`
-        @keyframes borderDraw {
-          to { stroke-dashoffset: 0; }
+        @keyframes borderShimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
         }
       `}</style>
     </div>
