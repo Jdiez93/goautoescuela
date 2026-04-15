@@ -25,7 +25,7 @@ const locations = [
     name: "Valdemorillo",
     address: "C. Covachuelas, 18, 28210 Valdemorillo, Madrid",
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.5!2d-4.0697!3d40.4869!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418a1b2c3d4e5f%3A0xfedcba0987654321!2sC.%20Covachuelas%2C%2018%2C%2028210%20Valdemorillo%2C%20Madrid!5e0!3m2!1ses!2ses!4v1700000000000",
+      "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=C.+Covachuelas+18+28210+Valdemorillo+Madrid+Spain&zoom=17",
     schedule: "Lunes, Miércoles y Viernes: 11:00 - 13:00 / 17:30 - 20:30",
     practicas: "Prácticas: 8:00 - 22:00",
     imagePlaceholder: "Imagen Valdemorillo",
