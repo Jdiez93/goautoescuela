@@ -3,7 +3,7 @@ import Footer from "@/components/landing/Footer";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Monitor, ClipboardCheck, MessageCircle } from "lucide-react";
+import { Monitor, ClipboardCheck, Video, Target } from "lucide-react";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
