@@ -3,33 +3,49 @@ import Footer from "@/components/landing/Footer";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Monitor, ClipboardCheck, Video, Target } from "lucide-react";
+import { ClipboardCheck, Monitor, Video, BarChart3 } from "lucide-react";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const featuresRow1 = [
+const features = [
   {
     icon: ClipboardCheck,
-    title: "Tests por bloques (85%)",
-    desc: "4 bloques progresivos + mínimo 85%",
+    title: "Supera los bloques de tests con el 85% de aptos",
+    bullets: [
+      "El método se organiza en 4 bloques de test progresivos",
+      "Para avanzar, debes alcanzar al menos un 85% de aptos en cada bloque",
+      "Así garantizamos que tu aprendizaje sea sólido y sin lagunas",
+    ],
+    imageLabel: "Imagen Tests",
   },
   {
     icon: Monitor,
-    title: "Clases online",
-    desc: "Disponible 24h en la App",
+    title: "Clases 100% online, prepárate donde y cuando quieras",
+    bullets: [
+      "NO necesitas asistir a clases presenciales",
+      "Todas las explicaciones están grabadas en nuestra App, disponibles las 24h",
+      "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
+    ],
+    imageLabel: "Imagen Video-Temario",
   },
-];
-
-const featuresRow2 = [
   {
     icon: Video,
-    title: "Video en cada pregunta",
-    desc: "Explicación clara en cada test",
+    title: "Tendrás un video explicativo en cada pregunta",
+    bullets: [
+      "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
+    ],
+    imageLabel: "Imagen Video-Pregunta",
   },
   {
-    icon: Target,
-    title: "Simulacros reales",
-    desc: "30 tests + 85% barómetro",
+    icon: BarChart3,
+    title: "Simulacros antes del examen",
+    bullets: [
+      "Una vez superados los bloques, toca la fase final",
+      "Realiza al menos 30 simulacros de examen reales",
+      "Mantén el 85% de aptos en tu barómetro",
+      "Completa el proceso en menos de 2 meses desde que te apuntaste en Ready2Go",
+    ],
+    imageLabel: "Imagen Estadísticas",
   },
 ];
 
