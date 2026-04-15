@@ -91,9 +91,9 @@ export default function LaTeorica() {
             </div>
           </motion.div>
 
-          {/* Feature cards */}
-          <div className="mt-16 md:mt-24 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {features.map((feat, i) => (
+          {/* Feature cards - row 1 */}
+          <div className="mt-16 md:mt-24 grid sm:grid-cols-2 gap-5">
+            {featuresRow1.map((feat, i) => (
               <motion.div
                 key={feat.title}
                 initial={{ opacity: 0, y: 25 }}
@@ -111,24 +111,44 @@ export default function LaTeorica() {
             ))}
           </div>
 
-          {/* CTA bottom */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.6, ease: easeCurve }}
-            className="mt-16 text-center"
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-              Empieza tu teórica hoy
-            </h2>
-            <Link to="/pagos">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }} className="inline-block">
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-11 text-sm font-semibold">
-                  Ver packs
-                </Button>
+          {/* Feature cards - row 2 */}
+          <div className="mt-5 grid sm:grid-cols-2 gap-5">
+            {featuresRow2.map((feat, i) => (
+              <motion.div
+                key={feat.title}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.5, delay: i * 0.08 + 0.16, ease: easeCurve }}
+                className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
+              >
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <feat.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base mb-1">{feat.title}</h3>
+                <p className="text-sm text-muted-foreground">{feat.desc}</p>
               </motion.div>
-            </Link>
+            ))}
+          </div>
+
+          {/* Bottom image + CTA */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.7, ease: easeCurve }}
+            className="mt-10 relative rounded-3xl bg-primary aspect-[21/9] flex items-center justify-center overflow-hidden"
+          >
+            <span className="text-primary-foreground/60 text-sm font-medium">Imagen chica portátil</span>
+            <div className="absolute bottom-5 left-5">
+              <Link to="/pagos">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
+                  <Button className="bg-[hsl(var(--foreground))] text-background hover:opacity-90 rounded-xl px-6 h-10 text-sm font-semibold">
+                    Ver packs
+                  </Button>
+                </motion.div>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </main>
