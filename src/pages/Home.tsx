@@ -231,8 +231,8 @@ function WhySection() {
 
 function CoursesSection() {
   const courses = [
-    { title: "La Teórica", id: "teorica" },
-    { title: "La Práctica", id: "practica" },
+    { title: "La Teórica", id: "teorica", to: "/la-teorica" },
+    { title: "La Práctica", id: "practica", to: "/las-practicas" },
   ];
 
   return (
@@ -253,9 +253,11 @@ function CoursesSection() {
             </h3>
             <div>
               <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.96 }}>
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 h-10 text-sm font-semibold">
-                  Saber más
-                </Button>
+                <Link to={course.to}>
+                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 h-10 text-sm font-semibold">
+                    Saber más
+                  </Button>
+                </Link>
               </motion.div>
             </div>
           </motion.div>
@@ -278,9 +280,11 @@ function PromoBanner() {
             Únete a Ready2Go de forma digital y descubre los beneficios exclusivos de nuestros descuentos online
           </h2>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
-            <Button variant="outline" className="rounded-full px-6 h-11 text-sm font-semibold border-foreground text-foreground hover:bg-foreground hover:text-background shrink-0">
-              Saber más
-            </Button>
+            <Link to="/autoescuela-online">
+              <Button variant="outline" className="rounded-full px-6 h-11 text-sm font-semibold border-foreground text-foreground hover:bg-foreground hover:text-background shrink-0">
+                Saber más
+              </Button>
+            </Link>
           </motion.div>
         </motion.div>
 
