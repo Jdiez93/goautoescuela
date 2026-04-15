@@ -18,6 +18,21 @@ const features = [
     desc: "Más de 3000 test con vídeos explicativos",
     imageLabel: "Imagen vídeos explicativos",
   },
+  {
+    title: "Tu profe, siempre contigo",
+    desc: "Clases grabadas para aprender paso a paso",
+    imageLabel: "Imagen clases grabadas",
+  },
+  {
+    title: "Método 85% Ready2Go",
+    desc: "Si no apruebas, te devolvemos el dinero",
+    imageLabel: "Imagen método 85%",
+  },
+  {
+    title: "Una App, todo lo que necesitas",
+    desc: "Gestiona todo desde tu móvil",
+    imageLabel: "Imagen app móvil",
+  },
 ];
 
 export default function AutoescuelaOnline() {
@@ -75,6 +90,31 @@ export default function AutoescuelaOnline() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Banner */}
+      <section className="pb-20 md:pb-28">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="rounded-3xl bg-gradient-to-br from-secondary to-secondary/80 p-10 md:p-14"
+          >
+            <h3 className="text-2xl sm:text-3xl font-bold text-secondary-foreground mb-3">
+              Tu carnet empieza aquí
+            </h3>
+            <p className="text-secondary-foreground/80 mb-8">
+              Miles de alumnos ya lo han conseguido. Ahora te toca a ti.
+            </p>
+            <a href="/registro">
+              <button className="px-6 py-3 rounded-xl bg-[hsl(var(--foreground))] text-background font-semibold hover:opacity-90 transition-opacity">
+                Empieza ahora
+              </button>
+            </a>
+          </motion.div>
         </div>
       </section>
 
