@@ -12,13 +12,11 @@ const features = [
     title: "Tu aula está donde tú quieras",
     desc: "Aprende a tu ritmo con acceso 24/7 a vídeos, test y contenido",
     imageLabel: "Imagen aula virtual",
-    imageFirst: false,
   },
   {
     title: "Cada pregunta, un vídeo",
     desc: "Más de 3000 test con vídeos explicativos",
     imageLabel: "Imagen vídeos explicativos",
-    imageFirst: true,
   },
 ];
 
