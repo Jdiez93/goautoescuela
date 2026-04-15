@@ -50,31 +50,32 @@ export default function AutoescuelaOnline() {
           </motion.h2>
 
           <div className="space-y-16 md:space-y-24">
-            {features.map((feat, i) => (
-              <motion.div
-                key={feat.title}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center ${
-                  feat.imageFirst ? "" : "md:[direction:rtl]"
-                }`}
-              >
-                {/* Image placeholder */}
-                <div className={`${feat.imageFirst ? "order-1 md:order-1" : "order-1 md:order-2"} md:[direction:ltr]`}>
-                  <div className="aspect-[4/3] rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">
-                    <span className="text-primary font-semibold text-lg">{feat.imageLabel}</span>
+            {features.map((feat, i) => {
+              const textFirst = i % 2 === 0;
+              return (
+                <motion.div
+                  key={feat.title}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  className="grid md:grid-cols-2 gap-8 md:gap-12 items-center"
+                >
+                  {/* Text */}
+                  <div className={textFirst ? "md:order-1" : "md:order-2"}>
+                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-3">{feat.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{feat.desc}</p>
                   </div>
-                </div>
 
-                {/* Text */}
-                <div className={`${feat.imageFirst ? "order-2 md:order-2" : "order-2 md:order-1"} md:[direction:ltr]`}>
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-3">{feat.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feat.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+                  {/* Image placeholder */}
+                  <div className={textFirst ? "md:order-2" : "md:order-1"}>
+                    <div className="aspect-[4/3] rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">
+                      <span className="text-primary font-semibold text-lg">{feat.imageLabel}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
