@@ -7,7 +7,7 @@ import { Monitor, ClipboardCheck, Video, Target } from "lucide-react";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const features = [
+const featuresRow1 = [
   {
     icon: ClipboardCheck,
     title: "Tests por bloques (85%)",
@@ -18,15 +18,18 @@ const features = [
     title: "Clases online",
     desc: "Disponible 24h en la App",
   },
+];
+
+const featuresRow2 = [
   {
-    icon: BookOpen,
-    title: "Clases presenciales",
-    desc: "Con tu profe en el aula",
+    icon: Video,
+    title: "Video en cada pregunta",
+    desc: "Explicación clara en cada test",
   },
   {
-    icon: MessageCircle,
-    title: "Dudas en directo",
-    desc: "Resuelve tus preguntas al momento",
+    icon: Target,
+    title: "Simulacros reales",
+    desc: "30 tests + 85% barómetro",
   },
 ];
 
