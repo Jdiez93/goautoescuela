@@ -3,33 +3,49 @@ import Footer from "@/components/landing/Footer";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Monitor, ClipboardCheck, Video, Target } from "lucide-react";
+import { ClipboardCheck, Monitor, Video, BarChart3 } from "lucide-react";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const featuresRow1 = [
+const features = [
   {
     icon: ClipboardCheck,
-    title: "Tests por bloques (85%)",
-    desc: "4 bloques progresivos + mínimo 85%",
+    title: "Supera los bloques de tests con el 85% de aptos",
+    bullets: [
+      "El método se organiza en 4 bloques de test progresivos",
+      "Para avanzar, debes alcanzar al menos un 85% de aptos en cada bloque",
+      "Así garantizamos que tu aprendizaje sea sólido y sin lagunas",
+    ],
+    imageLabel: "Imagen Tests",
   },
   {
     icon: Monitor,
-    title: "Clases online",
-    desc: "Disponible 24h en la App",
+    title: "Clases 100% online, prepárate donde y cuando quieras",
+    bullets: [
+      "NO necesitas asistir a clases presenciales",
+      "Todas las explicaciones están grabadas en nuestra App, disponibles las 24h",
+      "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
+    ],
+    imageLabel: "Imagen Video-Temario",
   },
-];
-
-const featuresRow2 = [
   {
     icon: Video,
-    title: "Video en cada pregunta",
-    desc: "Explicación clara en cada test",
+    title: "Tendrás un video explicativo en cada pregunta",
+    bullets: [
+      "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
+    ],
+    imageLabel: "Imagen Video-Pregunta",
   },
   {
-    icon: Target,
-    title: "Simulacros reales",
-    desc: "30 tests + 85% barómetro",
+    icon: BarChart3,
+    title: "Simulacros antes del examen",
+    bullets: [
+      "Una vez superados los bloques, toca la fase final",
+      "Realiza al menos 30 simulacros de examen reales",
+      "Mantén el 85% de aptos en tu barómetro",
+      "Completa el proceso en menos de 2 meses desde que te apuntaste en Ready2Go",
+    ],
+    imageLabel: "Imagen Estadísticas",
   },
 ];
 
@@ -91,44 +107,38 @@ export default function LaTeorica() {
             </div>
           </motion.div>
 
-          {/* Feature cards - row 1 */}
-          <div className="mt-16 md:mt-24 grid sm:grid-cols-2 gap-5">
-            {featuresRow1.map((feat, i) => (
-              <motion.div
-                key={feat.title}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: easeCurve }}
-                className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
-              >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <feat.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base mb-1">{feat.title}</h3>
-                <p className="text-sm text-muted-foreground">{feat.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Feature cards - row 2 */}
-          <div className="mt-5 grid sm:grid-cols-2 gap-5">
-            {featuresRow2.map((feat, i) => (
-              <motion.div
-                key={feat.title}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{ duration: 0.5, delay: i * 0.08 + 0.16, ease: easeCurve }}
-                className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
-              >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <feat.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base mb-1">{feat.title}</h3>
-                <p className="text-sm text-muted-foreground">{feat.desc}</p>
-              </motion.div>
-            ))}
+          {/* Feature cards */}
+          <div className="mt-16 md:mt-24 space-y-16 md:space-y-24">
+            {features.map((feat, i) => {
+              const textFirst = i % 2 === 0;
+              return (
+                <motion.div
+                  key={feat.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, ease: easeCurve }}
+                  className="grid md:grid-cols-2 gap-8 md:gap-12 items-center"
+                >
+                  <div className={textFirst ? "md:order-1" : "md:order-2"}>
+                    <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                      <feat.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3">{feat.title}</h3>
+                    <ul className="space-y-1.5">
+                      {feat.bullets.map((b, j) => (
+                        <li key={j} className="text-sm text-muted-foreground leading-relaxed">{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className={textFirst ? "md:order-2" : "md:order-1"}>
+                    <div className="aspect-[4/3] rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">
+                      <span className="text-primary font-semibold text-sm">{feat.imageLabel}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Bottom image + CTA */}
