@@ -16,7 +16,7 @@ const locations = [
     name: "Villanueva del Pardillo",
     address: "C/ Concepción, 61, 28229 Villanueva del Pardillo (Madrid)",
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1518.0!2d-3.9717!3d40.4978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd41f9a0b6c8d2e3%3A0xabc123def456!2sC.%20Concepci%C3%B3n%2C%2061%2C%20Local%209%2C%2028229%20Villanueva%20del%20Pardillo%2C%20Madrid!5e0!3m2!1ses!2ses!4v1700000000000",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d756.9!2d-3.9713!3d40.4975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd41890c9a7d3b3b%3A0x8e0e4c1e1e6a2f0!2sAutoescuela+Ready2Go!5e0!3m2!1ses!2ses!4v1700000000000",
     schedule: "Martes y Jueves: 11:00 - 13:00 / 17:30 - 20:30",
     practicas: "Prácticas: 8:00 - 22:00",
     imagePlaceholder: "Imagen Pardillo",
