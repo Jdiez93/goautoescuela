@@ -16,7 +16,7 @@ const locations = [
     name: "Villanueva del Pardillo",
     address: "C/ Concepción, 61, 28229 Villanueva del Pardillo (Madrid)",
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.5!2d-3.9697!3d40.4969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189e4a1b2c3d5%3A0x1234567890abcdef!2sC.%20de%20la%20Concepci%C3%B3n%2C%2061%2C%2028229%20Villanueva%20del%20Pardillo%2C%20Madrid!5e0!3m2!1ses!2ses!4v1700000000000",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1518.0!2d-3.9717!3d40.4978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd41f9a0b6c8d2e3%3A0xabc123def456!2sC.%20Concepci%C3%B3n%2C%2061%2C%20Local%209%2C%2028229%20Villanueva%20del%20Pardillo%2C%20Madrid!5e0!3m2!1ses!2ses!4v1700000000000",
     schedule: "Martes y Jueves: 11:00 - 13:00 / 17:30 - 20:30",
     practicas: "Prácticas: 8:00 - 22:00",
     imagePlaceholder: "Imagen Pardillo",
