@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "La Teórica", to: "/la-teorica" },
   { label: "Las Prácticas", to: "/las-practicas" },
+  { label: "Prácticas Virtuales", to: "/practicas-virtuales" },
   { label: "Autoescuelas Ready2Go", to: "/autoescuelas-ready2go" },
   { label: "Autoescuela Online", to: "/autoescuela-online" },
 ];
