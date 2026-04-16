@@ -5,6 +5,20 @@ import { Smartphone, Clock, ShieldCheck, Trophy } from "lucide-react";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+const fadeUp = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: false, margin: "-60px" },
+  transition: { duration: 0.7, ease: easeCurve },
+};
+
+const scaleIn = {
+  initial: { opacity: 0, scale: 0.92 },
+  whileInView: { opacity: 1, scale: 1 },
+  viewport: { once: false, margin: "-40px" },
+  transition: { duration: 0.6, ease: easeCurve },
+};
+
 const features = [
   {
     icon: Smartphone,
@@ -50,9 +64,7 @@ export default function PracticasVirtuales() {
 
           {/* Hero image placeholder */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, ease: easeCurve, delay: 0.1 }}
+            {...scaleIn}
             className="rounded-3xl bg-[hsl(220,30%,15%)] border border-primary/30 aspect-[21/9] flex items-center justify-center mb-16"
           >
             <span className="text-muted-foreground text-sm">Imagen practica virtual</span>
@@ -63,11 +75,12 @@ export default function PracticasVirtuales() {
             {features.map((feat, i) => (
               <motion.div
                 key={feat.title}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease: easeCurve }}
-                className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
+                whileHover={{ y: -4, scale: 1.02, transition: { duration: 0.3 } }}
+                className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base">
@@ -85,7 +98,9 @@ export default function PracticasVirtuales() {
           </div>
         </div>
       </main>
-      <Footer />
+      <motion.div {...fadeUp}>
+        <Footer />
+      </motion.div>
     </div>
   );
 }
