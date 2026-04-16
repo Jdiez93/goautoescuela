@@ -122,19 +122,32 @@ export default function AutoescuelaOnline() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="rounded-3xl bg-gradient-to-br from-secondary to-secondary/80 p-10 md:p-14"
+            className="grid md:grid-cols-2 gap-8 md:gap-12 items-center rounded-3xl bg-gradient-to-br from-secondary/10 to-secondary/5 p-8 md:p-12 border border-secondary/20"
           >
-            <h3 className="text-2xl sm:text-3xl font-bold text-secondary-foreground mb-3">
-              Tu carnet empieza aquí
-            </h3>
-            <p className="text-secondary-foreground/80 mb-8">
-              Miles de alumnos ya lo han conseguido. Ahora te toca a ti.
-            </p>
-            <a href="/registro">
-              <button className="px-6 py-3 rounded-xl bg-[hsl(var(--foreground))] text-background font-semibold hover:opacity-90 transition-opacity">
-                Empieza ahora
-              </button>
-            </a>
+            {/* Text Content */}
+            <div className="order-2 md:order-1 text-center md:text-left">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
+                Tu carnet empieza aquí
+              </h3>
+              <p className="text-muted-foreground leading-relaxed mb-2">
+                Miles de alumnos ya se han sacado la teórica con nuestro método
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Ahora te toca a ti
+              </p>
+              <a href="/registro">
+                <button className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl">
+                  Empieza ahora tu curso teórico
+                </button>
+              </a>
+            </div>
+
+            {/* Image placeholder */}
+            <div className="order-1 md:order-2">
+              <div className="aspect-square rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">
+                <span className="text-primary font-semibold text-lg">Imagen chicos móvil</span>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
