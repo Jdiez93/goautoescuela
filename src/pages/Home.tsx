@@ -245,21 +245,23 @@ function CoursesSection() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: false, margin: "-40px" }}
             transition={{ duration: 0.6, delay: i * 0.15, ease: easeCurve }}
-            whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
-            className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex flex-col justify-between p-6 sm:p-8 cursor-pointer"
+            className="flex flex-col gap-3"
           >
-            <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground font-['Space_Grotesk']">
+            <h3 className="text-xl sm:text-2xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
               {course.title}
             </h3>
-            <div>
+            <motion.div
+              whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
+              className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex items-end justify-end p-4 sm:p-6 cursor-pointer"
+            >
               <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.96 }}>
                 <Link to={course.to}>
-                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 h-10 text-sm font-semibold">
+                  <Button size="sm" variant="ghost" className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-white/10 rounded-full px-4 h-8 text-xs font-medium backdrop-blur-sm border border-white/15">
                     Saber más
                   </Button>
                 </Link>
               </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
         ))}
       </div>
