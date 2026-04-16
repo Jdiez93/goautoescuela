@@ -13,34 +13,10 @@ const fadeUp = {
 };
 
 const features = [
-  {
-    icon: Smartphone,
-    title: "Interacción y Tecnología",
-    text: "Texto...",
-    tag: "MOB_01",
-    corners: ["top-left", "top-right"],
-  },
-  {
-    icon: Clock,
-    title: "Tiempo y Dinero",
-    text: "Texto...",
-    tag: "SYNC_247",
-    corners: [],
-  },
-  {
-    icon: ShieldCheck,
-    title: "Confianza y Preparación",
-    text: "Texto...",
-    tag: "PROT_SAFE",
-    corners: [],
-  },
-  {
-    icon: Trophy,
-    title: "Éxito al Primer Intento",
-    text: "Texto...",
-    tag: "RANK_TOP",
-    corners: ["bottom-left", "bottom-right"],
-  },
+  { icon: Smartphone, title: "Interacción y Tecnología", text: "Texto..." },
+  { icon: Clock, title: "Tiempo y Dinero", text: "Texto..." },
+  { icon: ShieldCheck, title: "Confianza y Preparación", text: "Texto..." },
+  { icon: Trophy, title: "Éxito al Primer Intento", text: "Texto..." },
 ];
 
 function CornerBracket({ position }: { position: string }) {
