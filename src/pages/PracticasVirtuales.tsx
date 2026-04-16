@@ -19,19 +19,6 @@ const features = [
   { icon: Trophy, title: "Éxito al Primer Intento", text: "Texto..." },
 ];
 
-function CornerBracket({ position }: { position: string }) {
-  const classes: Record<string, string> = {
-    "top-left": "top-0 left-0 border-t border-l",
-    "top-right": "top-0 right-0 border-t border-r",
-    "bottom-left": "bottom-0 left-0 border-b border-l",
-    "bottom-right": "bottom-0 right-0 border-b border-r",
-  };
-  return (
-    <span
-      className={`absolute w-2 h-2 border-primary/50 ${classes[position]}`}
-    />
-  );
-}
 
 export default function PracticasVirtuales() {
   return (
@@ -70,7 +57,7 @@ export default function PracticasVirtuales() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, margin: "-60px" }}
             transition={{ duration: 0.6, ease: easeCurve }}
-            className="grid sm:grid-cols-2 gap-px bg-border/20 border border-border/30 rounded-2xl overflow-hidden"
+            className="grid sm:grid-cols-2 gap-4 sm:gap-5"
           >
             {features.map((feat, i) => (
               <motion.div
@@ -79,22 +66,12 @@ export default function PracticasVirtuales() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: easeCurve }}
-                className="group relative bg-background p-8 sm:p-10 transition-all duration-500 hover:bg-primary/[0.03]"
+                className="group relative bg-card border border-border/30 rounded-2xl p-8 sm:p-10 transition-all duration-500 hover:bg-primary/[0.03] hover:border-primary/30"
                 style={{ cursor: "crosshair" }}
               >
-                {/* Corner brackets */}
-                {feat.corners.map((c) => (
-                  <CornerBracket key={c} position={c} />
-                ))}
-
-                {/* Top row: icon + tag */}
-                <div className="flex justify-between items-start mb-7">
-                  <div className="w-12 h-12 rounded-sm border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary/15 transition-colors duration-400">
-                    <feat.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-[10px] text-primary/40 font-mono tracking-tighter select-none">
-                    {feat.tag}
-                  </span>
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-sm border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary/15 transition-colors duration-400 mb-7">
+                  <feat.icon className="w-5 h-5 text-primary" />
                 </div>
 
                 {/* Content */}
