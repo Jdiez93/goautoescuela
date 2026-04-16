@@ -3,7 +3,8 @@ import Footer from "@/components/landing/Footer";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ClipboardCheck, Monitor, Video, BarChart3 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ClipboardCheck, Monitor, Video, BarChart3, Info } from "lucide-react";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -154,6 +155,22 @@ export default function LaTeorica() {
                 </motion.div>
               </Link>
             </div>
+          </motion.div>
+
+          {/* Legal notice */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, ease: easeCurve }}
+            className="mt-12"
+          >
+            <Alert className="border-border/50 bg-muted/30">
+              <Info className="h-4 w-4" />
+              <AlertDescription className="text-xs leading-relaxed text-muted-foreground">
+                *Aplicable al curso teórico. Requiere cumplir el itinerario del método, asistencia/uso de plataforma según programa y alcanzar un 85% en el barómetro general en un plazo máximo de 2 meses desde el alta. Devolución sobre el importe abonado del teórico. No incluye tasas ni clases prácticas.
+              </AlertDescription>
+            </Alert>
           </motion.div>
         </div>
       </main>
