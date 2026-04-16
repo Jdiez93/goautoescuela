@@ -10,28 +10,45 @@ const fadeUp = {
 const features = [
   {
     title: "Tu aula está donde tú quieras",
-    desc: "Aprende a tu ritmo con acceso 24/7 a vídeos, test y contenido",
-    imageLabel: "Imagen aula virtual",
+    bullets: [
+      "Olvídate de horarios fijos",
+      "Con nuestra App tienes acceso 24/7 al curso teórico completo: esquemas, vídeos explicativos y test actualizados",
+      "Aprende a tu ritmo, cuándo y dónde quieras",
+    ],
+    imageLabel: "Imagen Tu aula",
   },
   {
     title: "Cada pregunta, un vídeo",
-    desc: "Más de 3000 test con vídeos explicativos",
-    imageLabel: "Imagen vídeos explicativos",
+    bullets: [
+      "Más de 3.000 test y miles de preguntas explicadas con vídeos de 1 minuto y medio",
+      "Te enseñamos por qué una respuesta es correcta y por qué las otras no lo son",
+      "Así aprendes de verdad y no memorizas al azar",
+    ],
+    imageLabel: "Imagen Pregunta video",
   },
   {
     title: "Tu profe, siempre contigo",
-    desc: "Clases grabadas para aprender paso a paso",
-    imageLabel: "Imagen clases grabadas",
+    bullets: [
+      "Accede a clases grabadas para repasar los temas más importantes, las veces que quieras",
+      "Nuestro método te guía paso a paso hasta alcanzar el nivel ideal para aprobar",
+    ],
+    imageLabel: "Imagen Tu profe",
   },
   {
-    title: "Método 85% Ready2Go",
-    desc: "Si no apruebas, te devolvemos el dinero",
-    imageLabel: "Imagen método 85%",
+    title: "Si alcanzas el 85% en el barómetro general y no apruebas, te devolvemos el dinero",
+    bullets: [
+      "Porque creemos en ti y en nuestro método",
+      "Consigue al menos el 85% en el barómetro general y, si no apruebas a la primera, te reembolsamos el curso teórico",
+    ],
+    imageLabel: "Imagen Método 85",
   },
   {
     title: "Una App, todo lo que necesitas",
-    desc: "Gestiona todo desde tu móvil",
-    imageLabel: "Imagen app móvil",
+    bullets: [
+      "Matricúlate, estudia, haz test, mira vídeos y gestiona todo desde tu móvil",
+      "Llévate la autoescuela contigo",
+    ],
+    imageLabel: "Imagen Nuestra App",
   },
 ];
 
