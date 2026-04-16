@@ -94,7 +94,11 @@ export default function AutoescuelaOnline() {
                   {/* Text */}
                   <div className={textFirst ? "md:order-1" : "md:order-2"}>
                     <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-3">{feat.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{feat.desc}</p>
+                    <ul className="space-y-2 text-muted-foreground leading-relaxed">
+                      {feat.bullets.map((b, j) => (
+                        <li key={j}>• {b}</li>
+                      ))}
+                    </ul>
                   </div>
 
                   {/* Image placeholder */}
