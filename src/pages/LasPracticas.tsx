@@ -154,32 +154,31 @@ export default function LasPracticas() {
 
           {/* CTA + image bottom section */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-40px" }}
-            transition={{ duration: 0.6, ease: easeCurve }}
-            className="mt-16 text-center"
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-              Empieza tus prácticas hoy
-            </h2>
-            <Link to="/pagos">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }} className="inline-block">
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-11 text-sm font-semibold">
-                  Ver packs
-                </Button>
-              </motion.div>
-            </Link>
-          </motion.div>
-
-          <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: false, margin: "-40px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
-            className="mt-10 rounded-3xl bg-[hsl(220,30%,15%)] aspect-[21/9] flex items-center justify-center"
+            className="mt-16 rounded-3xl bg-[hsl(220,30%,15%)] aspect-[21/9] relative overflow-hidden"
           >
-            <span className="text-primary-foreground/60 text-sm">Imagen chicos práctica</span>
+            {/* Placeholder text */}
+            <span className="absolute inset-0 flex items-center justify-center text-primary-foreground/60 text-sm pointer-events-none">
+              Imagen chicos práctica
+            </span>
+
+            {/* Button inside image - discreet */}
+            <div className="absolute inset-0 flex items-end justify-end p-6 sm:p-8">
+              <Link to="/pagos">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-white/10 rounded-full px-4 h-8 text-xs font-medium backdrop-blur-sm border border-white/15"
+                  >
+                    Ver packs
+                  </Button>
+                </motion.div>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </main>
