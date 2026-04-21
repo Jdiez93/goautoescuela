@@ -91,7 +91,7 @@ export default function ContactForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, margin: "-80px" }}
           transition={{ duration: 0.7, ease: easeCurve }}
-          className="relative overflow-hidden rounded-3xl border border-border/50 bg-gradient-to-br from-card/80 via-card/40 to-primary/5 backdrop-blur-xl shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
+          className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/40 backdrop-blur-xl shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
         >
           {/* Decorative blobs */}
           <motion.div
@@ -107,21 +107,18 @@ export default function ContactForm() {
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          <div className="relative grid md:grid-cols-2 gap-0">
+          <div className="relative grid md:grid-cols-2 gap-0 items-start">
             {/* Left side - intro */}
-            <div className="p-8 md:p-12 flex flex-col justify-center">
+            <div className="p-8 md:p-12">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false, margin: "-40px" }}
                 transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-5">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  <span className="text-xs font-medium text-primary uppercase tracking-wider">
-                    Contacto
-                  </span>
-                </div>
+                <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
+                  Contacto
+                </p>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] text-foreground mb-4 leading-tight">
                   ¿Necesitas más información?
                 </h2>
