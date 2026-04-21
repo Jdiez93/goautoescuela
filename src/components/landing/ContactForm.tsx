@@ -141,11 +141,11 @@ export default function ContactForm() {
             {/* Right side - form */}
             <motion.form
               onSubmit={handleSubmit}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
-              className="p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] backdrop-blur-sm space-y-5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.15, ease: easeCurve }}
+              className="p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] space-y-5"
             >
               <FormField
                 id="full_name"
