@@ -113,7 +113,7 @@ function FeatureCard({ icon, title, bullets, index }: { icon: string; title: str
             ))}
           </ul>
         </div>
-        <img src={icon} alt={title} className="w-24 h-24 sm:w-28 sm:h-28 object-contain shrink-0 mix-blend-multiply" />
+        <img src={icon} alt={title} className="w-32 h-32 sm:w-36 sm:h-36 object-contain shrink-0 mix-blend-multiply -mr-2" />
       </div>
     </motion.div>
   );
