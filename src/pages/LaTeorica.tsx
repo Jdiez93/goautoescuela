@@ -1,5 +1,6 @@
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -176,6 +177,7 @@ export default function LaTeorica() {
           </motion.div>
         </div>
       </main>
+      <ContactForm />
       <Footer />
     </div>
   );

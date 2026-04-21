@@ -128,6 +128,39 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          email_sent: boolean
+          full_name: string
+          id: string
+          message: string
+          phone: string
+          source_page: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          email_sent?: boolean
+          full_name: string
+          id?: string
+          message: string
+          phone: string
+          source_page?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          email_sent?: boolean
+          full_name?: string
+          id?: string
+          message?: string
+          phone?: string
+          source_page?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           booking_id: string | null
