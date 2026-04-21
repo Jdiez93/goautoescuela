@@ -17,7 +17,7 @@ const fadeUp = {
 
 const features = [
   { icon: iconoInteraccion, title: "Interacción y Tecnología", text: "Texto...", scale: 1 },
-  { icon: iconoTiempoDinero, title: "Tiempo y Dinero", text: "Texto...", scale: 1.35 },
+  { icon: iconoTiempoDinero, title: "Tiempo y Dinero", text: "Texto...", scale: 1.65 },
   { icon: iconoConfianza, title: "Confianza y Preparación", text: "Texto...", scale: 1 },
   { icon: iconoExito, title: "Éxito al Primer Intento", text: "Texto...", scale: 1 },
 ];
