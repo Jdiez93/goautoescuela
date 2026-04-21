@@ -4,13 +4,17 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ClipboardCheck, Monitor, Video, BarChart3, Info } from "lucide-react";
+import { Info } from "lucide-react";
+import icono85 from "@/assets/icono-85.jpeg";
+import iconoTest from "@/assets/icono-test.jpeg";
+import iconoVideoPregunta from "@/assets/icono-video-pregunta.jpeg";
+import iconoVideoTemario from "@/assets/icono-video-temario.jpeg";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const features = [
   {
-    icon: ClipboardCheck,
+    icon: icono85,
     title: "Supera los bloques de tests con el 85% de aptos",
     bullets: [
       "El método se organiza en 4 bloques de test progresivos",
@@ -20,7 +24,7 @@ const features = [
     imageLabel: "Imagen Tests",
   },
   {
-    icon: Monitor,
+    icon: iconoVideoTemario,
     title: "Clases 100% online, prepárate donde y cuando quieras",
     bullets: [
       "NO necesitas asistir a clases presenciales",
@@ -30,7 +34,7 @@ const features = [
     imageLabel: "Imagen Video-Temario",
   },
   {
-    icon: Video,
+    icon: iconoVideoPregunta,
     title: "Tendrás un video explicativo en cada pregunta",
     bullets: [
       "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
@@ -38,7 +42,7 @@ const features = [
     imageLabel: "Imagen Video-Pregunta",
   },
   {
-    icon: BarChart3,
+    icon: iconoTest,
     title: "Simulacros antes del examen",
     bullets: [
       "Una vez superados los bloques, toca la fase final",
@@ -120,9 +124,7 @@ export default function LaTeorica() {
                 className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
               >
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                    <feat.icon className="w-5 h-5 text-primary" />
-                  </div>
+                  <img src={feat.icon} alt={feat.title} className="w-20 h-20 object-contain shrink-0 mix-blend-multiply" />
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-sm leading-snug pt-2">{feat.title}</h3>
                 </div>
                 <div className="rounded-xl bg-primary/15 border border-primary/20 h-36 flex items-center justify-center mb-4">
