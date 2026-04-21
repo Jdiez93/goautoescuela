@@ -215,7 +215,7 @@ export default function Dashboard() {
               <Link to={card.href}>
                 <Card className={`h-full group hover:shadow-[var(--card-shadow-hover)] transition-all duration-300 hover:-translate-y-1 cursor-pointer border-border/50 bg-card ${(card as any).borderClass || ''}`}>
                   <CardHeader className="flex flex-row items-start gap-4 pb-2">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${card.accent === "secondary" ? "bg-secondary/10 text-secondary" : "bg-accent text-primary"}`}>
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${card.accent === "destructive" ? "bg-destructive/10 text-destructive" : card.accent === "secondary" ? "bg-secondary/10 text-secondary" : "bg-accent text-primary"}`}>
                       <card.icon className="w-6 h-6" />
                     </div>
                     <div className="flex-1 min-w-0">
