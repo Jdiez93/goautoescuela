@@ -33,6 +33,12 @@ export default function Footer() {
             <h4 className="font-semibold text-background mb-5 text-xs uppercase tracking-[0.2em]">Enlaces</h4>
             <ul className="space-y-3 text-sm">
               <li>
+                <Link to="/inicio" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
+                  Inicio
+                  <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </Link>
+              </li>
+              <li>
                 <Link to="/la-teorica" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
                   La Teórica
                   <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
