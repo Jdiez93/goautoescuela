@@ -104,16 +104,18 @@ function FeatureCard({ icon, title, bullets, index }: { icon: string; title: str
         />
       </div>
 
-      <div className="relative flex items-start justify-between gap-4">
-        <div className="flex-1">
-          <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3">{title}</h3>
-          <ul className="space-y-1.5">
-            {bullets.map((b, i) => (
-              <li key={i} className="text-sm text-muted-foreground leading-relaxed">{b}</li>
-            ))}
-          </ul>
-        </div>
-        <img src={icon} alt={title} className="w-32 h-32 sm:w-36 sm:h-36 object-contain shrink-0 mix-blend-multiply -mr-2" />
+      <img
+        src={icon}
+        alt={title}
+        className="absolute top-2 right-2 w-20 h-20 sm:w-24 sm:h-24 object-contain mix-blend-multiply pointer-events-none"
+      />
+      <div className="relative">
+        <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3 pr-20 sm:pr-24 min-h-[5rem] flex items-center">{title}</h3>
+        <ul className="space-y-1.5">
+          {bullets.map((b, i) => (
+            <li key={i} className="text-sm text-muted-foreground leading-relaxed">{b}</li>
+          ))}
+        </ul>
       </div>
     </motion.div>
   );
