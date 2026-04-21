@@ -91,20 +91,16 @@ export default function ContactForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, margin: "-80px" }}
           transition={{ duration: 0.7, ease: easeCurve }}
-          className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/40 backdrop-blur-xl shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
+          className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/60 shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
         >
-          {/* Decorative blobs */}
-          <motion.div
+          {/* Decorative blobs - static for performance */}
+          <div
             aria-hidden
-            className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/20 blur-3xl"
-            animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/15 blur-3xl pointer-events-none"
           />
-          <motion.div
+          <div
             aria-hidden
-            className="absolute -bottom-32 -left-20 w-80 h-80 rounded-full bg-secondary/20 blur-3xl"
-            animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -bottom-32 -left-20 w-80 h-80 rounded-full bg-secondary/15 blur-3xl pointer-events-none"
           />
 
           <div className="relative grid md:grid-cols-2 gap-0 items-start">
