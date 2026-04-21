@@ -16,10 +16,10 @@ const fadeUp = {
 };
 
 const features = [
-  { icon: iconoInteraccion, title: "Interacción y Tecnología", text: "Texto..." },
-  { icon: iconoTiempoDinero, title: "Tiempo y Dinero", text: "Texto..." },
-  { icon: iconoConfianza, title: "Confianza y Preparación", text: "Texto..." },
-  { icon: iconoExito, title: "Éxito al Primer Intento", text: "Texto..." },
+  { icon: iconoInteraccion, title: "Interacción y Tecnología", text: "Texto...", scale: 1 },
+  { icon: iconoTiempoDinero, title: "Tiempo y Dinero", text: "Texto...", scale: 1.35 },
+  { icon: iconoConfianza, title: "Confianza y Preparación", text: "Texto...", scale: 1 },
+  { icon: iconoExito, title: "Éxito al Primer Intento", text: "Texto...", scale: 1 },
 ];
 
 
@@ -76,6 +76,7 @@ export default function PracticasVirtuales() {
                 <img
                   src={feat.icon}
                   alt={feat.title}
+                  style={{ transform: `scale(${feat.scale})`, transformOrigin: "top right" }}
                   className="absolute -top-2 -right-2 w-32 h-32 sm:w-36 sm:h-36 object-contain mix-blend-multiply pointer-events-none"
                 />
                 <div className="mb-7" />
