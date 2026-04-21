@@ -107,10 +107,10 @@ export default function ContactForm() {
             {/* Left side - intro */}
             <div className="p-8 md:p-12">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: false, margin: "-40px" }}
-                transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, ease: easeCurve }}
               >
                 <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
                   Contacto
