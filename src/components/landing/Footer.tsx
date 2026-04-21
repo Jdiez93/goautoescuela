@@ -1,4 +1,4 @@
-import { Car, MapPin, Phone, Mail, Clock, Facebook, Instagram, ArrowUpRight } from "lucide-react";
+import { Car, MapPin, Phone, Mail, Clock, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -23,26 +23,9 @@ export default function Footer() {
                 AutoescuelaGO
               </span>
             </div>
-            <p className="text-sm leading-relaxed opacity-60 max-w-xs mb-6">
+            <p className="text-sm leading-relaxed opacity-60 max-w-xs">
               Tu autoescuela digital de confianza en la Sierra de Madrid. Formación moderna, profesional y cercana.
             </p>
-            {/* Social */}
-            <div className="flex items-center gap-3">
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="w-9 h-9 rounded-lg border border-background/15 flex items-center justify-center hover:border-primary/60 hover:bg-primary/10 transition-all"
-              >
-                <Facebook className="w-4 h-4 opacity-70" />
-              </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-lg border border-background/15 flex items-center justify-center hover:border-primary/60 hover:bg-primary/10 transition-all"
-              >
-                <Instagram className="w-4 h-4 opacity-70" />
-              </a>
-            </div>
           </div>
 
           {/* Enlaces rápidos */}
@@ -76,12 +59,6 @@ export default function Footer() {
               <li>
                 <Link to="/autoescuelas-ready2go" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
                   Nuestros Centros
-                  <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/blog" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
-                  Blog
                   <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                 </Link>
               </li>
