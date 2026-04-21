@@ -56,10 +56,10 @@ export default function ContactForm() {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase.from("contact_submissions").insert({
+      const { error } = await supabase.from("contact_submissions").insert([{
         ...parsed.data,
         source_page: pathname,
-      });
+      }]);
       if (error) throw error;
 
       setSuccess(true);
