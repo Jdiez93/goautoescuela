@@ -1,7 +1,10 @@
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { motion } from "framer-motion";
-import { Smartphone, Clock, ShieldCheck, Trophy } from "lucide-react";
+import iconoInteraccion from "@/assets/icono-interaccion-tecnologia.jpeg";
+import iconoTiempoDinero from "@/assets/icono-tiempo-dinero.jpeg";
+import iconoConfianza from "@/assets/icono-confianza-preparacion.jpeg";
+import iconoExito from "@/assets/icono-exito-primer-intento.jpeg";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -13,10 +16,10 @@ const fadeUp = {
 };
 
 const features = [
-  { icon: Smartphone, title: "Interacción y Tecnología", text: "Texto..." },
-  { icon: Clock, title: "Tiempo y Dinero", text: "Texto..." },
-  { icon: ShieldCheck, title: "Confianza y Preparación", text: "Texto..." },
-  { icon: Trophy, title: "Éxito al Primer Intento", text: "Texto..." },
+  { icon: iconoInteraccion, title: "Interacción y Tecnología", text: "Texto..." },
+  { icon: iconoTiempoDinero, title: "Tiempo y Dinero", text: "Texto..." },
+  { icon: iconoConfianza, title: "Confianza y Preparación", text: "Texto..." },
+  { icon: iconoExito, title: "Éxito al Primer Intento", text: "Texto..." },
 ];
 
 
@@ -70,9 +73,12 @@ export default function PracticasVirtuales() {
                 style={{ cursor: "crosshair" }}
               >
                 {/* Icon */}
-                <div className="w-12 h-12 rounded-sm border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary/15 transition-colors duration-400 mb-7">
-                  <feat.icon className="w-5 h-5 text-primary" />
-                </div>
+                <img
+                  src={feat.icon}
+                  alt={feat.title}
+                  className="absolute -top-2 -right-2 w-32 h-32 sm:w-36 sm:h-36 object-contain mix-blend-multiply pointer-events-none"
+                />
+                <div className="mb-7" />
 
                 {/* Content */}
                 <h3 className="text-lg font-medium text-foreground mb-2 tracking-wide font-['Space_Grotesk']">
