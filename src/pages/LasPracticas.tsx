@@ -3,13 +3,19 @@ import Footer from "@/components/landing/Footer";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CalendarCheck, Video, MapPin, TrendingUp, Car, Package, RefreshCw } from "lucide-react";
+import iconoAppPracticas from "@/assets/icono-app-practicas.jpeg";
+import iconoManiobras from "@/assets/icono-maniobras.jpeg";
+import iconoRecorridoExamen from "@/assets/icono-recorrido-examen.jpeg";
+import iconoProgreso from "@/assets/icono-progreso.jpeg";
+import iconoSimulacro from "@/assets/icono-simulacro.jpeg";
+import iconoAhorro from "@/assets/icono-ahorro.jpeg";
+import iconoReciclaje from "@/assets/icono-reciclaje.jpeg";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const features = [
   {
-    icon: CalendarCheck,
+    icon: iconoAppPracticas,
     title: "¡Tus prácticas a un click!",
     bullets: [
       "Resérvalas fácilmente desde tu móvil",
@@ -18,14 +24,14 @@ const features = [
     ],
   },
   {
-    icon: Video,
+    icon: iconoManiobras,
     title: "Maniobras de examen",
     bullets: [
       "Tendrás acceso a videos de cada maniobra con su explicación y los errores habituales que suelen cometerse en el examen",
     ],
   },
   {
-    icon: MapPin,
+    icon: iconoRecorridoExamen,
     title: "Recorridos de Examen, al detalle",
     bullets: [
       "Accede a los vídeos de los itinerarios más habituales",
@@ -34,7 +40,7 @@ const features = [
     ],
   },
   {
-    icon: TrendingUp,
+    icon: iconoProgreso,
     title: "Tu progreso siempre contigo",
     bullets: [
       "Cada coche Ready2Go lleva una tablet donde tu profe evalúa la clase",
@@ -42,7 +48,7 @@ const features = [
     ],
   },
   {
-    icon: Car,
+    icon: iconoSimulacro,
     title: "TestDrive!",
     bullets: [
       "Ponemos a prueba tu nivel como si fuera el día oficial",
@@ -51,7 +57,7 @@ const features = [
     ],
   },
   {
-    icon: Package,
+    icon: iconoAhorro,
     title: "AHORRA CON LOS PACKS",
     bullets: [
       "Elige uno de nuestros packs y paga menos por cada clase",
@@ -60,7 +66,7 @@ const features = [
     ],
   },
   {
-    icon: RefreshCw,
+    icon: iconoReciclaje,
     title: "Prácticas de Reciclaje",
     bullets: [
       "Recupera la seguridad con nuestras clases de reciclaje personalizadas",
@@ -69,7 +75,7 @@ const features = [
   },
 ];
 
-function FeatureCard({ icon: Icon, title, bullets, index }: { icon: typeof CalendarCheck; title: string; bullets: string[]; index: number }) {
+function FeatureCard({ icon, title, bullets, index }: { icon: string; title: string; bullets: string[]; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -107,9 +113,7 @@ function FeatureCard({ icon: Icon, title, bullets, index }: { icon: typeof Calen
             ))}
           </ul>
         </div>
-        <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-          <Icon className="w-5 h-5 text-primary" />
-        </div>
+        <img src={icon} alt={title} className="w-24 h-24 sm:w-28 sm:h-28 object-contain shrink-0 mix-blend-multiply" />
       </div>
     </motion.div>
   );
