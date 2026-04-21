@@ -87,34 +87,30 @@ export default function ContactForm() {
     <section className="py-20 md:py-28 px-4">
       <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: easeCurve }}
-          className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/40 backdrop-blur-xl shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: easeCurve }}
+          className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/60 shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
         >
-          {/* Decorative blobs */}
-          <motion.div
+          {/* Decorative blobs - static for performance */}
+          <div
             aria-hidden
-            className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/20 blur-3xl"
-            animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/15 blur-3xl pointer-events-none"
           />
-          <motion.div
+          <div
             aria-hidden
-            className="absolute -bottom-32 -left-20 w-80 h-80 rounded-full bg-secondary/20 blur-3xl"
-            animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -bottom-32 -left-20 w-80 h-80 rounded-full bg-secondary/15 blur-3xl pointer-events-none"
           />
 
           <div className="relative grid md:grid-cols-2 gap-0 items-start">
             {/* Left side - intro */}
             <div className="p-8 md:p-12">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: false, margin: "-40px" }}
-                transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, ease: easeCurve }}
               >
                 <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
                   Contacto
@@ -145,11 +141,11 @@ export default function ContactForm() {
             {/* Right side - form */}
             <motion.form
               onSubmit={handleSubmit}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
-              className="p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] backdrop-blur-sm space-y-5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.15, ease: easeCurve }}
+              className="p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] space-y-5"
             >
               <FormField
                 id="full_name"
