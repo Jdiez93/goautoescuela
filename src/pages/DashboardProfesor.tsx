@@ -438,54 +438,91 @@ export default function DashboardProfesor() {
       </AlertDialog>
 
       {/* Footer */}
-      <footer className="bg-foreground text-background/80 py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-5">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <Car className="w-4 h-4 text-primary-foreground" />
+      <footer className="relative bg-foreground text-background/80 py-10 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[160px] bg-primary/[0.05] rounded-full blur-3xl" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid md:grid-cols-3 gap-8 items-start">
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
+                  <Car className="w-4 h-4 text-primary-foreground" />
+                </div>
+                <span className="text-lg font-bold text-background font-['Space_Grotesk'] tracking-tight">AutoescuelaGO</span>
               </div>
-              <span className="text-base font-bold text-background font-['Space_Grotesk']">
-                AutoescuelaGO
-              </span>
+              <p className="text-xs leading-relaxed opacity-60 max-w-xs">
+                Tu autoescuela digital de confianza en la Sierra de Madrid.
+              </p>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5 text-sm opacity-70">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5" /> Villanueva del Pardillo
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5" /> 658474814
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5" /> info@autoescuelago.es
-              </span>
-              <span className="flex items-start gap-1.5">
-                <Clock className="w-3.5 h-3.5 mt-0.5" />
-                <span className="flex flex-col">
-                  <span>Lunes-Viernes: 10:00-13:00 y 16:00-20:00</span>
-                  <span>
-                    Sábados y domingos:{" "}
-                    <span className="text-red-400 font-semibold">Cerrados</span>
-                  </span>
-                </span>
-              </span>
+
+            <div>
+              <h4 className="font-semibold text-background mb-4 text-xs uppercase tracking-[0.2em]">Contacto</h4>
+              <ul className="space-y-2.5 text-sm">
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70" />
+                  <div className="opacity-70">
+                    <p className="font-medium text-background/90">V. del Pardillo</p>
+                    <p className="text-xs opacity-80">C/ Concepción, 61 — 28229</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70" />
+                  <div className="opacity-70">
+                    <p className="font-medium text-background/90">Valdemorillo</p>
+                    <p className="text-xs opacity-80">C/ Covachuelas, 18 — 28210</p>
+                  </div>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 shrink-0 text-primary/70" />
+                  <a href="tel:+34645343117" className="opacity-70 hover:opacity-100 transition-opacity">645 34 31 17</a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Mail className="w-4 h-4 shrink-0 text-primary/70" />
+                  <a href="mailto:info@autoescuelago.es" className="opacity-70 hover:opacity-100 transition-opacity">info@autoescuelago.es</a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-background mb-4 text-xs uppercase tracking-[0.2em]">Horarios</h4>
+              <div className="space-y-3 text-sm">
+                <div className="rounded-xl border border-background/10 bg-background/[0.03] p-3">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <p className="font-semibold text-background/90 text-xs uppercase tracking-wider">V. del Pardillo</p>
+                  </div>
+                  <div className="flex justify-between text-xs opacity-70">
+                    <span>Mar y Jue</span>
+                    <span className="font-medium text-background/85">11–13 / 17:30–20:30</span>
+                  </div>
+                </div>
+                <div className="rounded-xl border border-background/10 bg-background/[0.03] p-3">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <p className="font-semibold text-background/90 text-xs uppercase tracking-wider">Valdemorillo</p>
+                  </div>
+                  <div className="flex justify-between text-xs opacity-70">
+                    <span>Lun, Mié y Vie</span>
+                    <span className="font-medium text-background/85">11–13 / 17:30–20:30</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-xs opacity-70 pl-1">
+                  <Clock className="w-3.5 h-3.5 text-primary/70" />
+                  <span>Prácticas L–V · 8:00 – 22:00</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs opacity-60 pl-1">
+                  <span>Sáb y Dom:</span>
+                  <span className="text-red-400 font-semibold">Cerrado</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="border-t border-background/10 mt-5 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-50">
+
+          <div className="border-t border-background/10 mt-8 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-50">
             <span>© 2026 AutoescuelaGO. Todos los derechos reservados.</span>
             <div className="flex gap-4">
-              <Link
-                to="/politica-privacidad"
-                className="hover:opacity-100 hover:text-background transition-colors"
-              >
-                Política de privacidad
-              </Link>
-              <Link
-                to="/aviso-legal"
-                className="hover:opacity-100 hover:text-background transition-colors"
-              >
-                Aviso legal
-              </Link>
+              <Link to="/politica-privacidad" className="hover:opacity-100 hover:text-primary transition-all">Política de privacidad</Link>
+              <Link to="/aviso-legal" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</Link>
             </div>
           </div>
         </div>
