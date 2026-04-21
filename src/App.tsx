@@ -20,7 +20,7 @@ import DashboardProfesor from "./pages/DashboardProfesor";
 import Pagos from "./pages/Pagos";
 import Reservas from "./pages/Reservas";
 import Perfil from "./pages/Perfil";
-import Blog from "./pages/Blog";
+
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import NotFound from "./pages/NotFound";
 
@@ -50,7 +50,7 @@ const App = () => (
             <Route path="/pagos" element={<Pagos />} />
             <Route path="/reservas" element={<Reservas />} />
             <Route path="/perfil" element={<Perfil />} />
-            <Route path="/blog" element={<Blog />} />
+            
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
