@@ -1,5 +1,6 @@
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -193,6 +194,8 @@ export default function AutoescuelaOnline() {
           </motion.div>
         </div>
       </section>
+
+      <ContactForm />
 
       <motion.div {...fadeUp}>
         <Footer />

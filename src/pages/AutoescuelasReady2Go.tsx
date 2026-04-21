@@ -1,5 +1,6 @@
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Car } from "lucide-react";
 
@@ -121,6 +122,7 @@ export default function AutoescuelasReady2Go() {
           </div>
         </div>
       </main>
+      <ContactForm />
       <Footer />
     </div>
   );

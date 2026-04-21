@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import ContactForm from "@/components/landing/ContactForm";
 import SplashScreen from "@/components/SplashScreen";
 import iconoMetodo from "@/assets/icono-metodo.jpeg";
 import iconoApp from "@/assets/icono-app.jpeg";
@@ -334,6 +335,7 @@ export default function Home() {
             <WhySection />
             <CoursesSection />
             <PromoBanner />
+            <ContactForm />
           </main>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
