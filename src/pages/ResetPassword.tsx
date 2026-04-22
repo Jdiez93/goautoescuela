@@ -41,21 +41,58 @@ export default function ResetPassword() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let mounted = true;
+
     // Listen for the PASSWORD_RECOVERY event from the auth state change
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        setSessionReady(true);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
+        if (mounted) setSessionReady(true);
       }
     });
 
-    // Also check if we already have a session (user clicked link and was auto-logged in)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
+    const initialize = async () => {
+      // 1) Check URL hash for recovery tokens (#access_token=...&type=recovery)
+      const hash = window.location.hash;
+      if (hash && hash.includes("access_token")) {
+        const params = new URLSearchParams(hash.substring(1));
+        const access_token = params.get("access_token");
+        const refresh_token = params.get("refresh_token");
+        if (access_token && refresh_token) {
+          const { error } = await supabase.auth.setSession({ access_token, refresh_token });
+          if (!error && mounted) {
+            setSessionReady(true);
+            // Clean URL
+            window.history.replaceState(null, "", window.location.pathname);
+            return;
+          }
+        }
+      }
+
+      // 2) Check URL search params for code (?code=...) - PKCE flow
+      const search = new URLSearchParams(window.location.search);
+      const code = search.get("code");
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (!error && mounted) {
+          setSessionReady(true);
+          window.history.replaceState(null, "", window.location.pathname);
+          return;
+        }
+      }
+
+      // 3) Fallback: check if we already have a session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session && mounted) {
         setSessionReady(true);
       }
-    });
+    };
 
-    return () => subscription.unsubscribe();
+    initialize();
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
