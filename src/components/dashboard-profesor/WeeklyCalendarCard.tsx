@@ -23,13 +23,13 @@ interface WeeklyCalendarCardProps {
 // 45-min slots from 9:00 to 20:00
 const HOURS = (() => {
   const slots: { start: string; end: string; label: string }[] = [];
-  let h = 9, m = 0;
+  let h = 8, m = 0;
   while (true) {
     const sH = String(h).padStart(2, "0");
     const sM = String(m).padStart(2, "0");
     let eM = m + 45, eH = h;
     if (eM >= 60) { eH++; eM -= 60; }
-    if (eH > 20 || (eH === 20 && eM > 0)) break;
+    if (eH > 22 || (eH === 22 && eM > 0)) break;
     const eHs = String(eH).padStart(2, "0");
     const eMs = String(eM).padStart(2, "0");
     slots.push({ start: `${sH}:${sM}`, end: `${eHs}:${eMs}`, label: `${sH}:${sM}` });

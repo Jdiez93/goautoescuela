@@ -17,14 +17,14 @@ import { useToast } from "@/hooks/use-toast";
 // Same 45-min slots used in Reservas
 const ALL_SLOTS = (() => {
   const slots: { start: string; end: string }[] = [];
-  let hour = 9, min = 0;
+  let hour = 8, min = 0;
   while (true) {
     const startH = String(hour).padStart(2, "0");
     const startM = String(min).padStart(2, "0");
     let endMin = min + 45;
     let endHour = hour;
     if (endMin >= 60) { endHour++; endMin -= 60; }
-    if (endHour > 20 || (endHour === 20 && endMin > 0)) break;
+    if (endHour > 22 || (endHour === 22 && endMin > 0)) break;
     const endH = String(endHour).padStart(2, "0");
     const endM = String(endMin).padStart(2, "0");
     slots.push({ start: `${startH}:${startM}`, end: `${endH}:${endM}` });
