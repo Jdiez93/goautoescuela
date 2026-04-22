@@ -42,7 +42,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import BlockSlotsCard from "@/components/dashboard-profesor/BlockSlotsCard";
 import WeeklyCalendarCard from "@/components/dashboard-profesor/WeeklyCalendarCard";
-
+import AdminTeachersOverview from "@/components/dashboard-profesor/AdminTeachersOverview";
 
 export default function DashboardProfesor() {
   const { user, profile, role, isAdmin, isTeacher, loading, signOut } = useAuth();
@@ -246,7 +246,7 @@ export default function DashboardProfesor() {
             <div className="flex items-center gap-2 mb-2">
               <Shield className="w-4 h-4 text-primary-foreground/70" />
               <span className="text-sm font-medium text-primary-foreground/70 uppercase tracking-wider">
-                Profesor
+                {isAdmin ? "Jefe de autoescuela" : "Profesor"}
               </span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-1">
@@ -379,6 +379,18 @@ export default function DashboardProfesor() {
         >
           <BlockSlotsCard teacherId={user.id} />
         </motion.div>
+
+        {/* Admin-only: overview of all teachers' calendars */}
+        {isAdmin && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-8"
+          >
+            <AdminTeachersOverview currentUserName={profile?.full_name || ""} />
+          </motion.div>
+        )}
       </main>
 
       {/* Cancel Dialog */}
