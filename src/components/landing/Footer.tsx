@@ -82,13 +82,6 @@ export default function Footer() {
                   <p className="text-xs opacity-80">C. Covachuelas, 18 — 28210 Madrid</p>
                 </div>
               </li>
-              <li className="flex items-start gap-3 group">
-                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
-                <div className="opacity-70 group-hover:opacity-100 transition-opacity">
-                  <p className="font-medium text-background/90">Valdemorillo</p>
-                  <p className="text-xs opacity-80">C/ Covachuelas, 18 — 28210 Madrid</p>
-                </div>
-              </li>
               <li className="flex items-center gap-3 group">
                 <Phone className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
                 <a href="tel:+34645343117" className="opacity-70 group-hover:opacity-100 transition-opacity">

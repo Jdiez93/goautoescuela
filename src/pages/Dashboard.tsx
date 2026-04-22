@@ -426,13 +426,6 @@ export default function Dashboard() {
                     <p className="text-xs opacity-80">C. Covachuelas, 18 — 28210</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70" />
-                  <div className="opacity-70">
-                    <p className="font-medium text-background/90">Valdemorillo</p>
-                    <p className="text-xs opacity-80">C/ Covachuelas, 18 — 28210</p>
-                  </div>
-                </li>
                 <li className="flex items-center gap-2.5">
                   <Phone className="w-4 h-4 shrink-0 text-primary/70" />
                   <a href="tel:+34645343117" className="opacity-70 hover:opacity-100 transition-opacity">645 34 31 17</a>
