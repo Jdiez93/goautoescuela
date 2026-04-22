@@ -17,8 +17,9 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, signOut, isTeacher } = useAuth();
   const location = useLocation();
+  const panelHref = isTeacher ? "/dashboard-profesor" : "/dashboard";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -86,7 +87,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-2 shrink-0">
             {user ? (
               <>
-                <Link to="/dashboard">
+                <Link to={panelHref}>
                   <Button variant="ghost" size="sm" className="rounded-xl hover:bg-primary/10 transition-colors">Mi panel</Button>
                 </Link>
                 <Button variant="ghost" size="sm" className="rounded-xl hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors" onClick={signOut}>
@@ -161,7 +162,7 @@ export default function Navbar() {
               <div className="h-px bg-border/60 my-2" />
               {user ? (
                 <>
-                  <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                  <Link to={panelHref} onClick={() => setIsOpen(false)}>
                     <Button variant="outline" className="w-full rounded-xl">Mi panel</Button>
                   </Link>
                   <Button className="w-full rounded-xl" variant="ghost" onClick={() => { signOut(); setIsOpen(false); }}>

@@ -46,36 +46,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<AuthContextType["profile"]>(null);
 
   const fetchUserData = async (userId: string) => {
-    const [{ data: rolesData }, { data: profileData }] = await Promise.all([
+    const [{ data: rolesData, error: rolesError }, { data: profileData, error: profileError }] = await Promise.all([
       supabase.from("user_roles").select("role").eq("user_id", userId),
       supabase.from("profiles").select("full_name, email, phone, avatar_url").eq("user_id", userId).maybeSingle(),
     ]);
+
+    if (rolesError) throw rolesError;
+    if (profileError) throw profileError;
+
     const userRoles = (rolesData ?? []).map((r) => r.role as UserRole);
     setRoles(userRoles);
     setProfile(profileData ?? null);
   };
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        setTimeout(() => fetchUserData(session.user.id), 0);
-      } else {
+    const syncSessionState = async (nextSession: Session | null) => {
+      setLoading(true);
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+
+      try {
+        if (nextSession?.user) {
+          await fetchUserData(nextSession.user.id);
+        } else {
+          setRoles([]);
+          setProfile(null);
+        }
+      } catch (error) {
+        console.error("Error loading auth context data:", error);
         setRoles([]);
         setProfile(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      void syncSessionState(nextSession);
     });
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchUserData(session.user.id);
-      }
-      setLoading(false);
-    });
+    void supabase.auth.getSession().then(({ data: { session } }) => syncSessionState(session));
 
     return () => subscription.unsubscribe();
   }, []);

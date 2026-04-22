@@ -15,7 +15,7 @@ import NotificationBell from "@/components/dashboard/NotificationBell";
 import { useMemo, useState, useEffect } from "react";
 
 export default function Dashboard() {
-  const { user, profile, role, loading, signOut } = useAuth();
+  const { user, profile, role, isTeacher, loading, signOut } = useAuth();
 
   // Fetch payments
   const { data: payments, isLoading: paymentsLoading } = useQuery({
@@ -108,7 +108,7 @@ export default function Dashboard() {
   }
 
   if (!user) return <Navigate to="/login" replace />;
-  if (role === "teacher") return <Navigate to="/dashboard-profesor" replace />;
+  if (isTeacher) return <Navigate to="/dashboard-profesor" replace />;
 
   const studentCards = [
     { icon: Calendar, title: "Mis Reservas", desc: "Ver y gestionar tus clases programadas", href: "/reservas", accent: "primary" as const, borderClass: "border-l-4 border-l-primary" },
