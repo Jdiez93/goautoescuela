@@ -6,7 +6,11 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const NOTIFY_TO = "formulario.ready2go@gmail.com";
+// Sandbox de Resend: hasta verificar un dominio en resend.com/domains,
+// solo se puede enviar al email del propietario de la cuenta de Resend.
+// Tras verificar el dominio, cambiar NOTIFY_TO a "formulario.ready2go@gmail.com".
+const NOTIFY_TO = "jorgediezrodriguez2004@gmail.com";
+const FORWARD_TARGET = "formulario.ready2go@gmail.com";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -84,7 +88,7 @@ serve(async (req) => {
         from: "AutoescuelaGO <onboarding@resend.dev>",
         to: [NOTIFY_TO],
         reply_to: email,
-        subject: `📩 Nuevo contacto web - ${full_name}`,
+        subject: `📩 Nuevo contacto web - ${full_name} (reenviar a ${FORWARD_TARGET})`,
         html,
       }),
     });
