@@ -6,7 +6,7 @@ const sections = [
   {
     title: "1. Responsable del tratamiento",
     content:
-      "El responsable del tratamiento de sus datos personales es [NOMBRE DE LA AUTOESCUELA O RAZÓN SOCIAL], con NIF [NÚMERO DE CIF], domicilio en [DIRECCIÓN COMPLETA] y correo electrónico de contacto [EMAIL DE CONTACTO].",
+      "El responsable del tratamiento de sus datos personales es Valentín Cobo Fernández, con nombre comercial Autoescuela Monkey Drive, S.L., NIF B-05398987, domicilio social en C/ Concepción, 61, 28229 Villanueva del Pardillo (Madrid), teléfono de contacto 645 34 31 17 y correo electrónico de contacto info@autoescuelago.es.",
   },
   {
     title: "2. Finalidad del tratamiento",
