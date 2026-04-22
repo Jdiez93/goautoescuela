@@ -36,6 +36,7 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
+  const [sessionError, setSessionError] = useState<string | null>(null);
   const { toast } = useToast();
   const strength = useMemo(() => getPasswordStrength(password), [password]);
   const navigate = useNavigate();
@@ -43,48 +44,77 @@ export default function ResetPassword() {
   useEffect(() => {
     let mounted = true;
 
-    // Listen for the PASSWORD_RECOVERY event from the auth state change
+    const markReady = () => {
+      if (!mounted) return;
+      setSessionReady(true);
+      setSessionError(null);
+    };
+
+    const markError = (message: string) => {
+      if (!mounted) return;
+      setSessionReady(false);
+      setSessionError(message);
+    };
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
-        if (mounted) setSessionReady(true);
+      if (event === "PASSWORD_RECOVERY" || ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session)) {
+        markReady();
       }
     });
 
     const initialize = async () => {
-      // 1) Check URL hash for recovery tokens (#access_token=...&type=recovery)
-      const hash = window.location.hash;
-      if (hash && hash.includes("access_token")) {
-        const params = new URLSearchParams(hash.substring(1));
-        const access_token = params.get("access_token");
-        const refresh_token = params.get("refresh_token");
-        if (access_token && refresh_token) {
-          const { error } = await supabase.auth.setSession({ access_token, refresh_token });
-          if (!error && mounted) {
-            setSessionReady(true);
-            // Clean URL
-            window.history.replaceState(null, "", window.location.pathname);
-            return;
-          }
-        }
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const searchParams = new URLSearchParams(window.location.search);
+      const flowType = hashParams.get("type") ?? searchParams.get("type");
+      const accessToken = hashParams.get("access_token");
+      const refreshToken = hashParams.get("refresh_token");
+      const code = searchParams.get("code");
+      const urlError = hashParams.get("error_description") ?? searchParams.get("error_description") ?? hashParams.get("error") ?? searchParams.get("error");
+
+      if (urlError) {
+        markError("El enlace de recuperación no es válido o ha caducado. Solicita uno nuevo.");
+        return;
       }
 
-      // 2) Check URL search params for code (?code=...) - PKCE flow
-      const search = new URLSearchParams(window.location.search);
-      const code = search.get("code");
-      if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (!error && mounted) {
-          setSessionReady(true);
-          window.history.replaceState(null, "", window.location.pathname);
+      if (accessToken && refreshToken) {
+        const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+        if (error) {
+          markError("No hemos podido validar el enlace de recuperación. Solicita uno nuevo.");
           return;
         }
+
+        markReady();
+        window.history.replaceState(null, "", window.location.pathname);
+        return;
       }
 
-      // 3) Fallback: check if we already have a session
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session && mounted) {
-        setSessionReady(true);
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (error) {
+          markError("No hemos podido validar el enlace de recuperación. Solicita uno nuevo.");
+          return;
+        }
+
+        markReady();
+        window.history.replaceState(null, "", window.location.pathname);
+        return;
       }
+
+      for (let attempt = 0; attempt < 20; attempt++) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          markReady();
+          return;
+        }
+        await new Promise((resolve) => window.setTimeout(resolve, 250));
+      }
+
+      if (flowType === "recovery" || window.location.hash || window.location.search) {
+        markError("No hemos podido verificar el enlace de recuperación. Solicita uno nuevo e inténtalo otra vez.");
+        return;
+      }
+
+      markError("Falta el enlace de recuperación. Solicita uno nuevo desde “¿Olvidaste tu contraseña?”.");
     };
 
     initialize();
@@ -114,20 +144,37 @@ export default function ResetPassword() {
 
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
-      setSuccess(true);
-      toast({ title: "¡Contraseña actualizada!", description: "Ya puedes iniciar sesión con tu nueva contraseña." });
-      setTimeout(() => navigate("/login"), 3000);
+      return;
     }
+
+    setSuccess(true);
+    toast({ title: "¡Contraseña actualizada!", description: "Ya puedes iniciar sesión con tu nueva contraseña." });
+    setTimeout(() => navigate("/login"), 3000);
   };
 
   if (!sessionReady) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
         <Card className="w-full max-w-md shadow-[var(--card-shadow)]">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
-            <p className="text-muted-foreground">Verificando enlace de recuperación...</p>
+          <CardContent className="py-12">
+            {sessionError ? (
+              <div className="flex flex-col items-center text-center gap-5">
+                <p className="text-sm text-muted-foreground max-w-sm">{sessionError}</p>
+                <div className="w-full space-y-3">
+                  <Button asChild className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90">
+                    <Link to="/recuperar-password">Solicitar nuevo enlace</Link>
+                  </Button>
+                  <Button asChild variant="outline" className="w-full">
+                    <Link to="/login">Volver al login</Link>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
+                <p className="text-muted-foreground">Verificando enlace de recuperación...</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
