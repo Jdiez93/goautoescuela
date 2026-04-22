@@ -9,6 +9,9 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   role: UserRole | null;
+  roles: UserRole[];
+  isAdmin: boolean;
+  isTeacher: boolean;
   profile: { full_name: string; email: string; phone: string; avatar_url: string } | null;
   signOut: () => Promise<void>;
 }
@@ -18,25 +21,37 @@ const AuthContext = createContext<AuthContextType>({
   session: null,
   loading: true,
   role: null,
+  roles: [],
+  isAdmin: false,
+  isTeacher: false,
   profile: null,
   signOut: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
 
+// Pick the highest-privilege role for default routing/UX (admin > teacher > student)
+const pickPrimaryRole = (roles: UserRole[]): UserRole | null => {
+  if (roles.includes("admin")) return "admin";
+  if (roles.includes("teacher")) return "teacher";
+  if (roles.includes("student")) return "student";
+  return null;
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState<UserRole | null>(null);
+  const [roles, setRoles] = useState<UserRole[]>([]);
   const [profile, setProfile] = useState<AuthContextType["profile"]>(null);
 
   const fetchUserData = async (userId: string) => {
-    const [{ data: roleData }, { data: profileData }] = await Promise.all([
-      supabase.from("user_roles").select("role").eq("user_id", userId).maybeSingle(),
+    const [{ data: rolesData }, { data: profileData }] = await Promise.all([
+      supabase.from("user_roles").select("role").eq("user_id", userId),
       supabase.from("profiles").select("full_name, email, phone, avatar_url").eq("user_id", userId).maybeSingle(),
     ]);
-    setRole((roleData?.role as UserRole) ?? null);
+    const userRoles = (rolesData ?? []).map((r) => r.role as UserRole);
+    setRoles(userRoles);
     setProfile(profileData ?? null);
   };
 
@@ -47,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (session?.user) {
         setTimeout(() => fetchUserData(session.user.id), 0);
       } else {
-        setRole(null);
+        setRoles([]);
         setProfile(null);
       }
       setLoading(false);
@@ -69,8 +84,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   };
 
+  const role = pickPrimaryRole(roles);
+  const isAdmin = roles.includes("admin");
+  const isTeacher = roles.includes("teacher");
+
   return (
-    <AuthContext.Provider value={{ user, session, loading, role, profile, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, role, roles, isAdmin, isTeacher, profile, signOut }}>
       {children}
     </AuthContext.Provider>
   );
