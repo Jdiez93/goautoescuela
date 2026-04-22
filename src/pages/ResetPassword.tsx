@@ -125,6 +125,33 @@ export default function ResetPassword() {
     };
   }, []);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      toast({ title: "Error", description: "Las contraseñas no coinciden.", variant: "destructive" });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({ title: "Error", description: "La contraseña debe tener al menos 6 caracteres.", variant: "destructive" });
+      return;
+    }
+
+    setLoading(true);
+    const { error } = await supabase.auth.updateUser({ password });
+    setLoading(false);
+
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+      return;
+    }
+
+    setSuccess(true);
+    toast({ title: "¡Contraseña actualizada!", description: "Ya puedes iniciar sesión con tu nueva contraseña." });
+    setTimeout(() => navigate("/login"), 3000);
+  };
+
   if (!sessionReady) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
