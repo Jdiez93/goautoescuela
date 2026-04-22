@@ -147,7 +147,7 @@ export default function CookieSettingsModal() {
                           aria-label={`Activar ${cat.title}`}
                         />
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
