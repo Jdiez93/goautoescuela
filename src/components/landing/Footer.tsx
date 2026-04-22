@@ -24,7 +24,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed opacity-60 max-w-xs">
-              Tu autoescuela digital de confianza en la Sierra de Madrid. Formación moderna, profesional y cercana.
+              Tu éxito al volante es nuestro compromiso. Como referentes en formación vial digital, ofrecemos un ecosistema de aprendizaje flexible y profesional diseñado para que obtengas tu permiso con la máxima confianza, apoyándote en tecnología avanzada y un equipo humano altamente cualificado.
             </p>
           </div>
 
