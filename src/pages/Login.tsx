@@ -28,14 +28,14 @@ export default function Login() {
       setPasswordError(true);
       toast({ title: "Error al iniciar sesión", description: error.message, variant: "destructive" });
     } else {
-      // Check role to redirect appropriately
-      const { data: roleData } = await supabase
+      // Check roles to redirect appropriately (admin & teacher → teacher dashboard)
+      const { data: rolesData } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", data.user.id)
-        .maybeSingle();
-      
-      if (roleData?.role === "teacher") {
+        .eq("user_id", data.user.id);
+
+      const userRoles = (rolesData ?? []).map((r) => r.role);
+      if (userRoles.includes("teacher") || userRoles.includes("admin")) {
         navigate("/dashboard-profesor");
       } else {
         navigate("/dashboard");

@@ -45,7 +45,7 @@ import WeeklyCalendarCard from "@/components/dashboard-profesor/WeeklyCalendarCa
 
 
 export default function DashboardProfesor() {
-  const { user, profile, role, loading, signOut } = useAuth();
+  const { user, profile, role, isAdmin, isTeacher, loading, signOut } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [cancelBooking, setCancelBooking] = useState<{
@@ -72,7 +72,7 @@ export default function DashboardProfesor() {
       if (error) throw error;
       return data ?? [];
     },
-    enabled: !!user && role === "teacher",
+    enabled: !!user && (isTeacher || isAdmin),
   });
 
   // Fetch student profiles to show names
@@ -193,7 +193,7 @@ export default function DashboardProfesor() {
   }
 
   if (!user) return <Navigate to="/login" replace />;
-  if (role !== "teacher") return <Navigate to="/dashboard" replace />;
+  if (!isTeacher && !isAdmin) return <Navigate to="/dashboard" replace />;
 
   const formatDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString("es-ES", {
