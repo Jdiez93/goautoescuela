@@ -161,6 +161,51 @@ export type Database = {
         }
         Relationships: []
       }
+      cookie_consents: {
+        Row: {
+          analytics: boolean
+          anon_id: string
+          created_at: string
+          id: string
+          marketing: boolean
+          necessary: boolean
+          policy_version: string
+          preferences: boolean
+          source_url: string | null
+          updated_at: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          analytics?: boolean
+          anon_id: string
+          created_at?: string
+          id?: string
+          marketing?: boolean
+          necessary?: boolean
+          policy_version?: string
+          preferences?: boolean
+          source_url?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          analytics?: boolean
+          anon_id?: string
+          created_at?: string
+          id?: string
+          marketing?: boolean
+          necessary?: boolean
+          policy_version?: string
+          preferences?: boolean
+          source_url?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           booking_id: string | null
