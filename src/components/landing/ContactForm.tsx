@@ -56,14 +56,21 @@ export default function ContactForm() {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase.from("contact_submissions").insert([{
+      const payload = {
         full_name: parsed.data.full_name,
         email: parsed.data.email,
         phone: parsed.data.phone,
         message: parsed.data.message,
         source_page: pathname,
-      }]);
+      };
+
+      const { error } = await supabase.from("contact_submissions").insert([payload]);
       if (error) throw error;
+
+      // Fire-and-forget email notification (don't block UX if it fails)
+      supabase.functions.invoke("send-contact-notification", { body: payload }).catch((e) => {
+        console.error("Notification email failed:", e);
+      });
 
       setSuccess(true);
       setData(initial);
