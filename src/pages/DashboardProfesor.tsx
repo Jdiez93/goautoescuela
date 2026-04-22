@@ -463,7 +463,7 @@ export default function DashboardProfesor() {
                 <span className="text-lg font-bold text-background font-['Space_Grotesk'] tracking-tight">AutoescuelaGO</span>
               </div>
               <p className="text-xs leading-relaxed opacity-60 max-w-xs">
-                Tu autoescuela digital de confianza en la Sierra de Madrid.
+                Tu éxito al volante es nuestro compromiso. Como referentes en formación vial digital, ofrecemos un ecosistema de aprendizaje flexible y profesional diseñado para que obtengas tu permiso con la máxima confianza, apoyándote en tecnología avanzada y un equipo humano altamente cualificado.
               </p>
             </div>
 
