@@ -523,6 +523,7 @@ export default function DashboardProfesor() {
             <div className="flex gap-4">
               <Link to="/politica-privacidad" className="hover:opacity-100 hover:text-primary transition-all">Política de privacidad</Link>
               <Link to="/aviso-legal" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</Link>
+              <Link to="/cookies" className="hover:opacity-100 hover:text-primary transition-all">Cookies</Link>
             </div>
           </div>
         </div>
