@@ -21,7 +21,7 @@ const sections: Section[] = [
       { label: "Titular", value: "Valentín Cobo Fernández" },
       { label: "Nombre comercial", value: "Autoescuela Monkey Drive, S.L." },
       { label: "NIF/CIF", value: "B-05398987" },
-      { label: "Domicilio", value: "C/ Concepción, 61, 28229 Villanueva del Pardillo (Madrid)" },
+      { label: "Domicilio", value: "C. Covachuelas, 18, 28210 Valdemorillo, Madrid" },
       { label: "Correo electrónico", value: "info@autoescuelago.es" },
       { label: "Teléfono", value: "645 34 31 17" },
     ],
@@ -158,7 +158,7 @@ const sections: Section[] = [
     list: [
       { label: "Correo electrónico", value: "info@autoescuelago.es" },
       { label: "Teléfono", value: "645 34 31 17" },
-      { label: "Dirección postal", value: "C/ Concepción, 61, 28229 Villanueva del Pardillo (Madrid)" },
+      { label: "Dirección postal", value: "C. Covachuelas, 18, 28210 Valdemorillo, Madrid" },
     ],
     footer:
       "El establecimiento dispone de hojas oficiales de reclamaciones a disposición de las personas consumidoras y usuarias.",
