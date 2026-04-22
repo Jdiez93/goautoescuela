@@ -72,15 +72,15 @@ export default function CookieSettingsModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[110] bg-foreground/60 backdrop-blur-sm"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[110] bg-foreground/70"
             onClick={closeSettings}
           />
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.96 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-[120] flex items-center justify-center p-4 pointer-events-none"
             role="dialog"
             aria-modal="true"
@@ -107,15 +107,12 @@ export default function CookieSettingsModal() {
 
               {/* Categories */}
               <div className="overflow-y-auto p-6 space-y-3 flex-1">
-                {categories.map((cat, i) => {
+                {categories.map((cat) => {
                   const Icon = cat.icon;
                   const enabled = cat.required ? true : prefs[cat.key as keyof typeof prefs];
                   return (
-                    <motion.div
+                    <div
                       key={cat.key}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.05 + i * 0.06, duration: 0.4 }}
                       className="rounded-xl border border-border/60 bg-background/60 p-4 hover:border-primary/40 transition-colors"
                     >
                       <div className="flex items-start justify-between gap-4">
@@ -150,7 +147,7 @@ export default function CookieSettingsModal() {
                           aria-label={`Activar ${cat.title}`}
                         />
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
