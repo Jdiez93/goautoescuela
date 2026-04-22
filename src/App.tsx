@@ -4,6 +4,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
+import CookieBanner from "@/components/cookies/CookieBanner";
+import CookieSettingsModal from "@/components/cookies/CookieSettingsModal";
+import PoliticaCookies from "./pages/PoliticaCookies";
 import Home from "./pages/Home";
 import Index from "./pages/Index";
 import LaTeorica from "./pages/LaTeorica";
@@ -33,6 +37,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
+          <CookieConsentProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/inicio" element={<Home />} />
@@ -53,9 +58,13 @@ const App = () => (
             <Route path="/perfil" element={<Perfil />} />
             
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+            <Route path="/cookies" element={<PoliticaCookies />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieBanner />
+          <CookieSettingsModal />
+          </CookieConsentProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
