@@ -26,6 +26,7 @@ import Reservas from "./pages/Reservas";
 import Perfil from "./pages/Perfil";
 
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
+import AvisoLegal from "./pages/AvisoLegal";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +59,7 @@ const App = () => (
             <Route path="/perfil" element={<Perfil />} />
             
             <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+            <Route path="/aviso-legal" element={<AvisoLegal />} />
             <Route path="/cookies" element={<PoliticaCookies />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

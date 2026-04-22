@@ -154,7 +154,7 @@ export default function Footer() {
           <span>© 2026 AutoescuelaGO. Todos los derechos reservados.</span>
           <div className="flex gap-6">
             <Link to="/politica-privacidad" className="hover:opacity-100 hover:text-primary transition-all">Política de privacidad</Link>
-            <a href="#" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</a>
+            <Link to="/aviso-legal" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</Link>
             <Link to="/cookies" className="hover:opacity-100 hover:text-primary transition-all">Cookies</Link>
           </div>
         </div>
