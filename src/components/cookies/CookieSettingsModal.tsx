@@ -107,15 +107,12 @@ export default function CookieSettingsModal() {
 
               {/* Categories */}
               <div className="overflow-y-auto p-6 space-y-3 flex-1">
-                {categories.map((cat, i) => {
+                {categories.map((cat) => {
                   const Icon = cat.icon;
                   const enabled = cat.required ? true : prefs[cat.key as keyof typeof prefs];
                   return (
-                    <motion.div
+                    <div
                       key={cat.key}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.05 + i * 0.06, duration: 0.4 }}
                       className="rounded-xl border border-border/60 bg-background/60 p-4 hover:border-primary/40 transition-colors"
                     >
                       <div className="flex items-start justify-between gap-4">
