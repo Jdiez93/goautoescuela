@@ -147,7 +147,7 @@ export default function Dashboard() {
       <header className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logoReady2Go} alt="Ready2Go" className="w-9 h-9 rounded-xl object-contain bg-white" />
+            <img src={logoReady2Go} alt="Ready2Go" className="w-12 h-12 rounded-xl object-contain bg-white" />
             <span className="text-lg font-bold font-['Space_Grotesk']">AutoescuelaGO</span>
           </Link>
           <div className="flex items-center gap-2">
@@ -405,7 +405,7 @@ export default function Dashboard() {
           <div className="grid md:grid-cols-3 gap-8 items-start">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2.5">
-                <img src={logoReady2Go} alt="Ready2Go" className="w-9 h-9 rounded-xl object-contain bg-white" />
+                <img src={logoReady2Go} alt="Ready2Go" className="w-12 h-12 rounded-xl object-contain bg-white" />
                 <span className="text-lg font-bold text-background font-['Space_Grotesk'] tracking-tight">AutoescuelaGO</span>
               </div>
               <p className="text-xs leading-relaxed opacity-60 max-w-xs">
