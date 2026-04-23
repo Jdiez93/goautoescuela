@@ -20,7 +20,7 @@ export default function Footer() {
               <img
                 src={logoReady2Go}
                 alt="Ready2Go"
-                className="w-14 h-14 rounded-xl object-contain bg-white"
+                className="h-20 w-auto object-contain bg-white rounded-xl p-1"
               />
               <span className="text-xl font-bold text-background font-['Space_Grotesk'] tracking-tight">
                 AutoescuelaGO
