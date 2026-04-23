@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Car, LogOut } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
+import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
@@ -43,13 +44,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group shrink-0">
-            <motion.div
-              className="w-10 h-10 rounded-xl bg-hero-gradient flex items-center justify-center"
+            <motion.img
+              src={logoReady2Go}
+              alt="Ready2Go"
+              className="w-10 h-10 rounded-xl object-contain bg-white"
               whileHover={{ scale: 1.08, rotate: -3 }}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
-            >
-              <Car className="w-5 h-5 text-primary-foreground" />
-            </motion.div>
+            />
             <span className="text-lg sm:text-xl font-bold font-['Space_Grotesk'] tracking-tight">
               Autoescuela<span className="text-gradient">GO</span>
             </span>
