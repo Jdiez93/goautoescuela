@@ -13,6 +13,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import MonthlySpendingChart from "@/components/dashboard/MonthlySpendingChart";
 import NotificationBell from "@/components/dashboard/NotificationBell";
 import { useMemo, useState, useEffect } from "react";
+import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 
 export default function Dashboard() {
   const { user, profile, role, isTeacher, loading, signOut } = useAuth();
