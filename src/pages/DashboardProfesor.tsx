@@ -39,6 +39,7 @@ import { motion } from "framer-motion";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
+import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 import { useToast } from "@/hooks/use-toast";
 import BlockSlotsCard from "@/components/dashboard-profesor/BlockSlotsCard";
 import WeeklyCalendarCard from "@/components/dashboard-profesor/WeeklyCalendarCard";
@@ -208,9 +209,7 @@ export default function DashboardProfesor() {
       <header className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
-              <Car className="w-4 h-4 text-primary-foreground" />
-            </div>
+            <img src={logoReady2Go} alt="Ready2Go" className="w-9 h-9 rounded-xl object-contain bg-white" />
             <span className="text-lg font-bold font-['Space_Grotesk']">
               AutoescuelaGO
             </span>
@@ -457,9 +456,7 @@ export default function DashboardProfesor() {
           <div className="grid md:grid-cols-3 gap-8 items-start">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
-                  <Car className="w-4 h-4 text-primary-foreground" />
-                </div>
+                <img src={logoReady2Go} alt="Ready2Go" className="w-9 h-9 rounded-xl object-contain bg-white" />
                 <span className="text-lg font-bold text-background font-['Space_Grotesk'] tracking-tight">AutoescuelaGO</span>
               </div>
               <p className="text-xs leading-relaxed opacity-60 max-w-xs">

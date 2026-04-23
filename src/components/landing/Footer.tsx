@@ -1,5 +1,6 @@
-import { Car, MapPin, Phone, Mail, Clock, ArrowUpRight } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 
 export default function Footer() {
   return (
@@ -16,9 +17,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
-                <Car className="w-5 h-5 text-primary-foreground" />
-              </div>
+              <img
+                src={logoReady2Go}
+                alt="Ready2Go"
+                className="w-10 h-10 rounded-xl object-contain bg-white"
+              />
               <span className="text-xl font-bold text-background font-['Space_Grotesk'] tracking-tight">
                 AutoescuelaGO
               </span>
