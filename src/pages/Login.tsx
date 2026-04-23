@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Car, Loader2, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Car, Loader2, Mail, Lock, Eye, EyeOff, MailCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
@@ -15,8 +16,32 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [resendOpen, setResendOpen] = useState(false);
+  const [resendEmail, setResendEmail] = useState("");
+  const [resendLoading, setResendLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const handleResend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setResendLoading(true);
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: resendEmail,
+      options: { emailRedirectTo: `${window.location.origin}/login` },
+    });
+    setResendLoading(false);
+    if (error) {
+      toast({ title: "No se pudo reenviar", description: error.message, variant: "destructive" });
+    } else {
+      toast({
+        title: "Correo reenviado",
+        description: "Revisa tu bandeja de entrada (y la carpeta de spam).",
+      });
+      setResendOpen(false);
+      setResendEmail("");
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,6 +164,51 @@ export default function Login() {
               <Link to="/recuperar-password" className="text-primary hover:underline block">
                 ¿Olvidaste tu contraseña?
               </Link>
+              <Dialog open={resendOpen} onOpenChange={setResendOpen}>
+                <DialogTrigger asChild>
+                  <button type="button" className="text-primary hover:underline block mx-auto">
+                    ¿No recibiste el correo de confirmación?
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <div className="w-12 h-12 rounded-xl bg-hero-gradient flex items-center justify-center mx-auto mb-2">
+                      <MailCheck className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <DialogTitle className="text-center">Reenviar correo de confirmación</DialogTitle>
+                    <DialogDescription className="text-center">
+                      Introduce el email con el que te registraste y te enviaremos un nuevo enlace.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={handleResend} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="resend-email">Email</Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <Input
+                          id="resend-email"
+                          type="email"
+                          placeholder="tu@email.com"
+                          className="pl-10"
+                          value={resendEmail}
+                          onChange={(e) => setResendEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button
+                        type="submit"
+                        className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90"
+                        disabled={resendLoading}
+                      >
+                        {resendLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                        Reenviar correo
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
               <p className="text-muted-foreground">
                 ¿No tienes cuenta?{" "}
                 <Link to="/registro" className="text-primary hover:underline">Regístrate</Link>
