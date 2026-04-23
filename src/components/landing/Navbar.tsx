@@ -47,7 +47,7 @@ export default function Navbar() {
             <motion.img
               src={logoReady2Go}
               alt="Ready2Go"
-              className="w-10 h-10 rounded-xl object-contain bg-white"
+              className="w-14 h-14 rounded-xl object-contain bg-white"
               whileHover={{ scale: 1.08, rotate: -3 }}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
             />
