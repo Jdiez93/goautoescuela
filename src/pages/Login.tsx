@@ -164,6 +164,51 @@ export default function Login() {
               <Link to="/recuperar-password" className="text-primary hover:underline block">
                 ¿Olvidaste tu contraseña?
               </Link>
+              <Dialog open={resendOpen} onOpenChange={setResendOpen}>
+                <DialogTrigger asChild>
+                  <button type="button" className="text-primary hover:underline block mx-auto">
+                    ¿No recibiste el correo de confirmación?
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <div className="w-12 h-12 rounded-xl bg-hero-gradient flex items-center justify-center mx-auto mb-2">
+                      <MailCheck className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <DialogTitle className="text-center">Reenviar correo de confirmación</DialogTitle>
+                    <DialogDescription className="text-center">
+                      Introduce el email con el que te registraste y te enviaremos un nuevo enlace.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={handleResend} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="resend-email">Email</Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <Input
+                          id="resend-email"
+                          type="email"
+                          placeholder="tu@email.com"
+                          className="pl-10"
+                          value={resendEmail}
+                          onChange={(e) => setResendEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button
+                        type="submit"
+                        className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90"
+                        disabled={resendLoading}
+                      >
+                        {resendLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                        Reenviar correo
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
               <p className="text-muted-foreground">
                 ¿No tienes cuenta?{" "}
                 <Link to="/registro" className="text-primary hover:underline">Regístrate</Link>
