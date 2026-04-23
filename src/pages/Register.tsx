@@ -9,6 +9,7 @@ import { Car, Loader2, Mail, Lock, Eye, EyeOff, User, Check, X } from "lucide-re
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 
 const passwordChecks = (pass: string) => [
   { label: "Mínimo 6 caracteres", met: pass.length >= 6 },
