@@ -15,6 +15,7 @@ import LasPracticas from "./pages/LasPracticas";
 import AutoescuelasReady2Go from "./pages/AutoescuelasReady2Go";
 import AutoescuelaOnline from "./pages/AutoescuelaOnline";
 import PracticasVirtuales from "./pages/PracticasVirtuales";
+import Consejos from "./pages/Consejos";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -46,7 +47,9 @@ const App = () => (
             <Route path="/plataforma" element={<Index />} />
             <Route path="/la-teorica" element={<LaTeorica />} />
             <Route path="/las-practicas" element={<LasPracticas />} />
+            <Route path="/actualidad" element={<PracticasVirtuales />} />
             <Route path="/practicas-virtuales" element={<PracticasVirtuales />} />
+            <Route path="/consejos" element={<Consejos />} />
             <Route path="/autoescuelas-ready2go" element={<AutoescuelasReady2Go />} />
             <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
             <Route path="/login" element={<Login />} />

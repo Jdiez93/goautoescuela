@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, UserCircle } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
@@ -10,7 +16,8 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "La Teórica", to: "/la-teorica" },
   { label: "Las Prácticas", to: "/las-practicas" },
-  { label: "Prácticas Virtuales", to: "/practicas-virtuales" },
+  { label: "Actualidad", to: "/actualidad" },
+  { label: "Consejos", to: "/consejos" },
   { label: "Autoescuelas Ready2Go", to: "/autoescuelas-ready2go" },
   { label: "Autoescuela Online", to: "/autoescuela-online" },
 ];
@@ -57,14 +64,14 @@ export default function Navbar() {
           </Link>
 
           {/* Center nav links — desktop */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.to;
               return (
                 <Link key={link.to} to={link.to}>
                   <span
                     className={cn(
-                      "relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200",
+                      "relative px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium rounded-lg transition-colors duration-200",
                       isActive
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground"
@@ -96,18 +103,21 @@ export default function Navbar() {
                 </Button>
               </>
             ) : (
-              <>
-                <Link to="/login">
-                  <Button variant="ghost" size="sm" className="rounded-xl hover:bg-primary/10 transition-colors">Iniciar sesión</Button>
-                </Link>
-                <Link to="/registro">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                    <Button size="sm" className="bg-hero-gradient hover:opacity-90 text-primary-foreground rounded-xl shadow-md shadow-primary/20">
-                      Registrarse
-                    </Button>
-                  </motion.div>
-                </Link>
-              </>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-xl hover:bg-primary/10 transition-colors" aria-label="Acceso de usuario">
+                    <UserCircle className="w-5 h-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-44 rounded-xl">
+                  <DropdownMenuItem asChild className="rounded-lg cursor-pointer">
+                    <Link to="/login">Iniciar sesión</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="rounded-lg cursor-pointer">
+                    <Link to="/registro">Registrarse</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
           </div>
 

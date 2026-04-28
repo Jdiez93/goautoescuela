@@ -37,10 +37,10 @@ export default function PracticasVirtuales() {
             transition={{ duration: 0.6, ease: easeCurve }}
           >
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-3">
-              Prácticas Virtuales
+              Actualidad
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg mb-8">
-              Prepárate antes de subirte al coche
+              Novedades, tendencias y noticias para moverte con seguridad
             </p>
           </motion.div>
 
@@ -52,7 +52,7 @@ export default function PracticasVirtuales() {
             transition={{ duration: 0.6, ease: easeCurve }}
             className="rounded-3xl bg-[hsl(220,30%,15%)] border border-primary/30 aspect-[21/9] flex items-center justify-center mb-16"
           >
-            <span className="text-muted-foreground text-sm">Imagen practica virtual</span>
+            <span className="text-muted-foreground text-sm">Imagen actualidad</span>
           </motion.div>
 
           {/* HUD Feature Grid */}
