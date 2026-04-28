@@ -54,8 +54,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/practicas-virtuales" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
-                  Prácticas Virtuales
+                <Link to="/actualidad" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
+                  Actualidad
+                  <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/consejos" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
+                  Consejos
                   <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                 </Link>
               </li>
