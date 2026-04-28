@@ -105,8 +105,8 @@ export default function Navbar() {
             ) : (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-xl hover:bg-primary/10 transition-colors" aria-label="Acceso de usuario">
-                    <UserCircle className="w-5 h-5" />
+                  <Button variant="ghost" size="icon" className="h-11 w-11 rounded-xl hover:bg-primary/10 transition-colors" aria-label="Acceso de usuario">
+                    <UserCircle className="w-7 h-7" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-44 rounded-xl">
