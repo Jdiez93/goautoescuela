@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Car } from "lucide-react";
+import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 
 const tips = [
   "Ajustando espejos…",
@@ -58,13 +59,13 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           className="flex items-center gap-3"
         >
-          <motion.div
-            className="w-14 h-14 rounded-2xl bg-hero-gradient flex items-center justify-center shadow-lg shadow-primary/30"
-            animate={{ rotate: [0, -5, 5, 0] }}
+          <motion.img
+            src={logoReady2Go}
+            alt="Ready2Go"
+            className="h-16 w-auto object-contain"
+            animate={{ rotate: [0, -3, 3, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Car className="w-7 h-7 text-primary-foreground" />
-          </motion.div>
+          />
           <span className="text-3xl font-bold font-['Space_Grotesk'] tracking-tight">
             Autoescuela<span className="text-gradient">GO</span>
           </span>
