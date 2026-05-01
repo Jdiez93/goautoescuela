@@ -184,7 +184,7 @@ export default function Perfil() {
               <Car className="w-4 h-4 text-primary-foreground" />
             </div>
             <span className="text-lg font-bold font-['Space_Grotesk']">
-              AutoescuelaGO
+              Ready2Go
             </span>
           </Link>
         </div>
