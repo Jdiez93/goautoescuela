@@ -126,7 +126,7 @@ export default function Footer() {
                 <div className="space-y-1 text-xs opacity-70">
                   <div className="flex justify-between gap-2">
                     <span>Mar y Jue</span>
-                    <span className="font-medium text-background/85">11–13 / 17:30–20:30</span>
+                    <span className="font-medium text-background/85">11–13 / 17:00–20:00</span>
                   </div>
                 </div>
               </div>
@@ -140,7 +140,7 @@ export default function Footer() {
                 <div className="space-y-1 text-xs opacity-70">
                   <div className="flex justify-between gap-2">
                     <span>Lun, Mié y Vie</span>
-                    <span className="font-medium text-background/85">11–13 / 17:30–20:30</span>
+                    <span className="font-medium text-background/85">11–13 / 17:00–20:00</span>
                   </div>
                 </div>
               </div>
