@@ -111,10 +111,10 @@ export default function ContactForm() {
     <section className="py-20 md:py-28 px-4 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, x: -120 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -400, rotate: -6, scale: 0.85 }}
+          whileInView={{ opacity: 1, x: 0, rotate: 0, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: easeCurve }}
+          transition={{ type: "spring", stiffness: 90, damping: 14, mass: 1.1 }}
           className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/60 shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
         >
           {/* Decorative blobs - static for performance */}
