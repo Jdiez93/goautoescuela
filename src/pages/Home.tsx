@@ -221,9 +221,9 @@ function WhySection() {
                 },
               }}
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
-              className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default"
+              className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default flex flex-col items-center text-center"
             >
-              <img src={r.icon} alt={r.title} className="w-32 h-32 sm:w-36 sm:h-36 -ml-3 -mt-2 mb-3 object-contain mix-blend-multiply" />
+              <img src={r.icon} alt={r.title} className="w-44 h-44 sm:w-52 sm:h-52 mb-4 object-contain mix-blend-multiply" />
               <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
