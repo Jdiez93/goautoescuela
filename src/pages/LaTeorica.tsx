@@ -87,7 +87,7 @@ export default function LaTeorica() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: easeCurve, delay: 0.15 }}
-            className="mt-10 rounded-3xl bg-[hsl(var(--foreground))] aspect-[21/9] flex items-center justify-center"
+            className="mt-10 rounded-3xl bg-[hsl(var(--foreground))] aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center"
           >
             <span className="text-primary-foreground/60 text-sm font-medium">Imagen si no apruebas no pagas</span>
           </motion.div>
@@ -146,7 +146,7 @@ export default function LaTeorica() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
-            className="mt-10 relative rounded-3xl bg-primary aspect-[21/9] flex items-center justify-center overflow-hidden"
+            className="mt-10 relative rounded-3xl bg-primary aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center overflow-hidden"
           >
             <span className="text-primary-foreground/60 text-sm font-medium">Imagen chica portátil</span>
             <div className="absolute bottom-5 left-5">

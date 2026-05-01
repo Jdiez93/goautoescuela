@@ -147,7 +147,7 @@ export default function LasPracticas() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: easeCurve, delay: 0.1 }}
-            className="rounded-3xl bg-primary/80 aspect-[21/9] flex items-center justify-center mb-16"
+            className="rounded-3xl bg-primary/80 aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center mb-16"
           >
             <span className="text-primary-foreground/60 text-sm">Imagen Las Prácticas</span>
           </motion.div>
@@ -165,7 +165,7 @@ export default function LasPracticas() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: false, margin: "-40px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
-            className="mt-16 rounded-3xl bg-[hsl(220,30%,15%)] aspect-[21/9] relative overflow-hidden"
+            className="mt-16 rounded-3xl bg-[hsl(220,30%,15%)] aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] relative overflow-hidden"
           >
             {/* Placeholder text */}
             <span className="absolute inset-0 flex items-center justify-center text-primary-foreground/60 text-sm pointer-events-none">

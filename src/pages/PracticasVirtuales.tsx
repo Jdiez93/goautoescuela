@@ -50,7 +50,7 @@ export default function PracticasVirtuales() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: false, margin: "-40px" }}
             transition={{ duration: 0.6, ease: easeCurve }}
-            className="rounded-3xl bg-[hsl(220,30%,15%)] border border-primary/30 aspect-[21/9] flex items-center justify-center mb-16"
+            className="rounded-3xl bg-[hsl(220,30%,15%)] border border-primary/30 aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center mb-16"
           >
             <span className="text-muted-foreground text-sm">Imagen actualidad</span>
           </motion.div>
