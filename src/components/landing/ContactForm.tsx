@@ -2,15 +2,24 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { z } from "zod";
 import { useLocation } from "react-router-dom";
-import { Send, Mail, User, Phone, MessageSquare, CheckCircle2 } from "lucide-react";
+import { Send, Mail, User, Phone, MessageSquare, CheckCircle2, MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const TOWNS = ["Villanueva del Pardillo", "Valdemorillo"] as const;
 
 const contactSchema = z.object({
   full_name: z.string().trim().min(2, "Mínimo 2 caracteres").max(120, "Máximo 120 caracteres"),
@@ -21,12 +30,19 @@ const contactSchema = z.object({
     .min(6, "Teléfono inválido")
     .max(30, "Máximo 30 caracteres")
     .regex(/^[+\d\s()-]+$/, "Solo números y símbolos válidos"),
+  town: z.enum(TOWNS, { errorMap: () => ({ message: "Selecciona una población" }) }),
   message: z.string().trim().min(10, "Mínimo 10 caracteres").max(2000, "Máximo 2000 caracteres"),
 });
 
-type FormState = z.infer<typeof contactSchema>;
+type FormState = {
+  full_name: string;
+  email: string;
+  phone: string;
+  town: "" | (typeof TOWNS)[number];
+  message: string;
+};
 
-const initial: FormState = { full_name: "", email: "", phone: "", message: "" };
+const initial: FormState = { full_name: "", email: "", phone: "", town: "", message: "" };
 
 export default function ContactForm() {
   const { pathname } = useLocation();
@@ -60,6 +76,7 @@ export default function ContactForm() {
         full_name: parsed.data.full_name,
         email: parsed.data.email,
         phone: parsed.data.phone,
+        town: parsed.data.town,
         message: parsed.data.message,
         source_page: pathname,
       };
@@ -91,13 +108,13 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-20 md:py-28 px-4">
+    <section className="py-20 md:py-28 px-4 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -120 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: easeCurve }}
+          transition={{ duration: 0.8, ease: easeCurve }}
           className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/60 shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
         >
           {/* Decorative blobs - static for performance */}
@@ -114,10 +131,10 @@ export default function ContactForm() {
             {/* Left side - intro */}
             <div className="p-8 md:p-12">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, ease: easeCurve }}
+                transition={{ duration: 0.6, ease: easeCurve, delay: 0.1 }}
               >
                 <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
                   Contacto
@@ -148,10 +165,10 @@ export default function ContactForm() {
             {/* Right side - form */}
             <motion.form
               onSubmit={handleSubmit}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: 0.15, ease: easeCurve }}
+              transition={{ duration: 0.6, delay: 0.25, ease: easeCurve }}
               className="p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] space-y-5"
             >
               <FormField
@@ -205,6 +222,36 @@ export default function ContactForm() {
                   disabled={submitting}
                   maxLength={30}
                 />
+              </FormField>
+
+              <FormField
+                id="town"
+                label="Población"
+                icon={<MapPin className="w-4 h-4" />}
+                error={errors.town}
+              >
+                <Select
+                  value={data.town}
+                  onValueChange={(v) => {
+                    setData((d) => ({ ...d, town: v as (typeof TOWNS)[number] }));
+                    if (errors.town) setErrors((er) => ({ ...er, town: undefined }));
+                  }}
+                  disabled={submitting}
+                >
+                  <SelectTrigger
+                    id="town"
+                    className="bg-background/60 border-border/60 focus:ring-primary/40"
+                  >
+                    <SelectValue placeholder="Selecciona tu población" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TOWNS.map((t) => (
+                      <SelectItem key={t} value={t}>
+                        {t}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormField>
 
               <FormField
