@@ -50,15 +50,15 @@ export default function Navbar() {
       <div className="container mx-auto px-3 sm:px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group shrink-0">
+          <Link to="/" className="flex items-center gap-2 group shrink-0 min-w-0">
             <motion.img
               src={logoReady2Go}
               alt="Ready2Go"
-              className="h-16 md:h-20 w-auto object-contain"
+              className="h-10 sm:h-14 md:h-20 w-auto object-contain shrink-0"
               whileHover={{ scale: 1.08, rotate: -3 }}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
             />
-            <span className="text-lg sm:text-xl font-bold font-['Space_Grotesk'] tracking-tight">
+            <span className="text-base sm:text-lg md:text-xl font-bold font-['Space_Grotesk'] tracking-tight truncate">
               Ready2Go
             </span>
           </Link>
