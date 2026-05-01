@@ -160,7 +160,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-background/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs opacity-50">
-          <span>© 2026 AutoescuelaGO. Todos los derechos reservados.</span>
+          <span>© 2026 Ready2Go. Todos los derechos reservados.</span>
           <div className="flex gap-6">
             <Link to="/politica-privacidad" className="hover:opacity-100 hover:text-primary transition-all">Política de privacidad</Link>
             <Link to="/aviso-legal" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</Link>

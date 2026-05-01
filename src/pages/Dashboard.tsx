@@ -477,7 +477,7 @@ export default function Dashboard() {
           </div>
 
           <div className="border-t border-background/10 mt-8 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-50">
-            <span>© 2026 AutoescuelaGO. Todos los derechos reservados.</span>
+            <span>© 2026 Ready2Go. Todos los derechos reservados.</span>
             <div className="flex gap-4">
               <Link to="/politica-privacidad" className="hover:opacity-100 hover:text-primary transition-all">Política de privacidad</Link>
               <Link to="/aviso-legal" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</Link>
