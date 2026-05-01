@@ -43,7 +43,7 @@ serve(async (req) => {
 <body style="margin:0;padding:0;background-color:#f4f4f5;font-family:'Segoe UI',Roboto,sans-serif;">
   <div style="max-width:520px;margin:40px auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
     <div style="background:#dc2626;padding:32px 24px;text-align:center;">
-      <h1 style="color:#ffffff;margin:0;font-size:22px;">🚗 AutoescuelaGO</h1>
+      <h1 style="color:#ffffff;margin:0;font-size:22px;">🚗 Ready2Go</h1>
       <p style="color:rgba(255,255,255,0.8);margin:8px 0 0;font-size:14px;">Cancelación de reserva</p>
     </div>
     <div style="padding:32px 24px;">
@@ -81,7 +81,7 @@ serve(async (req) => {
     </div>
     <div style="background:#f9fafb;padding:16px 24px;text-align:center;border-top:1px solid #e5e7eb;">
       <p style="font-size:12px;color:#9ca3af;margin:0;">
-        © 2026 AutoescuelaGO · Villanueva del Pardillo
+        © 2026 Ready2Go · Villanueva del Pardillo
       </p>
     </div>
   </div>
@@ -96,7 +96,7 @@ serve(async (req) => {
 <body style="margin:0;padding:0;background-color:#f4f4f5;font-family:'Segoe UI',Roboto,sans-serif;">
   <div style="max-width:520px;margin:40px auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
     <div style="background:#f59e0b;padding:32px 24px;text-align:center;">
-      <h1 style="color:#ffffff;margin:0;font-size:22px;">🚗 AutoescuelaGO</h1>
+      <h1 style="color:#ffffff;margin:0;font-size:22px;">🚗 Ready2Go</h1>
       <p style="color:rgba(255,255,255,0.8);margin:8px 0 0;font-size:14px;">Cancelación de clase</p>
     </div>
     <div style="padding:32px 24px;">
@@ -134,7 +134,7 @@ serve(async (req) => {
     </div>
     <div style="background:#f9fafb;padding:16px 24px;text-align:center;border-top:1px solid #e5e7eb;">
       <p style="font-size:12px;color:#9ca3af;margin:0;">
-        © 2026 AutoescuelaGO · Villanueva del Pardillo
+        © 2026 Ready2Go · Villanueva del Pardillo
       </p>
     </div>
   </div>
@@ -149,7 +149,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "AutoescuelaGO <onboarding@resend.dev>",
+        from: "Ready2Go <onboarding@resend.dev>",
         to: [studentEmail],
         subject: `❌ Reserva cancelada - ${formattedDate}`,
         html: studentHtml,
@@ -172,7 +172,7 @@ serve(async (req) => {
           Authorization: `Bearer ${RESEND_API_KEY}`,
         },
         body: JSON.stringify({
-          from: "AutoescuelaGO <onboarding@resend.dev>",
+          from: "Ready2Go <onboarding@resend.dev>",
           to: [teacherEmail],
           subject: `⚠️ Clase cancelada - ${studentName || "Alumno"} - ${formattedDate}`,
           html: teacherHtml,

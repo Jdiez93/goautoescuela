@@ -211,7 +211,7 @@ export default function DashboardProfesor() {
           <Link to="/" className="flex items-center gap-2">
             <img src={logoReady2Go} alt="Ready2Go" className="h-14 w-auto object-contain" />
             <span className="text-lg font-bold font-['Space_Grotesk']">
-              AutoescuelaGO
+              Ready2Go
             </span>
           </Link>
           <div className="flex items-center gap-4">
@@ -457,7 +457,7 @@ export default function DashboardProfesor() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2.5">
                 <img src={logoReady2Go} alt="Ready2Go" className="h-16 w-auto object-contain bg-white rounded-xl p-1" />
-                <span className="text-lg font-bold text-background font-['Space_Grotesk'] tracking-tight">AutoescuelaGO</span>
+                <span className="text-lg font-bold text-background font-['Space_Grotesk'] tracking-tight">Ready2Go</span>
               </div>
               <p className="text-xs leading-relaxed opacity-60 max-w-xs">
                 Tu éxito al volante es nuestro compromiso. Como referentes en formación vial digital, ofrecemos un ecosistema de aprendizaje flexible y profesional diseñado para que obtengas tu permiso con la máxima confianza, apoyándote en tecnología avanzada y un equipo humano altamente cualificado.

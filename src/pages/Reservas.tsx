@@ -375,7 +375,7 @@ export default function Reservas() {
             <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
               <Car className="w-5 h-5" />
             </div>
-            <span className="font-bold font-['Space_Grotesk'] text-lg">AutoescuelaGO</span>
+            <span className="font-bold font-['Space_Grotesk'] text-lg">Ready2Go</span>
           </Link>
           <div className="flex items-center gap-3">
             {profile?.full_name && (

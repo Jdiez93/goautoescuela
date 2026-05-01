@@ -127,7 +127,7 @@ export default function Pagos() {
             <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
               <Car className="w-4 h-4 text-primary-foreground" />
             </div>
-            <span className="text-lg font-bold font-['Space_Grotesk']">AutoescuelaGO</span>
+            <span className="text-lg font-bold font-['Space_Grotesk']">Ready2Go</span>
           </Link>
         </div>
       </motion.header>

@@ -53,7 +53,7 @@ serve(async (req) => {
   <div style="max-width:560px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
     <div style="background:#1e40af;padding:28px 24px;text-align:center;">
       <h1 style="color:#fff;margin:0;font-size:22px;">📩 Nuevo mensaje del formulario</h1>
-      <p style="color:rgba(255,255,255,0.85);margin:6px 0 0;font-size:13px;">AutoescuelaGO · Web</p>
+      <p style="color:rgba(255,255,255,0.85);margin:6px 0 0;font-size:13px;">Ready2Go · Web</p>
     </div>
     <div style="padding:28px 24px;">
       <table style="width:100%;border-collapse:collapse;font-size:15px;color:#1a1a2e;">
@@ -72,7 +72,7 @@ serve(async (req) => {
       </div>
     </div>
     <div style="background:#f9fafb;padding:14px 24px;text-align:center;border-top:1px solid #e5e7eb;">
-      <p style="font-size:12px;color:#9ca3af;margin:0;">© 2026 AutoescuelaGO · Notificación automática</p>
+      <p style="font-size:12px;color:#9ca3af;margin:0;">© 2026 Ready2Go · Notificación automática</p>
     </div>
   </div>
 </body>
@@ -85,7 +85,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "AutoescuelaGO <onboarding@resend.dev>",
+        from: "Ready2Go <onboarding@resend.dev>",
         to: [NOTIFY_TO],
         reply_to: email,
         subject: `📩 Nuevo contacto web - ${full_name} (reenviar a ${FORWARD_TARGET})`,

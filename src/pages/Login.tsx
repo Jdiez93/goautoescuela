@@ -96,7 +96,7 @@ export default function Login() {
               </Link>
             </motion.div>
             <CardTitle>Iniciar sesión</CardTitle>
-            <CardDescription>Accede a tu cuenta de AutoescuelaGO</CardDescription>
+            <CardDescription>Accede a tu cuenta de Ready2Go</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">

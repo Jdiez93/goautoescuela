@@ -51,7 +51,7 @@ const sections = [
   {
     title: "2. ¿Quién utiliza las cookies en este sitio?",
     content:
-      "En AutoescuelaGO utilizamos cookies propias (gestionadas por nosotros) y, cuando el usuario lo consiente, cookies de terceros gestionadas por proveedores externos. Entre los terceros que pueden instalar cookies se incluyen, según los servicios activados:",
+      "En Ready2Go utilizamos cookies propias (gestionadas por nosotros) y, cuando el usuario lo consiente, cookies de terceros gestionadas por proveedores externos. Entre los terceros que pueden instalar cookies se incluyen, según los servicios activados:",
     list: [
       "Stripe — procesamiento seguro de pagos.",
       "Supabase — autenticación y gestión de sesión.",
@@ -86,7 +86,7 @@ const sections = [
   {
     title: "7. Decisiones automatizadas y elaboración de perfiles",
     content:
-      "AutoescuelaGO no realiza decisiones automatizadas ni elaboración de perfiles que produzcan efectos jurídicos en los usuarios o que les afecten significativamente de modo similar a través de las cookies utilizadas en este sitio.",
+      "Ready2Go no realiza decisiones automatizadas ni elaboración de perfiles que produzcan efectos jurídicos en los usuarios o que les afecten significativamente de modo similar a través de las cookies utilizadas en este sitio.",
   },
   {
     title: "8. Más información",

@@ -23,7 +23,7 @@ export default function Footer() {
                 className="h-20 w-auto object-contain bg-white rounded-xl p-1"
               />
               <span className="text-xl font-bold text-background font-['Space_Grotesk'] tracking-tight">
-                AutoescuelaGO
+                Ready2Go
               </span>
             </div>
             <p className="text-sm leading-relaxed opacity-60 max-w-xs">
