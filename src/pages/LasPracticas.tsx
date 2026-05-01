@@ -108,10 +108,10 @@ function FeatureCard({ icon, title, bullets, index }: { icon: string; title: str
       <img
         src={icon}
         alt={title}
-        className="absolute -top-2 -right-2 w-32 h-32 sm:w-36 sm:h-36 object-contain mix-blend-multiply pointer-events-none"
+        className="absolute -top-4 -right-4 w-44 h-44 sm:w-48 sm:h-48 object-contain mix-blend-multiply pointer-events-none"
       />
       <div className="relative">
-        <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3 pr-24 sm:pr-28 min-h-[5rem] flex items-center">{title}</h3>
+        <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3 pr-32 sm:pr-36 min-h-[7rem] flex items-center">{title}</h3>
         <ul className="space-y-1.5">
           {bullets.map((b, i) => (
             <li key={i} className="text-sm text-muted-foreground leading-relaxed">{b}</li>
