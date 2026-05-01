@@ -97,7 +97,7 @@ export default function Register() {
               <Link to="/" className="inline-flex items-center gap-2 mx-auto mb-4">
                 <img src={logoReady2Go} alt="Ready2Go" className="h-16 w-auto object-contain" />
                 <span className="text-xl font-bold font-['Space_Grotesk']">
-                  <span className="text-gradient">Ready2Go</span>
+                  Ready2Go
                 </span>
               </Link>
             </motion.div>
