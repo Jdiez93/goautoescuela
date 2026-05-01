@@ -451,7 +451,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex justify-between text-xs opacity-70">
                     <span>Mar y Jue</span>
-                    <span className="font-medium text-background/85">11–13 / 17:30–20:30</span>
+                    <span className="font-medium text-background/85">11–13 / 17:00–20:00</span>
                   </div>
                 </div>
                 <div className="rounded-xl border border-background/10 bg-background/[0.03] p-3">
@@ -461,7 +461,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex justify-between text-xs opacity-70">
                     <span>Lun, Mié y Vie</span>
-                    <span className="font-medium text-background/85">11–13 / 17:30–20:30</span>
+                    <span className="font-medium text-background/85">11–13 / 17:00–20:00</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-xs opacity-70 pl-1">

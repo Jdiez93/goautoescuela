@@ -20,7 +20,7 @@ const locations = [
     mapSrc:
       "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=C.+Concepción+61+Local+9+28229+Villanueva+del+Pardillo+Madrid+Spain&zoom=17",
     schedule: "Martes y Jueves",
-    hours: "11:00 - 13:00 / 17:30 - 20:30",
+    hours: "11:00 - 13:00 / 17:00 - 20:00",
     practicas: "8:00 - 22:00",
     imagePlaceholder: "Imagen Pardillo",
   },
@@ -30,7 +30,7 @@ const locations = [
     mapSrc:
       "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=C.+Covachuelas+18+28210+Valdemorillo+Madrid+Spain&zoom=17",
     schedule: "Lunes, Miércoles y Viernes",
-    hours: "11:00 - 13:00 / 17:30 - 20:30",
+    hours: "11:00 - 13:00 / 17:00 - 20:00",
     practicas: "8:00 - 22:00",
     imagePlaceholder: "Imagen Valdemorillo",
   },
