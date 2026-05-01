@@ -189,7 +189,7 @@ export default function ResetPassword() {
           <Link to="/" className="inline-flex items-center gap-2 mx-auto mb-4">
             <img src={logoReady2Go} alt="Ready2Go" className="h-16 w-auto object-contain" />
             <span className="text-xl font-bold font-['Space_Grotesk']">
-              Autoescuela<span className="text-gradient">GO</span>
+              <span className="text-gradient">Ready2Go</span>
             </span>
           </Link>
           <CardTitle>{success ? "¡Listo!" : "Nueva contraseña"}</CardTitle>

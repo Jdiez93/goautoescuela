@@ -59,7 +59,7 @@ export default function Navbar() {
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
             />
             <span className="text-lg sm:text-xl font-bold font-['Space_Grotesk'] tracking-tight">
-              Autoescuela<span className="text-gradient">GO</span>
+              <span className="text-gradient">Ready2Go</span>
             </span>
           </Link>
 

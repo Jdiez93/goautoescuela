@@ -67,7 +67,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
           <span className="text-3xl font-bold font-['Space_Grotesk'] tracking-tight">
-            Autoescuela<span className="text-gradient">GO</span>
+            <span className="text-gradient">Ready2Go</span>
           </span>
         </motion.div>
 
