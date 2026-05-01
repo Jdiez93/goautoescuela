@@ -138,6 +138,7 @@ export type Database = {
           message: string
           phone: string
           source_page: string
+          town: string | null
         }
         Insert: {
           created_at?: string
@@ -148,6 +149,7 @@ export type Database = {
           message: string
           phone: string
           source_page?: string
+          town?: string | null
         }
         Update: {
           created_at?: string
@@ -158,6 +160,7 @@ export type Database = {
           message?: string
           phone?: string
           source_page?: string
+          town?: string | null
         }
         Relationships: []
       }
