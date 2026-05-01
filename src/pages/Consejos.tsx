@@ -52,7 +52,7 @@ export default function Consejos() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: easeCurve, delay: 0.1 }}
-            className="rounded-3xl bg-primary/10 border border-primary/20 aspect-[21/9] flex items-center justify-center mb-16"
+            className="rounded-3xl bg-primary/10 border border-primary/20 aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center mb-12 sm:mb-16"
           >
             <span className="text-muted-foreground text-sm">Imagen consejos</span>
           </motion.div>

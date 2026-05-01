@@ -168,11 +168,11 @@ export default function AutoescuelaOnline() {
               <p className="text-muted-foreground leading-relaxed mb-8">
                 Ahora te toca a ti
               </p>
-              <a href="/registro">
+              <a href="/registro" className="inline-block w-full sm:w-auto">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.96 }}
-                  className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-4 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl text-sm sm:text-base"
                 >
                   Empieza ahora tu curso teórico
                 </motion.button>

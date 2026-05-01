@@ -40,7 +40,7 @@ export default function AutoescuelasReady2Go() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="pt-32 pb-24 px-4">
+      <main className="pt-24 sm:pt-32 pb-20 sm:pb-24 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div {...fadeUp} className="mb-12">

@@ -223,7 +223,7 @@ function WhySection() {
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
               className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default flex flex-col items-center text-center"
             >
-              <img src={r.icon} alt={r.title} className="w-44 h-44 sm:w-52 sm:h-52 mb-4 object-contain mix-blend-multiply" />
+              <img src={r.icon} alt={r.title} className="w-28 h-28 sm:w-40 sm:h-40 lg:w-52 lg:h-52 mb-4 object-contain mix-blend-multiply" />
               <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
@@ -299,7 +299,7 @@ function PromoBanner() {
         <motion.div
           {...scaleIn}
           whileHover={{ scale: 1.005, transition: { duration: 0.3 } }}
-          className="relative rounded-3xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[21/9] flex flex-col items-center justify-center"
+          className="relative rounded-3xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex flex-col items-center justify-center"
         >
           <span className="text-primary-foreground/60 text-sm mb-auto mt-[30%]">Imagen creada coche rotulado</span>
           <div className="mb-8">
