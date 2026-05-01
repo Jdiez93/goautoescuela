@@ -108,10 +108,10 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-20 md:py-28 px-4 overflow-hidden">
+    <section className="py-16 md:py-28 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, x: -400, rotate: -6, scale: 0.85 }}
+          initial={{ opacity: 0, x: -100, rotate: -3, scale: 0.92 }}
           whileInView={{ opacity: 1, x: 0, rotate: 0, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ type: "spring", stiffness: 90, damping: 14, mass: 1.1 }}
@@ -129,7 +129,7 @@ export default function ContactForm() {
 
           <div className="relative grid md:grid-cols-2 gap-0 items-start">
             {/* Left side - intro */}
-            <div className="p-8 md:p-12">
+            <div className="p-6 sm:p-8 md:p-12">
               <motion.div
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -169,7 +169,7 @@ export default function ContactForm() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, delay: 0.25, ease: easeCurve }}
-              className="p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] space-y-5"
+              className="p-6 sm:p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] space-y-5"
             >
               <FormField
                 id="full_name"
