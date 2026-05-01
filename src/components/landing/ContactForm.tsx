@@ -108,7 +108,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-20 md:py-28 px-4 overflow-hidden">
+    <section className="py-16 md:py-28 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, x: -100, rotate: -3, scale: 0.92 }}
