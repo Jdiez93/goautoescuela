@@ -124,9 +124,9 @@ export default function LaTeorica() {
                 transition={{ duration: 0.5, delay: i * 0.08, ease: easeCurve }}
                 className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <img src={feat.icon} alt={feat.title} className="w-28 h-28 sm:w-32 sm:h-32 object-contain shrink-0 mix-blend-multiply" />
-                  <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-sm leading-snug">{feat.title}</h3>
+                <div className="flex items-center gap-5 mb-4 min-h-[10rem]">
+                  <img src={feat.icon} alt={feat.title} className="w-40 h-40 sm:w-44 sm:h-44 object-contain shrink-0 mix-blend-multiply" />
+                  <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base leading-snug flex-1">{feat.title}</h3>
                 </div>
                 <div className="rounded-xl bg-primary/15 border border-primary/20 h-36 flex items-center justify-center mb-4">
                   <span className="text-primary font-medium text-xs">{feat.imageLabel}</span>
