@@ -97,8 +97,15 @@ export default function AutoescuelasReady2Go() {
                   </div>
                 </div>
 
+                {/* Image placeholder */}
+                <div className="rounded-2xl overflow-hidden bg-primary/80 aspect-[16/9] flex items-center justify-center shadow-lg mb-4">
+                  <span className="text-primary-foreground font-semibold text-lg">
+                    {loc.imagePlaceholder}
+                  </span>
+                </div>
+
                 {/* Google Maps embed */}
-                <div className="rounded-2xl overflow-hidden border border-border/60 aspect-[16/10] mb-4 shadow-lg">
+                <div className="rounded-2xl overflow-hidden border border-border/60 aspect-[16/10] shadow-lg">
                   <iframe
                     src={loc.mapSrc}
                     width="100%"
@@ -109,13 +116,6 @@ export default function AutoescuelasReady2Go() {
                     referrerPolicy="no-referrer-when-downgrade"
                     title={`Mapa ${loc.name}`}
                   />
-                </div>
-
-                {/* Image placeholder */}
-                <div className="rounded-2xl overflow-hidden bg-primary/80 aspect-[16/9] flex items-center justify-center shadow-lg">
-                  <span className="text-primary-foreground font-semibold text-lg">
-                    {loc.imagePlaceholder}
-                  </span>
                 </div>
               </motion.div>
             ))}
