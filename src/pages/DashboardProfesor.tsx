@@ -267,13 +267,13 @@ export default function DashboardProfesor() {
             transition={{ duration: 0.4 }}
           >
             <Card className="border-border/50 h-full">
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-primary" />
                   Mis clases programadas
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
                 {bookingsLoading ? (
                   <div className="space-y-3">
                     {[1, 2, 3].map((i) => (
