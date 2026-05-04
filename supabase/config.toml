@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.send-cancellation-confirmation]
 verify_jwt = false
+
+[functions.get-receipt-url]
+verify_jwt = false
