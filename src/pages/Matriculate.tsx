@@ -14,6 +14,12 @@ import {
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+// Reusable scroll animation: fades in/out as section enters/leaves viewport
+const scrollVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
 type Pack = {
   id: string;
   name: string;
@@ -86,11 +92,10 @@ export default function Matriculate() {
 
       {/* HERO */}
       <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden">
-        {/* Decorative gradients */}
+        {/* Decorative gradients (kept subtle, brand-aligned) */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(174_72%_45%/0.18),transparent_60%)]" />
-          <div className="absolute top-40 -left-32 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,hsl(220_90%_60%/0.12),transparent_70%)] blur-3xl" />
-          <div className="absolute top-20 -right-32 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,hsl(0_85%_60%/0.10),transparent_70%)] blur-3xl" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.18),transparent_60%)]" />
+          <div className="absolute top-40 -left-32 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.12),transparent_70%)] blur-3xl" />
         </div>
 
         <div className="container mx-auto px-4">
@@ -100,19 +105,9 @@ export default function Matriculate() {
             transition={{ duration: 0.7, ease: easeCurve }}
             className="max-w-3xl mx-auto text-center"
           >
-            <Badge
-              variant="outline"
-              className="mb-6 border-[hsl(174,72%,45%)]/40 text-[hsl(174,72%,45%)] bg-[hsl(174,72%,45%)]/5 backdrop-blur-sm px-4 py-1.5"
-            >
-              <Sparkles className="w-3.5 h-3.5 mr-1.5" />
-              Matriculación 2026
-            </Badge>
-
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-['Space_Grotesk'] tracking-tight mb-6 leading-[1.05]">
               Matricúlate y empieza{" "}
-              <span className="bg-gradient-to-r from-[hsl(174,72%,45%)] via-[hsl(190,80%,55%)] to-[hsl(220,85%,60%)] bg-clip-text text-transparent">
-                tu carnet hoy
-              </span>
+              <span className="text-primary">tu carnet hoy</span>
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
@@ -126,27 +121,37 @@ export default function Matriculate() {
       {/* HOW IT WORKS */}
       <section className="py-16 md:py-24 bg-muted/30 border-y border-border/50">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center mb-14">
+          <motion.div
+            variants={scrollVariants}
+            initial="hidden"
+            whileInView="visible"
+            exit="hidden"
+            viewport={{ amount: 0.3 }}
+            transition={{ duration: 0.6, ease: easeCurve }}
+            className="max-w-2xl mx-auto text-center mb-14"
+          >
             <h2 className="text-3xl md:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-4">
               Así de fácil es matricularte
             </h2>
             <p className="text-muted-foreground text-lg">
               En tres pasos estarás listo para empezar tu formación.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {steps.map((s, i) => (
               <motion.div
                 key={s.n}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: easeCurve }}
+                variants={scrollVariants}
+                initial="hidden"
+                whileInView="visible"
+                exit="hidden"
+                viewport={{ amount: 0.2 }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: easeCurve }}
                 className="relative"
               >
-                <Card className="p-7 rounded-2xl h-full border-border/60 hover:border-[hsl(174,72%,45%)]/40 transition-colors">
-                  <div className="text-5xl font-bold font-['Space_Grotesk'] bg-gradient-to-br from-[hsl(174,72%,45%)] to-[hsl(220,85%,60%)] bg-clip-text text-transparent mb-3">
+                <Card className="p-7 rounded-2xl h-full border-border/60 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
+                  <div className="text-5xl font-bold font-['Space_Grotesk'] text-primary mb-3">
                     {s.n}
                   </div>
                   <h3 className="text-xl font-bold mb-2">{s.title}</h3>
@@ -162,9 +167,11 @@ export default function Matriculate() {
       <section className="py-16 md:py-24 relative">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            variants={scrollVariants}
+            initial="hidden"
+            whileInView="visible"
+            exit="hidden"
+            viewport={{ amount: 0.3 }}
             transition={{ duration: 0.6, ease: easeCurve }}
             className="text-center max-w-2xl mx-auto mb-14"
           >
@@ -183,21 +190,23 @@ export default function Matriculate() {
               return (
                 <motion.div
                   key={pack.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1, ease: easeCurve }}
+                  variants={scrollVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  exit="hidden"
+                  viewport={{ amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: i * 0.12, ease: easeCurve }}
                 >
                   <Card
                     className={`relative h-full p-7 md:p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 ${
                       pack.highlight
-                        ? "border-[hsl(174,72%,45%)]/50 shadow-[0_20px_60px_-20px_hsl(174_80%_45%/0.35)] bg-gradient-to-b from-[hsl(174,72%,45%)]/5 to-transparent"
+                        ? "border-primary/50 shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.35)] bg-primary/5"
                         : "hover:border-foreground/20 hover:shadow-xl"
                     }`}
                   >
                     {pack.badge && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <Badge className="bg-gradient-to-r from-[hsl(174,72%,45%)] to-[hsl(190,80%,50%)] text-white border-0 px-3 py-1 shadow-lg">
+                        <Badge className="bg-primary text-primary-foreground border-0 px-3 py-1 shadow-lg">
                           <Sparkles className="w-3 h-3 mr-1" />
                           {pack.badge}
                         </Badge>
@@ -207,7 +216,7 @@ export default function Matriculate() {
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${
                         pack.highlight
-                          ? "bg-gradient-to-br from-[hsl(174,72%,45%)] to-[hsl(190,80%,50%)] text-white"
+                          ? "bg-primary text-primary-foreground"
                           : "bg-muted text-foreground"
                       }`}
                     >
@@ -231,7 +240,7 @@ export default function Matriculate() {
                           <span
                             className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${
                               pack.highlight
-                                ? "bg-[hsl(174,72%,45%)]/15 text-[hsl(174,72%,45%)]"
+                                ? "bg-primary/15 text-primary"
                                 : "bg-muted text-foreground/70"
                             }`}
                           >
@@ -243,11 +252,7 @@ export default function Matriculate() {
                     </ul>
 
                     <Button
-                      className={`w-full rounded-xl font-semibold ${
-                        pack.highlight
-                          ? "bg-gradient-to-r from-[hsl(174,72%,45%)] to-[hsl(190,80%,50%)] hover:shadow-[0_8px_24px_-8px_hsl(174_80%_45%/0.6)] text-white"
-                          : ""
-                      }`}
+                      className="w-full rounded-xl font-semibold"
                       variant={pack.highlight ? "default" : "outline"}
                     >
                       Elegir {pack.name.replace("Pack ", "")}
