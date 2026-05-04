@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, ArrowUpRight } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowUpRight, Instagram, Facebook, Youtube, Music2, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoReady2Go from "@/assets/logo-ready2go.jpeg";
 
@@ -29,6 +29,31 @@ export default function Footer() {
             <p className="text-sm leading-relaxed opacity-60 max-w-xs">
               Tu éxito al volante es nuestro compromiso. Como referentes en formación vial digital, ofrecemos un ecosistema de aprendizaje flexible y profesional diseñado para que obtengas tu permiso con la máxima confianza, apoyándote en tecnología avanzada y un equipo humano altamente cualificado.
             </p>
+
+            {/* Redes sociales */}
+            <div className="mt-5">
+              <h4 className="font-semibold text-background mb-3 text-xs uppercase tracking-[0.2em]">Síguenos</h4>
+              <div className="flex items-center gap-2.5">
+                {[
+                  { Icon: Instagram, label: "Instagram", href: "#" },
+                  { Icon: Facebook, label: "Facebook", href: "#" },
+                  { Icon: Music2, label: "TikTok", href: "#" },
+                  { Icon: Youtube, label: "YouTube", href: "#" },
+                  { Icon: Twitter, label: "X", href: "#" },
+                ].map(({ Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="w-9 h-9 rounded-xl border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Enlaces rápidos */}
