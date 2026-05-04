@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, Navigate } from "react-router-dom";
-import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp, AlertTriangle } from "lucide-react";
+import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp, AlertTriangle, Instagram, Facebook, Youtube, Music2, Twitter } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -411,6 +411,29 @@ export default function Dashboard() {
               <p className="text-xs leading-relaxed opacity-60 max-w-xs">
                 Tu éxito al volante es nuestro compromiso. Como referentes en formación vial digital, ofrecemos un ecosistema de aprendizaje flexible y profesional diseñado para que obtengas tu permiso con la máxima confianza, apoyándote en tecnología avanzada y un equipo humano altamente cualificado.
               </p>
+              <div className="mt-3">
+                <h4 className="font-semibold text-background mb-2.5 text-[10px] uppercase tracking-[0.2em]">Síguenos</h4>
+                <div className="flex items-center gap-2">
+                  {[
+                    { Icon: Instagram, label: "Instagram", href: "#" },
+                    { Icon: Facebook, label: "Facebook", href: "#" },
+                    { Icon: Music2, label: "TikTok", href: "#" },
+                    { Icon: Youtube, label: "YouTube", href: "#" },
+                    { Icon: Twitter, label: "X", href: "#" },
+                  ].map(({ Icon, label, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="w-8 h-8 rounded-lg border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all"
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div>
