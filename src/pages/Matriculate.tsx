@@ -246,7 +246,7 @@ export default function Matriculate() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
+            viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7, ease: easeCurve }}
             className="max-w-2xl mx-auto text-center mb-14"
           >
@@ -266,7 +266,7 @@ export default function Matriculate() {
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
-              viewport={{ once: false, amount: 0.5 }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 1.1, ease: easeCurve, delay: 0.2 }}
               style={{ transformOrigin: "left" }}
               className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
@@ -277,7 +277,7 @@ export default function Matriculate() {
                 key={s.n}
                 initial={{ opacity: 0, y: 50, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, delay: i * 0.15, ease: easeCurve }}
                 className="relative"
               >
@@ -296,7 +296,7 @@ export default function Matriculate() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.6, delay: 0.4, ease: easeCurve }}
             className="text-center mt-14"
           >

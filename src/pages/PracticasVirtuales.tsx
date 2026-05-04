@@ -12,7 +12,7 @@ const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: false, margin: "-60px" },
+  viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
 
@@ -48,7 +48,7 @@ export default function PracticasVirtuales() {
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false, margin: "-40px" }}
+            viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, ease: easeCurve }}
             className="rounded-3xl bg-[hsl(220,30%,15%)] border border-primary/30 aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center mb-16"
           >
@@ -59,7 +59,7 @@ export default function PracticasVirtuales() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-60px" }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, ease: easeCurve }}
             className="grid sm:grid-cols-2 gap-4 sm:gap-5"
           >
@@ -68,7 +68,7 @@ export default function PracticasVirtuales() {
                 key={feat.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-40px" }}
+                viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: easeCurve }}
                 className="group relative bg-card border border-border/30 rounded-2xl p-8 sm:p-10 transition-all duration-500 hover:bg-primary/[0.03] hover:border-primary/30"
                 style={{ cursor: "crosshair" }}

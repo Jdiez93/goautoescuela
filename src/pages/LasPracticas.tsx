@@ -81,7 +81,7 @@ function FeatureCard({ icon, title, bullets, index }: { icon: string; title: str
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, margin: "-40px" }}
+      viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.07, ease: easeCurve }}
       className="group relative rounded-2xl bg-card p-6 cursor-default overflow-hidden"
     >
@@ -163,7 +163,7 @@ export default function LasPracticas() {
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false, margin: "-40px" }}
+            viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
             className="mt-16 rounded-3xl bg-[hsl(220,30%,15%)] aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] relative overflow-hidden"
           >

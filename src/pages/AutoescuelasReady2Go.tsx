@@ -9,7 +9,7 @@ const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: false, margin: "-60px" },
+  viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
 
@@ -59,7 +59,7 @@ export default function AutoescuelasReady2Go() {
                 key={loc.name}
                 initial={{ opacity: 0, y: 40, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, margin: "-60px" }}
+                viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6, delay: i * 0.15, ease: easeCurve }}
                 className="group relative rounded-3xl border border-border/40 bg-card/30 backdrop-blur-sm p-6 hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_40px_-12px_hsl(var(--primary)/0.3)]"
               >
