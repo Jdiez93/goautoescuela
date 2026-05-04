@@ -174,7 +174,7 @@ export default function LasPracticas() {
 
             {/* Button inside image - discreet */}
             <div className="absolute inset-0 flex items-end justify-end p-6 sm:p-8">
-              <Link to="/pagos">
+              <Link to="/matriculate">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
                   <Button
                     size="sm"
