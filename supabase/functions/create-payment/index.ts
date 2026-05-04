@@ -63,7 +63,7 @@ serve(async (req) => {
       line_items: [{ price: pack.priceId, quantity: 1 }],
       mode: "payment",
       // Explicit list excludes Link (Link only appears with automatic_payment_methods)
-      payment_method_types: ["card", "klarna"],
+      payment_method_types: ["card", "klarna", "paypal", "bizum"],
       success_url: `${req.headers.get("origin")}/pagos?success=true&pack=${packKey}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/pagos?canceled=true`,
       metadata: {
