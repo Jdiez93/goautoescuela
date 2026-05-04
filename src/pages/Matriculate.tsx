@@ -1,6 +1,7 @@
+import { useEffect, useRef } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,22 +11,16 @@ import {
   GraduationCap,
   Car,
   Trophy,
+  ArrowDown,
 } from "lucide-react";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
-
-// Reusable scroll animation: fades in/out as section enters/leaves viewport
-const scrollVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
-};
 
 type Pack = {
   id: string;
   name: string;
   tagline: string;
   price: string;
-  oldPrice?: string;
   badge?: string;
   highlight?: boolean;
   icon: typeof GraduationCap;
@@ -86,122 +81,89 @@ const steps = [
 ];
 
 export default function Matriculate() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Smooth scroll behavior + restore on unmount
+  useEffect(() => {
+    const html = document.documentElement;
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = "smooth";
+    return () => {
+      html.style.scrollBehavior = prev;
+    };
+  }, []);
+
+  // Parallax progress for hero decorative elements
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 20, mass: 0.4 });
+  const blobY = useTransform(smoothProgress, [0, 1], [0, -120]);
+  const blobScale = useTransform(smoothProgress, [0, 1], [1, 1.15]);
+  const heroTextY = useTransform(smoothProgress, [0, 1], [0, -60]);
+  const heroOpacity = useTransform(smoothProgress, [0, 0.6], [1, 0]);
+
+  const scrollToPacks = () => {
+    document.getElementById("packs")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Navbar />
 
-      {/* HERO */}
-      <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden">
-        {/* Decorative gradients (kept subtle, brand-aligned) */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.18),transparent_60%)]" />
-          <div className="absolute top-40 -left-32 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.12),transparent_70%)] blur-3xl" />
-        </div>
+      {/* HERO + PACKS PEEK */}
+      <section ref={containerRef} className="relative pt-24 md:pt-28 pb-8 overflow-hidden">
+        {/* Decorative parallax blobs */}
+        <motion.div
+          style={{ y: blobY, scale: blobScale }}
+          className="absolute inset-0 -z-10 pointer-events-none"
+        >
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.22),transparent_60%)]" />
+          <div className="absolute top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.18),transparent_70%)] blur-3xl" />
+          <div className="absolute top-64 -right-32 w-[380px] h-[380px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.12),transparent_70%)] blur-3xl" />
+        </motion.div>
 
         <div className="container mx-auto px-4">
+          {/* Compact hero */}
           <motion.div
+            style={{ y: heroTextY, opacity: heroOpacity }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeCurve }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-3xl mx-auto text-center mb-10 md:mb-14"
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-['Space_Grotesk'] tracking-tight mb-6 leading-[1.05]">
+            <h1 className="text-4xl md:text-6xl font-bold font-['Space_Grotesk'] tracking-tight mb-5 leading-[1.05]">
               Matricúlate y empieza{" "}
               <span className="text-primary">tu carnet hoy</span>
             </h1>
-
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Elige el pack que mejor se adapta a ti. Sin papeleos, sin colas y con todo lo necesario
-              para conseguir tu permiso de conducir cuanto antes.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="py-16 md:py-24 bg-muted/30 border-y border-border/50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            variants={scrollVariants}
-            initial="hidden"
-            whileInView="visible"
-            exit="hidden"
-            viewport={{ amount: 0.3 }}
-            transition={{ duration: 0.6, ease: easeCurve }}
-            className="max-w-2xl mx-auto text-center mb-14"
-          >
-            <h2 className="text-3xl md:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-4">
-              Así de fácil es matricularte
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              En tres pasos estarás listo para empezar tu formación.
+              para conseguir tu permiso cuanto antes.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {steps.map((s, i) => (
-              <motion.div
-                key={s.n}
-                variants={scrollVariants}
-                initial="hidden"
-                whileInView="visible"
-                exit="hidden"
-                viewport={{ amount: 0.2 }}
-                transition={{ duration: 0.6, delay: i * 0.12, ease: easeCurve }}
-                className="relative"
-              >
-                <Card className="p-7 rounded-2xl h-full border-border/60 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
-                  <div className="text-5xl font-bold font-['Space_Grotesk'] text-primary mb-3">
-                    {s.n}
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{s.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{s.desc}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PACKS */}
-      <section className="py-16 md:py-24 relative">
-        <div className="container mx-auto px-4">
-          <motion.div
-            variants={scrollVariants}
-            initial="hidden"
-            whileInView="visible"
-            exit="hidden"
-            viewport={{ amount: 0.3 }}
-            transition={{ duration: 0.6, ease: easeCurve }}
-            className="text-center max-w-2xl mx-auto mb-14"
-          >
-            <h2 className="text-3xl md:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-4">
-              Elige tu pack de matriculación
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Tres planes pensados para distintos ritmos y objetivos. Todos incluyen acceso completo a
-              nuestra plataforma online.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+          {/* PACKS – visible immediately */}
+          <div id="packs" className="grid md:grid-cols-3 gap-5 lg:gap-7 max-w-6xl mx-auto scroll-mt-24">
             {packs.map((pack, i) => {
               const Icon = pack.icon;
               return (
                 <motion.div
                   key={pack.id}
-                  variants={scrollVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  exit="hidden"
-                  viewport={{ amount: 0.2 }}
-                  transition={{ duration: 0.6, delay: i * 0.12, ease: easeCurve }}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.15 + i * 0.12,
+                    ease: easeCurve,
+                  }}
+                  whileHover={{ y: -6, transition: { duration: 0.3, ease: easeCurve } }}
                 >
                   <Card
-                    className={`relative h-full p-7 md:p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 ${
+                    className={`relative h-full p-7 md:p-8 rounded-2xl transition-shadow duration-300 ${
                       pack.highlight
-                        ? "border-primary/50 shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.35)] bg-primary/5"
-                        : "hover:border-foreground/20 hover:shadow-xl"
+                        ? "border-primary/50 shadow-[0_24px_70px_-20px_hsl(var(--primary)/0.45)] bg-primary/5"
+                        : "hover:shadow-xl"
                     }`}
                   >
                     {pack.badge && (
@@ -263,9 +225,108 @@ export default function Matriculate() {
             })}
           </div>
 
-          <p className="text-center text-xs text-muted-foreground mt-8">
-            * Los precios y contenidos finales se publicarán próximamente.
-          </p>
+          {/* Scroll cue */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            className="flex justify-center mt-12 mb-2"
+          >
+            <button
+              onClick={() => document.getElementById("how")?.scrollIntoView({ behavior: "smooth" })}
+              className="group flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Ver cómo funciona"
+            >
+              <span className="text-xs uppercase tracking-[0.2em] font-medium">
+                Cómo funciona
+              </span>
+              <motion.span
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                className="w-9 h-9 rounded-full border border-border/60 flex items-center justify-center group-hover:border-primary/60 transition-colors"
+              >
+                <ArrowDown className="w-4 h-4" />
+              </motion.span>
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section
+        id="how"
+        className="relative py-20 md:py-28 bg-muted/30 border-y border-border/50 scroll-mt-24 overflow-hidden"
+      >
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.08),transparent_70%)] blur-3xl" />
+        </div>
+
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.4 }}
+            transition={{ duration: 0.7, ease: easeCurve }}
+            className="max-w-2xl mx-auto text-center mb-14"
+          >
+            <span className="inline-block text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">
+              Proceso simple
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-4">
+              Así de fácil es matricularte
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              En tres pasos estarás listo para empezar tu formación.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto relative">
+            {/* Connecting line (desktop) */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: false, amount: 0.5 }}
+              transition={{ duration: 1.1, ease: easeCurve, delay: 0.2 }}
+              style={{ transformOrigin: "left" }}
+              className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+            />
+
+            {steps.map((s, i) => (
+              <motion.div
+                key={s.n}
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.7, delay: i * 0.15, ease: easeCurve }}
+                className="relative"
+              >
+                <Card className="p-7 rounded-2xl h-full border-border/60 hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 bg-background/80 backdrop-blur">
+                  <div className="text-5xl font-bold font-['Space_Grotesk'] text-primary mb-3">
+                    {s.n}
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{s.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{s.desc}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom CTA back to packs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: easeCurve }}
+            className="text-center mt-14"
+          >
+            <Button
+              onClick={scrollToPacks}
+              size="lg"
+              className="rounded-xl font-semibold shadow-[0_12px_40px_-10px_hsl(var(--primary)/0.5)]"
+            >
+              Ver packs disponibles
+            </Button>
+          </motion.div>
         </div>
       </section>
 
