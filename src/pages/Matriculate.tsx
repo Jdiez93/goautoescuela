@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -81,8 +81,6 @@ const steps = [
 ];
 
 export default function Matriculate() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   // Smooth scroll behavior + restore on unmount
   useEffect(() => {
     const html = document.documentElement;
@@ -93,17 +91,6 @@ export default function Matriculate() {
     };
   }, []);
 
-  // Parallax progress for hero decorative elements
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 20, mass: 0.4 });
-  const blobY = useTransform(smoothProgress, [0, 1], [0, -120]);
-  const blobScale = useTransform(smoothProgress, [0, 1], [1, 1.15]);
-  const heroTextY = useTransform(smoothProgress, [0, 1], [0, -60]);
-  const heroOpacity = useTransform(smoothProgress, [0, 0.6], [1, 0]);
-
   const scrollToPacks = () => {
     document.getElementById("packs")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -113,21 +100,15 @@ export default function Matriculate() {
       <Navbar />
 
       {/* HERO + PACKS PEEK */}
-      <section ref={containerRef} className="relative pt-24 md:pt-28 pb-8 overflow-hidden">
-        {/* Decorative parallax blobs */}
-        <motion.div
-          style={{ y: blobY, scale: blobScale }}
-          className="absolute inset-0 -z-10 pointer-events-none"
-        >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.22),transparent_60%)]" />
-          <div className="absolute top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.18),transparent_70%)] blur-3xl" />
-          <div className="absolute top-64 -right-32 w-[380px] h-[380px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.12),transparent_70%)] blur-3xl" />
-        </motion.div>
+      <section className="relative pt-24 md:pt-28 pb-8 overflow-hidden">
+        {/* Decorative background (estático, sin parallax para evitar lag) */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.18),transparent_60%)]" />
+        </div>
 
         <div className="container mx-auto px-4">
           {/* Compact hero */}
           <motion.div
-            style={{ y: heroTextY, opacity: heroOpacity }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeCurve }}
@@ -265,7 +246,7 @@ export default function Matriculate() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
+            viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7, ease: easeCurve }}
             className="max-w-2xl mx-auto text-center mb-14"
           >
@@ -285,7 +266,7 @@ export default function Matriculate() {
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
-              viewport={{ once: false, amount: 0.5 }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 1.1, ease: easeCurve, delay: 0.2 }}
               style={{ transformOrigin: "left" }}
               className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
@@ -296,7 +277,7 @@ export default function Matriculate() {
                 key={s.n}
                 initial={{ opacity: 0, y: 50, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, delay: i * 0.15, ease: easeCurve }}
                 className="relative"
               >
@@ -315,7 +296,7 @@ export default function Matriculate() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.6, delay: 0.4, ease: easeCurve }}
             className="text-center mt-14"
           >

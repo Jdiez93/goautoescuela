@@ -44,14 +44,14 @@ const staggerContainer = {
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: false, margin: "-60px" },
+  viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
 
 const scaleIn = {
   initial: { opacity: 0, scale: 0.92 },
   whileInView: { opacity: 1, scale: 1 },
-  viewport: { once: false, margin: "-40px" },
+  viewport: { once: true, margin: "-40px" },
   transition: { duration: 0.6, ease: easeCurve },
 };
 
@@ -206,7 +206,7 @@ function WhySection() {
           variants={staggerContainer}
           initial="initial"
           whileInView="animate"
-          viewport={{ once: false, margin: "-60px" }}
+          viewport={{ once: true, margin: "-60px" }}
         >
           {reasons.map((r, i) => (
             <motion.div
@@ -248,7 +248,7 @@ function CoursesSection() {
             key={course.id}
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, margin: "-40px" }}
+            viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, delay: i * 0.15, ease: easeCurve }}
             className="flex flex-col gap-3"
           >
@@ -340,7 +340,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             transition={{ duration: 0.7, ease: easeCurve }}
           >
             <Footer />

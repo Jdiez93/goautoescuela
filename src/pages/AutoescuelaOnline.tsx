@@ -8,14 +8,14 @@ const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: false, margin: "-60px" },
+  viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
 
 const scaleIn = {
   initial: { opacity: 0, scale: 0.92 },
   whileInView: { opacity: 1, scale: 1 },
-  viewport: { once: false, margin: "-40px" },
+  viewport: { once: true, margin: "-40px" },
   transition: { duration: 0.6, ease: easeCurve },
 };
 
@@ -101,7 +101,7 @@ export default function AutoescuelaOnline() {
                   key={feat.title}
                   initial={{ opacity: 0, y: 40, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: false, margin: "-60px" }}
+                  viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6, delay: 0.1, ease: easeCurve }}
                   className="grid md:grid-cols-2 gap-8 md:gap-12 items-center"
                 >
@@ -110,7 +110,7 @@ export default function AutoescuelaOnline() {
                     className={textFirst ? "md:order-1" : "md:order-2"}
                     initial={{ opacity: 0, x: textFirst ? -30 : 30 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, margin: "-60px" }}
+                    viewport={{ once: true, margin: "-60px" }}
                     transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
                   >
                     <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-3">{feat.title}</h3>
@@ -126,7 +126,7 @@ export default function AutoescuelaOnline() {
                     className={textFirst ? "md:order-2" : "md:order-1"}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: false, margin: "-60px" }}
+                    viewport={{ once: true, margin: "-60px" }}
                     transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
                     whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
                   >
@@ -147,7 +147,7 @@ export default function AutoescuelaOnline() {
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, margin: "-60px" }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
             className="grid md:grid-cols-2 gap-8 md:gap-12 items-center rounded-3xl bg-gradient-to-br from-secondary/10 to-secondary/5 p-8 md:p-12 border border-secondary/20"
           >
@@ -156,7 +156,7 @@ export default function AutoescuelaOnline() {
               className="order-2 md:order-1 text-center md:text-left"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, margin: "-60px" }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
             >
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
@@ -184,7 +184,7 @@ export default function AutoescuelaOnline() {
               className="order-1 md:order-2"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false, margin: "-60px" }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
             >
               <div className="aspect-square rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">

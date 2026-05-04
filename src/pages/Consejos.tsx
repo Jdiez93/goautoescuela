@@ -65,7 +65,7 @@ export default function Consejos() {
                   key={tip.title}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, margin: "-40px" }}
+                  viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.5, delay: index * 0.08, ease: easeCurve }}
                   className="rounded-2xl bg-card border border-border/40 p-6 hover:border-primary/30 transition-colors"
                 >
