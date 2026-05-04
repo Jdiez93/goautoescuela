@@ -62,6 +62,16 @@ serve(async (req) => {
       customer_email: customerId ? undefined : user.email,
       line_items: [{ price: pack.priceId, quantity: 1 }],
       mode: "payment",
+      payment_method_types: ["card"],
+      payment_method_options: {
+        card: {
+          // Disables Link wallet on Checkout
+          setup_future_usage: undefined,
+        },
+      },
+      // Disable Link explicitly
+      // @ts-ignore - supported by Stripe API
+      automatic_payment_methods: undefined,
       success_url: `${req.headers.get("origin")}/pagos?success=true&pack=${packKey}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/pagos?canceled=true`,
       metadata: {
