@@ -109,7 +109,6 @@ export default function Matriculate() {
         <div className="container mx-auto px-4">
           {/* Compact hero */}
           <motion.div
-            style={{ y: heroTextY, opacity: heroOpacity }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeCurve }}
