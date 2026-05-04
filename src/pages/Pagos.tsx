@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
-import { Car, ArrowLeft, CreditCard, BookOpen, CheckCircle, Loader2, AlertCircle, TrendingUp } from "lucide-react";
+import { Car, ArrowLeft, CreditCard, BookOpen, CheckCircle, Loader2, AlertCircle, TrendingUp, FileText, Download } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
@@ -53,6 +53,9 @@ export default function Pagos() {
 
   const success = searchParams.get("success");
   const canceled = searchParams.get("canceled");
+  const sessionId = searchParams.get("session_id");
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [downloadingSuccess, setDownloadingSuccess] = useState(false);
 
   const { data: payments, isLoading: paymentsLoading } = useQuery({
     queryKey: ["my-payments", user?.id],
@@ -96,6 +99,50 @@ export default function Pagos() {
       toast({ title: "Error", description: err.message || "No se pudo iniciar el pago", variant: "destructive" });
     } finally {
       setPurchasingPack(null);
+    }
+  };
+
+  const openReceipt = async (opts: { paymentIntentId?: string | null; sessionId?: string | null }) => {
+    const { data, error } = await supabase.functions.invoke("get-receipt-url", {
+      body: {
+        paymentIntentId: opts.paymentIntentId ?? undefined,
+        sessionId: opts.sessionId ?? undefined,
+      },
+    });
+    if (error || !data?.receiptUrl) {
+      throw new Error(data?.error || error?.message || "No se pudo obtener el justificante");
+    }
+    window.open(data.receiptUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleDownloadReceipt = async (paymentId: string, paymentIntentId: string | null) => {
+    if (!paymentIntentId) {
+      toast({ title: "Justificante no disponible", description: "Este pago aún no tiene justificante.", variant: "destructive" });
+      return;
+    }
+    setDownloadingId(paymentId);
+    try {
+      await openReceipt({ paymentIntentId });
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    } finally {
+      setDownloadingId(null);
+    }
+  };
+
+  const handleDownloadSuccessReceipt = async () => {
+    if (!sessionId) return;
+    setDownloadingSuccess(true);
+    try {
+      await openReceipt({ sessionId });
+    } catch (err: any) {
+      toast({
+        title: "Justificante aún no disponible",
+        description: "Espera unos segundos y vuelve a intentarlo desde el historial.",
+        variant: "destructive",
+      });
+    } finally {
+      setDownloadingSuccess(false);
     }
   };
 
@@ -189,10 +236,28 @@ export default function Pagos() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="mb-6 p-4 rounded-xl bg-accent border border-primary/20 flex items-center gap-3"
+              className="mb-6 p-4 rounded-xl bg-accent border border-primary/20 flex flex-col sm:flex-row sm:items-center gap-3"
             >
-              <CheckCircle className="w-5 h-5 text-primary shrink-0" />
-              <p className="text-sm text-accent-foreground font-medium">¡Pago realizado con éxito! Las clases se añadirán a tu saldo en breve.</p>
+              <div className="flex items-center gap-3 flex-1">
+                <CheckCircle className="w-5 h-5 text-primary shrink-0" />
+                <p className="text-sm text-accent-foreground font-medium">¡Pago realizado con éxito! Las clases se añadirán a tu saldo en breve.</p>
+              </div>
+              {sessionId && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0 bg-background/60 hover:bg-background"
+                  onClick={handleDownloadSuccessReceipt}
+                  disabled={downloadingSuccess}
+                >
+                  {downloadingSuccess ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Download className="w-4 h-4 mr-2" />
+                  )}
+                  Descargar justificante
+                </Button>
+              )}
             </motion.div>
           )}
           {canceled === "true" && (
@@ -390,6 +455,7 @@ export default function Pagos() {
                         <th className="px-4 py-3 font-medium text-muted-foreground">Clases</th>
                         <th className="px-4 py-3 font-medium text-muted-foreground text-right">Importe</th>
                         <th className="px-4 py-3 font-medium text-muted-foreground text-center">Estado</th>
+                        <th className="px-4 py-3 font-medium text-muted-foreground text-center">Justificante</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -417,6 +483,27 @@ export default function Pagos() {
                             >
                               {p.status === "completed" ? "Completado" : p.status === "pending" ? "Pendiente" : "Fallido"}
                             </Badge>
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            {p.status === "completed" && p.stripe_payment_id ? (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 px-2 text-primary hover:text-primary hover:bg-primary/10"
+                                onClick={() => handleDownloadReceipt(p.id, p.stripe_payment_id)}
+                                disabled={downloadingId === p.id}
+                                title="Descargar justificante"
+                              >
+                                {downloadingId === p.id ? (
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                  <FileText className="w-4 h-4" />
+                                )}
+                                <span className="ml-1.5 hidden sm:inline">PDF</span>
+                              </Button>
+                            ) : (
+                              <span className="text-xs text-muted-foreground">—</span>
+                            )}
                           </td>
                         </motion.tr>
                       ))}
