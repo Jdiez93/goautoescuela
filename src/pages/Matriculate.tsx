@@ -81,8 +81,6 @@ const steps = [
 ];
 
 export default function Matriculate() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   // Smooth scroll behavior + restore on unmount
   useEffect(() => {
     const html = document.documentElement;
@@ -93,17 +91,6 @@ export default function Matriculate() {
     };
   }, []);
 
-  // Parallax progress for hero decorative elements
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 20, mass: 0.4 });
-  const blobY = useTransform(smoothProgress, [0, 1], [0, -120]);
-  const blobScale = useTransform(smoothProgress, [0, 1], [1, 1.15]);
-  const heroTextY = useTransform(smoothProgress, [0, 1], [0, -60]);
-  const heroOpacity = useTransform(smoothProgress, [0, 0.6], [1, 0]);
-
   const scrollToPacks = () => {
     document.getElementById("packs")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -113,16 +100,11 @@ export default function Matriculate() {
       <Navbar />
 
       {/* HERO + PACKS PEEK */}
-      <section ref={containerRef} className="relative pt-24 md:pt-28 pb-8 overflow-hidden">
-        {/* Decorative parallax blobs */}
-        <motion.div
-          style={{ y: blobY, scale: blobScale }}
-          className="absolute inset-0 -z-10 pointer-events-none"
-        >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.22),transparent_60%)]" />
-          <div className="absolute top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.18),transparent_70%)] blur-3xl" />
-          <div className="absolute top-64 -right-32 w-[380px] h-[380px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.12),transparent_70%)] blur-3xl" />
-        </motion.div>
+      <section className="relative pt-24 md:pt-28 pb-8 overflow-hidden">
+        {/* Decorative background (estático, sin parallax para evitar lag) */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.18),transparent_60%)]" />
+        </div>
 
         <div className="container mx-auto px-4">
           {/* Compact hero */}
