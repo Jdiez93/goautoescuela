@@ -102,6 +102,50 @@ export default function Pagos() {
     }
   };
 
+  const openReceipt = async (opts: { paymentIntentId?: string | null; sessionId?: string | null }) => {
+    const { data, error } = await supabase.functions.invoke("get-receipt-url", {
+      body: {
+        paymentIntentId: opts.paymentIntentId ?? undefined,
+        sessionId: opts.sessionId ?? undefined,
+      },
+    });
+    if (error || !data?.receiptUrl) {
+      throw new Error(data?.error || error?.message || "No se pudo obtener el justificante");
+    }
+    window.open(data.receiptUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleDownloadReceipt = async (paymentId: string, paymentIntentId: string | null) => {
+    if (!paymentIntentId) {
+      toast({ title: "Justificante no disponible", description: "Este pago aún no tiene justificante.", variant: "destructive" });
+      return;
+    }
+    setDownloadingId(paymentId);
+    try {
+      await openReceipt({ paymentIntentId });
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    } finally {
+      setDownloadingId(null);
+    }
+  };
+
+  const handleDownloadSuccessReceipt = async () => {
+    if (!sessionId) return;
+    setDownloadingSuccess(true);
+    try {
+      await openReceipt({ sessionId });
+    } catch (err: any) {
+      toast({
+        title: "Justificante aún no disponible",
+        description: "Espera unos segundos y vuelve a intentarlo desde el historial.",
+        variant: "destructive",
+      });
+    } finally {
+      setDownloadingSuccess(false);
+    }
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
