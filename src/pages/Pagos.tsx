@@ -484,6 +484,27 @@ export default function Pagos() {
                               {p.status === "completed" ? "Completado" : p.status === "pending" ? "Pendiente" : "Fallido"}
                             </Badge>
                           </td>
+                          <td className="px-4 py-3 text-center">
+                            {p.status === "completed" && p.stripe_payment_id ? (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-8 px-2 text-primary hover:text-primary hover:bg-primary/10"
+                                onClick={() => handleDownloadReceipt(p.id, p.stripe_payment_id)}
+                                disabled={downloadingId === p.id}
+                                title="Descargar justificante"
+                              >
+                                {downloadingId === p.id ? (
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                  <FileText className="w-4 h-4" />
+                                )}
+                                <span className="ml-1.5 hidden sm:inline">PDF</span>
+                              </Button>
+                            ) : (
+                              <span className="text-xs text-muted-foreground">—</span>
+                            )}
+                          </td>
                         </motion.tr>
                       ))}
                     </tbody>
