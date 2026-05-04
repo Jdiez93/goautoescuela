@@ -93,6 +93,11 @@ export default function Navbar() {
 
           {/* Right actions — desktop */}
           <div className="hidden md:flex items-center gap-2 shrink-0">
+            <Link to="/matriculate" className="hidden lg:inline-block">
+              <span className="relative px-3 py-2 text-xs xl:text-sm font-bold rounded-lg text-[hsl(174,72%,45%)] hover:text-[hsl(174,80%,55%)] transition-all duration-300 hover:[text-shadow:0_0_12px_hsl(174_80%_55%/0.9),0_0_24px_hsl(174_80%_55%/0.6)]">
+                Matricúlate
+              </span>
+            </Link>
             {user ? (
               <>
                 <Link to={panelHref}>
@@ -170,6 +175,11 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+              <Link to="/matriculate" onClick={() => setIsOpen(false)}>
+                <div className="px-4 py-2.5 rounded-xl text-sm font-bold text-[hsl(174,72%,45%)] hover:[text-shadow:0_0_12px_hsl(174_80%_55%/0.9)] transition-all">
+                  Matricúlate
+                </div>
+              </Link>
               <div className="h-px bg-border/60 my-2" />
               {user ? (
                 <>
