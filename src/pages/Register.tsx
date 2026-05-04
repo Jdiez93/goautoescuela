@@ -102,7 +102,9 @@ export default function Register() {
               </Link>
             </motion.div>
             <CardTitle>Crear cuenta</CardTitle>
-            <CardDescription>Regístrate para empezar tu carnet</CardDescription>
+            <CardDescription className="text-destructive font-medium">
+              Para la correcta creación de la cuenta regístrese con el mismo correo que realizó la matrícula
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleRegister} className="space-y-4">
