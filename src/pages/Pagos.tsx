@@ -455,6 +455,7 @@ export default function Pagos() {
                         <th className="px-4 py-3 font-medium text-muted-foreground">Clases</th>
                         <th className="px-4 py-3 font-medium text-muted-foreground text-right">Importe</th>
                         <th className="px-4 py-3 font-medium text-muted-foreground text-center">Estado</th>
+                        <th className="px-4 py-3 font-medium text-muted-foreground text-center">Justificante</th>
                       </tr>
                     </thead>
                     <tbody>
