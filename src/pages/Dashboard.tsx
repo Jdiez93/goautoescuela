@@ -145,25 +145,25 @@ export default function Dashboard() {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logoReady2Go} alt="Ready2Go" className="h-14 w-auto object-contain" />
-            <span className="text-lg font-bold font-['Space_Grotesk']">Ready2Go</span>
+        <div className="container mx-auto px-3 sm:px-4 flex items-center justify-between h-14 sm:h-16 gap-2">
+          <Link to="/" className="flex items-center gap-2 min-w-0">
+            <img src={logoReady2Go} alt="Ready2Go" className="h-9 sm:h-12 w-auto object-contain shrink-0" />
+            <span className="text-base sm:text-lg font-bold font-['Space_Grotesk'] truncate">Ready2Go</span>
           </Link>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-primary-foreground/80 hidden sm:inline">
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+            <span className="text-sm text-primary-foreground/80 hidden md:inline truncate max-w-[160px]">
               {profile?.full_name || user.email}
             </span>
             {role === "student" && <NotificationBell />}
-            <Button variant="ghost" size="sm" onClick={signOut} className="text-primary-foreground hover:bg-destructive hover:text-destructive-foreground">
-              <LogOut className="w-4 h-4 mr-1" /> Salir
+            <Button variant="ghost" size="sm" onClick={signOut} className="text-primary-foreground hover:bg-destructive hover:text-destructive-foreground px-2 sm:px-3">
+              <LogOut className="w-4 h-4 sm:mr-1" /> <span className="hidden sm:inline">Salir</span>
             </Button>
           </div>
         </div>
       </header>
 
       {/* Hero banner */}
-      <div className="bg-primary pb-20 pt-8 relative overflow-hidden">
+      <div className="bg-primary pb-16 sm:pb-20 pt-6 sm:pt-8 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-[-50px] right-[-100px] w-[300px] h-[300px] rounded-full border-[40px] border-primary-foreground" />
           <div className="absolute bottom-[-80px] left-[-60px] w-[200px] h-[200px] rounded-full border-[30px] border-primary-foreground" />
@@ -172,18 +172,18 @@ export default function Dashboard() {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div className="flex items-center gap-2 mb-2">
               <Shield className="w-4 h-4 text-primary-foreground/70" />
-              <span className="text-sm font-medium text-primary-foreground/70 uppercase tracking-wider">{roleLabel}</span>
+              <span className="text-xs sm:text-sm font-medium text-primary-foreground/70 uppercase tracking-wider">{roleLabel}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-1">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-1 break-words">
               ¡Hola, {profile?.full_name || "usuario"}!
             </h1>
-            <p className="text-primary-foreground/70">Bienvenido a tu panel de control</p>
+            <p className="text-sm sm:text-base text-primary-foreground/70">Bienvenido a tu panel de control</p>
           </motion.div>
         </div>
       </div>
 
       {/* Main content */}
-      <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1 space-y-8">
+      <main className="container mx-auto px-3 sm:px-4 -mt-12 pb-16 relative z-10 flex-1 space-y-6 sm:space-y-8">
         {/* Navigation Cards */}
         {role === "student" && !studentDataLoading && stats.totalPurchased > 0 && stats.totalRemaining <= 2 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
@@ -268,8 +268,8 @@ export default function Dashboard() {
                         </Button>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-6">
-                        <div className="w-32 h-32 shrink-0">
+                      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                        <div className="w-28 h-28 sm:w-32 sm:h-32 shrink-0">
                           <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                               <Pie data={chartData} cx="50%" cy="50%" innerRadius={30} outerRadius={50} paddingAngle={4} dataKey="value" strokeWidth={0}>
@@ -330,16 +330,16 @@ export default function Dashboard() {
                       </div>
                     ) : nextClass && countdown ? (
                       <div className="space-y-4">
-                        <div className="flex justify-center gap-3">
+                        <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
                           {[
                             { label: "Días", value: countdown.days },
                             { label: "Horas", value: countdown.hours },
                             { label: "Min", value: countdown.minutes },
                             { label: "Seg", value: countdown.seconds },
                           ].map((item) => (
-                            <div key={item.label} className="bg-accent rounded-xl px-3 py-3 text-center min-w-[60px]">
-                              <div className="text-2xl font-bold text-primary font-['Space_Grotesk']">{String(item.value).padStart(2, "0")}</div>
-                              <div className="text-xs text-muted-foreground">{item.label}</div>
+                            <div key={item.label} className="bg-accent rounded-xl px-2 sm:px-3 py-2 sm:py-3 text-center min-w-[56px] sm:min-w-[60px]">
+                              <div className="text-xl sm:text-2xl font-bold text-primary font-['Space_Grotesk']">{String(item.value).padStart(2, "0")}</div>
+                              <div className="text-[10px] sm:text-xs text-muted-foreground">{item.label}</div>
                             </div>
                           ))}
                         </div>
