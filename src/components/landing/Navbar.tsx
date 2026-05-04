@@ -17,7 +17,7 @@ const navLinks = [
   { label: "Teórica", to: "/la-teorica" },
   { label: "Prácticas", to: "/las-practicas" },
   { label: "Actualidad", to: "/actualidad" },
-  { label: "Consejos", to: "/consejos" },
+  { label: "Trabaja con nosotros", to: "/consejos" },
   { label: "Autoescuelas Ready2Go", to: "/autoescuelas-ready2go" },
   { label: "Autoescuela Online", to: "/autoescuela-online" },
 ];
