@@ -53,6 +53,9 @@ export default function Pagos() {
 
   const success = searchParams.get("success");
   const canceled = searchParams.get("canceled");
+  const sessionId = searchParams.get("session_id");
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [downloadingSuccess, setDownloadingSuccess] = useState(false);
 
   const { data: payments, isLoading: paymentsLoading } = useQuery({
     queryKey: ["my-payments", user?.id],
