@@ -236,10 +236,28 @@ export default function Pagos() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="mb-6 p-4 rounded-xl bg-accent border border-primary/20 flex items-center gap-3"
+              className="mb-6 p-4 rounded-xl bg-accent border border-primary/20 flex flex-col sm:flex-row sm:items-center gap-3"
             >
-              <CheckCircle className="w-5 h-5 text-primary shrink-0" />
-              <p className="text-sm text-accent-foreground font-medium">¡Pago realizado con éxito! Las clases se añadirán a tu saldo en breve.</p>
+              <div className="flex items-center gap-3 flex-1">
+                <CheckCircle className="w-5 h-5 text-primary shrink-0" />
+                <p className="text-sm text-accent-foreground font-medium">¡Pago realizado con éxito! Las clases se añadirán a tu saldo en breve.</p>
+              </div>
+              {sessionId && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0 bg-background/60 hover:bg-background"
+                  onClick={handleDownloadSuccessReceipt}
+                  disabled={downloadingSuccess}
+                >
+                  {downloadingSuccess ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Download className="w-4 h-4 mr-2" />
+                  )}
+                  Descargar justificante
+                </Button>
+              )}
             </motion.div>
           )}
           {canceled === "true" && (
