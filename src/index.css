@@ -103,6 +103,8 @@
   html, body {
     overflow-x: hidden;
     max-width: 100%;
+    /* Suaviza scroll y mejora rendimiento */
+    -webkit-overflow-scrolling: touch;
   }
   body {
     @apply bg-background text-foreground;
@@ -115,6 +117,26 @@
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* Scrollbar minimalista (oculta la barra gris por defecto) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.35);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.55);
+  }
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.35) transparent;
   }
 }
 
