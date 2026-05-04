@@ -207,31 +207,31 @@ export default function DashboardProfesor() {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logoReady2Go} alt="Ready2Go" className="h-14 w-auto object-contain" />
-            <span className="text-lg font-bold font-['Space_Grotesk']">
+        <div className="container mx-auto px-3 sm:px-4 flex items-center justify-between h-14 sm:h-16 gap-2">
+          <Link to="/" className="flex items-center gap-2 min-w-0">
+            <img src={logoReady2Go} alt="Ready2Go" className="h-9 sm:h-12 w-auto object-contain shrink-0" />
+            <span className="text-base sm:text-lg font-bold font-['Space_Grotesk'] truncate">
               Ready2Go
             </span>
           </Link>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-primary-foreground/80 hidden sm:inline">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            <span className="text-sm text-primary-foreground/80 hidden md:inline truncate max-w-[160px]">
               {profile?.full_name || user.email}
             </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={signOut}
-              className="text-primary-foreground hover:bg-destructive hover:text-destructive-foreground"
+              className="text-primary-foreground hover:bg-destructive hover:text-destructive-foreground px-2 sm:px-3"
             >
-              <LogOut className="w-4 h-4 mr-1" /> Salir
+              <LogOut className="w-4 h-4 sm:mr-1" /> <span className="hidden sm:inline">Salir</span>
             </Button>
           </div>
         </div>
       </header>
 
       {/* Hero */}
-      <div className="bg-primary pb-20 pt-8 relative overflow-hidden">
+      <div className="bg-primary pb-16 sm:pb-20 pt-6 sm:pt-8 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-[-50px] right-[-100px] w-[300px] h-[300px] rounded-full border-[40px] border-primary-foreground" />
           <div className="absolute bottom-[-80px] left-[-60px] w-[200px] h-[200px] rounded-full border-[30px] border-primary-foreground" />
@@ -244,14 +244,14 @@ export default function DashboardProfesor() {
           >
             <div className="flex items-center gap-2 mb-2">
               <Shield className="w-4 h-4 text-primary-foreground/70" />
-              <span className="text-sm font-medium text-primary-foreground/70 uppercase tracking-wider">
+              <span className="text-xs sm:text-sm font-medium text-primary-foreground/70 uppercase tracking-wider">
                 {isAdmin ? "Jefe de autoescuela" : "Profesor"}
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-1">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-1 break-words">
               ¡Hola, {profile?.full_name || "profesor"}!
             </h1>
-            <p className="text-primary-foreground/70">
+            <p className="text-sm sm:text-base text-primary-foreground/70">
               Panel de control del profesor
             </p>
           </motion.div>
@@ -259,7 +259,7 @@ export default function DashboardProfesor() {
       </div>
 
       {/* Content */}
-      <main className="container mx-auto px-4 -mt-12 pb-16 relative z-10 flex-1">
+      <main className="container mx-auto px-3 sm:px-4 -mt-12 pb-16 relative z-10 flex-1">
         <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
