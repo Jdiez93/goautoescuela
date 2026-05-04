@@ -150,13 +150,13 @@ export default function LaTeorica() {
           >
             <span className="text-primary-foreground/60 text-sm font-medium">Imagen chica portátil</span>
             <div className="absolute bottom-5 left-5">
-              <Link to="/pagos">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
-                  <Button className="bg-[hsl(var(--foreground))] text-background hover:opacity-90 rounded-xl px-6 h-10 text-sm font-semibold">
-                    Ver packs
-                  </Button>
-                </motion.div>
-              </Link>
+            <Link to="/matriculate">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
+                <Button className="bg-[hsl(var(--foreground))] text-background hover:opacity-90 rounded-xl px-6 h-10 text-sm font-semibold">
+                  Ver packs
+                </Button>
+              </motion.div>
+            </Link>
             </div>
           </motion.div>
 
