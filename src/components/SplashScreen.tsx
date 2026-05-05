@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Car } from "lucide-react";
-import logoReady2Go from "@/assets/logo-ready2go.jpeg";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.jpeg";
 
 const tips = [
   "Ajustando espejos…",
