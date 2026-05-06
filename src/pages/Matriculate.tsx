@@ -185,11 +185,11 @@ export default function Matriculate() {
                     <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">{pack.tagline}</p>
 
                     <div className="mb-6 pb-6 border-b border-border/60">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-bold">{pack.price}</span>
-                        <span className="text-muted-foreground text-sm">€ /pago único</span>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl md:text-6xl font-bold tracking-tight">{pack.price}</span>
+                        <span className="text-3xl md:text-4xl font-bold text-foreground/80">€</span>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">Precio próximamente</p>
+                      <p className="text-xs text-muted-foreground mt-2">IVA incluido · Pago único</p>
                     </div>
 
                     <ul className="space-y-3 mb-8">
