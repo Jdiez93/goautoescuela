@@ -44,11 +44,13 @@ export default function ResetPassword() {
 
   useEffect(() => {
     let mounted = true;
+    let timeoutId: number | undefined;
 
     const markReady = () => {
       if (!mounted) return;
       setSessionReady(true);
       setSessionError(null);
+      if (timeoutId) window.clearTimeout(timeoutId);
     };
 
     const markError = (message: string) => {
@@ -57,74 +59,60 @@ export default function ResetPassword() {
       setSessionError(message);
     };
 
+    // Listen for the recovery event triggered by Supabase after it auto-detects
+    // the code/token in the URL (detectSessionInUrl is enabled by default).
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" || ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session)) {
+      if (event === "PASSWORD_RECOVERY") {
+        markReady();
+        return;
+      }
+      if ((event === "SIGNED_IN" || event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED") && session) {
         markReady();
       }
     });
 
-    const initialize = async () => {
-      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-      const searchParams = new URLSearchParams(window.location.search);
-      const flowType = hashParams.get("type") ?? searchParams.get("type");
-      const accessToken = hashParams.get("access_token");
-      const refreshToken = hashParams.get("refresh_token");
-      const code = searchParams.get("code");
-      const urlError = hashParams.get("error_description") ?? searchParams.get("error_description") ?? hashParams.get("error") ?? searchParams.get("error");
+    // Detect explicit URL errors right away
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const searchParams = new URLSearchParams(window.location.search);
+    const urlError =
+      hashParams.get("error_description") ??
+      searchParams.get("error_description") ??
+      hashParams.get("error") ??
+      searchParams.get("error");
 
-      if (urlError) {
-        markError("El enlace de recuperación no es válido o ha caducado. Solicita uno nuevo.");
-        return;
-      }
+    if (urlError) {
+      markError("El enlace de recuperación no es válido o ha caducado. Solicita uno nuevo.");
+      return () => {
+        mounted = false;
+        subscription.unsubscribe();
+      };
+    }
 
-      if (accessToken && refreshToken) {
-        const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
-        if (error) {
-          markError("No hemos podido validar el enlace de recuperación. Solicita uno nuevo.");
-          return;
-        }
+    // Quick path: if a session already exists (Supabase already exchanged the code)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) markReady();
+    });
 
-        markReady();
-        window.history.replaceState(null, "", window.location.pathname);
-        return;
-      }
-
-      if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (error) {
-          markError("No hemos podido validar el enlace de recuperación. Solicita uno nuevo.");
-          return;
-        }
-
-        markReady();
-        window.history.replaceState(null, "", window.location.pathname);
-        return;
-      }
-
-      for (let attempt = 0; attempt < 20; attempt++) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          markReady();
-          return;
-        }
-        await new Promise((resolve) => window.setTimeout(resolve, 250));
-      }
-
-      if (flowType === "recovery" || window.location.hash || window.location.search) {
+    // Safety timeout: if nothing fires within 8s, surface an error.
+    timeoutId = window.setTimeout(() => {
+      const hasRecoveryParams =
+        window.location.hash.includes("access_token") ||
+        window.location.search.includes("code=") ||
+        window.location.search.includes("type=recovery");
+      if (hasRecoveryParams) {
         markError("No hemos podido verificar el enlace de recuperación. Solicita uno nuevo e inténtalo otra vez.");
-        return;
+      } else {
+        markError("Falta el enlace de recuperación. Solicita uno nuevo desde “¿Olvidaste tu contraseña?”.");
       }
-
-      markError("Falta el enlace de recuperación. Solicita uno nuevo desde “¿Olvidaste tu contraseña?”.");
-    };
-
-    initialize();
+    }, 8000);
 
     return () => {
       mounted = false;
       subscription.unsubscribe();
+      if (timeoutId) window.clearTimeout(timeoutId);
     };
   }, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
