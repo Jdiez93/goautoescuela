@@ -237,6 +237,60 @@ export default function Matriculate() {
             })}
           </div>
 
+          {/* OTROS PRECIOS + HORARIO */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: easeCurve }}
+            className="mt-16 md:mt-20 max-w-6xl mx-auto grid md:grid-cols-2 gap-6 lg:gap-8"
+          >
+            {/* Otros precios */}
+            <Card className="p-7 md:p-8 rounded-2xl border-border/60">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold font-['Space_Grotesk']">Otros precios</h3>
+              </div>
+              <ul className="space-y-3">
+                {otrosPrecios.map((item) => (
+                  <li
+                    key={item.label}
+                    className="flex items-center justify-between gap-4 py-2 border-b border-border/30 last:border-0"
+                  >
+                    <span className="text-sm md:text-base text-foreground/85">{item.label}</span>
+                    <span className="font-bold text-primary whitespace-nowrap">{item.price}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            {/* Horario */}
+            <Card className="p-7 md:p-8 rounded-2xl border-border/60 bg-gradient-to-br from-primary/5 to-transparent">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold font-['Space_Grotesk']">Horario de oficina</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-5">De lunes a viernes</p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-background/60 border border-border/50">
+                  <span className="font-semibold">Mañanas</span>
+                  <span className="text-lg font-bold text-primary">11:00 — 13:00</span>
+                </div>
+                <div className="flex items-center justify-between p-4 rounded-xl bg-background/60 border border-border/50">
+                  <span className="font-semibold">Tardes</span>
+                  <span className="text-lg font-bold text-primary">17:00 — 20:00</span>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-6 text-center">
+                Precios con IVA incluido. Esta información puede actualizarse periódicamente.
+              </p>
+            </Card>
+          </motion.div>
+
           {/* Scroll cue */}
           <motion.div
             initial={{ opacity: 0 }}
