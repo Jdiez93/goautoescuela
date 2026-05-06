@@ -190,7 +190,7 @@ function WhySection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 px-4">
+    <section className="py-16 sm:py-24 px-4 cv-auto">
       <div className="max-w-6xl mx-auto">
         <motion.div {...fadeUp}>
           <h2 className="text-2xl sm:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground">
@@ -241,7 +241,7 @@ function CoursesSection() {
   ];
 
   return (
-    <section className="pb-16 sm:pb-24 px-4">
+    <section className="pb-16 sm:pb-24 px-4 cv-auto">
       <div className="max-w-6xl mx-auto grid sm:grid-cols-2 gap-6">
         {courses.map((course, i) => (
           <motion.div
@@ -276,7 +276,7 @@ function CoursesSection() {
 
 function PromoBanner() {
   return (
-    <section className="pb-16 sm:pb-24 px-4">
+    <section className="pb-16 sm:pb-24 px-4 cv-auto">
       <div className="max-w-6xl mx-auto">
         {/* Text + button row */}
         <motion.div

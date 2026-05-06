@@ -67,7 +67,7 @@ const cardVariant = {
 
 export default function FeaturesShowcase() {
   return (
-    <section id="funcionalidades" className="py-32 relative">
+    <section id="funcionalidades" className="py-32 relative cv-auto">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/[0.02] to-background" />
       

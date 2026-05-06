@@ -147,4 +147,15 @@
   .bg-hero-gradient {
     background: var(--hero-gradient);
   }
+  /* Optimización de scroll: defiere el render de secciones fuera de pantalla */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 800px;
+  }
+  /* Promociona elementos animados a su propia capa para evitar repaints durante scroll */
+  .gpu-layer {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
 }
