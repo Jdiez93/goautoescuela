@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Car, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import logoReady2Go from "@/assets/logo-ready2go-oficial.jpeg";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");

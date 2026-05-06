@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Car, Loader2, Mail, Lock, Eye, EyeOff, MailCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import logoReady2Go from "@/assets/logo-ready2go-oficial.jpeg";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
 export default function Login() {
   const [email, setEmail] = useState("");

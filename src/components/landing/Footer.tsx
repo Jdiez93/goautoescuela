@@ -1,6 +1,6 @@
 import { MapPin, Phone, Mail, Clock, ArrowUpRight, Instagram, Facebook, Youtube, Music2, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
-import logoReady2Go from "@/assets/logo-ready2go-oficial.jpeg";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
 export default function Footer() {
   return (
@@ -20,7 +20,7 @@ export default function Footer() {
               <img
                 src={logoReady2Go}
                 alt="Ready2Go"
-                className="h-20 w-auto object-contain bg-white rounded-xl p-1"
+                className="h-20 w-auto object-contain"
               />
               <span className="text-xl font-bold text-background font-['Space_Grotesk'] tracking-tight">
                 Ready2Go
