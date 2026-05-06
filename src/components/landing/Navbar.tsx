@@ -30,8 +30,21 @@ export default function Navbar() {
   const panelHref = isTeacher ? "/dashboard-profesor" : "/dashboard";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
+    let ticking = false;
+    let lastScrolled = window.scrollY > 20;
+    setScrolled(lastScrolled);
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const next = window.scrollY > 20;
+        if (next !== lastScrolled) {
+          lastScrolled = next;
+          setScrolled(next);
+        }
+        ticking = false;
+      });
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
