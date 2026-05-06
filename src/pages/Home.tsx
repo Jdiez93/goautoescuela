@@ -241,7 +241,7 @@ function CoursesSection() {
   ];
 
   return (
-    <section className="pb-16 sm:pb-24 px-4">
+    <section className="pb-16 sm:pb-24 px-4 cv-auto">
       <div className="max-w-6xl mx-auto grid sm:grid-cols-2 gap-6">
         {courses.map((course, i) => (
           <motion.div
