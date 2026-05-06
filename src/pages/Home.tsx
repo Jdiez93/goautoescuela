@@ -190,7 +190,7 @@ function WhySection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 px-4">
+    <section className="py-16 sm:py-24 px-4 cv-auto">
       <div className="max-w-6xl mx-auto">
         <motion.div {...fadeUp}>
           <h2 className="text-2xl sm:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground">
