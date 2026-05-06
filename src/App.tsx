@@ -31,6 +31,7 @@ import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import AvisoLegal from "./pages/AvisoLegal";
 import CondicionesContratacion from "./pages/CondicionesContratacion";
 import NotFound from "./pages/NotFound";
+import PageTitle from "./components/PageTitle";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <CookieConsentProvider>
+          <PageTitle />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/inicio" element={<Home />} />
