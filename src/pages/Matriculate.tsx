@@ -31,47 +31,62 @@ const packs: Pack[] = [
   {
     id: "basico",
     name: "Pack Básico",
-    tagline: "Empieza tu carnet sin complicaciones",
-    price: "—",
+    tagline: "Matrícula + 3 Clases",
+    price: "69",
     icon: GraduationCap,
     features: [
-      "Matrícula y apertura de expediente",
-      "Acceso a la teórica online",
-      "Tests ilimitados",
-      "Soporte por email",
+      "Manual Online Permiso B",
+      "Aula Virtual",
+      "Teóricas y Test online",
+      "Test online ilimitados",
+      "Clases en DIRECTO",
+      "3 Clases prácticas (45 min.)",
     ],
   },
   {
-    id: "premium",
-    name: "Pack Premium",
-    tagline: "El más completo, el favorito de nuestros alumnos",
-    price: "—",
+    id: "avanzado",
+    name: "Pack Avanzado",
+    tagline: "Matrícula + 6 Clases + 1 Examen Práctico",
+    price: "229",
     badge: "Más popular",
     highlight: true,
     icon: Trophy,
     features: [
-      "Todo lo del Pack Básico",
-      "Clases prácticas incluidas",
-      "Tutor personal asignado",
-      "Simulacros de examen",
-      "Gestión completa de tasas",
-      "Soporte prioritario 7 días",
+      "Manual Online Permiso B",
+      "Aula Virtual",
+      "Teóricas online",
+      "Test online ilimitados",
+      "Clases en DIRECTO",
+      "6 Clases prácticas (45 min.)",
+      "1 Examen Práctico",
     ],
   },
   {
-    id: "intensivo",
-    name: "Pack Intensivo",
-    tagline: "Saca tu carnet en tiempo récord",
-    price: "—",
+    id: "completo",
+    name: "Pack Completo",
+    tagline: "Matrícula TODO INCLUIDO",
+    price: "944",
     icon: Car,
     features: [
-      "Todo lo del Pack Premium",
-      "Clases prácticas reforzadas",
-      "Plan acelerado personalizado",
-      "Examen garantizado",
-      "Coche para el día del examen",
+      "Manual Online Permiso B",
+      "Aula Virtual",
+      "Teóricas y Test online",
+      "Clases en DIRECTO",
+      "Tramitaciones",
+      "20 Clases prácticas (45 min.)",
+      "1 Examen Práctico",
+      "Tasa DGT (94,05€)",
     ],
   },
+];
+
+const otrosPrecios = [
+  { label: "Clase práctica individual (45 min.)", price: "38,50€" },
+  { label: "Bono 6 clases prácticas", price: "222€" },
+  { label: "Bono 11 clases prácticas", price: "390€" },
+  { label: "Examen práctico", price: "100€" },
+  { label: "Tasas de tráfico", price: "94,05€" },
+  { label: "Gestión y tramitación", price: "50€" },
 ];
 
 const steps = [
@@ -124,6 +139,22 @@ export default function Matriculate() {
             </p>
           </motion.div>
 
+          {/* Subheader exámenes */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
+            className="text-center mb-8 md:mb-10"
+          >
+            <span className="inline-block text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
+              Permiso B · Para turismos
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">
+              Exámenes en <span className="underline decoration-primary decoration-2 underline-offset-4">Ávila</span> y{" "}
+              <span className="underline decoration-primary decoration-2 underline-offset-4">Móstoles</span>
+            </h2>
+          </motion.div>
+
           {/* PACKS – visible immediately */}
           <div id="packs" className="grid md:grid-cols-3 gap-5 lg:gap-7 max-w-6xl mx-auto scroll-mt-24">
             {packs.map((pack, i) => {
@@ -170,11 +201,11 @@ export default function Matriculate() {
                     <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">{pack.tagline}</p>
 
                     <div className="mb-6 pb-6 border-b border-border/60">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-bold">{pack.price}</span>
-                        <span className="text-muted-foreground text-sm">€ /pago único</span>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl md:text-6xl font-bold tracking-tight">{pack.price}</span>
+                        <span className="text-3xl md:text-4xl font-bold text-foreground/80">€</span>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">Precio próximamente</p>
+                      <p className="text-xs text-muted-foreground mt-2">IVA incluido · Pago único</p>
                     </div>
 
                     <ul className="space-y-3 mb-8">
@@ -205,6 +236,60 @@ export default function Matriculate() {
               );
             })}
           </div>
+
+          {/* OTROS PRECIOS + HORARIO */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: easeCurve }}
+            className="mt-16 md:mt-20 max-w-6xl mx-auto grid md:grid-cols-2 gap-6 lg:gap-8"
+          >
+            {/* Otros precios */}
+            <Card className="p-7 md:p-8 rounded-2xl border-border/60">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold font-['Space_Grotesk']">Otros precios</h3>
+              </div>
+              <ul className="space-y-3">
+                {otrosPrecios.map((item) => (
+                  <li
+                    key={item.label}
+                    className="flex items-center justify-between gap-4 py-2 border-b border-border/30 last:border-0"
+                  >
+                    <span className="text-sm md:text-base text-foreground/85">{item.label}</span>
+                    <span className="font-bold text-primary whitespace-nowrap">{item.price}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            {/* Horario */}
+            <Card className="p-7 md:p-8 rounded-2xl border-border/60 bg-gradient-to-br from-primary/5 to-transparent">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold font-['Space_Grotesk']">Horario de oficina</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-5">De lunes a viernes</p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-background/60 border border-border/50">
+                  <span className="font-semibold">Mañanas</span>
+                  <span className="text-lg font-bold text-primary">11:00 — 13:00</span>
+                </div>
+                <div className="flex items-center justify-between p-4 rounded-xl bg-background/60 border border-border/50">
+                  <span className="font-semibold">Tardes</span>
+                  <span className="text-lg font-bold text-primary">17:00 — 20:00</span>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-6 text-center">
+                Precios con IVA incluido. Esta información puede actualizarse periódicamente.
+              </p>
+            </Card>
+          </motion.div>
 
           {/* Scroll cue */}
           <motion.div
