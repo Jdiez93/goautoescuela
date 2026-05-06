@@ -41,13 +41,14 @@ const stats = [
 
 const FloatingOrb = ({ className, delay = 0 }: { className: string; delay?: number }) => (
   <motion.div
-    className={`absolute rounded-full blur-3xl will-change-transform ${className}`}
+    className={`absolute rounded-full blur-3xl will-change-transform pointer-events-none ${className}`}
+    style={{ transform: "translateZ(0)", contain: "layout paint" }}
     animate={{
-      scale: [1, 1.15, 0.95, 1.05, 1],
-      x: [0, 20, -15, 10, 0],
-      y: [0, -15, 10, -8, 0],
+      scale: [1, 1.12, 1],
+      x: [0, 18, 0],
+      y: [0, -12, 0],
     }}
-    transition={{ duration: 18, repeat: Infinity, ease: "linear", delay }}
+    transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay }}
   />
 );
 
