@@ -1,0 +1,3 @@
+UPDATE public.class_packs SET name = 'Clase suelta', num_classes = 1, price = 38.50 WHERE id = '24b870ce-5a49-4f83-8431-6e8fa88bc3c5';
+UPDATE public.class_packs SET name = 'Bono 6 clases', num_classes = 6, price = 222.00 WHERE id = '8890b7e4-e1ab-484d-af28-c4a2f0e5467b';
+UPDATE public.class_packs SET name = 'Bono 11 clases', num_classes = 11, price = 390.00 WHERE id = 'c999b973-3281-4ee4-8835-b81192024eae';

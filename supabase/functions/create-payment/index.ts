@@ -9,19 +9,19 @@ const corsHeaders = {
 
 const PACK_PRICES: Record<string, { priceId: string; packId: string; classes: number }> = {
   "clase-suelta": {
-    priceId: "price_1T12ZPP3jcTmXVIwFBHrPZMc",
+    priceId: "price_1TU84YP3jcTmXVIws0Yx7fwX",
     packId: "24b870ce-5a49-4f83-8431-6e8fa88bc3c5",
     classes: 1,
   },
-  "pack-10": {
-    priceId: "price_1T12ZaP3jcTmXVIwT9H6LZhq",
+  "pack-6": {
+    priceId: "price_1TU84wP3jcTmXVIwXbebedtA",
     packId: "8890b7e4-e1ab-484d-af28-c4a2f0e5467b",
-    classes: 10,
+    classes: 6,
   },
-  "pack-20": {
-    priceId: "price_1T12ZsP3jcTmXVIwX7z5lM9d",
+  "pack-11": {
+    priceId: "price_1TU85GP3jcTmXVIwfgbURYuh",
     packId: "c999b973-3281-4ee4-8835-b81192024eae",
-    classes: 20,
+    classes: 11,
   },
 };
 
