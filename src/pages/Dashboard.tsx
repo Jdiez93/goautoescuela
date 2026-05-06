@@ -405,7 +405,7 @@ export default function Dashboard() {
           <div className="grid md:grid-cols-3 gap-8 items-start">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2.5">
-                <img src={logoReady2Go} alt="Ready2Go" className="h-16 w-auto object-contain bg-white rounded-xl p-1" />
+                <img src={logoReady2Go} alt="Ready2Go" className="h-16 w-auto object-contain" />
                 <span className="text-lg font-bold text-background font-['Space_Grotesk'] tracking-tight">Ready2Go</span>
               </div>
               <p className="text-xs leading-relaxed opacity-60 max-w-xs">
