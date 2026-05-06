@@ -11,9 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PACKS = [
-  { key: "clase-suelta", name: "Clase suelta", classes: 1, price: 35, desc: "Una clase práctica individual", popular: false },
-  { key: "pack-10", name: "Pack 10 clases", classes: 10, price: 320, desc: "10 clases prácticas · Ahorra 30€", popular: true },
-  { key: "pack-20", name: "Pack 20 clases", classes: 20, price: 580, desc: "20 clases prácticas · Ahorra 120€", popular: false },
+  { key: "clase-suelta", name: "Clase suelta", classes: 1, price: 38.5, desc: "Una clase práctica individual de 45 min", popular: false },
+  { key: "pack-6", name: "Bono 6 clases", classes: 6, price: 222, desc: "6 clases prácticas · Ahorra 9€", popular: true },
+  { key: "pack-11", name: "Bono 11 clases", classes: 11, price: 390, desc: "11 clases prácticas · Ahorra 33,50€", popular: false },
 ];
 
 const containerVariants = {
