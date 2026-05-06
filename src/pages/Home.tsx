@@ -276,7 +276,7 @@ function CoursesSection() {
 
 function PromoBanner() {
   return (
-    <section className="pb-16 sm:pb-24 px-4">
+    <section className="pb-16 sm:pb-24 px-4 cv-auto">
       <div className="max-w-6xl mx-auto">
         {/* Text + button row */}
         <motion.div
