@@ -139,6 +139,22 @@ export default function Matriculate() {
             </p>
           </motion.div>
 
+          {/* Subheader exámenes */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
+            className="text-center mb-8 md:mb-10"
+          >
+            <span className="inline-block text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
+              Permiso B · Para turismos
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">
+              Exámenes en <span className="underline decoration-primary decoration-2 underline-offset-4">Ávila</span> y{" "}
+              <span className="underline decoration-primary decoration-2 underline-offset-4">Móstoles</span>
+            </h2>
+          </motion.div>
+
           {/* PACKS – visible immediately */}
           <div id="packs" className="grid md:grid-cols-3 gap-5 lg:gap-7 max-w-6xl mx-auto scroll-mt-24">
             {packs.map((pack, i) => {
