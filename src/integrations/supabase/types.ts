@@ -411,7 +411,7 @@ export type Database = {
       refund_class: { Args: { _user_id: string }; Returns: undefined }
     }
     Enums: {
-      app_role: "student" | "teacher" | "admin"
+      app_role: "student" | "teacher" | "admin" | "secretaria"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -539,7 +539,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["student", "teacher", "admin"],
+      app_role: ["student", "teacher", "admin", "secretaria"],
     },
   },
 } as const
