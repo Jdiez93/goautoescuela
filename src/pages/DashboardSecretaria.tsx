@@ -528,3 +528,34 @@ function StatusBadge({ status }: { status: string }) {
     </Badge>
   );
 }
+
+function SortableHead({
+  label,
+  colKey,
+  sortKey,
+  sortDir,
+  onSort,
+}: {
+  label: string;
+  colKey: string;
+  sortKey: string;
+  sortDir: "asc" | "desc";
+  onSort: (k: any) => void;
+}) {
+  const active = sortKey === colKey;
+  const Icon = !active ? ArrowUpDown : sortDir === "asc" ? ArrowUp : ArrowDown;
+  return (
+    <TableHead>
+      <button
+        type="button"
+        onClick={() => onSort(colKey)}
+        className={`inline-flex items-center gap-1.5 hover:text-foreground transition-colors ${
+          active ? "text-foreground font-semibold" : ""
+        }`}
+      >
+        {label}
+        <Icon className={`w-3.5 h-3.5 ${active ? "opacity-100" : "opacity-50"}`} />
+      </button>
+    </TableHead>
+  );
+}
