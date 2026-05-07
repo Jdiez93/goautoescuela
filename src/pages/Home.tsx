@@ -11,6 +11,8 @@ import iconoMetodo from "@/assets/icono-metodo.jpeg";
 import iconoApp from "@/assets/icono-app.jpeg";
 import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
 import iconoAprobado from "@/assets/icono-aprobado.jpeg";
+import imgTeorica from "@/assets/home-teorica.jpeg";
+import imgPractica from "@/assets/home-practica.jpeg";
 
 const carouselSlides = [
   {
@@ -236,8 +238,8 @@ function WhySection() {
 
 function CoursesSection() {
   const courses = [
-    { title: "La Teórica", id: "teorica", to: "/la-teorica" },
-    { title: "La Práctica", id: "practica", to: "/las-practicas" },
+    { title: "La Teórica", id: "teorica", to: "/la-teorica", img: imgTeorica },
+    { title: "La Práctica", id: "practica", to: "/las-practicas", img: imgPractica },
   ];
 
   return (
@@ -257,11 +259,18 @@ function CoursesSection() {
             </h3>
             <motion.div
               whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
-              className="relative rounded-2xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[16/9] flex items-end justify-end p-4 sm:p-6 cursor-pointer"
+              className="relative rounded-2xl overflow-hidden bg-white aspect-[16/9] flex items-end justify-end p-4 sm:p-6 cursor-pointer border border-border/40 shadow-sm"
             >
-              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.96 }}>
+              <img
+                src={course.img}
+                alt={course.title}
+                className="absolute inset-0 w-full h-full object-cover object-center"
+                loading="lazy"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.96 }} className="relative z-10">
                 <Link to={course.to}>
-                  <Button size="sm" variant="ghost" className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-white/10 rounded-full px-4 h-8 text-xs font-medium backdrop-blur-sm border border-white/15">
+                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 h-9 text-xs sm:text-sm font-semibold shadow-lg">
                     Saber más
                   </Button>
                 </Link>
