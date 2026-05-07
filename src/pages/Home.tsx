@@ -194,6 +194,8 @@ function WhySection() {
                 },
               }}
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
+              className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default flex flex-col items-center text-center"
+            >
               <motion.div
                 whileHover={{ y: -16, scale: 1.18, rotate: -8 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
