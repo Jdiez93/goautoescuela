@@ -267,10 +267,9 @@ function CoursesSection() {
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="lazy"
               />
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
               <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.96 }} className="relative z-10">
                 <Link to={course.to}>
-                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 h-9 text-xs sm:text-sm font-semibold shadow-lg">
+                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-3 h-7 text-[11px] font-semibold shadow-md">
                     Saber más
                   </Button>
                 </Link>
