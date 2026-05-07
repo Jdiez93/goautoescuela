@@ -88,15 +88,19 @@ export default function HowItWorks() {
                   {/* Step number */}
                   <div className="relative z-10">
                     <div className="relative mx-auto w-16 h-16 mb-6">
-                      <div
-                        className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
+                      <motion.div
+                        whileHover={{ y: -14, scale: 1.18, rotate: -8 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        className={`w-16 h-16 rounded-2xl flex items-center justify-center cursor-pointer ${
                           step.color === "secondary"
                             ? "bg-gradient-to-br from-secondary/15 to-secondary/5"
                             : "bg-gradient-to-br from-primary/15 to-primary/5"
                         }`}
                       >
-                        <step.icon className={`w-7 h-7 ${step.color === "secondary" ? "text-secondary" : "text-primary"}`} />
-                      </div>
+                        <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                          <step.icon className={`w-7 h-7 ${step.color === "secondary" ? "text-secondary" : "text-primary"}`} />
+                        </motion.div>
+                      </motion.div>
                       <span className={`absolute -top-2 -right-2 w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center shadow-lg ${
                         step.color === "secondary"
                           ? "bg-secondary text-secondary-foreground shadow-secondary/30"

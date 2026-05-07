@@ -69,9 +69,15 @@ export default function Consejos() {
                   transition={{ duration: 0.5, delay: index * 0.08, ease: easeCurve }}
                   className="rounded-2xl bg-card border border-border/40 p-6 hover:border-primary/30 transition-colors"
                 >
-                  <div className="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5">
-                    <Icon className="w-5 h-5" />
-                  </div>
+                  <motion.div
+                    whileHover={{ y: -14, scale: 1.18, rotate: -8 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    className="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5 cursor-pointer"
+                  >
+                    <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                      <Icon className="w-5 h-5" />
+                    </motion.div>
+                  </motion.div>
                   <h2 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-2">{tip.title}</h2>
                   <p className="text-sm text-muted-foreground leading-relaxed">{tip.text}</p>
                 </motion.article>

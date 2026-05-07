@@ -129,15 +129,21 @@ export default function FeaturesShowcase() {
 
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-5">
-                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                        feat.accent === "secondary"
-                          ? "bg-gradient-to-br from-secondary/15 to-secondary/5 group-hover:shadow-lg group-hover:shadow-secondary/10"
-                          : "bg-gradient-to-br from-primary/15 to-primary/5 group-hover:shadow-lg group-hover:shadow-primary/10"
-                      }`}>
-                        <feat.icon className={`w-6 h-6 ${
-                          feat.accent === "secondary" ? "text-secondary" : "text-primary"
-                        }`} />
-                      </div>
+                      <motion.div
+                        whileHover={{ y: -14, scale: 1.18, rotate: -8 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        className={`w-14 h-14 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 ${
+                          feat.accent === "secondary"
+                            ? "bg-gradient-to-br from-secondary/15 to-secondary/5 group-hover:shadow-lg group-hover:shadow-secondary/10"
+                            : "bg-gradient-to-br from-primary/15 to-primary/5 group-hover:shadow-lg group-hover:shadow-primary/10"
+                        }`}
+                      >
+                        <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                          <feat.icon className={`w-6 h-6 ${
+                            feat.accent === "secondary" ? "text-secondary" : "text-primary"
+                          }`} />
+                        </motion.div>
+                      </motion.div>
                       <ArrowUpRight className="w-5 h-5 text-muted-foreground/30 group-hover:text-primary/50 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </div>
 
