@@ -285,7 +285,7 @@ export default function Matriculate() {
                       className="w-full rounded-xl font-semibold"
                       variant={pack.highlight ? "default" : "outline"}
                     >
-                      Elegir {pack.name.replace("Pack ", "")}
+                      {pack.cta || `Elegir ${pack.name.replace("Pack ", "")}`}
                     </Button>
                   </Card>
                 </motion.div>
