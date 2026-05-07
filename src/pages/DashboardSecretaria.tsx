@@ -81,13 +81,13 @@ export default function DashboardSecretaria() {
   });
 
   const { data: packs } = useQuery({
-    queryKey: ["class-packs-active"],
+    queryKey: ["packs-matricula-active"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("class_packs")
+        .from("packs_matricula")
         .select("id, name")
         .eq("is_active", true)
-        .order("num_classes");
+        .order("sort_order");
       if (error) throw error;
       return data ?? [];
     },
@@ -233,38 +233,16 @@ export default function DashboardSecretaria() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+          className="grid grid-cols-1 gap-4"
         >
-          <Card className="border-l-4 border-l-primary">
+          <Card className="border-l-4 border-l-primary max-w-md">
             <CardContent className="p-5 flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Users className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Total</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Total matrículas</p>
                 <p className="text-2xl font-bold">{matriculas?.length ?? 0}</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="border-l-4 border-l-destructive">
-            <CardContent className="p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center">
-                <Filter className="w-6 h-6 text-destructive" />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Filtradas</p>
-                <p className="text-2xl font-bold">{filtered.length}</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="border-l-4 border-l-accent-foreground">
-            <CardContent className="p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center">
-                <Package className="w-6 h-6 text-accent-foreground" />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Packs</p>
-                <p className="text-2xl font-bold">{packs?.length ?? 0}</p>
               </div>
             </CardContent>
           </Card>
