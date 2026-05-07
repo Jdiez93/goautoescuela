@@ -36,6 +36,13 @@ import {
   MapPin,
   Package,
   X,
+  ArrowUp,
+  ArrowDown,
+  ArrowUpDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
 } from "lucide-react";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
