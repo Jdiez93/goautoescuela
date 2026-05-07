@@ -7,7 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Check,
-  Sparkles,
+  Coins,
+  Clock,
   GraduationCap,
   Car,
   Trophy,
