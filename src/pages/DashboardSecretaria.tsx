@@ -43,6 +43,13 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Instagram,
+  Facebook,
+  Youtube,
+  Music2,
+  Twitter,
+  Phone,
+  Clock,
 } from "lucide-react";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
