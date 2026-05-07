@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { z } from "zod";
 import { useLocation } from "react-router-dom";
 import { Send, Mail, User, Phone, MessageSquare, CheckCircle2, MapPin } from "lucide-react";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
