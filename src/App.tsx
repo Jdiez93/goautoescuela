@@ -24,6 +24,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import DashboardProfesor from "./pages/DashboardProfesor";
+import DashboardSecretaria from "./pages/DashboardSecretaria";
 import Pagos from "./pages/Pagos";
 import Reservas from "./pages/Reservas";
 import Perfil from "./pages/Perfil";
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard-profesor" element={<DashboardProfesor />} />
+            <Route path="/dashboard-secretaria" element={<DashboardSecretaria />} />
             <Route path="/pagos" element={<Pagos />} />
             <Route path="/reservas" element={<Reservas />} />
             <Route path="/perfil" element={<Perfil />} />

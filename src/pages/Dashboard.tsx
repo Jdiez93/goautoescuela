@@ -16,7 +16,7 @@ import { useMemo, useState, useEffect } from "react";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
 export default function Dashboard() {
-  const { user, profile, role, isTeacher, loading, signOut } = useAuth();
+  const { user, profile, role, isTeacher, isSecretaria, loading, signOut } = useAuth();
 
   // Fetch payments
   const { data: payments, isLoading: paymentsLoading } = useQuery({
@@ -109,6 +109,7 @@ export default function Dashboard() {
   }
 
   if (!user) return <Navigate to="/login" replace />;
+  if (isSecretaria) return <Navigate to="/dashboard-secretaria" replace />;
   if (isTeacher) return <Navigate to="/dashboard-profesor" replace />;
 
   const studentCards = [
