@@ -127,22 +127,6 @@ export default function AutoescuelaPardillo() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="px-4">
-          <div className="max-w-4xl mx-auto text-center rounded-3xl bg-primary/5 border border-primary/20 p-8 sm:p-12">
-            <motion.div {...fadeUp}>
-              <h2 className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-4">
-                ¿Listo para empezar?
-              </h2>
-              <p className="text-muted-foreground mb-6 text-lg">
-                Matricúlate hoy y comienza tu camino hacia el carnet de conducir.
-              </p>
-              <Link to="/matriculate">
-                <Button size="lg" className="rounded-2xl">Matricúlate ahora</Button>
-              </Link>
-            </motion.div>
-          </div>
-        </section>
       </main>
       <ContactForm />
       <Footer />
