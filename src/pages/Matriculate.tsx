@@ -225,7 +225,7 @@ export default function Matriculate() {
                   whileHover={{ y: -6, transition: { duration: 0.3, ease: easeCurve } }}
                 >
                   <Card
-                    className={`relative h-full p-7 md:p-8 rounded-2xl transition-shadow duration-300 ${
+                    className={`group relative h-full p-7 md:p-8 rounded-2xl transition-shadow duration-300 ${
                       pack.highlight
                         ? "border-primary/50 shadow-[0_24px_70px_-20px_hsl(var(--primary)/0.45)] bg-primary/5"
                         : "hover:shadow-xl"
@@ -240,15 +240,22 @@ export default function Matriculate() {
                       </div>
                     )}
 
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${
+                    <motion.div
+                      whileHover={{ y: -14, scale: 1.18, rotate: -8 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 cursor-pointer ${
                         pack.highlight
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-foreground"
+                          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/40"
+                          : "bg-muted text-foreground group-hover:bg-primary/10"
                       }`}
                     >
-                      <Icon className="w-6 h-6" />
-                    </div>
+                      <motion.div
+                        animate={{ y: [0, -2, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        <Icon className="w-6 h-6" />
+                      </motion.div>
+                    </motion.div>
 
                     <h3 className="text-2xl font-bold font-['Space_Grotesk'] mb-1">{pack.name}</h3>
                     <p className="text-sm text-muted-foreground">{pack.tagline}</p>
