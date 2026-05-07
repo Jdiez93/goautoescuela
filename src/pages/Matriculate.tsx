@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Check,
+  Coins,
+  Clock,
   Sparkles,
   GraduationCap,
   Car,
@@ -251,7 +253,7 @@ export default function Matriculate() {
             <Card className="p-7 md:p-8 rounded-2xl border-border/60">
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                  <Sparkles className="w-5 h-5" />
+                  <Coins className="w-5 h-5" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold font-['Space_Grotesk']">Otros precios</h3>
               </div>
@@ -272,7 +274,7 @@ export default function Matriculate() {
             <Card className="p-7 md:p-8 rounded-2xl border-border/60 bg-gradient-to-br from-primary/5 to-transparent">
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                  <GraduationCap className="w-5 h-5" />
+                  <Clock className="w-5 h-5" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold font-['Space_Grotesk']">Horario de oficina</h3>
               </div>
