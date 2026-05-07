@@ -92,7 +92,8 @@ const otrosPrecios = [
 const steps = [
   { n: "01", title: "Elige tu pack", desc: "Selecciona el plan que mejor encaje con tu objetivo y tu ritmo." },
   { n: "02", title: "Completa tu matrícula", desc: "Rellena tus datos y confirma tu pago de forma 100% segura." },
-  { n: "03", title: "Empieza ya", desc: "Accede a tu cuenta y comienza con tu carnet!" },
+  { n: "03", title: "Regístrate en el área virtual", desc: "Crea tu cuenta usando el mismo correo electrónico con el que has realizado la matrícula para acceder al área virtual del alumno." },
+  { n: "04", title: "Empieza ya", desc: "Accede a tu cuenta y comienza con tu carnet!" },
 ];
 
 export default function Matriculate() {
@@ -351,7 +352,7 @@ export default function Matriculate() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto relative">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto relative">
             {/* Connecting line (desktop) */}
             <motion.div
               initial={{ scaleX: 0 }}
