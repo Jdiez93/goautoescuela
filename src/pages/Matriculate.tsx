@@ -53,7 +53,6 @@ const packs: Pack[] = [
     features: [
       "Manual Online Permiso B",
       "Aula Virtual",
-      "Teóricas online",
       "Test online ilimitados",
       "Clases en DIRECTO",
       "6 Clases prácticas (45 min.)",
@@ -69,9 +68,9 @@ const packs: Pack[] = [
     features: [
       "Manual Online Permiso B",
       "Aula Virtual",
-      "Teóricas y Test online",
+      "Clases teóricas online en directo",
       "Clases en DIRECTO",
-      "Tramitaciones",
+      "2 tramitaciones",
       "20 Clases prácticas (45 min.)",
       "1 Examen Práctico",
       "Tasa DGT (94,05€)",
@@ -149,9 +148,12 @@ export default function Matriculate() {
               Permiso B
             </span>
             <h2 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">
-              Exámenes en <span className="underline decoration-primary decoration-2 underline-offset-4">Ávila</span> y{" "}
+              Exámenes en <span className="underline decoration-primary decoration-2 underline-offset-4">Ávila (Valdemorillo)</span> y{" "}
               <span className="underline decoration-primary decoration-2 underline-offset-4">Móstoles</span>
             </h2>
+            <p className="text-sm text-muted-foreground mt-2 max-w-lg mx-auto">
+              Para examinarte en Ávila debes matricularte en la autoescuela de Valdemorillo.
+            </p>
           </motion.div>
 
           {/* PACKS – visible immediately */}
