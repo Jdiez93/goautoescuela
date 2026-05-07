@@ -250,9 +250,12 @@ export default function Matriculate() {
                       <Icon className="w-6 h-6" />
                     </div>
 
-                    <h3 className="text-2xl font-bold font-['Space_Grotesk'] mb-2">{pack.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">{pack.tagline}</p>
-
+                    <h3 className="text-2xl font-bold font-['Space_Grotesk'] mb-1">{pack.name}</h3>
+                    <p className="text-sm text-muted-foreground">{pack.tagline}</p>
+                    {pack.subtitle && (
+                      <p className="text-sm font-medium text-primary mt-1 mb-4">{pack.subtitle}</p>
+                    )}
+                    {!pack.subtitle && <div className="mb-4" />}
                     <div className="mb-6 pb-6 border-b border-border/60">
                       <div className="flex items-baseline gap-1">
                         <span className="text-5xl md:text-6xl font-bold tracking-tight">{pack.price}</span>
