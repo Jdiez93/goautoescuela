@@ -89,6 +89,7 @@ const packs: Pack[] = [
     price: "1350",
     badge: "Premium",
     icon: Trophy,
+    cta: "Elegir premium",
     features: [
       "Manual Online Permiso B",
       "Aula Virtual",
