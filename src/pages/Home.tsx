@@ -13,20 +13,12 @@ import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
 import iconoAprobado from "@/assets/icono-aprobado.jpeg";
 import imgTeorica from "@/assets/home-teorica.jpeg";
 import imgPractica from "@/assets/home-practica.jpeg";
+import slide1 from "@/assets/carrusel-devolvemos.png";
+import slide2 from "@/assets/carrusel-todoen1.jpeg";
 
 const carouselSlides = [
-  {
-    id: 1,
-    bg: "from-primary to-primary/80",
-    title: "Tu carnet de conducir empieza aquí",
-    subtitle: "Clases prácticas online y presenciales en Villanueva del Pardillo",
-  },
-  {
-    id: 2,
-    bg: "from-secondary to-secondary/80",
-    title: "Packs de clases con los mejores precios",
-    subtitle: "Ahorra comprando packs de 5, 10 o 20 clases prácticas",
-  },
+  { id: 1, image: slide1 },
+  { id: 2, image: slide2 },
 ];
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -85,46 +77,25 @@ function HeroCarousel() {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.97, x: -60 }}
             transition={{ duration: 0.6, ease: easeCurve }}
-            className={`absolute inset-0 bg-gradient-to-br ${carouselSlides[current].bg} flex flex-col justify-end p-6 sm:p-10 lg:p-14`}
+            className="absolute inset-0"
           >
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-2xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground font-['Space_Grotesk'] tracking-tight mb-2 sm:mb-3 max-w-xl"
-            >
-              {carouselSlides[current].title}
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-sm sm:text-lg text-primary-foreground/80 max-w-md mb-6 sm:mb-8"
-            >
-              {carouselSlides[current].subtitle}
-            </motion.p>
-
-            <motion.div
-              className="flex gap-3"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <Link to="/registro">
+            <img
+              src={carouselSlides[current].image}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover object-center"
+            />
+            <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 z-10">
+              <Link to="/matriculate">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                  <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
-                    Empezar ahora
-                  </Button>
-                </motion.div>
-              </Link>
-              <a href="#packs">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                  <Button size="lg" className="border border-primary-foreground/40 bg-transparent text-primary-foreground hover:border-primary-foreground hover:bg-transparent rounded-xl px-6 sm:px-8 h-11 sm:h-13 text-sm sm:text-base font-semibold">
+                  <Button
+                    size="sm"
+                    className="bg-background/30 backdrop-blur-md border border-background/40 text-foreground hover:bg-background/50 rounded-full px-4 h-8 text-xs font-medium shadow-sm"
+                  >
                     Ver packs
                   </Button>
                 </motion.div>
-              </a>
-            </motion.div>
+              </Link>
+            </div>
           </motion.div>
         </AnimatePresence>
 
