@@ -54,6 +54,7 @@ interface Matricula {
   phone: string;
   city: string;
   pack_name: string;
+  pack_id: string | null;
   status: string;
   created_at: string;
 }
@@ -72,7 +73,7 @@ export default function DashboardSecretaria() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("matriculas")
-        .select("id, full_name, dni, email, phone, city, pack_name, status, created_at")
+        .select("id, full_name, dni, email, phone, city, pack_name, pack_id, status, created_at")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Matricula[];
