@@ -82,7 +82,8 @@ const packs: Pack[] = [
   {
     id: "premium",
     name: "Pack Premium (Ávila)",
-    tagline: "Sin lista de espera",
+    tagline: "Apto para Villanueva del Pardillo y Valdemorillo",
+    subtitle: "Sin lista de espera",
     price: "1350",
     badge: "Premium",
     icon: Trophy,
