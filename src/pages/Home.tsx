@@ -13,20 +13,12 @@ import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
 import iconoAprobado from "@/assets/icono-aprobado.jpeg";
 import imgTeorica from "@/assets/home-teorica.jpeg";
 import imgPractica from "@/assets/home-practica.jpeg";
+import slide1 from "@/assets/carrusel-devolvemos.png";
+import slide2 from "@/assets/carrusel-todoen1.jpeg";
 
 const carouselSlides = [
-  {
-    id: 1,
-    bg: "from-primary to-primary/80",
-    title: "Tu carnet de conducir empieza aquí",
-    subtitle: "Clases prácticas online y presenciales en Villanueva del Pardillo",
-  },
-  {
-    id: 2,
-    bg: "from-secondary to-secondary/80",
-    title: "Packs de clases con los mejores precios",
-    subtitle: "Ahorra comprando packs de 5, 10 o 20 clases prácticas",
-  },
+  { id: 1, image: slide1 },
+  { id: 2, image: slide2 },
 ];
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
