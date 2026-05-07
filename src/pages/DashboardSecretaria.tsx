@@ -382,50 +382,102 @@ export default function DashboardSecretaria() {
                   </p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Nombre y apellidos</TableHead>
-                        <TableHead>DNI</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Teléfono</TableHead>
-                        <TableHead>Población</TableHead>
-                        <TableHead>Pack</TableHead>
-                        <TableHead>Estado</TableHead>
-                        <TableHead>Fecha</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filtered.map((m) => (
-                        <TableRow key={m.id} className="hover:bg-accent/30">
-                          <TableCell className="font-medium">{m.full_name}</TableCell>
-                          <TableCell className="font-mono text-xs">{m.dni || "—"}</TableCell>
-                          <TableCell className="text-sm">{m.email}</TableCell>
-                          <TableCell className="text-sm">{m.phone || "—"}</TableCell>
-                          <TableCell className="text-sm">{m.city || "—"}</TableCell>
-                          <TableCell>
-                            {m.pack_name ? (
-                              <Badge variant="secondary">{m.pack_name}</Badge>
-                            ) : (
-                              <span className="text-muted-foreground text-sm">—</span>
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            <StatusBadge status={m.status} />
-                          </TableCell>
-                          <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
-                            {new Date(m.created_at).toLocaleDateString("es-ES", {
-                              day: "2-digit",
-                              month: "2-digit",
-                              year: "numeric",
-                            })}
-                          </TableCell>
+                <>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <SortableHead label="Nombre y apellidos" colKey="full_name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="DNI" colKey="dni" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Email" colKey="email" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Teléfono" colKey="phone" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Población" colKey="city" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Pack" colKey="pack_name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Estado" colKey="status" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Fecha" colKey="created_at" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                      </TableHeader>
+                      <TableBody>
+                        {paginated.map((m) => (
+                          <TableRow key={m.id} className="hover:bg-accent/30">
+                            <TableCell className="font-medium">{m.full_name}</TableCell>
+                            <TableCell className="font-mono text-xs">{m.dni || "—"}</TableCell>
+                            <TableCell className="text-sm">{m.email}</TableCell>
+                            <TableCell className="text-sm">{m.phone || "—"}</TableCell>
+                            <TableCell className="text-sm">{m.city || "—"}</TableCell>
+                            <TableCell>
+                              {m.pack_name ? (
+                                <Badge variant="secondary">{m.pack_name}</Badge>
+                              ) : (
+                                <span className="text-muted-foreground text-sm">—</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <StatusBadge status={m.status} />
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                              {new Date(m.created_at).toLocaleDateString("es-ES", {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                              })}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  {/* Pagination */}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 sm:px-0 pt-4">
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <span>
+                        Mostrando{" "}
+                        <span className="font-semibold text-foreground">
+                          {(currentPage - 1) * pageSize + 1}
+                        </span>
+                        {"–"}
+                        <span className="font-semibold text-foreground">
+                          {Math.min(currentPage * pageSize, sorted.length)}
+                        </span>{" "}
+                        de{" "}
+                        <span className="font-semibold text-foreground">{sorted.length}</span>
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <Label className="text-xs">Por página</Label>
+                        <Select value={String(pageSize)} onValueChange={(v) => setPageSize(Number(v))}>
+                          <SelectTrigger className="h-8 w-[80px]">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {[10, 25, 50, 100].map((n) => (
+                              <SelectItem key={n} value={String(n)}>
+                                {n}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setPage(1)} disabled={currentPage === 1}>
+                        <ChevronsLeft className="w-4 h-4" />
+                      </Button>
+                      <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>
+                        <ChevronLeft className="w-4 h-4" />
+                      </Button>
+                      <span className="px-3 text-sm font-medium">
+                        {currentPage} / {totalPages}
+                      </span>
+                      <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                      <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setPage(totalPages)} disabled={currentPage === totalPages}>
+                        <ChevronsRight className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </>
               )}
             </CardContent>
           </Card>
