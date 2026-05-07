@@ -202,7 +202,7 @@ export default function Matriculate() {
           </motion.div>
 
           {/* PACKS – visible immediately */}
-          <div id="packs" className="grid md:grid-cols-3 gap-5 lg:gap-7 max-w-6xl mx-auto scroll-mt-24">
+          <div id="packs" className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 max-w-7xl mx-auto scroll-mt-24">
             {packs.map((pack, i) => {
               const Icon = pack.icon;
               return (
