@@ -105,11 +105,19 @@ function FeatureCard({ icon, title, bullets, index }: { icon: string; title: str
         />
       </div>
 
-      <img
-        src={icon}
-        alt={title}
-        className="absolute -top-4 -right-4 w-44 h-44 sm:w-48 sm:h-48 object-contain mix-blend-multiply pointer-events-none"
-      />
+      <motion.div
+        whileHover={{ y: -14, scale: 1.15, rotate: -8 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        className="absolute -top-4 -right-4 cursor-pointer pointer-events-auto"
+      >
+        <motion.img
+          src={icon}
+          alt={title}
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          className="w-44 h-44 sm:w-48 sm:h-48 object-contain mix-blend-multiply"
+        />
+      </motion.div>
       <div className="relative">
         <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3 pr-32 sm:pr-36 min-h-[7rem] flex items-center">{title}</h3>
         <ul className="space-y-1.5">

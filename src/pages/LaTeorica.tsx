@@ -125,7 +125,15 @@ export default function LaTeorica() {
                 className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
               >
                 <div className="flex items-center gap-5 mb-4 min-h-[10rem]">
-                  <img src={feat.icon} alt={feat.title} className="w-40 h-40 sm:w-44 sm:h-44 object-contain shrink-0 mix-blend-multiply" />
+                  <motion.div whileHover={{ y: -14, scale: 1.15, rotate: -8 }} transition={{ type: "spring", stiffness: 400, damping: 10 }} className="cursor-pointer shrink-0">
+                    <motion.img
+                      src={feat.icon}
+                      alt={feat.title}
+                      animate={{ y: [0, -3, 0] }}
+                      transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                      className="w-40 h-40 sm:w-44 sm:h-44 object-contain mix-blend-multiply"
+                    />
+                  </motion.div>
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base leading-snug flex-1">{feat.title}</h3>
                 </div>
                 <div className="rounded-xl bg-primary/15 border border-primary/20 h-36 flex items-center justify-center mb-4">
