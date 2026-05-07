@@ -50,7 +50,7 @@ const packs: Pack[] = [
   {
     id: "avanzado",
     name: "Pack Avanzado",
-    tagline: "Matrícula + 6 Clases + 1 Examen Práctico",
+    tagline: "Matrícula + 5 Clases + 1 Examen Práctico",
     price: "229",
     badge: "Más popular",
     highlight: true,
@@ -60,7 +60,7 @@ const packs: Pack[] = [
       "Aula Virtual",
       "Test online ilimitados",
       "Clases en DIRECTO",
-      "6 Clases prácticas (45 min.)",
+      "5 Clases prácticas (45 min.)",
       "1 Examen Práctico",
     ],
   },
