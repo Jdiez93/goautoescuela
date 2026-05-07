@@ -81,8 +81,8 @@ const packs: Pack[] = [
   },
   {
     id: "premium",
-    name: "Pack Premium",
-    tagline: "Apto para Villanueva del Pardillo y Valdemorillo",
+    name: "Pack Premium (Ávila)",
+    tagline: "Sin lista de espera",
     price: "1350",
     badge: "Premium",
     icon: Trophy,
@@ -93,7 +93,6 @@ const packs: Pack[] = [
       "Test online ilimitados",
       "2 tramitaciones",
       "Tasa DGT (94,05 €)",
-      "Sin listas de espera",
       "20 clases prácticas",
       "1 examen práctico",
     ],
