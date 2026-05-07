@@ -23,11 +23,13 @@ type Pack = {
   id: string;
   name: string;
   tagline: string;
+  subtitle?: string;
   price: string;
   badge?: string;
   highlight?: boolean;
   icon: typeof GraduationCap;
   features: string[];
+  cta?: string;
 };
 
 const packs: Pack[] = [
