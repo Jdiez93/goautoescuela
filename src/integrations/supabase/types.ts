@@ -14,48 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      blog_posts: {
-        Row: {
-          author_id: string
-          content: string
-          cover_image: string | null
-          created_at: string
-          excerpt: string | null
-          id: string
-          published: boolean
-          published_at: string | null
-          slug: string
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          author_id: string
-          content?: string
-          cover_image?: string | null
-          created_at?: string
-          excerpt?: string | null
-          id?: string
-          published?: boolean
-          published_at?: string | null
-          slug: string
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          author_id?: string
-          content?: string
-          cover_image?: string | null
-          created_at?: string
-          excerpt?: string | null
-          id?: string
-          published?: boolean
-          published_at?: string | null
-          slug?: string
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       bookings: {
         Row: {
           booking_date: string
@@ -399,36 +357,6 @@ export type Database = {
           reason?: string | null
           start_time?: string
           teacher_id?: string
-        }
-        Relationships: []
-      }
-      testimonials: {
-        Row: {
-          approved: boolean
-          author_id: string | null
-          author_name: string
-          content: string
-          created_at: string
-          id: string
-          rating: number
-        }
-        Insert: {
-          approved?: boolean
-          author_id?: string | null
-          author_name: string
-          content: string
-          created_at?: string
-          id?: string
-          rating?: number
-        }
-        Update: {
-          approved?: boolean
-          author_id?: string | null
-          author_name?: string
-          content?: string
-          created_at?: string
-          id?: string
-          rating?: number
         }
         Relationships: []
       }
