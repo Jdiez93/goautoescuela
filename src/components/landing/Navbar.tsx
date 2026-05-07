@@ -216,6 +216,24 @@ export default function Navbar() {
             <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.to;
+                if (link.children) {
+                  return (
+                    <div key={link.to} className="flex flex-col">
+                      <div className="px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground">
+                        {link.label}
+                      </div>
+                      <div className="flex flex-col gap-1 pl-4">
+                        {link.children.map((child) => (
+                          <Link key={child.to} to={child.to} onClick={() => setIsOpen(false)}>
+                            <div className="px-4 py-2 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+                              {child.label}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
                 return (
                   <Link key={link.to} to={link.to} onClick={() => setIsOpen(false)}>
                     <div
