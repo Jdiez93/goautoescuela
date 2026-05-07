@@ -2,7 +2,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Car, Phone, Mail, CheckCircle2 } from "lucide-react";
+import { MapPin, Clock, Car } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -14,15 +14,6 @@ const fadeUp = {
   viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
-
-const features = [
-  "Aulas modernas y equipadas",
-  "Profesores titulados con amplia experiencia",
-  "Vehículos de última generación",
-  "Atención personalizada",
-  "Flexibilidad horaria en prácticas",
-  "Plataforma online incluida",
-];
 
 export default function AutoescuelaPardillo() {
   const name = "Villanueva del Pardillo";
@@ -89,32 +80,25 @@ export default function AutoescuelaPardillo() {
           </div>
         </section>
 
-        {/* Features */}
+        {/* CTA */}
         <section className="px-4 mb-16">
-          <div className="max-w-6xl mx-auto rounded-3xl border border-border/40 bg-card/30 backdrop-blur-sm p-8 sm:p-12">
-            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-8 text-center">
-              ¿Por qué elegir nuestro centro?
-            </motion.h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {features.map((f, i) => (
-                <motion.div
-                  key={f}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.05, ease: easeCurve }}
-                  className="flex items-center gap-3 rounded-2xl bg-primary/5 border border-primary/10 px-4 py-3"
-                >
-                  <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
-                  <span className="text-foreground font-medium">{f}</span>
-                </motion.div>
-              ))}
-            </div>
+          <div className="max-w-4xl mx-auto text-center rounded-3xl bg-primary/5 border border-primary/20 p-8 sm:p-12">
+            <motion.div {...fadeUp}>
+              <h2 className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-4">
+                ¿Listo para empezar?
+              </h2>
+              <p className="text-muted-foreground mb-6 text-lg">
+                Matricúlate hoy y comienza tu camino hacia el carnet de conducir.
+              </p>
+              <Link to="/matriculate">
+                <Button size="lg" className="rounded-2xl">Matricúlate ahora</Button>
+              </Link>
+            </motion.div>
           </div>
         </section>
 
         {/* Map */}
-        <section className="px-4 mb-16">
+        <section className="px-4">
           <div className="max-w-6xl mx-auto">
             <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-6 text-center">
               ¿Cómo llegar?
@@ -134,22 +118,6 @@ export default function AutoescuelaPardillo() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="px-4">
-          <div className="max-w-4xl mx-auto text-center rounded-3xl bg-primary/5 border border-primary/20 p-8 sm:p-12">
-            <motion.div {...fadeUp}>
-              <h2 className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-4">
-                ¿Listo para empezar?
-              </h2>
-              <p className="text-muted-foreground mb-6 text-lg">
-                Matricúlate hoy y comienza tu camino hacia el carnet de conducir.
-              </p>
-              <Link to="/matriculate">
-                <Button size="lg" className="rounded-2xl">Matricúlate ahora</Button>
-              </Link>
-            </motion.div>
-          </div>
-        </section>
       </main>
       <ContactForm />
       <Footer />
