@@ -90,7 +90,7 @@ const otrosPrecios = [
 const steps = [
   { n: "01", title: "Elige tu pack", desc: "Selecciona el plan que mejor encaje con tu objetivo y tu ritmo." },
   { n: "02", title: "Completa tu matrícula", desc: "Rellena tus datos y confirma tu pago de forma 100% segura." },
-  { n: "03", title: "Empieza ya", desc: "Accede a tu cuenta y comienza con la teórica al instante." },
+  { n: "03", title: "Empieza ya", desc: "Accede a tu cuenta y comienza con tu carnet!" },
 ];
 
 export default function Matriculate() {
