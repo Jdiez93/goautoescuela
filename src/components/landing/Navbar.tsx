@@ -22,8 +22,16 @@ const navLinks = [
     label: "Autoescuelas Ready2Go",
     to: "/autoescuelas-ready2go",
     children: [
-      { label: "Villanueva del Pardillo", to: "/autoescuelas-ready2go/villanueva-del-pardillo" },
-      { label: "Valdemorillo", to: "/autoescuelas-ready2go/valdemorillo" },
+      {
+        label: "Villanueva del Pardillo",
+        to: "/autoescuelas-ready2go/villanueva-del-pardillo",
+        description: "C/ Concepción, 61 · Madrid",
+      },
+      {
+        label: "Valdemorillo",
+        to: "/autoescuelas-ready2go/valdemorillo",
+        description: "C/ Covachuelas, 18 · Madrid",
+      },
     ],
   },
   { label: "Autoescuela Online", to: "/autoescuela-online" },
