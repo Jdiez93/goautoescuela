@@ -59,20 +59,32 @@ export default function AutoescuelaPardillo() {
         <section className="px-4 mb-16">
           <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
             <motion.div {...fadeUp} className="rounded-3xl border border-border/40 bg-card/30 backdrop-blur-sm p-6 hover:border-primary/50 transition-all">
-              <MapPin className="w-8 h-8 text-primary mb-3" />
+              <motion.div whileHover={{ y: -10, scale: 1.2, rotate: -8 }} transition={{ type: "spring", stiffness: 400, damping: 10 }} className="inline-block mb-3 cursor-pointer">
+                <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                  <MapPin className="w-8 h-8 text-primary" />
+                </motion.div>
+              </motion.div>
               <h3 className="text-lg font-bold font-['Space_Grotesk'] mb-2">Dirección</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{address}</p>
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.1, ease: easeCurve }} className="rounded-3xl border border-border/40 bg-card/30 backdrop-blur-sm p-6 hover:border-primary/50 transition-all">
-              <Clock className="w-8 h-8 text-primary mb-3" />
+              <motion.div whileHover={{ y: -10, scale: 1.2, rotate: -8 }} transition={{ type: "spring", stiffness: 400, damping: 10 }} className="inline-block mb-3 cursor-pointer">
+                <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                  <Clock className="w-8 h-8 text-primary" />
+                </motion.div>
+              </motion.div>
               <h3 className="text-lg font-bold font-['Space_Grotesk'] mb-2">Horario presencial</h3>
               <p className="text-sm text-foreground font-semibold mb-1">Martes y Jueves</p>
               <p className="text-sm text-muted-foreground">11:00 - 13:00 / 17:00 - 20:00</p>
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.2, ease: easeCurve }} className="rounded-3xl border border-border/40 bg-card/30 backdrop-blur-sm p-6 hover:border-primary/50 transition-all">
-              <Car className="w-8 h-8 text-primary mb-3" />
+              <motion.div whileHover={{ y: -10, scale: 1.2, rotate: -8 }} transition={{ type: "spring", stiffness: 400, damping: 10 }} className="inline-block mb-3 cursor-pointer">
+                <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                  <Car className="w-8 h-8 text-primary" />
+                </motion.div>
+              </motion.div>
               <h3 className="text-lg font-bold font-['Space_Grotesk'] mb-2">Prácticas</h3>
               <p className="text-sm text-foreground font-semibold mb-1">Lunes a Viernes</p>
               <p className="text-sm text-muted-foreground">8:00 - 22:00</p>
