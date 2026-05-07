@@ -147,7 +147,7 @@ export default function ContactForm() {
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, ease: easeCurve, delay: 0.1 }}
+                transition={{ duration: 0.6, ease: easeCurve, delay: 0.85 }}
               >
                 <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
                   Contacto
