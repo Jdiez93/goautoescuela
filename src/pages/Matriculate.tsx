@@ -23,11 +23,13 @@ type Pack = {
   id: string;
   name: string;
   tagline: string;
+  subtitle?: string;
   price: string;
   badge?: string;
   highlight?: boolean;
   icon: typeof GraduationCap;
   features: string[];
+  cta?: string;
 };
 
 const packs: Pack[] = [
@@ -82,10 +84,12 @@ const packs: Pack[] = [
   {
     id: "premium",
     name: "Pack Premium (Ávila)",
-    tagline: "Sin lista de espera",
+    tagline: "Apto para Villanueva del Pardillo y Valdemorillo",
+    subtitle: "Sin lista de espera",
     price: "1350",
     badge: "Premium",
     icon: Trophy,
+    cta: "Elegir premium",
     features: [
       "Manual Online Permiso B",
       "Aula Virtual",
@@ -246,9 +250,12 @@ export default function Matriculate() {
                       <Icon className="w-6 h-6" />
                     </div>
 
-                    <h3 className="text-2xl font-bold font-['Space_Grotesk'] mb-2">{pack.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">{pack.tagline}</p>
-
+                    <h3 className="text-2xl font-bold font-['Space_Grotesk'] mb-1">{pack.name}</h3>
+                    <p className="text-sm text-muted-foreground">{pack.tagline}</p>
+                    {pack.subtitle && (
+                      <p className="text-sm font-medium text-primary mt-1 mb-4">{pack.subtitle}</p>
+                    )}
+                    {!pack.subtitle && <div className="mb-4" />}
                     <div className="mb-6 pb-6 border-b border-border/60">
                       <div className="flex items-baseline gap-1">
                         <span className="text-5xl md:text-6xl font-bold tracking-tight">{pack.price}</span>
@@ -278,7 +285,7 @@ export default function Matriculate() {
                       className="w-full rounded-xl font-semibold"
                       variant={pack.highlight ? "default" : "outline"}
                     >
-                      Elegir {pack.name.replace("Pack ", "")}
+                      {pack.cta || `Elegir ${pack.name.replace("Pack ", "")}`}
                     </Button>
                   </Card>
                 </motion.div>
