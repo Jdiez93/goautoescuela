@@ -12,7 +12,8 @@ import Home from "./pages/Home";
 import Index from "./pages/Index";
 import LaTeorica from "./pages/LaTeorica";
 import LasPracticas from "./pages/LasPracticas";
-import AutoescuelasReady2Go from "./pages/AutoescuelasReady2Go";
+import AutoescuelaPardillo from "./pages/AutoescuelaPardillo";
+import AutoescuelaValdemorillo from "./pages/AutoescuelaValdemorillo";
 import AutoescuelaOnline from "./pages/AutoescuelaOnline";
 import PracticasVirtuales from "./pages/PracticasVirtuales";
 import Consejos from "./pages/Consejos";
@@ -53,7 +54,8 @@ const App = () => (
             <Route path="/actualidad" element={<PracticasVirtuales />} />
             <Route path="/practicas-virtuales" element={<PracticasVirtuales />} />
             <Route path="/consejos" element={<Consejos />} />
-            <Route path="/autoescuelas-ready2go" element={<AutoescuelasReady2Go />} />
+            <Route path="/autoescuelas-ready2go/villanueva-del-pardillo" element={<AutoescuelaPardillo />} />
+            <Route path="/autoescuelas-ready2go/valdemorillo" element={<AutoescuelaValdemorillo />} />
             <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
             <Route path="/matriculate" element={<Matriculate />} />
             <Route path="/login" element={<Login />} />

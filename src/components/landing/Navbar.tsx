@@ -18,7 +18,14 @@ const navLinks = [
   { label: "Prácticas", to: "/las-practicas" },
   { label: "Centro de formación", to: "/actualidad" },
   { label: "Centro de estudios", to: "/consejos" },
-  { label: "Autoescuelas Ready2Go", to: "/autoescuelas-ready2go" },
+  {
+    label: "Autoescuelas Ready2Go",
+    to: "/autoescuelas-ready2go",
+    children: [
+      { label: "Villanueva del Pardillo", to: "/autoescuelas-ready2go/villanueva-del-pardillo" },
+      { label: "Valdemorillo", to: "/autoescuelas-ready2go/valdemorillo" },
+    ],
+  },
   { label: "Autoescuela Online", to: "/autoescuela-online" },
 ];
 
@@ -79,7 +86,43 @@ export default function Navbar() {
           {/* Center nav links — desktop */}
           <div className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.to;
+              const isActive =
+                location.pathname === link.to ||
+                (link.children && location.pathname.startsWith(link.to + "/"));
+              if (link.children) {
+                return (
+                  <div key={link.to} className="relative group">
+                    <span
+                      className={cn(
+                        "relative px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer inline-block",
+                        isActive
+                          ? "text-foreground"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {link.label}
+                      {isActive && (
+                        <motion.span
+                          layoutId="nav-underline"
+                          className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </span>
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      <div className="min-w-[220px] rounded-xl border border-border/50 bg-background/95 backdrop-blur-xl shadow-lg p-1.5">
+                        {link.children.map((child) => (
+                          <Link key={child.to} to={child.to}>
+                            <div className="px-3 py-2 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+                              {child.label}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
               return (
                 <Link key={link.to} to={link.to}>
                   <span
@@ -173,6 +216,24 @@ export default function Navbar() {
             <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.to;
+                if (link.children) {
+                  return (
+                    <div key={link.to} className="flex flex-col">
+                      <div className="px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground">
+                        {link.label}
+                      </div>
+                      <div className="flex flex-col gap-1 pl-4">
+                        {link.children.map((child) => (
+                          <Link key={child.to} to={child.to} onClick={() => setIsOpen(false)}>
+                            <div className="px-4 py-2 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+                              {child.label}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
                 return (
                   <Link key={link.to} to={link.to} onClick={() => setIsOpen(false)}>
                     <div
