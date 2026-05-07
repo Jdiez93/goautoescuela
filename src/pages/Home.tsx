@@ -69,7 +69,7 @@ function HeroCarousel() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
     >
-      <div className="relative overflow-hidden rounded-3xl aspect-[16/9] sm:aspect-[21/9] bg-muted">
+      <div className="relative overflow-hidden rounded-3xl aspect-[16/9]">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -82,7 +82,7 @@ function HeroCarousel() {
             <img
               src={carouselSlides[current].image}
               alt=""
-              className="absolute inset-0 w-full h-full object-contain"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
             <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 z-10">
               <Link to="/matriculate">
