@@ -317,7 +317,7 @@ export default function DashboardSecretaria() {
                     <SelectContent>
                       <SelectItem value="all">Todos los packs</SelectItem>
                       {packs?.map((p) => (
-                        <SelectItem key={p.id} value={p.name}>
+                        <SelectItem key={p.id} value={p.id}>
                           {p.name}
                         </SelectItem>
                       ))}
