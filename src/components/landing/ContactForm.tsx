@@ -181,7 +181,7 @@ export default function ContactForm() {
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: 0.25, ease: easeCurve }}
+              transition={{ duration: 0.6, delay: 0.95, ease: easeCurve }}
               className="p-6 sm:p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] space-y-5"
             >
               <FormField
