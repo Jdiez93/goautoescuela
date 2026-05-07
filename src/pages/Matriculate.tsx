@@ -11,8 +11,9 @@ import {
   Clock,
   Sparkles,
   GraduationCap,
-  Car,
+  Crown,
   Trophy,
+  Rocket,
   ArrowDown,
 } from "lucide-react";
 
