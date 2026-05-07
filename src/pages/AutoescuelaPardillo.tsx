@@ -2,7 +2,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Car, Phone, Mail, CheckCircle2 } from "lucide-react";
+import { MapPin, Clock, Car } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -14,15 +14,6 @@ const fadeUp = {
   viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.7, ease: easeCurve },
 };
-
-const features = [
-  "Aulas modernas y equipadas",
-  "Profesores titulados con amplia experiencia",
-  "Vehículos de última generación",
-  "Atención personalizada",
-  "Flexibilidad horaria en prácticas",
-  "Plataforma online incluida",
-];
 
 export default function AutoescuelaPardillo() {
   const name = "Villanueva del Pardillo";
