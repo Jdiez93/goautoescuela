@@ -37,7 +37,6 @@ const packs: Pack[] = [
     features: [
       "Manual Online Permiso B",
       "Aula Virtual",
-      "Teóricas y Test online",
       "Test online ilimitados",
       "Clases en DIRECTO",
       "3 Clases prácticas (45 min.)",
