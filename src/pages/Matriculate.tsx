@@ -78,6 +78,22 @@ const packs: Pack[] = [
       "Tasa DGT (94,05€)",
     ],
   },
+  {
+    id: "premium",
+    name: "Pack Premium",
+    tagline: "Apto para Villanueva del Pardillo y Valdemorillo",
+    price: "1350",
+    badge: "Premium",
+    icon: Sparkles,
+    features: [
+      "2 gestiones",
+      "Tasa DGT (94,05 €)",
+      "Examen práctico",
+      "20 clases prácticas",
+      "Examen en Ávila",
+      "Sin lista de espera",
+    ],
+  },
 ];
 
 const otrosPrecios = [
