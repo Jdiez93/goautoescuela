@@ -54,6 +54,7 @@ interface Matricula {
   phone: string;
   city: string;
   pack_name: string;
+  pack_id: string | null;
   status: string;
   created_at: string;
 }
@@ -72,7 +73,7 @@ export default function DashboardSecretaria() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("matriculas")
-        .select("id, full_name, dni, email, phone, city, pack_name, status, created_at")
+        .select("id, full_name, dni, email, phone, city, pack_name, pack_id, status, created_at")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Matricula[];
@@ -119,10 +120,15 @@ export default function DashboardSecretaria() {
       if (fDni && !norm(m.dni).includes(norm(fDni))) return false;
       if (fCity && !norm(m.city).includes(norm(fCity))) return false;
       if (fEmail && !norm(m.email).includes(norm(fEmail))) return false;
-      if (fPack !== "all" && m.pack_name !== fPack) return false;
+      if (fPack !== "all") {
+        const pack = packs?.find((p) => p.id === fPack);
+        const matchesId = m.pack_id === fPack;
+        const matchesName = pack ? m.pack_name === pack.name : false;
+        if (!matchesId && !matchesName) return false;
+      }
       return true;
     });
-  }, [matriculas, fName, fDni, fCity, fEmail, fPack]);
+  }, [matriculas, packs, fName, fDni, fCity, fEmail, fPack]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -311,7 +317,7 @@ export default function DashboardSecretaria() {
                     <SelectContent>
                       <SelectItem value="all">Todos los packs</SelectItem>
                       {packs?.map((p) => (
-                        <SelectItem key={p.id} value={p.name}>
+                        <SelectItem key={p.id} value={p.id}>
                           {p.name}
                         </SelectItem>
                       ))}
