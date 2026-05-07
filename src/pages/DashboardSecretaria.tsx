@@ -81,13 +81,13 @@ export default function DashboardSecretaria() {
   });
 
   const { data: packs } = useQuery({
-    queryKey: ["class-packs-active"],
+    queryKey: ["packs-matricula-active"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("class_packs")
+        .from("packs_matricula")
         .select("id, name")
         .eq("is_active", true)
-        .order("num_classes");
+        .order("sort_order");
       if (error) throw error;
       return data ?? [];
     },
