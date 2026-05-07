@@ -139,6 +139,31 @@ export default function Matriculate() {
             </p>
           </motion.div>
 
+          {/* Scroll cue – Cómo funciona */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="flex justify-center mb-8 md:mb-10"
+          >
+            <button
+              onClick={() => document.getElementById("how")?.scrollIntoView({ behavior: "smooth" })}
+              className="group flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Ver cómo funciona"
+            >
+              <span className="text-xs uppercase tracking-[0.2em] font-medium">
+                Cómo funciona
+              </span>
+              <motion.span
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                className="w-9 h-9 rounded-full border border-border/60 flex items-center justify-center group-hover:border-primary/60 transition-colors"
+              >
+                <ArrowDown className="w-4 h-4" />
+              </motion.span>
+            </button>
+          </motion.div>
+
           {/* Subheader exámenes */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
