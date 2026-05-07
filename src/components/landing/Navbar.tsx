@@ -18,7 +18,14 @@ const navLinks = [
   { label: "Prácticas", to: "/las-practicas" },
   { label: "Centro de formación", to: "/actualidad" },
   { label: "Centro de estudios", to: "/consejos" },
-  { label: "Autoescuelas Ready2Go", to: "/autoescuelas-ready2go" },
+  {
+    label: "Autoescuelas Ready2Go",
+    to: "/autoescuelas-ready2go",
+    children: [
+      { label: "Villanueva del Pardillo", to: "/autoescuelas-ready2go/villanueva-del-pardillo" },
+      { label: "Valdemorillo", to: "/autoescuelas-ready2go/valdemorillo" },
+    ],
+  },
   { label: "Autoescuela Online", to: "/autoescuela-online" },
 ];
 
