@@ -120,10 +120,15 @@ export default function DashboardSecretaria() {
       if (fDni && !norm(m.dni).includes(norm(fDni))) return false;
       if (fCity && !norm(m.city).includes(norm(fCity))) return false;
       if (fEmail && !norm(m.email).includes(norm(fEmail))) return false;
-      if (fPack !== "all" && m.pack_name !== fPack) return false;
+      if (fPack !== "all") {
+        const pack = packs?.find((p) => p.id === fPack);
+        const matchesId = m.pack_id === fPack;
+        const matchesName = pack ? m.pack_name === pack.name : false;
+        if (!matchesId && !matchesName) return false;
+      }
       return true;
     });
-  }, [matriculas, fName, fDni, fCity, fEmail, fPack]);
+  }, [matriculas, packs, fName, fDni, fCity, fEmail, fPack]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
