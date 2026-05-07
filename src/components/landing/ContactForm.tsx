@@ -119,8 +119,8 @@ export default function ContactForm() {
           initial={{ x: "-120%", opacity: 0, rotate: -8, scale: 0.9 }}
           whileInView={{ x: "120%", opacity: [0, 1, 1, 0], rotate: 0, scale: 1.05 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], times: [0, 0.2, 0.75, 1] }}
-          className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-[60%] max-w-[520px] h-auto z-20 drop-shadow-[0_20px_40px_hsl(var(--primary)/0.35)]"
+          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1], times: [0, 0.2, 0.8, 1] }}
+          className="pointer-events-none absolute top-[42%] left-0 -translate-y-1/2 w-[60%] max-w-[520px] h-auto z-20 drop-shadow-[0_20px_40px_hsl(var(--primary)/0.35)]"
         />
 
         <motion.div
