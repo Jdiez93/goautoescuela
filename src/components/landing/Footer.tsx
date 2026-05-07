@@ -184,13 +184,36 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-background/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs opacity-50">
-          <span>© 2026 Ready2Go. Todos los derechos reservados.</span>
-          <div className="flex gap-6">
-            <Link to="/politica-privacidad" className="hover:opacity-100 hover:text-primary transition-all">Política de privacidad</Link>
-            <Link to="/aviso-legal" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</Link>
-            <Link to="/condiciones-contratacion" className="hover:opacity-100 hover:text-primary transition-all">Condiciones de contratación</Link>
-            <Link to="/cookies" className="hover:opacity-100 hover:text-primary transition-all">Cookies</Link>
+        <div className="border-t border-background/10 pt-8 flex flex-col gap-4 text-xs opacity-60">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <span>© 2026 Ready2Go. Todos los derechos reservados.</span>
+            <div className="flex gap-6">
+              <Link to="/politica-privacidad" className="hover:opacity-100 hover:text-primary transition-all">Política de privacidad</Link>
+              <Link to="/aviso-legal" className="hover:opacity-100 hover:text-primary transition-all">Aviso legal</Link>
+              <Link to="/condiciones-contratacion" className="hover:opacity-100 hover:text-primary transition-all">Condiciones de contratación</Link>
+              <Link to="/cookies" className="hover:opacity-100 hover:text-primary transition-all">Cookies</Link>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-center pt-2 border-t border-background/10">
+            <span>
+              Página desarrollada por{" "}
+              <a
+                href="https://jdr93portfolio.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold hover:text-primary hover:opacity-100 underline-offset-4 hover:underline transition-all"
+              >
+                Jorge Díez Rodríguez
+              </a>
+            </span>
+            <span className="hidden sm:inline opacity-50">/</span>
+            <a
+              href="mailto:jorgediezrodriguez2004@gmail.com"
+              className="inline-flex items-center gap-1.5 hover:text-primary hover:opacity-100 transition-all"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              jorgediezrodriguez2004@gmail.com
+            </a>
           </div>
         </div>
       </div>
