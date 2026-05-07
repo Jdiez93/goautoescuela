@@ -94,6 +94,23 @@ export default function DashboardSecretaria() {
     enabled: !!user && (isSecretaria || isAdmin),
   });
 
+  // Sorting
+  type SortKey =
+    | "full_name"
+    | "dni"
+    | "email"
+    | "phone"
+    | "city"
+    | "pack_name"
+    | "status"
+    | "created_at";
+  const [sortKey, setSortKey] = useState<SortKey>("created_at");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  // Pagination
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
+
   const filtered = useMemo(() => {
     if (!matriculas) return [];
     const norm = (s: string) => s.toLowerCase().trim();
@@ -106,6 +123,47 @@ export default function DashboardSecretaria() {
       return true;
     });
   }, [matriculas, fName, fDni, fCity, fEmail, fPack]);
+
+  const sorted = useMemo(() => {
+    const arr = [...filtered];
+    arr.sort((a, b) => {
+      let av: string | number = (a[sortKey] ?? "") as string;
+      let bv: string | number = (b[sortKey] ?? "") as string;
+      if (sortKey === "created_at") {
+        av = new Date(a.created_at).getTime();
+        bv = new Date(b.created_at).getTime();
+      } else {
+        av = String(av).toLowerCase();
+        bv = String(bv).toLowerCase();
+      }
+      if (av < bv) return sortDir === "asc" ? -1 : 1;
+      if (av > bv) return sortDir === "asc" ? 1 : -1;
+      return 0;
+    });
+    return arr;
+  }, [filtered, sortKey, sortDir]);
+
+  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const paginated = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return sorted.slice(start, start + pageSize);
+  }, [sorted, currentPage, pageSize]);
+
+  const toggleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
+    }
+    setPage(1);
+  };
+
+  // Reset to first page when filters/page size change
+  useMemo(() => {
+    setPage(1);
+  }, [fName, fDni, fCity, fEmail, fPack, pageSize]);
 
   const clearFilters = () => {
     setFName("");
