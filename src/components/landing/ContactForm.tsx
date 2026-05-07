@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { z } from "zod";
 import { useLocation } from "react-router-dom";
 import { Send, Mail, User, Phone, MessageSquare, CheckCircle2, MapPin } from "lucide-react";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -109,12 +110,24 @@ export default function ContactForm() {
 
   return (
     <section className="py-16 md:py-28 px-4 sm:px-6 overflow-hidden cv-auto">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, x: -100, rotate: -3, scale: 0.92 }}
-          whileInView={{ opacity: 1, x: 0, rotate: 0, scale: 1 }}
+      <div className="max-w-5xl mx-auto relative">
+        {/* Logo swooshing across from left to right (acts like the arrows of the brand) */}
+        <motion.img
+          src={logoReady2Go}
+          alt=""
+          aria-hidden
+          initial={{ x: "-120%", opacity: 0, rotate: -8, scale: 0.9 }}
+          whileInView={{ x: "120%", opacity: [0, 1, 1, 0], rotate: 0, scale: 1.05 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ type: "spring", stiffness: 90, damping: 14, mass: 1.1 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], times: [0, 0.2, 0.75, 1] }}
+          className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-[60%] max-w-[520px] h-auto z-20 drop-shadow-[0_20px_40px_hsl(var(--primary)/0.35)]"
+        />
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: easeCurve, delay: 0.7 }}
           className="relative overflow-hidden rounded-3xl border-2 border-primary/60 bg-card/60 shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25)]"
         >
           {/* Decorative blobs - static for performance */}
@@ -134,7 +147,7 @@ export default function ContactForm() {
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, ease: easeCurve, delay: 0.1 }}
+                transition={{ duration: 0.6, ease: easeCurve, delay: 0.85 }}
               >
                 <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
                   Contacto
@@ -168,7 +181,7 @@ export default function ContactForm() {
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: 0.25, ease: easeCurve }}
+              transition={{ duration: 0.6, delay: 0.95, ease: easeCurve }}
               className="p-6 sm:p-8 md:p-12 bg-background/40 md:rounded-l-[2rem] space-y-5"
             >
               <FormField
