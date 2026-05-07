@@ -147,7 +147,7 @@ export default function Matriculate() {
             className="text-center mb-8 md:mb-10"
           >
             <span className="inline-block text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">
-              Permiso B · Para turismos
+              Permiso B
             </span>
             <h2 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">
               Exámenes en <span className="underline decoration-primary decoration-2 underline-offset-4">Ávila</span> y{" "}
