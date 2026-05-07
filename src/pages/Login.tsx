@@ -61,7 +61,9 @@ export default function Login() {
         .eq("user_id", data.user.id);
 
       const userRoles = (rolesData ?? []).map((r) => r.role);
-      if (userRoles.includes("teacher") || userRoles.includes("admin")) {
+      if (userRoles.includes("secretaria")) {
+        navigate("/dashboard-secretaria");
+      } else if (userRoles.includes("teacher") || userRoles.includes("admin")) {
         navigate("/dashboard-profesor");
       } else {
         navigate("/dashboard");
