@@ -148,12 +148,13 @@ export default function Matriculate() {
               Permiso B
             </span>
             <h2 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">
-              Exámenes en <span className="underline decoration-primary decoration-2 underline-offset-4">Ávila (Valdemorillo)</span> y{" "}
+              Exámenes en <span className="underline decoration-primary decoration-2 underline-offset-4">Ávila</span> y{" "}
               <span className="underline decoration-primary decoration-2 underline-offset-4">Móstoles</span>
             </h2>
-            <p className="text-sm text-muted-foreground mt-2 max-w-lg mx-auto">
-              Para examinarte en Ávila debes matricularte en la autoescuela de Valdemorillo.
-            </p>
+            <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-sm max-w-md mx-auto">
+              <span className="font-bold text-amber-600">*</span>
+              <span>Para examinarte en <span className="font-semibold">Ávila</span> debes matricularte en la autoescuela de <span className="font-semibold">Valdemorillo</span>.</span>
+            </div>
           </motion.div>
 
           {/* PACKS – visible immediately */}
