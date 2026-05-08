@@ -4,13 +4,13 @@ import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import iconoAppPracticas from "@/assets/icono-app-practicas.jpeg";
-import iconoManiobras from "@/assets/icono-maniobras.jpeg";
-import iconoRecorridoExamen from "@/assets/icono-recorrido-examen.jpeg";
-import iconoProgreso from "@/assets/icono-progreso.jpeg";
-import iconoSimulacro from "@/assets/icono-simulacro.jpeg";
-import iconoAhorro from "@/assets/icono-ahorro.jpeg";
-import iconoReciclaje from "@/assets/icono-reciclaje.jpeg";
+import iconoAppPracticas from "@/assets/icono-app-practicas.png";
+import iconoManiobras from "@/assets/icono-maniobras.png";
+import iconoRecorridoExamen from "@/assets/icono-recorrido-examen.png";
+import iconoProgreso from "@/assets/icono-progreso.png";
+import iconoSimulacro from "@/assets/icono-simulacro.png";
+import iconoAhorro from "@/assets/icono-ahorro.png";
+import iconoReciclaje from "@/assets/icono-reciclaje.png";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -115,7 +115,7 @@ function FeatureCard({ icon, title, bullets, index }: { icon: string; title: str
           alt={title}
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          className="w-44 h-44 sm:w-48 sm:h-48 object-contain mix-blend-multiply"
+          className="w-44 h-44 sm:w-48 sm:h-48 object-contain"
         />
       </motion.div>
       <div className="relative">
