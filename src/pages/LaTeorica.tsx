@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 import icono85 from "@/assets/icono-85.jpeg";
+import heroSiNoApruebas from "@/assets/si-no-apruebas-no-pagas.jpeg";
+import metodoReadyImg from "@/assets/teorica-metodo-ready.jpeg";
 import iconoTest from "@/assets/icono-test.jpeg";
 import iconoVideoPregunta from "@/assets/icono-video-pregunta.jpeg";
 import iconoVideoTemario from "@/assets/icono-video-temario.jpeg";
@@ -87,9 +89,9 @@ export default function LaTeorica() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: easeCurve, delay: 0.15 }}
-            className="mt-10 rounded-3xl bg-[hsl(var(--foreground))] aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center"
+            className="mt-10 rounded-3xl overflow-hidden aspect-[16/9] bg-background"
           >
-            <span className="text-primary-foreground/60 text-sm font-medium">Imagen si no apruebas no pagas</span>
+            <img src={heroSiNoApruebas} alt="La teórica online 100% guiada. Y si no apruebas, no pagas" className="w-full h-full object-contain" loading="eager" />
           </motion.div>
 
           {/* ¿Qué es el método Ready? */}
@@ -108,8 +110,8 @@ export default function LaTeorica() {
                 Un aprendizaje estructurado, flexible y eficaz que te prepara para aprobar el teórico a la primera.
               </p>
             </div>
-            <div className="rounded-2xl bg-[hsl(var(--foreground))] aspect-[4/3] flex items-center justify-center">
-              <span className="text-primary-foreground/60 text-sm font-medium">Imagen chica movil</span>
+            <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-background border border-border/40">
+              <img src={metodoReadyImg} alt="Tendrás acceso: vídeos zona de examen, ahorra tiempo y dinero, calendario compatible con tu vida" className="w-full h-full object-contain" loading="lazy" />
             </div>
           </motion.div>
 
