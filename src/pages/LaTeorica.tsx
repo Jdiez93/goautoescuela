@@ -89,7 +89,7 @@ export default function LaTeorica() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: easeCurve, delay: 0.15 }}
-            className="mt-10 rounded-3xl overflow-hidden aspect-[16/9] bg-background"
+            className="mt-10 rounded-3xl overflow-hidden aspect-[16/9] bg-background border border-border/60 shadow-xl ring-1 ring-border/40"
           >
             <img src={heroSiNoApruebas} alt="La teórica online 100% guiada. Y si no apruebas, no pagas" className="w-full h-full object-contain" loading="eager" />
           </motion.div>
@@ -110,8 +110,8 @@ export default function LaTeorica() {
                 Un aprendizaje estructurado, flexible y eficaz que te prepara para aprobar el teórico a la primera.
               </p>
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-background border border-border/40">
-              <img src={metodoReadyImg} alt="Tendrás acceso: vídeos zona de examen, ahorra tiempo y dinero, calendario compatible con tu vida" className="w-full h-full object-contain" loading="lazy" />
+            <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-background border border-border/60 shadow-xl ring-1 ring-border/40">
+              <img src={metodoReadyImg} alt="Método Ready: aprendizaje guiado en la app" className="w-full h-full object-contain" loading="lazy" />
             </div>
           </motion.div>
 
