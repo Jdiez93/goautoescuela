@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
-import icono85 from "@/assets/icono-85.jpeg";
+import icono85 from "@/assets/icono-85.png";
 import heroSiNoApruebas from "@/assets/si-no-apruebas-no-pagas.jpeg";
 import metodoReadyImg from "@/assets/teorica-metodo-ready.jpeg";
-import iconoTest from "@/assets/icono-test.jpeg";
-import iconoVideoPregunta from "@/assets/icono-video-pregunta.jpeg";
-import iconoVideoTemario from "@/assets/icono-video-temario.jpeg";
+import iconoTest from "@/assets/icono-test.png";
+import iconoVideoPregunta from "@/assets/icono-video-pregunta.png";
+import iconoVideoTemario from "@/assets/icono-video-temario.png";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -131,7 +131,7 @@ export default function LaTeorica() {
                       alt={feat.title}
                       animate={{ y: [0, -3, 0] }}
                       transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                      className="w-40 h-40 sm:w-44 sm:h-44 object-contain mix-blend-multiply"
+                      className="w-40 h-40 sm:w-44 sm:h-44 object-contain"
                     />
                   </motion.div>
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base leading-snug flex-1">{feat.title}</h3>
