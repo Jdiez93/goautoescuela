@@ -46,7 +46,8 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <CookieConsentProvider>
-          <PageTitle />
+            <ScrollToTop />
+            <PageTitle />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/inicio" element={<Home />} />
