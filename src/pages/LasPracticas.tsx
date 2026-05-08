@@ -59,6 +59,7 @@ const features = [
   },
   {
     icon: iconoAhorro,
+    iconScale: 1.3,
     title: "AHORRA CON LOS PACKS",
     bullets: [
       "Elige uno de nuestros packs y paga menos por cada clase",
@@ -76,7 +77,7 @@ const features = [
   },
 ];
 
-function FeatureCard({ icon, title, bullets, index }: { icon: string; title: string; bullets: string[]; index: number }) {
+function FeatureCard({ icon, title, bullets, index, iconScale = 1 }: { icon: string; title: string; bullets: string[]; index: number; iconScale?: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -108,17 +109,17 @@ function FeatureCard({ icon, title, bullets, index }: { icon: string; title: str
       <motion.div
         whileHover={{ y: -14, scale: 1.15, rotate: -8 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
-        className="absolute -top-4 -right-4 cursor-pointer pointer-events-auto"
+        className="absolute -top-4 -right-4 cursor-pointer z-10"
       >
         <motion.img
           src={icon}
           alt={title}
-          animate={{ y: [0, -3, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ y: [0, -3, 0], scale: iconScale }}
+          transition={{ y: { duration: 2.4, repeat: Infinity, ease: "easeInOut" }, scale: { duration: 0 } }}
           className="w-44 h-44 sm:w-48 sm:h-48 object-contain"
         />
       </motion.div>
-      <div className="relative">
+      <div className="relative pointer-events-none">
         <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-lg mb-3 pr-32 sm:pr-36 min-h-[7rem] flex items-center">{title}</h3>
         <ul className="space-y-1.5">
           {bullets.map((b, i) => (
