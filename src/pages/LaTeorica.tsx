@@ -131,7 +131,7 @@ export default function LaTeorica() {
                       alt={feat.title}
                       animate={{ y: [0, -3, 0] }}
                       transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                      className="w-40 h-40 sm:w-44 sm:h-44 object-contain"
+                      className="no-glow w-40 h-40 sm:w-44 sm:h-44 object-contain"
                     />
                   </motion.div>
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base leading-snug flex-1">{feat.title}</h3>
