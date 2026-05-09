@@ -116,7 +116,7 @@ function FeatureCard({ icon, title, bullets, index, iconScale = 1 }: { icon: str
           alt={title}
           animate={{ y: [0, -3, 0], scale: iconScale }}
           transition={{ y: { duration: 2.4, repeat: Infinity, ease: "easeInOut" }, scale: { duration: 0 } }}
-          className="w-44 h-44 sm:w-48 sm:h-48 object-contain"
+          className="no-glow w-44 h-44 sm:w-48 sm:h-48 object-contain"
         />
       </motion.div>
       <div className="relative pointer-events-none">
