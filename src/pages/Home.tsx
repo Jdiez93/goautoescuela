@@ -69,7 +69,7 @@ function HeroCarousel() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
     >
-      <div className="relative overflow-hidden rounded-3xl aspect-[16/9]">
+      <div className="img-glow relative overflow-hidden rounded-3xl aspect-[16/9]">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
