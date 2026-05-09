@@ -169,8 +169,20 @@
     filter: drop-shadow(0 0 12px hsl(var(--primary) / 0.55))
             drop-shadow(0 0 4px hsl(var(--primary) / 0.35));
   }
-  /* Excluir imágenes donde el efecto no aporta (logos pequeños, avatars, etc. si tienen la clase no-glow) */
   img.no-glow:hover {
     filter: none;
+  }
+}
+
+@layer utilities {
+  /* Glow turquesa para contenedores con overflow-hidden (carrusel, hero, tarjetas) */
+  .img-glow {
+    transition: box-shadow 0.45s ease, transform 0.45s ease;
+  }
+  .img-glow:hover {
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.35),
+      0 10px 40px -10px hsl(var(--primary) / 0.55),
+      0 0 60px -10px hsl(var(--primary) / 0.4);
   }
 }
