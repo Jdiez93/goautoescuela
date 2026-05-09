@@ -78,7 +78,7 @@ export default function PracticasVirtuales() {
                   src={feat.icon}
                   alt={feat.title}
                   style={{ transform: `scale(${feat.scale})`, transformOrigin: "center" }}
-                  className="absolute -top-2 -right-2 w-32 h-32 sm:w-36 sm:h-36 object-contain mix-blend-multiply pointer-events-none"
+                  className="no-glow absolute -top-2 -right-2 w-32 h-32 sm:w-36 sm:h-36 object-contain mix-blend-multiply pointer-events-none"
                 />
                 <div className="mb-7" />
 
