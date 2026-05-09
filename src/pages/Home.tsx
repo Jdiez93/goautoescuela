@@ -206,7 +206,7 @@ function WhySection() {
                   alt={r.title}
                   animate={{ y: [0, -3, 0] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-28 h-28 sm:w-40 sm:h-40 lg:w-52 lg:h-52 object-contain mix-blend-multiply"
+                  className="no-glow w-28 h-28 sm:w-40 sm:h-40 lg:w-52 lg:h-52 object-contain mix-blend-multiply"
                 />
               </motion.div>
               <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
