@@ -159,3 +159,18 @@
     backface-visibility: hidden;
   }
 }
+
+@layer base {
+  /* Sombreado turquesa minimalista al pasar el ratón sobre cualquier imagen */
+  img {
+    transition: filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  img:hover {
+    filter: drop-shadow(0 0 12px hsl(var(--primary) / 0.55))
+            drop-shadow(0 0 4px hsl(var(--primary) / 0.35));
+  }
+  /* Excluir imágenes donde el efecto no aporta (logos pequeños, avatars, etc. si tienen la clase no-glow) */
+  img.no-glow:hover {
+    filter: none;
+  }
+}
