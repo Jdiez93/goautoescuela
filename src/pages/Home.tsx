@@ -69,7 +69,7 @@ function HeroCarousel() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
     >
-      <div className="relative overflow-hidden rounded-3xl aspect-[16/9]">
+      <div className="img-glow relative overflow-hidden rounded-3xl aspect-[16/9]">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -242,7 +242,7 @@ function CoursesSection() {
             </h3>
             <motion.div
               whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
-              className="relative rounded-2xl overflow-hidden bg-white aspect-[16/9] flex items-end justify-end p-4 sm:p-6 cursor-pointer border border-border/40 shadow-sm"
+              className="img-glow relative rounded-2xl overflow-hidden bg-white aspect-[16/9] flex items-end justify-end p-4 sm:p-6 cursor-pointer border border-border/40 shadow-sm"
             >
               <img
                 src={course.img}

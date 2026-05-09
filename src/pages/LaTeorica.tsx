@@ -89,7 +89,7 @@ export default function LaTeorica() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: easeCurve, delay: 0.15 }}
-            className="mt-10 rounded-3xl overflow-hidden aspect-[16/9] bg-background border border-border/60 shadow-xl ring-1 ring-border/40"
+            className="img-glow mt-10 rounded-3xl overflow-hidden aspect-[16/9] bg-background border border-border/60 shadow-xl ring-1 ring-border/40"
           >
             <img src={heroSiNoApruebas} alt="La teórica online 100% guiada. Y si no apruebas, no pagas" className="w-full h-full object-contain" loading="eager" />
           </motion.div>
