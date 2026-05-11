@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Sparkles } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Bot, X, Send, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 
@@ -25,35 +24,70 @@ const SUGGESTED_QUESTIONS = [
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function ChatWidget() {
-  const { user } = useAuth();
+  const { user, session, loading: authLoading } = useAuth();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const historyLoadedRef = useRef(false);
+  const [anonId, setAnonId] = useState<string | null>(null);
+  const historyLoadedForRef = useRef<string | null>(null);
 
-  // Load history for logged-in users (single conversation)
+  // Stable anonymous id so visitors can keep one persisted conversation.
   useEffect(() => {
-    if (!user || historyLoadedRef.current) return;
-    historyLoadedRef.current = true;
+    const storageKey = "ready2go_chat_anon_id";
+    const existing = localStorage.getItem(storageKey);
+    if (existing) {
+      setAnonId(existing);
+      return;
+    }
+    const next = crypto.randomUUID();
+    localStorage.setItem(storageKey, next);
+    setAnonId(next);
+  }, []);
+
+  const callChatAssistant = useCallback(
+    async (body: Record<string, unknown>) => {
+      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+      const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+      return fetch(`${SUPABASE_URL}/functions/v1/chat-assistant`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${session?.access_token ?? SUPABASE_KEY}`,
+        },
+        body: JSON.stringify({ anonId, ...body }),
+      });
+    },
+    [anonId, session?.access_token],
+  );
+
+  // Load a single persisted conversation for logged-in users or visitors.
+  useEffect(() => {
+    if (authLoading || !anonId) return;
+    const historyKey = user?.id ?? anonId;
+    if (historyLoadedForRef.current === historyKey) return;
+    historyLoadedForRef.current = historyKey;
+
     (async () => {
-      const { data, error } = await supabase
-        .from("chat_messages")
-        .select("role, content, created_at")
-        .order("created_at", { ascending: true })
-        .limit(100);
-      if (!error && data && data.length > 0) {
-        setMessages([
-          WELCOME_MESSAGE,
-          ...data
-            .filter((m) => m.role === "user" || m.role === "assistant")
-            .map((m) => ({ role: m.role as "user" | "assistant", content: m.content })),
-        ]);
+      try {
+        const res = await callChatAssistant({ action: "history" });
+        const data = await res.json();
+        if (Array.isArray(data?.messages) && data.messages.length > 0) {
+          setMessages([
+            WELCOME_MESSAGE,
+            ...data.messages
+              .filter((m: ChatMessage) => m.role === "user" || m.role === "assistant")
+              .map((m: ChatMessage) => ({ role: m.role, content: m.content })),
+          ]);
+        }
+      } catch (error) {
+        console.error("chat history error", error);
       }
     })();
-  }, [user]);
+  }, [anonId, authLoading, callChatAssistant, user?.id]);
 
   // Auto-scroll
   useEffect(() => {
@@ -70,14 +104,6 @@ export default function ChatWidget() {
     }
   }, [open]);
 
-  const persist = useCallback(
-    async (role: "user" | "assistant", content: string) => {
-      if (!user) return;
-      await supabase.from("chat_messages").insert({ user_id: user.id, role, content });
-    },
-    [user],
-  );
-
   const sendMessage = useCallback(
     async (text: string) => {
       const trimmed = text.trim();
@@ -88,7 +114,6 @@ export default function ChatWidget() {
       setMessages([...nextMessages, { role: "assistant", content: "" }]);
       setInput("");
       setLoading(true);
-      void persist("user", trimmed);
 
       try {
         // Send only user/assistant turns (exclude welcome to keep context clean)
@@ -96,17 +121,7 @@ export default function ChatWidget() {
           .filter((_, i) => !(i === 0 && nextMessages[0].role === "assistant" && nextMessages[0].content === WELCOME_MESSAGE.content))
           .map((m) => ({ role: m.role, content: m.content }));
 
-        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-        const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-        const res = await fetch(`${SUPABASE_URL}/functions/v1/chat-assistant`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${SUPABASE_KEY}`,
-          },
-          body: JSON.stringify({ messages: conversationForApi }),
-        });
+        const res = await callChatAssistant({ action: "message", messages: conversationForApi });
 
         if (!res.ok || !res.body) {
           let errMsg = "Lo siento, ha habido un problema. Por favor inténtalo de nuevo o escríbenos a reservas@autoescuelago.es.";
@@ -156,7 +171,6 @@ export default function ChatWidget() {
           }
         }
 
-        if (assistantText) void persist("assistant", assistantText);
       } catch (err) {
         console.error("chat error", err);
         setMessages((prev) => {
@@ -172,7 +186,7 @@ export default function ChatWidget() {
         setLoading(false);
       }
     },
-    [messages, loading, persist],
+    [callChatAssistant, loading, messages],
   );
 
   const onSubmit = (e: React.FormEvent) => {
@@ -199,7 +213,7 @@ export default function ChatWidget() {
             aria-label="Abrir chat de asistencia"
             className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-2xl shadow-primary/40 flex items-center justify-center hover:shadow-primary/60 transition-shadow"
           >
-            <MessageCircle className="h-6 w-6" />
+            <Bot className="h-6 w-6" />
             <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-background animate-pulse" />
           </motion.button>
         )}
@@ -220,7 +234,7 @@ export default function ChatWidget() {
             <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-border bg-gradient-to-r from-primary/10 via-background to-background">
               <div className="flex items-center gap-3 min-w-0">
                 <div className="h-9 w-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md shrink-0">
-                  <Sparkles className="h-4 w-4" />
+                  <Bot className="h-4 w-4" />
                 </div>
                 <div className="min-w-0">
                   <p className="font-semibold text-sm font-['Space_Grotesk'] truncate">Asistente Ready2Go</p>
@@ -295,7 +309,7 @@ export default function ChatWidget() {
                 </button>
               </div>
               <p className="text-[10px] text-muted-foreground text-center mt-2">
-                Asistente con IA · Las respuestas pueden contener errores
+                Asistente virtual de Ready2Go
               </p>
             </form>
           </motion.div>
