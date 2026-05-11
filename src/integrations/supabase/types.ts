@@ -58,25 +58,28 @@ export type Database = {
       }
       chat_messages: {
         Row: {
+          anon_id: string | null
           content: string
           created_at: string
           id: string
           role: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
+          anon_id?: string | null
           content: string
           created_at?: string
           id?: string
           role: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
+          anon_id?: string | null
           content?: string
           created_at?: string
           id?: string
           role?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
