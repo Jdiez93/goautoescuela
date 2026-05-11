@@ -47,15 +47,21 @@ BONOS Y PRECIOS DE CLASES PRÁCTICAS:
 - Clase práctica individual de 45 min — 38,50€.
 - Bono 6 clases prácticas — 222€ (ahorra 9€).
 - Bono 11 clases prácticas — 390€ (ahorra 33,50€).
-- Examen práctico — 100€.
 - Tasas de tráfico — 94,05€.
 - Gestión y tramitación — 50€.
+- El precio del examen práctico individual no figura publicado en la web; si te lo preguntan, indícalo claramente y ofrece reservas@autoescuelago.es para confirmarlo. No inventes un precio.
 - El pago online se hace de forma segura mediante Stripe (tarjeta).
 - Tras el pago, las clases quedan disponibles en el saldo del alumno y se descuentan según se reservan.
 
-CÓMO RESERVAR:
-1. Registrarse o iniciar sesión en la web.
-2. Comprar un pack o bono desde el área de pagos/matrícula.
+CÓMO REGISTRARSE EN LA WEB:
+- El registro se hace dentro de esta misma web (autoescuelago.es). NO existe otra web oficial distinta, no derives a ninguna página externa.
+- Pasos: hacer clic en el icono de perfil (arriba a la derecha en la barra de navegación) y pulsar "Registrarse" (también accesible en /registro).
+- Importante: hay que registrarse con el MISMO correo con el que se hizo la matrícula, para vincular correctamente la cuenta.
+- Tras registrarse, recibirá un email de confirmación; al confirmarlo podrá iniciar sesión.
+
+CÓMO RESERVAR CLASES PRÁCTICAS:
+1. Registrarse o iniciar sesión (icono de perfil → Registrarse / Iniciar sesión).
+2. Comprar un pack o bono desde el área de Pagos/Matrícula.
 3. Acceder a Reservas y elegir día, hora y profesor según disponibilidad.
 4. Recibir confirmación por email.
 
