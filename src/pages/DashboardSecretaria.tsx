@@ -200,46 +200,48 @@ export default function DashboardSecretaria() {
   if (!isSecretaria && !isAdmin) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="bg-card/80 backdrop-blur-md border-b border-border/50 sticky top-0 z-40 shadow-sm">
-        <div className="container mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logoReady2Go} alt="Ready2Go" className="h-10 w-auto" />
-            <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-border/60">
-              <Briefcase className="w-5 h-5 text-primary" />
-              <span className="font-bold text-foreground">Secretaría</span>
-            </div>
+      <header className="bg-primary text-primary-foreground">
+        <div className="container mx-auto px-3 sm:px-4 flex items-center justify-between h-14 sm:h-16 gap-2">
+          <Link to="/" className="flex items-center gap-2 min-w-0">
+            <img src={logoReady2Go} alt="Ready2Go" className="h-9 sm:h-12 w-auto object-contain shrink-0" />
+            <span className="text-base sm:text-lg font-bold font-['Space_Grotesk'] truncate">Ready2Go</span>
           </Link>
-          <div className="flex items-center gap-3">
-            <div className="hidden md:block text-right">
-              <p className="text-sm font-semibold text-foreground">
-                {profile?.full_name || "Secretaría"}
-              </p>
-              <p className="text-xs text-muted-foreground">{profile?.email}</p>
-            </div>
-            <Button variant="outline" size="sm" onClick={signOut}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Salir
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+            <span className="text-sm text-primary-foreground/80 hidden md:inline truncate max-w-[160px]">
+              {profile?.full_name || user.email}
+            </span>
+            <Button variant="ghost" size="sm" onClick={signOut} className="text-primary-foreground hover:bg-destructive hover:text-destructive-foreground px-2 sm:px-3">
+              <LogOut className="w-4 h-4 sm:mr-1" /> <span className="hidden sm:inline">Salir</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 sm:px-6 py-8 space-y-8">
-        {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            Panel de Secretaría
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Gestión de matrículas online realizadas por los alumnos.
-          </p>
-        </motion.div>
+      {/* Hero banner */}
+      <div className="bg-primary pb-16 sm:pb-20 pt-6 sm:pt-8 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-[-50px] right-[-100px] w-[300px] h-[300px] rounded-full border-[40px] border-primary-foreground" />
+          <div className="absolute bottom-[-80px] left-[-60px] w-[200px] h-[200px] rounded-full border-[30px] border-primary-foreground" />
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
+            <div className="flex items-center gap-2 mb-2">
+              <Briefcase className="w-4 h-4 text-primary-foreground/70" />
+              <span className="text-xs sm:text-sm font-medium text-primary-foreground/70 uppercase tracking-wider">Secretaría</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-1 break-words">
+              ¡Hola, {profile?.full_name || "usuario"}!
+            </h1>
+            <p className="text-sm sm:text-base text-primary-foreground/70">
+              Gestión de matrículas online realizadas por los alumnos
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      <main className="container mx-auto px-4 sm:px-6 -mt-12 pb-16 relative z-10 flex-1 space-y-8">
 
         {/* Stats */}
         <motion.div
