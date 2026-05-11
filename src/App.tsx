@@ -8,6 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
 import CookieBanner from "@/components/cookies/CookieBanner";
 import CookieSettingsModal from "@/components/cookies/CookieSettingsModal";
+import ChatWidget from "@/components/ChatWidget";
 import PoliticaCookies from "./pages/PoliticaCookies";
 import Home from "./pages/Home";
 import Index from "./pages/Index";
@@ -81,6 +82,7 @@ const App = () => (
           </Routes>
           <CookieBanner />
           <CookieSettingsModal />
+          <ChatWidget />
           </CookieConsentProvider>
         </AuthProvider>
       </BrowserRouter>
