@@ -48,7 +48,7 @@ BONOS Y PRECIOS DE CLASES PRÁCTICAS:
 - Bono 11 clases prácticas — 390€ (ahorra 33,50€).
 - Tasas de tráfico — 94,05€.
 - Gestión y tramitación — 50€.
-- El precio del examen práctico individual no figura publicado en la web; si te lo preguntan, indícalo claramente y ofrece reservas@autoescuelago.es para confirmarlo. No inventes un precio.
+- El precio del examen práctico individual no figura publicado en la web; si te lo preguntan, indícalo claramente y sugiere pasarse por las oficinas (Lunes a Viernes 10:00-13:00 y 16:00-20:00) para confirmarlo. No inventes un precio.
 - El pago online se hace de forma segura mediante Stripe (tarjeta).
 - Tras el pago, las clases quedan disponibles en el saldo del alumno y se descuentan según se reservan.
 
