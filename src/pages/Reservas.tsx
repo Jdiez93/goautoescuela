@@ -7,12 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Link, Navigate } from "react-router-dom";
-import { Car, ArrowLeft, Clock, User, CalendarDays, X, AlertTriangle, CheckCircle2, Sparkles, BookOpen } from "lucide-react";
+import { ArrowLeft, Clock, User, CalendarDays, X, AlertTriangle, CheckCircle2, Sparkles, BookOpen } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { motion, AnimatePresence } from "framer-motion";
 import { format, isBefore, startOfDay, isToday } from "date-fns";
 import { es } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 import {
   AlertDialog,
   AlertDialogAction,
