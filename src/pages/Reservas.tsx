@@ -373,9 +373,7 @@ export default function Reservas() {
         <div className="container mx-auto px-4 flex items-center justify-between h-16 relative z-10">
           <Link to="/dashboard" className="flex items-center gap-3 text-primary-foreground hover:opacity-80 transition-opacity">
             <ArrowLeft className="w-4 h-4" />
-            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
-              <Car className="w-5 h-5" />
-            </div>
+            <img src={logoReady2Go} alt="Ready2Go" className="h-9 w-auto object-contain shrink-0" />
             <span className="font-bold font-['Space_Grotesk'] text-lg">Ready2Go</span>
           </Link>
           <div className="flex items-center gap-3">
