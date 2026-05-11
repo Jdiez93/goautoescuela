@@ -20,13 +20,9 @@ export function AnimatedIconBox({ children, className, groupHover = false }: Ani
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
       className={cn("cursor-pointer", className)}
     >
-      <motion.div
-        animate={{ y: [0, -2, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="w-full h-full flex items-center justify-center"
-      >
+      <div className="w-full h-full flex items-center justify-center">
         {children}
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

@@ -97,9 +97,8 @@ export default function HowItWorks() {
                             : "bg-gradient-to-br from-primary/15 to-primary/5"
                         }`}
                       >
-                        <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-                          <step.icon className={`w-7 h-7 ${step.color === "secondary" ? "text-secondary" : "text-primary"}`} />
-                        </motion.div>
+                        <step.icon className={`w-7 h-7 ${step.color === "secondary" ? "text-secondary" : "text-primary"}`} />
+
                       </motion.div>
                       <span className={`absolute -top-2 -right-2 w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center shadow-lg ${
                         step.color === "secondary"

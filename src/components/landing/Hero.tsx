@@ -39,16 +39,10 @@ const stats = [
   { icon: Shield, value: 24, suffix: "/7", label: "Acceso seguro" },
 ];
 
-const FloatingOrb = ({ className, delay = 0 }: { className: string; delay?: number }) => (
-  <motion.div
-    className={`absolute rounded-full blur-3xl will-change-transform pointer-events-none ${className}`}
+const FloatingOrb = ({ className }: { className: string; delay?: number }) => (
+  <div
+    className={`absolute rounded-full blur-2xl pointer-events-none ${className}`}
     style={{ transform: "translateZ(0)", contain: "layout paint" }}
-    animate={{
-      scale: [1, 1.12, 1],
-      x: [0, 18, 0],
-      y: [0, -12, 0],
-    }}
-    transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay }}
   />
 );
 

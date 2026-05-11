@@ -16,8 +16,8 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const [tipIndex, setTipIndex] = useState(0);
 
   useEffect(() => {
-    const duration = 2400;
-    const interval = 30;
+    const duration = 1200;
+    const interval = 40;
     const step = 100 / (duration / interval);
     const timer = setInterval(() => {
       setProgress((p) => {
@@ -59,12 +59,10 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           className="flex items-center gap-3"
         >
-          <motion.img
+          <img
             src={logoReady2Go}
             alt="Ready2Go"
             className="h-16 w-auto object-contain"
-            animate={{ rotate: [0, -3, 3, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
           <span className="text-3xl font-bold font-['Space_Grotesk'] tracking-tight">
             Ready2Go
