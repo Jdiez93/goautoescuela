@@ -147,7 +147,7 @@ function WhySection() {
     },
     {
       icon: iconoApp,
-      title: "App Ready2Go",
+      title: "Espacio del alumno",
       desc: "Desde el primer día tendrás un área personal donde gestionar tu carnet: test propios con vídeos y temario digital, seguimiento del progreso y reserva de prácticas con elección de día y hora. Todo en el mismo sitio para facilitar cada paso.",
     },
     {
