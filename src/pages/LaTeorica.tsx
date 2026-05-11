@@ -110,7 +110,9 @@ export default function LaTeorica() {
                 Un aprendizaje estructurado, flexible y eficaz que te prepara para aprobar el teórico a la primera.
               </p>
             </div>
-            <img src={metodoReadyImg} alt="Método Ready: aprendizaje guiado en la app" loading="lazy" className="w-full h-auto md:scale-110 lg:scale-115 origin-center" />
+            <div className="img-glow relative rounded-2xl overflow-hidden bg-white border border-border/40 shadow-sm">
+              <img src={metodoReadyImg} alt="Método Ready: aprendizaje guiado en la app" loading="lazy" className="w-full h-auto" />
+            </div>
           </motion.div>
 
           {/* Feature cards - grid 2x2 */}
