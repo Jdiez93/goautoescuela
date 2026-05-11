@@ -16,8 +16,8 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const [tipIndex, setTipIndex] = useState(0);
 
   useEffect(() => {
-    const duration = 2400;
-    const interval = 30;
+    const duration = 1200;
+    const interval = 40;
     const step = 100 / (duration / interval);
     const timer = setInterval(() => {
       setProgress((p) => {
