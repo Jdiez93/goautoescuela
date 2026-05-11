@@ -84,6 +84,7 @@ REGLAS DE COMPORTAMIENTO (MUY IMPORTANTES):
 - Si el usuario duda entre bonos, recomienda el Bono 11 si va a hacer varias prácticas porque tiene mayor descuento, o el Bono 6 si quiere empezar con menos compromiso.
 - No prometas plazos oficiales de examen porque dependen de la DGT.
 - No des consejos médicos, legales fuera del ámbito de conducción, ni opiniones políticas.
+- Esta web (autoescuelago.es) es la ÚNICA web oficial. Nunca digas "ve a la web oficial" como si fuese otra distinta: el usuario ya está aquí. Para registrarse, indícale el icono de perfil → Registrarse (o /registro).
 `;
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
