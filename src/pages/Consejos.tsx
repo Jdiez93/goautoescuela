@@ -365,26 +365,24 @@ export default function Consejos() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.18 }}
             onClick={() => setZoomOpen(false)}
-            className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 cursor-zoom-out"
+            className="fixed inset-0 z-[100] bg-foreground/85 flex items-center justify-center p-4 sm:p-8 cursor-zoom-out"
+            style={{ willChange: "opacity" }}
           >
             <button
               onClick={() => setZoomOpen(false)}
               aria-label="Cerrar"
-              className="absolute top-5 right-5 w-10 h-10 rounded-full bg-card border border-border/60 flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+              className="absolute top-5 right-5 w-10 h-10 rounded-full bg-card border border-border/60 flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-colors z-10"
             >
               <X className="w-5 h-5" />
             </button>
-            <motion.img
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.3, ease: easeCurve }}
+            <img
               src={centroEstudios}
               alt="Centro de Estudios Ready2Go ampliado"
               onClick={(e) => e.stopPropagation()}
-              className="max-w-[95vw] max-h-[90vh] w-auto h-auto rounded-2xl shadow-2xl object-contain"
+              className="max-w-[95vw] max-h-[90vh] w-auto h-auto rounded-2xl shadow-2xl object-contain animate-scale-in"
+              style={{ willChange: "transform, opacity" }}
             />
           </motion.div>
         )}
