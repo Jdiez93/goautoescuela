@@ -196,7 +196,11 @@ function WhySection() {
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
               className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default flex flex-col items-center text-center"
             >
-              <div className="mb-4">
+              <motion.div
+                className="mb-4"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+              >
                 <img
                   src={r.icon}
                   alt={r.title}
@@ -204,7 +208,7 @@ function WhySection() {
                   decoding="async"
                   className="no-glow w-28 h-28 sm:w-40 sm:h-40 lg:w-52 lg:h-52 object-contain mix-blend-multiply"
                 />
-              </div>
+              </motion.div>
               <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
