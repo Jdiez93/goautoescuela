@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   ClipboardList,
@@ -15,6 +16,8 @@ import {
   BrainCircuit,
   Check,
   Sparkles,
+  X,
+  ArrowRight,
 } from "lucide-react";
 import centroEstudios from "@/assets/centro-de-estudios.jpeg";
 
@@ -50,6 +53,7 @@ const scrollTo = (id: string) => {
 };
 
 export default function Consejos() {
+  const [zoomOpen, setZoomOpen] = useState(false);
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -84,9 +88,8 @@ export default function Consejos() {
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
                   <Button
-                    variant="ghost"
                     onClick={() => scrollTo("como-trabajamos")}
-                    className="rounded-full px-7 h-11 text-sm font-semibold text-foreground hover:bg-primary/10"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-7 h-11 text-sm font-semibold"
                   >
                     Cómo trabajamos
                   </Button>
@@ -98,19 +101,23 @@ export default function Consejos() {
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: easeCurve, delay: 0.15 }}
-              className="md:col-span-3 img-glow relative rounded-2xl overflow-hidden bg-white border border-border/40 shadow-sm md:-mr-8 lg:-mr-16"
+              className="md:col-span-3 img-glow group relative rounded-2xl overflow-hidden bg-white border border-border/40 shadow-sm md:-mr-8 lg:-mr-16 cursor-zoom-in"
+              onClick={() => setZoomOpen(true)}
             >
               <img
                 src={centroEstudios}
                 alt="Centro de Estudios Ready2Go: método y entorno para el rendimiento"
                 loading="lazy"
-                className="w-full h-auto scale-[1.02]"
+                className="w-full h-auto scale-[1.02] transition-transform duration-500 group-hover:scale-[1.05]"
               />
+              <div className="absolute bottom-3 right-3 px-3 py-1.5 rounded-full bg-background/80 backdrop-blur text-xs font-medium text-foreground/80 opacity-0 group-hover:opacity-100 transition-opacity">
+                Ampliar imagen
+              </div>
             </motion.div>
           </section>
 
           {/* CÓMO TRABAJAMOS */}
-          <section id="como-trabajamos" className="mt-20 md:mt-28 scroll-mt-40 md:scroll-mt-48">
+          <section id="como-trabajamos" className="mt-32 md:mt-56 scroll-mt-20">
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
