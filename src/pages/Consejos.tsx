@@ -290,37 +290,106 @@ export default function Consejos() {
           {/* CTA FINAL */}
           <section id="contacto-centro" className="mt-20 md:mt-28 scroll-mt-24">
             <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-40px" }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, ease: easeCurve }}
-              className="rounded-3xl bg-primary p-10 sm:p-14 text-center overflow-hidden"
+              className="relative rounded-3xl bg-card border border-border/50 p-10 sm:p-16 overflow-hidden"
             >
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-primary-foreground mb-4">
-                Más que una academia
-              </h2>
-              <p className="text-primary-foreground/85 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8">
-                Un lugar donde estudiar con calma, trabajar con método y avanzar de forma constante.
-                Porque aprender mejor no depende solo de estudiar más.
-              </p>
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block">
-                <Button
-                  onClick={() => {
-                    const form = document.getElementById("contacto");
-                    form?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="bg-[hsl(var(--foreground))] text-background hover:opacity-90 rounded-full px-8 h-12 text-sm font-semibold"
-                >
-                  Quiero información sobre los grupos
-                </Button>
-              </motion.div>
-              <p className="text-primary-foreground/70 text-xs sm:text-sm mt-5">
-                Te explicamos el funcionamiento del centro personalmente
-              </p>
+              {/* Subtle decorative blobs */}
+              <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-primary/5 blur-3xl" />
+
+              <div className="relative grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-[0.18em] mb-5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Ready2Go
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-5 leading-[1.05]">
+                    Más que <span className="text-primary">una academia</span>
+                  </h2>
+                  <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
+                    Un lugar donde estudiar con calma, trabajar con método y avanzar de forma
+                    constante. Porque aprender mejor no depende solo de estudiar más.
+                  </p>
+                  <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block">
+                    <Button
+                      onClick={() => {
+                        const form = document.getElementById("contacto");
+                        form?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="group bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-12 text-sm font-semibold gap-2"
+                    >
+                      Quiero información sobre los grupos
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </motion.div>
+                  <p className="text-muted-foreground/80 text-xs sm:text-sm mt-4">
+                    Te explicamos el funcionamiento del centro personalmente
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  {[
+                    { k: "Calma", v: "Sin ruido ni prisas" },
+                    { k: "Método", v: "Plan estructurado" },
+                    { k: "Constancia", v: "Avance sostenido" },
+                    { k: "Cercanía", v: "Trato personal" },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={item.k}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-30px" }}
+                      transition={{ duration: 0.5, delay: i * 0.08, ease: easeCurve }}
+                      className="rounded-2xl bg-background/60 border border-border/50 p-5 hover:border-primary/40 hover:bg-background transition-all"
+                    >
+                      <p className="font-semibold text-foreground font-['Space_Grotesk'] mb-1">
+                        {item.k}
+                      </p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{item.v}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </section>
         </div>
       </main>
+
+      {/* Image Lightbox */}
+      <AnimatePresence>
+        {zoomOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setZoomOpen(false)}
+            className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 cursor-zoom-out"
+          >
+            <button
+              onClick={() => setZoomOpen(false)}
+              aria-label="Cerrar"
+              className="absolute top-5 right-5 w-10 h-10 rounded-full bg-card border border-border/60 flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <motion.img
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.3, ease: easeCurve }}
+              src={centroEstudios}
+              alt="Centro de Estudios Ready2Go ampliado"
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-[95vw] max-h-[90vh] w-auto h-auto rounded-2xl shadow-2xl object-contain"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div id="contacto">
         <ContactForm />
       </div>
