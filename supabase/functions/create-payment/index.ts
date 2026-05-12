@@ -16,7 +16,7 @@ const PACK_PRICES: Record<string, { priceId: string; packId: string; classes: nu
   "pack-6": {
     priceId: "price_1TU84wP3jcTmXVIwXbebedtA",
     packId: "8890b7e4-e1ab-484d-af28-c4a2f0e5467b",
-    classes: 6,
+    classes: 5,
   },
   "pack-11": {
     priceId: "price_1TU85GP3jcTmXVIwfgbURYuh",
