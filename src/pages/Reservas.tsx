@@ -157,23 +157,25 @@ export default function Reservas() {
     });
   }, [selectedDate, takenSlots]);
 
-  // Handle slot selection (max 2 consecutive)
+  // Handle slot selection (max 3 consecutive)
   const handleSlotToggle = (slotStart: string) => {
     if (selectedSlots.includes(slotStart)) {
       setSelectedSlots(selectedSlots.filter((s) => s !== slotStart));
       return;
     }
-    if (selectedSlots.length >= 2) {
-      toast({ title: "Máximo 2 clases seguidas", variant: "destructive" });
+    if (selectedSlots.length >= 3) {
+      toast({ title: "Máximo 3 clases seguidas", variant: "destructive" });
       return;
     }
     const newSlots = [...selectedSlots, slotStart].sort();
-    if (newSlots.length === 2) {
-      const idx0 = ALL_SLOTS.findIndex((s) => s.start === newSlots[0]);
-      const idx1 = ALL_SLOTS.findIndex((s) => s.start === newSlots[1]);
-      if (idx1 !== idx0 + 1) {
-        toast({ title: "Las clases deben ser consecutivas", variant: "destructive" });
-        return;
+    if (newSlots.length >= 2) {
+      for (let i = 1; i < newSlots.length; i++) {
+        const idxPrev = ALL_SLOTS.findIndex((s) => s.start === newSlots[i - 1]);
+        const idxCur = ALL_SLOTS.findIndex((s) => s.start === newSlots[i]);
+        if (idxCur !== idxPrev + 1) {
+          toast({ title: "Las clases deben ser consecutivas", variant: "destructive" });
+          return;
+        }
       }
     }
     setSelectedSlots(newSlots);
