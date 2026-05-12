@@ -197,9 +197,9 @@ function WhySection() {
               className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group cursor-default flex flex-col items-center text-center"
             >
               <motion.div
-                className="mb-4"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+                className="mb-4 cursor-pointer"
+                whileHover={{ y: -14, scale: 1.15, rotate: -8 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <img
                   src={r.icon}
