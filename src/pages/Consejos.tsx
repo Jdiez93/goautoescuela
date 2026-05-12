@@ -56,11 +56,12 @@ export default function Consejos() {
       <main className="pt-24 pb-20">
         <div className="max-w-6xl mx-auto px-4">
           {/* HERO */}
-          <section className="grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+          <section className="grid md:grid-cols-5 gap-10 md:gap-14 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: easeCurve }}
+              className="md:col-span-2"
             >
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-3">
                 Centro de Estudios Ready2Go
@@ -97,19 +98,19 @@ export default function Consejos() {
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: easeCurve, delay: 0.15 }}
-              className="img-glow relative rounded-2xl overflow-hidden bg-white border border-border/40 shadow-sm"
+              className="md:col-span-3 img-glow relative rounded-2xl overflow-hidden bg-white border border-border/40 shadow-sm md:-mr-8 lg:-mr-16"
             >
               <img
                 src={centroEstudios}
                 alt="Centro de Estudios Ready2Go: método y entorno para el rendimiento"
                 loading="lazy"
-                className="w-full h-auto"
+                className="w-full h-auto scale-[1.02]"
               />
             </motion.div>
           </section>
 
           {/* CÓMO TRABAJAMOS */}
-          <section id="como-trabajamos" className="mt-20 md:mt-28 scroll-mt-24">
+          <section id="como-trabajamos" className="mt-20 md:mt-28 scroll-mt-40 md:scroll-mt-48">
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
