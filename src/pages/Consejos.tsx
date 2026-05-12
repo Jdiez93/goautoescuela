@@ -60,7 +60,7 @@ export default function Consejos() {
       <main className="pt-24 pb-20">
         <div className="max-w-6xl mx-auto px-4">
           {/* HERO */}
-          <section className="grid md:grid-cols-5 gap-10 md:gap-14 items-center">
+          <section className="grid md:grid-cols-5 gap-10 md:gap-14 items-center min-h-[calc(100vh-8rem)]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -117,7 +117,7 @@ export default function Consejos() {
           </section>
 
           {/* CÓMO TRABAJAMOS */}
-          <section id="como-trabajamos" className="mt-32 md:mt-56 scroll-mt-20">
+          <section id="como-trabajamos" className="mt-24 md:mt-32 scroll-mt-20">
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
