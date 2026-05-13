@@ -101,14 +101,14 @@ export default function Consejos() {
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: easeCurve, delay: 0.15 }}
-              className="md:col-span-3 img-glow group relative rounded-2xl overflow-hidden bg-white border border-border/40 shadow-sm md:-mr-12 lg:-mr-24 xl:-mr-32 cursor-zoom-in"
+              className="md:col-span-3 group relative rounded-2xl overflow-hidden bg-white border border-border/40 md:-mr-12 lg:-mr-24 xl:-mr-32 cursor-zoom-in"
               onClick={() => setZoomOpen(true)}
             >
               <img
                 src={centroEstudios}
                 alt="Centro de Estudios Ready2Go: método y entorno para el rendimiento"
                 loading="lazy"
-                className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.03]"
+                className="w-full h-auto"
               />
               <div className="absolute bottom-3 right-3 px-3 py-1.5 rounded-full bg-background/80 backdrop-blur text-xs font-medium text-foreground/80 opacity-0 group-hover:opacity-100 transition-opacity">
                 Ampliar imagen
