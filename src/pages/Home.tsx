@@ -6,7 +6,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
-import SplashScreen from "@/components/SplashScreen";
+import ScrollExpandHero from "@/components/ScrollExpandHero";
+import cocheBg from "@/assets/ready2go-coche.png";
 import iconoMetodo from "@/assets/icono-metodo.jpeg";
 import iconoApp from "@/assets/icono-app.jpeg";
 import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
@@ -307,15 +308,28 @@ function PromoBanner() {
 }
 
 export default function Home() {
-  const [showSplash, setShowSplash] = useState(true);
-  const handleFinish = useCallback(() => setShowSplash(false), []);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return !sessionStorage.getItem("r2g_intro_seen");
+  });
+  const handleFinish = useCallback(() => {
+    sessionStorage.setItem("r2g_intro_seen", "1");
+    setShowIntro(false);
+  }, []);
 
   return (
     <>
       <AnimatePresence>
-        {showSplash && <SplashScreen onFinish={handleFinish} />}
+        {showIntro && (
+          <ScrollExpandHero
+            mediaSrc={slide1}
+            bgImageSrc={cocheBg}
+            title="Bienvenidos a Ready2Go"
+            onComplete={handleFinish}
+          />
+        )}
       </AnimatePresence>
-      {!showSplash && (
+      {!showIntro && (
         <motion.div
           className="min-h-screen bg-background"
           {...pageTransition}
