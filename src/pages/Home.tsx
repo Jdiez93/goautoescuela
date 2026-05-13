@@ -1,13 +1,11 @@
-import { useState, useCallback, useEffect } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
-import ScrollExpandHero from "@/components/ScrollExpandHero";
-import cocheBg from "@/assets/ready2go-coche.png";
 import iconoMetodo from "@/assets/icono-metodo.jpeg";
 import iconoApp from "@/assets/icono-app.jpeg";
 import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
@@ -308,50 +306,27 @@ function PromoBanner() {
 }
 
 export default function Home() {
-  const [showIntro, setShowIntro] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return !sessionStorage.getItem("r2g_intro_seen");
-  });
-  const handleFinish = useCallback(() => {
-    sessionStorage.setItem("r2g_intro_seen", "1");
-    setShowIntro(false);
-  }, []);
-
   return (
-    <>
-      <AnimatePresence>
-        {showIntro && (
-          <ScrollExpandHero
-            mediaSrc={slide1}
-            bgImageSrc={cocheBg}
-            title="Bienvenidos a Ready2Go"
-            onComplete={handleFinish}
-          />
-        )}
-      </AnimatePresence>
-      {!showIntro && (
-        <motion.div
-          className="min-h-screen bg-background"
-          {...pageTransition}
-        >
-          <Navbar />
-          <main className="pt-20">
-            <HeroCarousel />
-            <WhySection />
-            <CoursesSection />
-            <PromoBanner />
-            <ContactForm />
-          </main>
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: easeCurve }}
-          >
-            <Footer />
-          </motion.div>
-        </motion.div>
-      )}
-    </>
+    <motion.div
+      className="min-h-screen bg-background"
+      {...pageTransition}
+    >
+      <Navbar />
+      <main className="pt-20">
+        <HeroCarousel />
+        <WhySection />
+        <CoursesSection />
+        <PromoBanner />
+        <ContactForm />
+      </main>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, ease: easeCurve }}
+      >
+        <Footer />
+      </motion.div>
+    </motion.div>
   );
 }
