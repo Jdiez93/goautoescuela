@@ -308,15 +308,28 @@ function PromoBanner() {
 }
 
 export default function Home() {
-  const [showSplash, setShowSplash] = useState(true);
-  const handleFinish = useCallback(() => setShowSplash(false), []);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return !sessionStorage.getItem("r2g_intro_seen");
+  });
+  const handleFinish = useCallback(() => {
+    sessionStorage.setItem("r2g_intro_seen", "1");
+    setShowIntro(false);
+  }, []);
 
   return (
     <>
       <AnimatePresence>
-        {showSplash && <SplashScreen onFinish={handleFinish} />}
+        {showIntro && (
+          <ScrollExpandHero
+            mediaSrc={slide1}
+            bgImageSrc={cocheBg}
+            title="Bienvenidos a Ready2Go"
+            onComplete={handleFinish}
+          />
+        )}
       </AnimatePresence>
-      {!showSplash && (
+      {!showIntro && (
         <motion.div
           className="min-h-screen bg-background"
           {...pageTransition}
