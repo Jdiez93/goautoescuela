@@ -11,6 +11,7 @@ import iconoProgreso from "@/assets/icono-progreso.png";
 import iconoSimulacro from "@/assets/icono-simulacro.png";
 import iconoAhorro from "@/assets/icono-ahorro.png";
 import iconoReciclaje from "@/assets/icono-reciclaje.png";
+import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
