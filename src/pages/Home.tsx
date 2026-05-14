@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
+import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import iconoMetodo from "@/assets/icono-metodo.jpeg";
 import iconoApp from "@/assets/icono-app.jpeg";
 import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
