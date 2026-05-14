@@ -12,6 +12,7 @@ import metodoReadyImg from "@/assets/teorica-metodo-ready.jpeg";
 import iconoTest from "@/assets/icono-test.png";
 import iconoVideoPregunta from "@/assets/icono-video-pregunta.png";
 import iconoVideoTemario from "@/assets/icono-video-temario.png";
+import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
