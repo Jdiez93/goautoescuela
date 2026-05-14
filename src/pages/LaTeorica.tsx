@@ -71,7 +71,7 @@ export default function LaTeorica() {
             transition={{ duration: 0.6, ease: easeCurve }}
           >
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-3">
-              Una autoescuela diferente
+              <RandomLetterSwapPingPong label="Una autoescuela diferente" />
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg mb-6">
               La forma más fácil, rápida y económica de conseguir tu libertad
