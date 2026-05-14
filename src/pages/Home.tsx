@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import ScrollExpansionHero from "@/components/ScrollExpansionHero";
 import introCarBg from "@/assets/intro-car-bg.png";
-import introSurprised from "@/assets/intro-surprised-guy.jpg";
+import introSurprised from "@/assets/intro-surprised-guy.png";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
@@ -326,16 +326,39 @@ export default function Home() {
     };
   }, [showIntro]);
 
+  // Replay intro on scroll-up at top of home
+  useEffect(() => {
+    if (showIntro) return;
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY < -10 && window.scrollY <= 2) {
+        setShowIntro(true);
+      }
+    };
+    let touchY = 0;
+    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0].clientY; };
+    const onTouchMove = (e: TouchEvent) => {
+      const delta = e.touches[0].clientY - touchY;
+      if (delta > 30 && window.scrollY <= 2) setShowIntro(true);
+    };
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [showIntro]);
+
   if (showIntro) {
     return (
-      <div className="bg-background">
-        <ScrollExpansionHero
-          mediaSrc={introSurprised}
-          bgImageSrc={introCarBg}
-          title="BIENVENIDOS A READY2GO"
-          onComplete={() => setShowIntro(false)}
-        />
-      </div>
+      <ScrollExpansionHero
+        mediaSrc={introSurprised}
+        bgImageSrc={introCarBg}
+        titleStart="BIENVENIDOS A"
+        titleAccent="READY2GO"
+        onComplete={() => setShowIntro(false)}
+      />
     );
   }
 
