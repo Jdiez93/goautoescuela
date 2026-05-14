@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from "react"
-import { DynamicAnimationOptions, motion, useAnimate } from "framer-motion"
+import { AnimationOptions, motion, useAnimate } from "framer-motion"
 import { debounce } from "lodash"
 
 interface TextProps {
   label: string
   reverse?: boolean
-  transition?: DynamicAnimationOptions
+  transition?: AnimationOptions
   staggerDuration?: number
   className?: string
   onClick?: () => void
@@ -25,7 +25,7 @@ export function RandomLetterSwapPingPong({
   const [scope, animate] = useAnimate()
   const [blocked, setBlocked] = useState(false)
 
-  const mergeTransition = (transition: DynamicAnimationOptions, i: number) => ({
+  const mergeTransition = (transition: AnimationOptions, i: number) => ({
     ...transition,
     delay: i * staggerDuration,
   })
