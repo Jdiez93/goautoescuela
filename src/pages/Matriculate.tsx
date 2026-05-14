@@ -16,6 +16,7 @@ import {
   Rocket,
   ArrowDown,
 } from "lucide-react";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
