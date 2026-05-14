@@ -106,7 +106,7 @@ export default function LaTeorica() {
           >
             <div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-                ¿Qué es el método Ready?
+                <RandomLetterSwapPingPong label="¿Qué es el método Ready?" />
               </h2>
               <p className="text-muted-foreground leading-relaxed">
                 Un aprendizaje estructurado, flexible y eficaz que te prepara para aprobar el teórico a la primera.
