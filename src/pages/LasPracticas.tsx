@@ -130,6 +130,7 @@ function FeatureCard({ icon, title, bullets, index, iconScale = 1 }: { icon: str
           ))}
         </ul>
       </div>
+    </Tilt3D>
     </motion.div>
   );
 }
