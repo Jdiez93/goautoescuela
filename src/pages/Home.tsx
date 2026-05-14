@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import ScrollExpansionHero from "@/components/ScrollExpansionHero";
+import introCarBg from "@/assets/intro-car-bg.png";
+import introSurprised from "@/assets/intro-surprised-guy.jpg";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
@@ -307,6 +310,35 @@ function PromoBanner() {
 }
 
 export default function Home() {
+  const location = useLocation();
+  const skipIntro = (location.state as { skipIntro?: boolean } | null)?.skipIntro === true;
+  const [showIntro, setShowIntro] = useState(!skipIntro);
+
+  useEffect(() => {
+    if (showIntro) {
+      document.body.style.overflow = "hidden";
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showIntro]);
+
+  if (showIntro) {
+    return (
+      <div className="bg-background">
+        <ScrollExpansionHero
+          mediaSrc={introSurprised}
+          bgImageSrc={introCarBg}
+          title="BIENVENIDOS A READY2GO"
+          onComplete={() => setShowIntro(false)}
+        />
+      </div>
+    );
+  }
+
   return (
     <motion.div
       className="min-h-screen bg-background"
