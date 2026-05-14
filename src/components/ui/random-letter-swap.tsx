@@ -72,7 +72,7 @@ export function RandomLetterSwapPingPong({
     >
       <span className="sr-only">{label}</span>
       {label.split("").map((letter, i) => (
-        <span className="whitespace-pre relative flex" key={i} aria-hidden>
+        <span className="whitespace-pre relative flex overflow-hidden" key={i} aria-hidden>
           <motion.span className={`relative letter-${i}`} style={{ top: 0 }}>
             {letter}
           </motion.span>
