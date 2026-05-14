@@ -86,8 +86,8 @@ function FeatureCard({ icon, title, bullets, index, iconScale = 1 }: { icon: str
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.07, ease: easeCurve }}
-      className="group relative rounded-2xl bg-card p-6 cursor-default overflow-hidden"
     >
+    <Tilt3D className="group relative rounded-2xl bg-card p-6 cursor-default overflow-hidden block">
       <AnimatedCardBg />
       {/* Static border */}
       <div className="absolute inset-0 rounded-2xl border border-border/40 group-hover:border-transparent transition-colors duration-300 pointer-events-none" />
