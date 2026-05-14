@@ -174,7 +174,7 @@ export default function ResetPassword() {
     <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
       <Card className="w-full max-w-md shadow-[var(--card-shadow)]">
         <CardHeader className="text-center">
-          <Link to="/" className="inline-flex items-center gap-2 mx-auto mb-4">
+          <Link to="/" state={{ skipIntro: true }} className="inline-flex items-center gap-2 mx-auto mb-4">
             <img src={logoReady2Go} alt="Ready2Go" className="h-16 w-auto object-contain" />
             <span className="text-xl font-bold font-['Space_Grotesk']">
               Ready2Go
