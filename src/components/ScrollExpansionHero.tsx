@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 interface ScrollExpansionHeroProps {
   mediaSrc: string;
   bgImageSrc: string;
-  title?: string;
+  titleStart?: string;
+  titleAccent?: string;
   textBlend?: boolean;
   onComplete?: () => void;
   children?: ReactNode;
@@ -15,7 +16,8 @@ interface ScrollExpansionHeroProps {
 const ScrollExpansionHero = ({
   mediaSrc,
   bgImageSrc,
-  title,
+  titleStart,
+  titleAccent,
   textBlend,
   onComplete,
   children,
@@ -102,15 +104,12 @@ const ScrollExpansionHero = ({
   const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
-  const firstWord = title ? title.split(" ")[0] : "";
-  const restOfTitle = title ? title.split(" ").slice(1).join(" ") : "";
-
   return (
-    <div ref={sectionRef} className="transition-colors duration-700 ease-in-out overflow-x-hidden">
+    <div ref={sectionRef} className="transition-colors duration-700 ease-in-out overflow-x-hidden bg-background">
       <section className="relative flex flex-col items-center justify-start min-h-[100dvh]">
         <div className="relative w-full flex flex-col items-center min-h-[100dvh]">
           <motion.div
-            className="absolute inset-0 z-0 h-full"
+            className="absolute inset-0 z-0 h-full w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 - scrollProgress }}
             transition={{ duration: 0.1 }}
@@ -118,12 +117,12 @@ const ScrollExpansionHero = ({
             <img
               src={bgImageSrc}
               alt="Fondo"
-              className="w-full h-screen object-cover object-center"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-black/10" />
           </motion.div>
 
-          <div className="container mx-auto flex flex-col items-center justify-start relative z-10">
+          <div className="w-full flex flex-col items-center justify-start relative z-10">
             <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative">
               <div
                 className="absolute z-10 flex flex-col items-center justify-center transition-none"
@@ -138,7 +137,7 @@ const ScrollExpansionHero = ({
                 <div className="relative w-full h-full">
                   <img
                     src={mediaSrc}
-                    alt={title || "Media"}
+                    alt={titleStart || "Media"}
                     className="w-full h-full object-cover rounded-xl"
                   />
                   <motion.div
@@ -155,18 +154,22 @@ const ScrollExpansionHero = ({
                   textBlend ? "mix-blend-difference" : "mix-blend-normal"
                 }`}
               >
-                <motion.h2
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-none font-['Space_Grotesk']"
-                  style={{ transform: `translateX(-${textTranslateX}vw)` }}
-                >
-                  {firstWord}
-                </motion.h2>
-                <motion.h2
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-none font-['Space_Grotesk']"
-                  style={{ transform: `translateX(${textTranslateX}vw)` }}
-                >
-                  {restOfTitle}
-                </motion.h2>
+                {titleStart && (
+                  <motion.h2
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-none font-['Space_Grotesk']"
+                    style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                  >
+                    {titleStart}
+                  </motion.h2>
+                )}
+                {titleAccent && (
+                  <motion.h2
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-none font-['Space_Grotesk'] text-primary"
+                    style={{ transform: `translateX(${textTranslateX}vw)` }}
+                  >
+                    {titleAccent}
+                  </motion.h2>
+                )}
               </div>
             </div>
 
