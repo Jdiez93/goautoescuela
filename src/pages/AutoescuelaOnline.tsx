@@ -2,6 +2,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -88,9 +89,9 @@ export default function AutoescuelaOnline() {
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.h2
             {...fadeUp}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-16"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-16 flex"
           >
-            Qué es ready2Go Online
+            <RandomLetterSwapPingPong label="Qué es ready2Go Online" />
           </motion.h2>
 
           <div className="space-y-16 md:space-y-24">

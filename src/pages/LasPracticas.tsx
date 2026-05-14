@@ -12,6 +12,7 @@ import iconoSimulacro from "@/assets/icono-simulacro.png";
 import iconoAhorro from "@/assets/icono-ahorro.png";
 import iconoReciclaje from "@/assets/icono-reciclaje.png";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 import { Tilt3D } from "@/components/ui/tilt-3d";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -148,7 +149,7 @@ export default function LasPracticas() {
             transition={{ duration: 0.6, ease: easeCurve }}
           >
             <h1 className="text-3xl sm:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-2">
-              Libertad sin barreras
+              <RandomLetterSwapPingPong label="Libertad sin barreras" />
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg mb-8">
               Disfruta de la flexibilidad que necesitas

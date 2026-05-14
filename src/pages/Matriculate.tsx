@@ -16,6 +16,7 @@ import {
   Rocket,
   ArrowDown,
 } from "lucide-react";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -153,9 +154,9 @@ export default function Matriculate() {
             transition={{ duration: 0.7, ease: easeCurve }}
             className="max-w-3xl mx-auto text-center mb-10 md:mb-14"
           >
-            <h1 className="text-4xl md:text-6xl font-bold font-['Space_Grotesk'] tracking-tight mb-5 leading-[1.05]">
-              Matricúlate y empieza{" "}
-              <span className="text-primary">tu carnet hoy</span>
+            <h1 className="text-4xl md:text-6xl font-bold font-['Space_Grotesk'] tracking-tight mb-5 leading-[1.05] flex flex-wrap justify-center gap-x-3">
+              <RandomLetterSwapPingPong label="Matricúlate y empieza" />
+              <RandomLetterSwapPingPong label="tu carnet hoy" className="text-primary" />
             </h1>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Elige el pack que mejor se adapta a ti. Sin papeleos, sin colas y con todo lo necesario

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { MapPin, Clock, Car } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -32,8 +33,8 @@ export default function AutoescuelaValdemorillo() {
               <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
                 Autoescuela Ready2Go
               </span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-['Space_Grotesk'] text-foreground mb-4">
-                {name}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-['Space_Grotesk'] text-foreground mb-4 inline-flex justify-center">
+                <RandomLetterSwapPingPong label={name} />
               </h1>
               <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto">
                 Tu autoescuela en la sierra de Madrid, con la opción única de examinarte en Ávila.
@@ -111,8 +112,8 @@ export default function AutoescuelaValdemorillo() {
         {/* Map */}
         <section className="px-4">
           <div className="max-w-6xl mx-auto">
-            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-6 text-center">
-              ¿Cómo llegar?
+            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-6 text-center flex justify-center">
+              <RandomLetterSwapPingPong label="¿Cómo llegar?" />
             </motion.h2>
             <motion.div {...fadeUp} className="rounded-3xl overflow-hidden border border-border/60 aspect-[16/9] shadow-2xl">
               <iframe

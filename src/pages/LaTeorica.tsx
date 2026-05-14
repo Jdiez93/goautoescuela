@@ -13,6 +13,7 @@ import iconoTest from "@/assets/icono-test.png";
 import iconoVideoPregunta from "@/assets/icono-video-pregunta.png";
 import iconoVideoTemario from "@/assets/icono-video-temario.png";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -71,7 +72,7 @@ export default function LaTeorica() {
             transition={{ duration: 0.6, ease: easeCurve }}
           >
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-3">
-              Una autoescuela diferente
+              <RandomLetterSwapPingPong label="Una autoescuela diferente" />
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg mb-6">
               La forma más fácil, rápida y económica de conseguir tu libertad
@@ -105,7 +106,7 @@ export default function LaTeorica() {
           >
             <div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-                ¿Qué es el método Ready?
+                <RandomLetterSwapPingPong label="¿Qué es el método Ready?" />
               </h2>
               <p className="text-muted-foreground leading-relaxed">
                 Un aprendizaje estructurado, flexible y eficaz que te prepara para aprobar el teórico a la primera.

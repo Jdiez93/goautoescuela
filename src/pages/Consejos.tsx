@@ -20,6 +20,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import centroEstudios from "@/assets/centro-de-estudios.jpeg";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -68,7 +69,7 @@ export default function Consejos() {
               className="md:col-span-2"
             >
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-3">
-                Centro de Estudios Ready2Go
+                <RandomLetterSwapPingPong label="Centro de Estudios Ready2Go" />
               </h1>
               <p className="text-lg sm:text-xl text-foreground/80 font-medium mb-3">
                 Un espacio diseñado para estudiar de verdad
@@ -126,7 +127,7 @@ export default function Consejos() {
               className="max-w-3xl mb-10"
             >
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-                Cómo trabajamos
+                <RandomLetterSwapPingPong label="Cómo trabajamos" />
               </h2>
               <p className="text-muted-foreground leading-relaxed">
                 No creemos en grupos masificados ni en clases improvisadas. Trabajamos con grupos
@@ -173,7 +174,7 @@ export default function Consejos() {
               className="max-w-3xl mb-10"
             >
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-                Un entorno que favorece el rendimiento
+                <RandomLetterSwapPingPong label="Un entorno que favorece el rendimiento" />
               </h2>
               <p className="text-muted-foreground leading-relaxed">
                 Hemos diseñado el centro para que el alumno venga a estudiar en un espacio cómodo,

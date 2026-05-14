@@ -11,6 +11,7 @@ import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import { Tilt3D } from "@/components/ui/tilt-3d";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 import iconoMetodo from "@/assets/icono-metodo.jpeg";
 import iconoApp from "@/assets/icono-app.jpeg";
 import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
@@ -169,7 +170,7 @@ function WhySection() {
       <div className="max-w-6xl mx-auto">
         <motion.div {...fadeUp}>
           <h2 className="text-2xl sm:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground">
-            ¿Por qué Ready2Go?
+            <RandomLetterSwapPingPong label="¿Por qué Ready2Go?" />
           </h2>
           <p className="text-muted-foreground mt-2 mb-10 sm:mb-14 text-base sm:text-lg">
             Porque aprender a conducir tiene que ser compatible con tu agenda, fácil y divertido
@@ -243,7 +244,7 @@ function CoursesSection() {
             className="flex flex-col gap-3"
           >
             <h3 className="text-xl sm:text-2xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-              {course.title}
+              <RandomLetterSwapPingPong label={course.title} />
             </h3>
             <motion.div
               whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
