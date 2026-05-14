@@ -312,10 +312,12 @@ function PromoBanner() {
 export default function Home() {
   const location = useLocation();
   const skipIntro = (location.state as { skipIntro?: boolean } | null)?.skipIntro === true;
-  const [showIntro, setShowIntro] = useState(!skipIntro);
+  const [introVisible, setIntroVisible] = useState(!skipIntro);
+  const [introStartExpanded, setIntroStartExpanded] = useState(false);
 
+  // Lock body scroll while intro is visible
   useEffect(() => {
-    if (showIntro) {
+    if (introVisible) {
       document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
     } else {
@@ -324,21 +326,25 @@ export default function Home() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [showIntro]);
+  }, [introVisible]);
 
-  // Replay intro on scroll-up at top of home
+  // Replay intro (reverse animation) on scroll-up at top of home
   useEffect(() => {
-    if (showIntro) return;
+    if (introVisible) return;
     const onWheel = (e: WheelEvent) => {
       if (e.deltaY < -10 && window.scrollY <= 2) {
-        setShowIntro(true);
+        setIntroStartExpanded(true);
+        setIntroVisible(true);
       }
     };
     let touchY = 0;
     const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0].clientY; };
     const onTouchMove = (e: TouchEvent) => {
       const delta = e.touches[0].clientY - touchY;
-      if (delta > 30 && window.scrollY <= 2) setShowIntro(true);
+      if (delta > 30 && window.scrollY <= 2) {
+        setIntroStartExpanded(true);
+        setIntroVisible(true);
+      }
     };
     window.addEventListener("wheel", onWheel, { passive: true });
     window.addEventListener("touchstart", onTouchStart, { passive: true });
@@ -348,41 +354,61 @@ export default function Home() {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [showIntro]);
-
-  if (showIntro) {
-    return (
-      <ScrollExpansionHero
-        mediaSrc={introSurprised}
-        bgImageSrc={introCarBg}
-        titleStart="BIENVENIDOS A"
-        titleAccent="READY2GO"
-        onComplete={() => setShowIntro(false)}
-      />
-    );
-  }
+  }, [introVisible]);
 
   return (
-    <motion.div
-      className="min-h-screen bg-background"
-      {...pageTransition}
-    >
-      <Navbar />
-      <main className="pt-20">
-        <HeroCarousel />
-        <WhySection />
-        <CoursesSection />
-        <PromoBanner />
-        <ContactForm />
-      </main>
+    <>
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, ease: easeCurve }}
+        className="min-h-screen bg-background"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: easeCurve }}
       >
-        <Footer />
+        <Navbar />
+        <main className="pt-20">
+          <HeroCarousel />
+          <WhySection />
+          <CoursesSection />
+          <PromoBanner />
+          <ContactForm />
+        </main>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: easeCurve }}
+        >
+          <Footer />
+        </motion.div>
       </motion.div>
-    </motion.div>
+
+      <AnimatePresence>
+        {introVisible && (
+          <motion.div
+            key="intro-overlay"
+            initial={introStartExpanded ? { opacity: 0 } : { opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: easeCurve }}
+            className="fixed inset-0 z-[60]"
+          >
+            <ScrollExpansionHero
+              mediaSrc={introSurprised}
+              bgImageSrc={introCarBg}
+              titleStart="BIENVENIDOS A"
+              titleAccent="READY2GO"
+              startExpanded={introStartExpanded}
+              onComplete={() => {
+                setIntroVisible(false);
+                setIntroStartExpanded(false);
+              }}
+              onCollapse={() => {
+                // user scrolled the intro back to the start — keep visible
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
