@@ -87,6 +87,7 @@ function FeatureCard({ icon, title, bullets, index, iconScale = 1 }: { icon: str
       transition={{ duration: 0.5, delay: index * 0.07, ease: easeCurve }}
       className="group relative rounded-2xl bg-card p-6 cursor-default overflow-hidden"
     >
+      <AnimatedCardBg />
       {/* Static border */}
       <div className="absolute inset-0 rounded-2xl border border-border/40 group-hover:border-transparent transition-colors duration-300 pointer-events-none" />
 
