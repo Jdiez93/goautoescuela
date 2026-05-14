@@ -33,8 +33,8 @@ export default function AutoescuelaPardillo() {
               <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
                 Autoescuela Ready2Go
               </span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-['Space_Grotesk'] text-foreground mb-4">
-                {name}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-['Space_Grotesk'] text-foreground mb-4 inline-flex justify-center">
+                <RandomLetterSwapPingPong label={name} />
               </h1>
               <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto">
                 Tu centro de confianza para sacarte el carnet en la zona oeste de Madrid.
