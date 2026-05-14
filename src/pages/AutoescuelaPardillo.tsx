@@ -113,8 +113,8 @@ export default function AutoescuelaPardillo() {
         {/* Map */}
         <section className="px-4">
           <div className="max-w-6xl mx-auto">
-            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-6 text-center">
-              ¿Cómo llegar?
+            <motion.h2 {...fadeUp} className="text-2xl sm:text-3xl font-bold font-['Space_Grotesk'] mb-6 text-center flex justify-center">
+              <RandomLetterSwapPingPong label="¿Cómo llegar?" />
             </motion.h2>
             <motion.div {...fadeUp} className="rounded-3xl overflow-hidden border border-border/60 aspect-[16/9] shadow-2xl">
               <iframe
