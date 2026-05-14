@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useRef } from "react"
 import { AnimationOptions, motion, useAnimate } from "framer-motion"
 import { debounce } from "lodash"
 
@@ -23,25 +23,25 @@ export function RandomLetterSwapPingPong({
   ...props
 }: TextProps) {
   const [scope, animate] = useAnimate()
-  const [blocked, setBlocked] = useState(false)
+  const blocked = useRef(false)
 
   const mergeTransition = (transition: AnimationOptions, i: number) => ({
     ...transition,
     delay: i * staggerDuration,
   })
 
-  const shuffledIndices = Array.from({ length: label.length }, (_, i) => i).sort(
-    () => Math.random() - 0.5
-  )
+  const getShuffledIndices = () =>
+    Array.from({ length: label.length }, (_, i) => i).sort(() => Math.random() - 0.5)
 
   const hoverStart = debounce(
     () => {
-      if (blocked) return
-      setBlocked(true)
+      if (blocked.current) return
+      blocked.current = true
+      const shuffledIndices = getShuffledIndices()
       for (let i = 0; i < label.length; i++) {
         const idx = shuffledIndices[i]
-        animate(".letter-" + idx, { y: reverse ? "100%" : "-100%" }, mergeTransition(transition, i))
-        animate(".letter-secondary-" + idx, { top: "0%" }, mergeTransition(transition, i))
+        animate(".letter-" + idx, { y: reverse ? "110%" : "-110%" }, mergeTransition(transition, i))
+        animate(".letter-secondary-" + idx, { y: "0%", opacity: 1 }, mergeTransition(transition, i))
       }
     },
     100,
@@ -50,11 +50,12 @@ export function RandomLetterSwapPingPong({
 
   const hoverEnd = debounce(
     () => {
-      setBlocked(false)
+      blocked.current = false
+      const shuffledIndices = getShuffledIndices()
       for (let i = 0; i < label.length; i++) {
         const idx = shuffledIndices[i]
-        animate(".letter-" + idx, { y: 0 }, mergeTransition(transition, i))
-        animate(".letter-secondary-" + idx, { top: reverse ? "-100%" : "100%" }, mergeTransition(transition, i))
+        animate(".letter-" + idx, { y: "0%" }, mergeTransition(transition, i))
+        animate(".letter-secondary-" + idx, { y: reverse ? "-110%" : "110%", opacity: 0 }, mergeTransition(transition, i))
       }
     },
     100,
@@ -63,7 +64,7 @@ export function RandomLetterSwapPingPong({
 
   return (
     <motion.span
-      className={`inline-flex justify-center items-center relative overflow-hidden ${className ?? ""}`}
+      className={`inline-flex flex-wrap justify-center items-baseline relative ${className ?? ""}`}
       onHoverStart={hoverStart}
       onHoverEnd={hoverEnd}
       onClick={onClick}
@@ -72,14 +73,14 @@ export function RandomLetterSwapPingPong({
     >
       <span className="sr-only">{label}</span>
       {label.split("").map((letter, i) => (
-        <span className="whitespace-pre relative flex overflow-hidden" key={i} aria-hidden>
-          <motion.span className={`relative letter-${i}`} style={{ top: 0 }}>
+        <span className="whitespace-pre relative inline-block overflow-hidden leading-[1.08] align-baseline" key={i} aria-hidden="true">
+          <motion.span className={`relative block letter-${i}`} style={{ y: "0%" }}>
             {letter}
           </motion.span>
           <motion.span
-            className={`absolute letter-secondary-${i}`}
+            className={`absolute left-0 top-0 block pointer-events-none letter-secondary-${i}`}
             aria-hidden
-            style={{ top: reverse ? "-100%" : "100%" }}
+            style={{ y: reverse ? "-110%" : "110%", opacity: 0 }}
           >
             {letter}
           </motion.span>

@@ -56,12 +56,12 @@ const features = [
     imageLabel: "Imagen Método 85",
   },
   {
-    title: "Una App, todo lo que necesitas",
+    title: "Tu espacio, todo lo que necesitas",
     bullets: [
-      "Matricúlate, estudia, haz test, mira vídeos y gestiona todo desde tu móvil",
+      "Matricúlate, estudia, haz test, mira vídeos y gestiona todo desde la web",
       "Llévate la autoescuela contigo",
     ],
-    imageLabel: "Imagen Nuestra App",
+    imageLabel: "Imagen Tu espacio",
   },
 ];
 
