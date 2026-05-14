@@ -211,6 +211,7 @@ function WhySection() {
               </motion.div>
               <h3 className="relative z-10 font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
               <p className="relative z-10 text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+            </Tilt3D>
             </motion.div>
           ))}
         </motion.div>
