@@ -174,7 +174,7 @@ export default function Consejos() {
               className="max-w-3xl mb-10"
             >
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-                Un entorno que favorece el rendimiento
+                <RandomLetterSwapPingPong label="Un entorno que favorece el rendimiento" />
               </h2>
               <p className="text-muted-foreground leading-relaxed">
                 Hemos diseñado el centro para que el alumno venga a estudiar en un espacio cómodo,
