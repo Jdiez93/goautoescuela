@@ -148,7 +148,7 @@ export default function LasPracticas() {
             transition={{ duration: 0.6, ease: easeCurve }}
           >
             <h1 className="text-3xl sm:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-2">
-              Libertad sin barreras
+              <RandomLetterSwapPingPong label="Libertad sin barreras" />
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg mb-8">
               Disfruta de la flexibilidad que necesitas
