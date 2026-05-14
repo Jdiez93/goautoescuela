@@ -20,6 +20,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import centroEstudios from "@/assets/centro-de-estudios.jpeg";
+import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
