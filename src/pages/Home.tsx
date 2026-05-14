@@ -244,7 +244,7 @@ function CoursesSection() {
             className="flex flex-col gap-3"
           >
             <h3 className="text-xl sm:text-2xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-              {course.title}
+              <RandomLetterSwapPingPong label={course.title} />
             </h3>
             <motion.div
               whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.3 } }}
