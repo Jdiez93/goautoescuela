@@ -169,7 +169,7 @@ function WhySection() {
       <div className="max-w-6xl mx-auto">
         <motion.div {...fadeUp}>
           <h2 className="text-2xl sm:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground">
-            ¿Por qué Ready2Go?
+            <RandomLetterSwapPingPong label="¿Por qué Ready2Go?" />
           </h2>
           <p className="text-muted-foreground mt-2 mb-10 sm:mb-14 text-base sm:text-lg">
             Porque aprender a conducir tiene que ser compatible con tu agenda, fácil y divertido
