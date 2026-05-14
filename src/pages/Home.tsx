@@ -207,8 +207,8 @@ function WhySection() {
                   className="no-glow w-28 h-28 sm:w-40 sm:h-40 lg:w-52 lg:h-52 object-contain mix-blend-multiply"
                 />
               </motion.div>
-              <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+              <h3 className="relative z-10 font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
+              <p className="relative z-10 text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
           ))}
         </motion.div>
