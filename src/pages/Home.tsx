@@ -191,8 +191,9 @@ function WhySection() {
                   transition: { duration: 0.6, delay: i * 0.1, ease: easeCurve },
                 },
               }}
-              whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
-              className="relative overflow-hidden p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 transition-colors duration-300 group cursor-default flex flex-col items-center text-center"
+            >
+            <Tilt3D
+              className="relative overflow-hidden p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 transition-colors duration-300 group cursor-default flex flex-col items-center text-center h-full"
             >
               <AnimatedCardBg />
               <motion.div
