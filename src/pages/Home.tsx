@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
+import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import iconoMetodo from "@/assets/icono-metodo.jpeg";
 import iconoApp from "@/assets/icono-app.jpeg";
 import iconoEstadistica from "@/assets/icono-estadistica.jpeg";
@@ -191,10 +192,11 @@ function WhySection() {
                 },
               }}
               whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.3 } }}
-              className="p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 transition-colors duration-300 group cursor-default flex flex-col items-center text-center"
+              className="relative overflow-hidden p-6 rounded-2xl border border-border/60 bg-card hover:border-primary/30 transition-colors duration-300 group cursor-default flex flex-col items-center text-center"
             >
+              <AnimatedCardBg />
               <motion.div
-                className="mb-4 cursor-pointer"
+                className="relative z-10 mb-4 cursor-pointer"
                 whileHover={{ y: -14, scale: 1.15, rotate: -8 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
@@ -206,8 +208,8 @@ function WhySection() {
                   className="no-glow w-28 h-28 sm:w-40 sm:h-40 lg:w-52 lg:h-52 object-contain mix-blend-multiply"
                 />
               </motion.div>
-              <h3 className="font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+              <h3 className="relative z-10 font-semibold text-foreground mb-2 font-['Space_Grotesk']">{r.title}</h3>
+              <p className="relative z-10 text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
             </motion.div>
           ))}
         </motion.div>

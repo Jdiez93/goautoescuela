@@ -12,6 +12,7 @@ import metodoReadyImg from "@/assets/teorica-metodo-ready.jpeg";
 import iconoTest from "@/assets/icono-test.png";
 import iconoVideoPregunta from "@/assets/icono-video-pregunta.png";
 import iconoVideoTemario from "@/assets/icono-video-temario.png";
+import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -124,9 +125,10 @@ export default function LaTeorica() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease: easeCurve }}
-                className="group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
+                className="relative overflow-hidden group rounded-2xl border border-border/40 bg-card p-6 hover:border-primary/30 transition-colors duration-300"
               >
-                <div className="flex items-center gap-5 mb-4 min-h-[10rem]">
+                <AnimatedCardBg />
+                <div className="relative z-10 flex items-center gap-5 mb-4 min-h-[10rem]">
                   <motion.div whileHover={{ y: -14, scale: 1.15, rotate: -8 }} transition={{ type: "spring", stiffness: 400, damping: 10 }} className="cursor-pointer shrink-0">
                     <motion.img
                       src={feat.icon}
@@ -138,10 +140,10 @@ export default function LaTeorica() {
                   </motion.div>
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base leading-snug flex-1">{feat.title}</h3>
                 </div>
-                <div className="rounded-xl bg-primary/15 border border-primary/20 h-36 flex items-center justify-center mb-4">
+                <div className="relative z-10 rounded-xl bg-primary/15 border border-primary/20 h-36 flex items-center justify-center mb-4">
                   <span className="text-primary font-medium text-xs">{feat.imageLabel}</span>
                 </div>
-                <ul className="space-y-1">
+                <ul className="relative z-10 space-y-1">
                   {feat.bullets.map((b, j) => (
                     <li key={j} className="text-xs text-muted-foreground leading-relaxed">• {b}</li>
                   ))}
