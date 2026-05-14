@@ -30,9 +30,6 @@ export default function AutoescuelaPardillo() {
         <section className="px-4 mb-16">
           <div className="max-w-6xl mx-auto">
             <motion.div {...fadeUp} className="text-center mb-10">
-              </span>
-            </motion.div>
-            <motion.div {...fadeUp} className="text-center mb-10" style={{ display: "contents" }}>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-['Space_Grotesk'] text-foreground mb-4 inline-flex justify-center">
                 <RandomLetterSwapPingPong label={name} />
               </h1>
