@@ -127,7 +127,7 @@ export default function Consejos() {
               className="max-w-3xl mb-10"
             >
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-4">
-                Cómo trabajamos
+                <RandomLetterSwapPingPong label="Cómo trabajamos" />
               </h2>
               <p className="text-muted-foreground leading-relaxed">
                 No creemos en grupos masificados ni en clases improvisadas. Trabajamos con grupos
