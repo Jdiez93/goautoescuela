@@ -69,7 +69,7 @@ export default function Consejos() {
               className="md:col-span-2"
             >
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-3">
-                Centro de Estudios Ready2Go
+                <RandomLetterSwapPingPong label="Centro de Estudios Ready2Go" />
               </h1>
               <p className="text-lg sm:text-xl text-foreground/80 font-medium mb-3">
                 Un espacio diseñado para estudiar de verdad
