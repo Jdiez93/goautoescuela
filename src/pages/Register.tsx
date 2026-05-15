@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Car, Loader2, Mail, Lock, Eye, EyeOff, User, Check, X } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { NeonCheckbox } from "@/components/ui/neon-checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
@@ -204,19 +204,20 @@ export default function Register() {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5, duration: 0.35 }}
-                className="flex items-start gap-2"
               >
-                <Checkbox
+                <NeonCheckbox
                   id="privacy"
                   checked={acceptedPrivacy}
-                  onCheckedChange={(checked) => setAcceptedPrivacy(checked === true)}
+                  onChange={(e) => setAcceptedPrivacy(e.target.checked)}
+                  label={
+                    <span className="text-muted-foreground">
+                      He leído y acepto la{" "}
+                      <Link to="/politica-privacidad" className="text-primary hover:underline" target="_blank">
+                        política de privacidad
+                      </Link>
+                    </span>
+                  }
                 />
-                <Label htmlFor="privacy" className="text-sm text-muted-foreground leading-snug cursor-pointer">
-                  He leído y acepto la{" "}
-                  <Link to="/politica-privacidad" className="text-primary hover:underline" target="_blank">
-                    política de privacidad
-                  </Link>
-                </Label>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
