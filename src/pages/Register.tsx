@@ -212,7 +212,7 @@ export default function Register() {
                   label={
                     <span className="text-muted-foreground">
                       He leído y acepto la{" "}
-                      <Link to="/politica-privacidad" className="font-medium text-primary hover:underline" target="_blank">
+                      <Link to="/politica-privacidad" className="font-semibold hover:underline" style={{ color: "hsl(170 98% 73%)" }} target="_blank">
                         política de privacidad
                       </Link>
                     </span>
