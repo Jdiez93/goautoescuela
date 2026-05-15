@@ -4,7 +4,7 @@ import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-foreground text-background/80 pt-20 pb-8 overflow-hidden">
+    <footer className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen max-w-none bg-foreground text-background/80 pt-20 pb-8 overflow-hidden">
       {/* Top gradient line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
