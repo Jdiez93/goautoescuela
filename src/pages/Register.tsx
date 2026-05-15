@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Car, Loader2, Mail, Lock, Eye, EyeOff, User, Check, X } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { NeonCheckbox } from "@/components/ui/neon-checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
