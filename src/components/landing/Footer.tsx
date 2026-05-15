@@ -11,7 +11,7 @@ export default function Footer() {
       {/* Subtle orb */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-primary/[0.05] rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-3 sm:px-4 relative z-10">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top section: Brand + Navigation columns */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-14">
           {/* Brand */}
