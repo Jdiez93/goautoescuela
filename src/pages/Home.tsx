@@ -378,6 +378,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: easeCurve }}
+          className="w-full max-w-none overflow-hidden"
         >
           <Footer />
         </motion.div>
