@@ -52,6 +52,7 @@ const features = [
       "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
     ],
     imageLabel: "Imagen Video-Pregunta",
+    image: featureVideoPregunta,
   },
   {
     icon: iconoTest,
