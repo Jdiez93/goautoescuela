@@ -62,8 +62,8 @@ serve(async (req) => {
       customer_email: customerId ? undefined : user.email,
       line_items: [{ price: pack.priceId, quantity: 1 }],
       mode: "payment",
-      // Explicit list excludes Link (Link only appears with automatic_payment_methods)
-      payment_method_types: ["card", "klarna", "paypal", "bizum"],
+      // Keep checkout compatible with the live Stripe account even if optional methods are not enabled.
+      payment_method_types: ["card"],
       success_url: `${req.headers.get("origin")}/pagos?success=true&pack=${packKey}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/pagos?canceled=true`,
       metadata: {
