@@ -144,8 +144,12 @@ export default function LaTeorica() {
                   </motion.div>
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base leading-snug flex-1">{feat.title}</h3>
                 </div>
-                <div className="relative z-10 rounded-xl bg-primary/15 border border-primary/20 h-36 flex items-center justify-center mb-4">
-                  <span className="text-primary font-medium text-xs">{feat.imageLabel}</span>
+                <div className="relative z-10 rounded-xl bg-primary/10 border border-primary/20 h-56 sm:h-64 overflow-hidden flex items-center justify-center mb-4">
+                  {feat.image ? (
+                    <img src={feat.image} alt={feat.title} loading="lazy" className="w-full h-full object-cover object-center" />
+                  ) : (
+                    <span className="text-primary font-medium text-xs">{feat.imageLabel}</span>
+                  )}
                 </div>
                 <ul className="relative z-10 space-y-1">
                   {feat.bullets.map((b, j) => (
