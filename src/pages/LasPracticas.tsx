@@ -14,6 +14,7 @@ import iconoReciclaje from "@/assets/icono-reciclaje.png";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 import { Tilt3D } from "@/components/ui/tilt-3d";
+import practicasHero from "@/assets/practicas-hero.png";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
