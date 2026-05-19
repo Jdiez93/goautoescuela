@@ -29,6 +29,7 @@ const features = [
       "Así garantizamos que tu aprendizaje sea sólido y sin lagunas",
     ],
     imageLabel: "Imagen Tests",
+    image: featureTests,
   },
   {
     icon: iconoVideoTemario,
