@@ -12,6 +12,7 @@ import metodoReadyImg from "@/assets/teorica-metodo-ready.jpeg";
 import iconoTest from "@/assets/icono-test.png";
 import iconoVideoPregunta from "@/assets/icono-video-pregunta.png";
 import iconoVideoTemario from "@/assets/icono-video-temario.png";
+import chicaPortatil from "@/assets/chica-portatil.png";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
