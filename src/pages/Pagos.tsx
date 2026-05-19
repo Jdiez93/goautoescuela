@@ -13,7 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const PACKS = [
   { key: "clase-suelta", name: "Clase suelta", classes: 1, price: 38.5, desc: "Una clase práctica individual de 45 min", popular: false },
-  { key: "pack-6", name: "Bono 5 clases", classes: 5, price: 222, desc: "5 clases prácticas · Ahorra 9€", popular: false },
+  { key: "pack-6", name: "Bono 6 clases", classes: 6, price: 222, desc: "6 clases prácticas · 37€/clase", popular: false },
   { key: "pack-11", name: "Bono 11 clases", classes: 11, price: 390, desc: "11 clases prácticas · Ahorra 33,50€", popular: true },
 ];
 
