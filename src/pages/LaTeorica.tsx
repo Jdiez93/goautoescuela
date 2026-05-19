@@ -168,7 +168,7 @@ export default function LaTeorica() {
               className="absolute inset-0 w-full h-full object-cover object-center"
               loading="lazy"
             />
-            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 z-10">
+            <div className="absolute inset-x-0 bottom-4 sm:bottom-6 z-10 flex justify-center">
             <Link to="/matriculate">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
                 <Button className="bg-background/30 backdrop-blur-md border border-foreground/20 text-foreground hover:bg-background/50 rounded-xl px-6 h-10 text-sm font-semibold shadow-sm">
