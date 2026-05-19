@@ -12,6 +12,7 @@ import metodoReadyImg from "@/assets/teorica-metodo-ready.jpeg";
 import iconoTest from "@/assets/icono-test.png";
 import iconoVideoPregunta from "@/assets/icono-video-pregunta.png";
 import iconoVideoTemario from "@/assets/icono-video-temario.png";
+import chicaPortatil from "@/assets/chica-portatil.png";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
@@ -159,13 +160,18 @@ export default function LaTeorica() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
-            className="mt-10 relative rounded-3xl bg-primary aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center overflow-hidden"
+            className="mt-10 relative rounded-3xl bg-white aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] overflow-hidden border border-border/40 shadow-sm"
           >
-            <span className="text-primary-foreground/60 text-sm font-medium">Imagen chica portátil</span>
-            <div className="absolute bottom-5 left-5">
+            <img
+              src={chicaPortatil}
+              alt="Tú pones el ritmo, nosotros el método"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              loading="lazy"
+            />
+            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 z-10">
             <Link to="/matriculate">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
-                <Button className="bg-[hsl(var(--foreground))] text-background hover:opacity-90 rounded-xl px-6 h-10 text-sm font-semibold">
+                <Button className="bg-background/30 backdrop-blur-md border border-foreground/20 text-foreground hover:bg-background/50 rounded-xl px-6 h-10 text-sm font-semibold shadow-sm">
                   Ver packs
                 </Button>
               </motion.div>
