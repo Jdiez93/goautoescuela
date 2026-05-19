@@ -14,6 +14,7 @@ import iconoReciclaje from "@/assets/icono-reciclaje.png";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 import { Tilt3D } from "@/components/ui/tilt-3d";
+import practicasHero from "@/assets/practicas-hero.png";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -161,10 +162,16 @@ export default function LasPracticas() {
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: easeCurve, delay: 0.1 }}
-            className="rounded-3xl bg-primary/80 aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-center justify-center mb-16"
+            className="img-glow relative rounded-3xl overflow-hidden bg-white aspect-[16/9] border border-border/40 shadow-sm mb-16"
           >
-            <span className="text-primary-foreground/60 text-sm">Imagen Las Prácticas</span>
+            <img
+              src={practicasHero}
+              alt="Tus prácticas a tu ritmo. Elige día y hora con un solo click"
+              className="absolute inset-0 w-full h-full object-contain"
+              loading="eager"
+            />
           </motion.div>
+
 
           {/* Feature cards grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
