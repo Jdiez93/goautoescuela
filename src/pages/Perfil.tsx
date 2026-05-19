@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Navigate, Link } from "react-router-dom";
-import { Car, ArrowLeft, Save, Loader2, User, Mail, Phone, MapPin, Calendar, CreditCard, Pencil } from "lucide-react";
+import { ArrowLeft, Save, Loader2, User, Mail, Phone, MapPin, Calendar, CreditCard, Pencil } from "lucide-react";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -180,9 +181,7 @@ export default function Perfil() {
             <span className="text-sm">Volver al panel</span>
           </Link>
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
-              <Car className="w-4 h-4 text-primary-foreground" />
-            </div>
+            <img src={logoReady2Go} alt="Ready2Go" className="h-9 sm:h-12 w-auto object-contain shrink-0" />
             <span className="text-lg font-bold font-['Space_Grotesk']">
               Ready2Go
             </span>

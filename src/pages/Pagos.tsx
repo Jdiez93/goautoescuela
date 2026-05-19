@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
-import { Car, ArrowLeft, CreditCard, BookOpen, CheckCircle, Loader2, AlertCircle, TrendingUp, FileText, Download } from "lucide-react";
+import { ArrowLeft, CreditCard, BookOpen, CheckCircle, Loader2, AlertCircle, TrendingUp, FileText, Download } from "lucide-react";
+import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
@@ -171,9 +172,7 @@ export default function Pagos() {
             <span className="text-sm">Volver al panel</span>
           </Link>
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
-              <Car className="w-4 h-4 text-primary-foreground" />
-            </div>
+            <img src={logoReady2Go} alt="Ready2Go" className="h-9 sm:h-12 w-auto object-contain shrink-0" />
             <span className="text-lg font-bold font-['Space_Grotesk']">Ready2Go</span>
           </Link>
         </div>
