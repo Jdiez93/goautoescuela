@@ -64,6 +64,7 @@ const features = [
       "Completa el proceso en menos de 2 meses desde que te apuntaste en Ready2Go",
     ],
     imageLabel: "Imagen Estadísticas",
+    image: featureEstadisticas,
   },
 ];
 
