@@ -20,6 +20,7 @@ import imgTeorica from "@/assets/home-teorica.jpeg";
 import imgPractica from "@/assets/home-practica.jpeg";
 import slide1 from "@/assets/carrusel-devolvemos.png";
 import slide2 from "@/assets/carrusel-todoen1.jpeg";
+import cocheRotulado from "@/assets/coche-rotulado.png";
 
 const carouselSlides = [
   { id: 1, image: slide1 },
@@ -294,12 +295,17 @@ function PromoBanner() {
         <motion.div
           {...scaleIn}
           whileHover={{ scale: 1.005, transition: { duration: 0.3 } }}
-          className="relative rounded-3xl overflow-hidden bg-[hsl(220,30%,15%)] aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex flex-col items-center justify-center"
+          className="relative rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-end justify-center"
         >
-          <span className="text-primary-foreground/60 text-sm mb-auto mt-[30%]">Imagen creada coche rotulado</span>
-          <div className="mb-8">
+          <img
+            src={cocheRotulado}
+            alt="Coche rotulado Ready2Go - Conduce hacia tu libertad"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            loading="lazy"
+          />
+          <div className="relative z-10 mb-6 sm:mb-8">
             <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-11 text-sm font-semibold">
+              <Button className="bg-background/20 backdrop-blur-md border border-background/40 text-primary-foreground hover:bg-background/40 rounded-full px-6 h-10 text-sm font-semibold shadow-sm">
                 Me interesa
               </Button>
             </motion.div>
