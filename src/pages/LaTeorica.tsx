@@ -14,6 +14,9 @@ import iconoVideoPregunta from "@/assets/icono-video-pregunta.png";
 import iconoVideoTemario from "@/assets/icono-video-temario.png";
 import chicaPortatil from "@/assets/chica-portatil.png";
 import featureTests from "@/assets/feature-tests.png";
+import featureTemarioVideo from "@/assets/feature-temario-video.png";
+import featureVideoPregunta from "@/assets/feature-video-pregunta.png";
+import featureEstadisticas from "@/assets/feature-estadisticas.png";
 import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 
@@ -40,6 +43,7 @@ const features = [
       "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
     ],
     imageLabel: "Imagen Video-Temario",
+    image: featureTemarioVideo,
   },
   {
     icon: iconoVideoPregunta,
@@ -48,6 +52,7 @@ const features = [
       "Cada pregunta de test incluye un vídeo explicativo corto, para que entiendas por qué aciertas o fallas",
     ],
     imageLabel: "Imagen Video-Pregunta",
+    image: featureVideoPregunta,
   },
   {
     icon: iconoTest,
@@ -59,6 +64,7 @@ const features = [
       "Completa el proceso en menos de 2 meses desde que te apuntaste en Ready2Go",
     ],
     imageLabel: "Imagen Estadísticas",
+    image: featureEstadisticas,
   },
 ];
 
@@ -144,7 +150,7 @@ export default function LaTeorica() {
                   </motion.div>
                   <h3 className="font-semibold text-foreground font-['Space_Grotesk'] text-base leading-snug flex-1">{feat.title}</h3>
                 </div>
-                <div className="relative z-10 rounded-xl bg-primary/10 border border-primary/20 h-56 sm:h-64 overflow-hidden flex items-center justify-center mb-4">
+                <div className="relative z-10 rounded-xl bg-primary/10 border border-primary/20 h-64 sm:h-80 overflow-hidden flex items-center justify-center mb-4">
                   {feat.image ? (
                     <img src={feat.image} alt={feat.title} loading="lazy" className="w-full h-full object-cover object-center" />
                   ) : (
