@@ -20,6 +20,7 @@ import imgTeorica from "@/assets/home-teorica.jpeg";
 import imgPractica from "@/assets/home-practica.jpeg";
 import slide1 from "@/assets/carrusel-devolvemos.png";
 import slide2 from "@/assets/carrusel-todoen1.jpeg";
+import cocheRotulado from "@/assets/coche-rotulado.png";
 
 const carouselSlides = [
   { id: 1, image: slide1 },
