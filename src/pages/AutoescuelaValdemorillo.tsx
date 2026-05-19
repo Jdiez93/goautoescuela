@@ -44,11 +44,14 @@ export default function AutoescuelaValdemorillo() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: easeCurve }}
-              className="rounded-3xl overflow-hidden bg-primary/80 aspect-[21/9] flex items-center justify-center shadow-2xl"
+              className="rounded-3xl overflow-hidden aspect-[16/9] shadow-2xl border border-border/40"
             >
-              <span className="text-primary-foreground font-semibold text-2xl">
-                Imagen Valdemorillo
-              </span>
+              <img
+                src={valdemorilloHero}
+                alt="Flota de vehículos Ready2Go en Valdemorillo"
+                className="w-full h-full object-cover object-center"
+                loading="eager"
+              />
             </motion.div>
           </div>
         </section>
