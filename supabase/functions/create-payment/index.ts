@@ -62,8 +62,8 @@ serve(async (req) => {
       customer_email: customerId ? undefined : user.email,
       line_items: [{ price: pack.priceId, quantity: 1 }],
       mode: "payment",
-      // Explicit list excludes Link (Link only appears with automatic_payment_methods)
-      payment_method_types: ["card", "klarna", "paypal", "bizum"],
+      // PayPal is not enabled on the live Stripe account, so only active live methods are requested.
+      payment_method_types: ["card", "klarna", "bizum"],
       success_url: `${req.headers.get("origin")}/pagos?success=true&pack=${packKey}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/pagos?canceled=true`,
       metadata: {
