@@ -561,6 +561,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      owns_matricula: { Args: { _matricula_id: string }; Returns: boolean }
       refund_class: { Args: { _user_id: string }; Returns: undefined }
     }
     Enums: {

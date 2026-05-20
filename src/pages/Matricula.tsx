@@ -3,7 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Download, FileText, Info, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Download, FileText, Info, Loader2, Upload, X } from "lucide-react";
 
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -87,6 +87,11 @@ export default function Matricula() {
   const [packError, setPackError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const [contratoFirmado, setContratoFirmado] = useState<File | null>(null);
+  const [dniAnverso, setDniAnverso] = useState<File | null>(null);
+  const [dniReverso, setDniReverso] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -152,10 +157,19 @@ export default function Matricula() {
   }, [slug, cityValue]);
   const contratoPendiente = !!slug && !!cityValue && CONTRATOS[slug]?.[cityValue] === null;
 
+  const allFilesPresent = !!contratoFirmado && !!dniAnverso && !!dniReverso;
+
   const onSubmit = async (values: MatriculaForm) => {
     if (!pack) return;
+    setFileError(null);
+    if (!allFilesPresent) {
+      setFileError("Debes subir el contrato firmado y las dos caras del DNI.");
+      return;
+    }
     setSubmitting(true);
+    let createdId: string | null = null;
     try {
+      // 1. Create matricula row
       const { data, error } = await supabase
         .from("matriculas")
         .insert({
@@ -179,19 +193,45 @@ export default function Matricula() {
         .single();
 
       if (error) throw error;
+      createdId = data!.id as string;
+
+      // 2. Upload files to private bucket
+      const uploads: Array<{ file: File; folder: string; column: string }> = [
+        { file: contratoFirmado!, folder: "contrato_firmado", column: "contrato_firmado_url" },
+        { file: dniAnverso!, folder: "dni_anverso", column: "dni_anverso_url" },
+        { file: dniReverso!, folder: "dni_reverso", column: "dni_reverso_url" },
+      ];
+
+      const updatePayload: Record<string, string> = {};
+      for (const u of uploads) {
+        const ext = u.file.name.split(".").pop()?.toLowerCase() ?? "bin";
+        const path = `${createdId}/${u.folder}/${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage
+          .from("matriculas")
+          .upload(path, u.file, { contentType: u.file.type, upsert: false });
+        if (upErr) throw upErr;
+        updatePayload[u.column] = path;
+      }
+
+      // 3. Save private paths in matricula row
+      const { error: updErr } = await supabase
+        .from("matriculas")
+        .update(updatePayload)
+        .eq("id", createdId);
+      if (updErr) throw updErr;
 
       toast({
-        title: "Datos guardados",
+        title: "Matrícula registrada",
         description:
-          "Tu matrícula se ha registrado correctamente. El siguiente paso será el pago.",
+          "Hemos guardado tus datos y documentos. El siguiente paso será el pago.",
       });
-      // Próxima fase: redirigir a subida de documentos / pago con el id
-      navigate(`/matricula?pack=${packParam}&saved=${data?.id ?? ""}`, { replace: true });
+      navigate(`/matricula?pack=${packParam}&saved=${createdId}`, { replace: true });
     } catch (err) {
       console.error("Error guardando matrícula:", err);
       toast({
-        title: "No se pudo guardar la matrícula",
-        description: "Inténtalo de nuevo en unos segundos.",
+        title: "No se pudo completar la matrícula",
+        description:
+          (err as Error)?.message ?? "Inténtalo de nuevo en unos segundos.",
         variant: "destructive",
       });
     } finally {
@@ -418,6 +458,52 @@ export default function Matricula() {
                   </div>
                 )}
 
+                {/* Subida de documentos */}
+                <div className="md:col-span-2 space-y-4 pt-2">
+                  <div>
+                    <h3 className="text-lg font-semibold font-['Space_Grotesk']">Documentación</h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Formatos admitidos: JPG, PNG o PDF. Tamaño máximo 10 MB por archivo.
+                    </p>
+                  </div>
+
+                  <FileDropper
+                    label="Contrato firmado *"
+                    description="Súbelo en PDF o foto una vez firmado."
+                    file={contratoFirmado}
+                    onChange={setContratoFirmado}
+                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                  />
+
+                  <Alert className="border-primary/30 bg-primary/5">
+                    <Info className="h-4 w-4 text-primary" />
+                    <AlertDescription className="text-xs">
+                      Las imágenes del DNI deben verse de forma clara, completa y legible.
+                    </AlertDescription>
+                  </Alert>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FileDropper
+                      label="DNI - Anverso *"
+                      description="Cara frontal del DNI."
+                      file={dniAnverso}
+                      onChange={setDniAnverso}
+                      accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    />
+                    <FileDropper
+                      label="DNI - Reverso *"
+                      description="Cara posterior del DNI."
+                      file={dniReverso}
+                      onChange={setDniReverso}
+                      accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    />
+                  </div>
+
+                  {fileError && (
+                    <p className="text-xs text-destructive">{fileError}</p>
+                  )}
+                </div>
+
                 {/* Submit row */}
                 <div className="md:col-span-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 pt-4 border-t">
                   <p className="text-xs text-muted-foreground">
@@ -426,7 +512,7 @@ export default function Matricula() {
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={!isValid || submitting || !pack || !!packError || contratoPendiente}
+                    disabled={!isValid || submitting || !pack || !!packError || contratoPendiente || !allFilesPresent}
                     className="sm:ml-auto"
                   >
                     {submitting ? (
@@ -447,6 +533,93 @@ export default function Matricula() {
       </main>
 
       <Footer />
+    </div>
+  );
+}
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/jpg"];
+
+function FileDropper({
+  label,
+  description,
+  file,
+  onChange,
+  accept,
+}: {
+  label: string;
+  description?: string;
+  file: File | null;
+  onChange: (file: File | null) => void;
+  accept: string;
+}) {
+  const [error, setError] = useState<string | null>(null);
+  const inputId = useMemo(() => `file-${Math.random().toString(36).slice(2)}`, []);
+
+  const handleFiles = (f: File | null) => {
+    setError(null);
+    if (!f) {
+      onChange(null);
+      return;
+    }
+    if (!ALLOWED_TYPES.includes(f.type)) {
+      setError("Formato no permitido. Usa JPG, PNG o PDF.");
+      return;
+    }
+    if (f.size > MAX_FILE_SIZE) {
+      setError("El archivo supera los 10 MB.");
+      return;
+    }
+    onChange(f);
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label>{label}</Label>
+      {file ? (
+        <div className="flex items-center justify-between gap-3 rounded-lg border-2 border-primary/40 bg-primary/5 p-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-md bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <FileText className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-medium truncate">{file.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {(file.size / 1024 / 1024).toFixed(2)} MB
+              </p>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => onChange(null)}
+            aria-label="Quitar archivo"
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
+      ) : (
+        <label
+          htmlFor={inputId}
+          className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-colors cursor-pointer p-5 text-center"
+        >
+          <Upload className="w-5 h-5 text-muted-foreground" />
+          <span className="text-sm font-medium">Selecciona un archivo</span>
+          {description && (
+            <span className="text-xs text-muted-foreground">{description}</span>
+          )}
+          <span className="text-[11px] text-muted-foreground">JPG, PNG o PDF · máx. 10 MB</span>
+          <input
+            id={inputId}
+            type="file"
+            accept={accept}
+            className="hidden"
+            onChange={(e) => handleFiles(e.target.files?.[0] ?? null)}
+          />
+        </label>
+      )}
+      {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
   );
 }
