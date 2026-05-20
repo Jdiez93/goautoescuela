@@ -87,6 +87,11 @@ export default function Matricula() {
   const [packError, setPackError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const [contratoFirmado, setContratoFirmado] = useState<File | null>(null);
+  const [dniAnverso, setDniAnverso] = useState<File | null>(null);
+  const [dniReverso, setDniReverso] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
