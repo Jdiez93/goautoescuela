@@ -167,33 +167,32 @@ export default function Matricula() {
       return;
     }
     setSubmitting(true);
-    let createdId: string | null = null;
+    const createdId =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     try {
-      // 1. Create matricula row
-      const { data, error } = await supabase
-        .from("matriculas")
-        .insert({
-          full_name: values.full_name,
-          dni: values.dni.toUpperCase(),
-          date_of_birth: values.date_of_birth,
-          email: values.email.toLowerCase(),
-          phone: values.phone,
-          address: values.address,
-          postal_code: values.postal_code,
-          city: values.city,
-          pack_id: pack.id,
-          pack_name: pack.name,
-          precio: pack.price,
-          estado_matricula: "pendiente_pago",
-          estado_pago: "pendiente",
-          status: "pendiente_pago",
-          contrato_asociado: contrato?.label ?? "",
-        })
-        .select("id")
-        .single();
+      // 1. Create matricula row (with client-side id, no RETURNING to avoid SELECT RLS)
+      const { error } = await supabase.from("matriculas").insert({
+        id: createdId,
+        full_name: values.full_name,
+        dni: values.dni.toUpperCase(),
+        date_of_birth: values.date_of_birth,
+        email: values.email.toLowerCase(),
+        phone: values.phone,
+        address: values.address,
+        postal_code: values.postal_code,
+        city: values.city,
+        pack_id: pack.id,
+        pack_name: pack.name,
+        precio: pack.price,
+        estado_matricula: "pendiente_pago",
+        estado_pago: "pendiente",
+        status: "pendiente_pago",
+        contrato_asociado: contrato?.label ?? "",
+      });
 
       if (error) throw error;
-      createdId = data!.id as string;
 
       // 2. Upload files to private bucket
       const uploads: Array<{ file: File; folder: string; column: string }> = [
@@ -219,6 +218,7 @@ export default function Matricula() {
         .update(updatePayload)
         .eq("id", createdId);
       if (updErr) throw updErr;
+
 
       toast({
         title: "Matrícula registrada",
