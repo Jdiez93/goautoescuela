@@ -176,8 +176,8 @@ export default function Matricula() {
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
 
-      <main className="flex-1 px-4 md:px-8 py-10 md:py-14">
-        <div className="max-w-6xl mx-auto">
+      <main className="flex-1 px-4 md:px-8 pt-32 md:pt-40 pb-16 md:pb-24">
+        <div className="max-w-7xl mx-auto">
           {/* Top row: pack card + stepper */}
           <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 mb-8">
             {/* Pack card */}
