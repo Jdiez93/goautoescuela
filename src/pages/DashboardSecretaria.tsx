@@ -177,9 +177,12 @@ export default function DashboardSecretaria() {
     arr.sort((a, b) => {
       let av: string | number = (a[sortKey] ?? "") as string;
       let bv: string | number = (b[sortKey] ?? "") as string;
-      if (sortKey === "created_at") {
-        av = new Date(a.created_at).getTime();
-        bv = new Date(b.created_at).getTime();
+      if (sortKey === "created_at" || sortKey === "fecha_pago") {
+        av = a[sortKey] ? new Date(a[sortKey] as string).getTime() : 0;
+        bv = b[sortKey] ? new Date(b[sortKey] as string).getTime() : 0;
+      } else if (sortKey === "precio") {
+        av = a.precio ?? 0;
+        bv = b.precio ?? 0;
       } else {
         av = String(av).toLowerCase();
         bv = String(bv).toLowerCase();
@@ -190,6 +193,7 @@ export default function DashboardSecretaria() {
     });
     return arr;
   }, [filtered, sortKey, sortDir]);
+
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
   const currentPage = Math.min(page, totalPages);
