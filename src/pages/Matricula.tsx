@@ -537,6 +537,93 @@ export default function Matricula() {
   );
 }
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/jpg"];
+
+function FileDropper({
+  label,
+  description,
+  file,
+  onChange,
+  accept,
+}: {
+  label: string;
+  description?: string;
+  file: File | null;
+  onChange: (file: File | null) => void;
+  accept: string;
+}) {
+  const [error, setError] = useState<string | null>(null);
+  const inputId = useMemo(() => `file-${Math.random().toString(36).slice(2)}`, []);
+
+  const handleFiles = (f: File | null) => {
+    setError(null);
+    if (!f) {
+      onChange(null);
+      return;
+    }
+    if (!ALLOWED_TYPES.includes(f.type)) {
+      setError("Formato no permitido. Usa JPG, PNG o PDF.");
+      return;
+    }
+    if (f.size > MAX_FILE_SIZE) {
+      setError("El archivo supera los 10 MB.");
+      return;
+    }
+    onChange(f);
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label>{label}</Label>
+      {file ? (
+        <div className="flex items-center justify-between gap-3 rounded-lg border-2 border-primary/40 bg-primary/5 p-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-md bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+              <FileText className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-medium truncate">{file.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {(file.size / 1024 / 1024).toFixed(2)} MB
+              </p>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => onChange(null)}
+            aria-label="Quitar archivo"
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
+      ) : (
+        <label
+          htmlFor={inputId}
+          className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-colors cursor-pointer p-5 text-center"
+        >
+          <Upload className="w-5 h-5 text-muted-foreground" />
+          <span className="text-sm font-medium">Selecciona un archivo</span>
+          {description && (
+            <span className="text-xs text-muted-foreground">{description}</span>
+          )}
+          <span className="text-[11px] text-muted-foreground">JPG, PNG o PDF · máx. 10 MB</span>
+          <input
+            id={inputId}
+            type="file"
+            accept={accept}
+            className="hidden"
+            onChange={(e) => handleFiles(e.target.files?.[0] ?? null)}
+          />
+        </label>
+      )}
+      {error && <p className="text-xs text-destructive">{error}</p>}
+    </div>
+  );
+}
+
 function Step({
   number,
   label,
