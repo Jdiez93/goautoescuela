@@ -509,6 +509,11 @@ function Field({
   );
 }
 
+const MESES_ES = [
+  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
+];
+
 function DateOfBirthPicker({
   value,
   onChange,
@@ -516,49 +521,55 @@ function DateOfBirthPicker({
   value?: string;
   onChange: (iso: string) => void;
 }) {
-  const [open, setOpen] = useState(false);
   const today = new Date();
-  const fromYear = 1940;
-  const toYear = today.getFullYear() - 14;
-  const selected = value ? new Date(value + "T00:00:00") : undefined;
-  const defaultMonth = selected ?? new Date(toYear - 4, 0, 1);
+  const maxYear = today.getFullYear() - 14;
+  const minYear = 1940;
+
+  const [d, m, y] = value
+    ? [value.slice(8, 10), value.slice(5, 7), value.slice(0, 4)]
+    : ["", "", ""];
+
+  const years = Array.from({ length: maxYear - minYear + 1 }, (_, i) => maxYear - i);
+  const daysInMonth = y && m ? new Date(parseInt(y), parseInt(m), 0).getDate() : 31;
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+  const commit = (dd: string, mm: string, yy: string) => {
+    if (dd && mm && yy) {
+      const safeDay = Math.min(parseInt(dd), new Date(parseInt(yy), parseInt(mm), 0).getDate());
+      onChange(`${yy}-${mm}-${String(safeDay).padStart(2, "0")}`);
+    } else {
+      onChange("");
+    }
+  };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          className={cn(
-            "w-full justify-start text-left font-normal",
-            !selected && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {selected ? format(selected, "PPP", { locale: es }) : "Selecciona la fecha"}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={selected}
-          defaultMonth={defaultMonth}
-          onSelect={(d) => {
-            if (!d) return;
-            // ISO yyyy-MM-dd sin desfase horario
-            const iso = format(d, "yyyy-MM-dd");
-            onChange(iso);
-            setOpen(false);
-          }}
-          captionLayout="dropdown-buttons"
-          fromYear={fromYear}
-          toYear={toYear}
-          disabled={(date) => date > today || date < new Date(`${fromYear}-01-01`)}
-          locale={es}
-          initialFocus
-          className={cn("p-3 pointer-events-auto")}
-        />
-      </PopoverContent>
-    </Popover>
+    <div className="grid grid-cols-3 gap-2">
+      <Select value={d} onValueChange={(v) => commit(v, m, y)}>
+        <SelectTrigger><SelectValue placeholder="Día" /></SelectTrigger>
+        <SelectContent className="max-h-72">
+          {days.map((n) => (
+            <SelectItem key={n} value={String(n).padStart(2, "0")}>{n}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select value={m} onValueChange={(v) => commit(d, v, y)}>
+        <SelectTrigger><SelectValue placeholder="Mes" /></SelectTrigger>
+        <SelectContent className="max-h-72">
+          {MESES_ES.map((name, idx) => (
+            <SelectItem key={name} value={String(idx + 1).padStart(2, "0")}>{name}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select value={y} onValueChange={(v) => commit(d, m, v)}>
+        <SelectTrigger><SelectValue placeholder="Año" /></SelectTrigger>
+        <SelectContent className="max-h-72">
+          {years.map((yr) => (
+            <SelectItem key={yr} value={String(yr)}>{yr}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
