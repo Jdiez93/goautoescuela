@@ -508,3 +508,57 @@ function Field({
     </div>
   );
 }
+
+function DateOfBirthPicker({
+  value,
+  onChange,
+}: {
+  value?: string;
+  onChange: (iso: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const today = new Date();
+  const fromYear = 1940;
+  const toYear = today.getFullYear() - 14;
+  const selected = value ? new Date(value + "T00:00:00") : undefined;
+  const defaultMonth = selected ?? new Date(toYear - 4, 0, 1);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          className={cn(
+            "w-full justify-start text-left font-normal",
+            !selected && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {selected ? format(selected, "PPP", { locale: es }) : "Selecciona la fecha"}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={selected}
+          defaultMonth={defaultMonth}
+          onSelect={(d) => {
+            if (!d) return;
+            // ISO yyyy-MM-dd sin desfase horario
+            const iso = format(d, "yyyy-MM-dd");
+            onChange(iso);
+            setOpen(false);
+          }}
+          captionLayout="dropdown-buttons"
+          fromYear={fromYear}
+          toYear={toYear}
+          disabled={(date) => date > today || date < new Date(`${fromYear}-01-01`)}
+          locale={es}
+          initialFocus
+          className={cn("p-3 pointer-events-auto")}
+        />
+      </PopoverContent>
+    </Popover>
+  );
+}
