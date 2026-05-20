@@ -63,6 +63,7 @@ const App = () => (
             <Route path="/autoescuelas-ready2go/valdemorillo" element={<AutoescuelaValdemorillo />} />
             <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
             <Route path="/matriculate" element={<Matriculate />} />
+            <Route path="/matricula" element={<Matricula />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />
             <Route path="/recuperar-password" element={<ForgotPassword />} />
