@@ -3,7 +3,9 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Download, FileText, Info, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, CalendarIcon, CheckCircle2, Download, FileText, Info, Loader2 } from "lucide-react";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -20,6 +22,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -299,8 +304,14 @@ export default function Matricula() {
                 </Field>
 
                 <Field label="Fecha de nacimiento *" error={errors.date_of_birth?.message}>
-                  <Input type="date" {...register("date_of_birth")} />
+                  <DateOfBirthPicker
+                    value={watch("date_of_birth")}
+                    onChange={(iso) =>
+                      setValue("date_of_birth", iso, { shouldValidate: true, shouldDirty: true })
+                    }
+                  />
                 </Field>
+
 
                 <Field label="Correo electrónico *" error={errors.email?.message}>
                   <Input
@@ -495,5 +506,59 @@ function Field({
       {children}
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
+  );
+}
+
+function DateOfBirthPicker({
+  value,
+  onChange,
+}: {
+  value?: string;
+  onChange: (iso: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const today = new Date();
+  const fromYear = 1940;
+  const toYear = today.getFullYear() - 14;
+  const selected = value ? new Date(value + "T00:00:00") : undefined;
+  const defaultMonth = selected ?? new Date(toYear - 4, 0, 1);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          className={cn(
+            "w-full justify-start text-left font-normal",
+            !selected && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {selected ? format(selected, "PPP", { locale: es }) : "Selecciona la fecha"}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={selected}
+          defaultMonth={defaultMonth}
+          onSelect={(d) => {
+            if (!d) return;
+            // ISO yyyy-MM-dd sin desfase horario
+            const iso = format(d, "yyyy-MM-dd");
+            onChange(iso);
+            setOpen(false);
+          }}
+          captionLayout="dropdown-buttons"
+          fromYear={fromYear}
+          toYear={toYear}
+          disabled={(date) => date > today || date < new Date(`${fromYear}-01-01`)}
+          locale={es}
+          initialFocus
+          className={cn("p-3 pointer-events-auto")}
+        />
+      </PopoverContent>
+    </Popover>
   );
 }
