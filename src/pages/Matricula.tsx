@@ -3,9 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AlertCircle, ArrowLeft, ArrowRight, CalendarIcon, CheckCircle2, Download, FileText, Info, Loader2 } from "lucide-react";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Download, FileText, Info, Loader2 } from "lucide-react";
 
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -22,9 +20,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -509,11 +504,6 @@ function Field({
   );
 }
 
-const MESES_ES = [
-  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
-];
-
 function DateOfBirthPicker({
   value,
   onChange,
@@ -525,51 +515,102 @@ function DateOfBirthPicker({
   const maxYear = today.getFullYear() - 14;
   const minYear = 1940;
 
-  const [d, m, y] = value
-    ? [value.slice(8, 10), value.slice(5, 7), value.slice(0, 4)]
-    : ["", "", ""];
+  const [day, setDay] = useState(value?.slice(8, 10) ?? "");
+  const [month, setMonth] = useState(value?.slice(5, 7) ?? "");
+  const [year, setYear] = useState(value?.slice(0, 4) ?? "");
 
-  const years = Array.from({ length: maxYear - minYear + 1 }, (_, i) => maxYear - i);
-  const daysInMonth = y && m ? new Date(parseInt(y), parseInt(m), 0).getDate() : 31;
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  useEffect(() => {
+    if (!value) return;
+    setDay(value.slice(8, 10));
+    setMonth(value.slice(5, 7));
+    setYear(value.slice(0, 4));
+  }, [value]);
 
-  const commit = (dd: string, mm: string, yy: string) => {
-    if (dd && mm && yy) {
-      const safeDay = Math.min(parseInt(dd), new Date(parseInt(yy), parseInt(mm), 0).getDate());
-      onChange(`${yy}-${mm}-${String(safeDay).padStart(2, "0")}`);
-    } else {
+  const commit = (nextDay: string, nextMonth: string, nextYear: string) => {
+    const dayNumber = Number(nextDay);
+    const monthNumber = Number(nextMonth);
+    const yearNumber = Number(nextYear);
+    const hasCompleteDate = nextDay.length > 0 && nextMonth.length > 0 && nextYear.length === 4;
+
+    if (!hasCompleteDate) {
       onChange("");
+      return;
     }
+
+    const daysInMonth = new Date(yearNumber, monthNumber, 0).getDate();
+    const isValidDate =
+      yearNumber >= minYear &&
+      yearNumber <= maxYear &&
+      monthNumber >= 1 &&
+      monthNumber <= 12 &&
+      dayNumber >= 1 &&
+      dayNumber <= daysInMonth;
+
+    onChange(
+      isValidDate
+        ? `${nextYear}-${String(monthNumber).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`
+        : ""
+    );
   };
 
+  const updatePart = (part: "day" | "month" | "year", rawValue: string) => {
+    const cleaned = rawValue.replace(/\D/g, "").slice(0, part === "year" ? 4 : 2);
+    const nextDay = part === "day" ? cleaned : day;
+    const nextMonth = part === "month" ? cleaned : month;
+    const nextYear = part === "year" ? cleaned : year;
+
+    setDay(nextDay);
+    setMonth(nextMonth);
+    setYear(nextYear);
+    commit(nextDay, nextMonth, nextYear);
+  };
+
+  const completeButInvalid = day.length > 0 && month.length > 0 && year.length === 4 && !value;
+
   return (
-    <div className="grid grid-cols-3 gap-2">
-      <Select value={d} onValueChange={(v) => commit(v, m, y)}>
-        <SelectTrigger><SelectValue placeholder="Día" /></SelectTrigger>
-        <SelectContent className="max-h-72">
-          {days.map((n) => (
-            <SelectItem key={n} value={String(n).padStart(2, "0")}>{n}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      <Select value={m} onValueChange={(v) => commit(d, v, y)}>
-        <SelectTrigger><SelectValue placeholder="Mes" /></SelectTrigger>
-        <SelectContent className="max-h-72">
-          {MESES_ES.map((name, idx) => (
-            <SelectItem key={name} value={String(idx + 1).padStart(2, "0")}>{name}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      <Select value={y} onValueChange={(v) => commit(d, m, v)}>
-        <SelectTrigger><SelectValue placeholder="Año" /></SelectTrigger>
-        <SelectContent className="max-h-72">
-          {years.map((yr) => (
-            <SelectItem key={yr} value={String(yr)}>{yr}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="space-y-2">
+      <div className="grid grid-cols-[0.8fr_0.8fr_1fr] gap-2">
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-muted-foreground">Día</span>
+          <Input
+            value={day}
+            onChange={(event) => updatePart("day", event.target.value)}
+            inputMode="numeric"
+            maxLength={2}
+            placeholder="15"
+            className="h-12 text-center text-base"
+            autoComplete="bday-day"
+          />
+        </div>
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-muted-foreground">Mes</span>
+          <Input
+            value={month}
+            onChange={(event) => updatePart("month", event.target.value)}
+            inputMode="numeric"
+            maxLength={2}
+            placeholder="08"
+            className="h-12 text-center text-base"
+            autoComplete="bday-month"
+          />
+        </div>
+        <div className="space-y-1">
+          <span className="text-xs font-medium text-muted-foreground">Año</span>
+          <Input
+            value={year}
+            onChange={(event) => updatePart("year", event.target.value)}
+            inputMode="numeric"
+            maxLength={4}
+            placeholder="1998"
+            className="h-12 text-center text-base"
+            autoComplete="bday-year"
+          />
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground">Escribe la fecha en formato día / mes / año.</p>
+      {completeButInvalid && (
+        <p className="text-xs text-destructive">Revisa la fecha introducida.</p>
+      )}
     </div>
   );
 }
