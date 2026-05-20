@@ -3,7 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Info, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Download, FileText, Info, Loader2 } from "lucide-react";
 
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -24,6 +24,26 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const POBLACIONES = ["Villanueva del Pardillo", "Valdemorillo"] as const;
+
+// Mapeo contrato según pack + población. null = aún no disponible.
+const CONTRATOS: Record<string, Record<string, { file: string; label: string } | null>> = {
+  basico: {
+    "Villanueva del Pardillo": { file: "/contratos/pack_basico_pardillo.pdf", label: "Contrato Pack Básico - Villanueva del Pardillo" },
+    Valdemorillo: { file: "/contratos/pack_basico_valdemorillo.pdf", label: "Contrato Pack Básico - Valdemorillo" },
+  },
+  avanzado: {
+    "Villanueva del Pardillo": { file: "/contratos/pack_avanzado_pardillo.pdf", label: "Contrato Pack Avanzado - Villanueva del Pardillo" },
+    Valdemorillo: { file: "/contratos/pack_avanzado_valdemorillo.pdf", label: "Contrato Pack Avanzado - Valdemorillo" },
+  },
+  completo: {
+    "Villanueva del Pardillo": { file: "/contratos/pack_completo_pardillo.pdf", label: "Contrato Pack Completo - Villanueva del Pardillo" },
+    Valdemorillo: { file: "/contratos/pack_completo_valdemorillo.pdf", label: "Contrato Pack Completo - Valdemorillo" },
+  },
+  premium: {
+    "Villanueva del Pardillo": null,
+    Valdemorillo: null,
+  },
+};
 
 const matriculaSchema = z.object({
   full_name: z.string().trim().min(3, "Introduce nombre y apellidos").max(120),
@@ -125,6 +145,12 @@ export default function Matricula() {
       maximumFractionDigits: 0,
     }).format(pack.price);
   }, [pack]);
+
+  const contrato = useMemo(() => {
+    if (!slug || !cityValue) return undefined;
+    return CONTRATOS[slug]?.[cityValue] ?? undefined;
+  }, [slug, cityValue]);
+  const contratoPendiente = !!slug && !!cityValue && CONTRATOS[slug]?.[cityValue] === null;
 
   const onSubmit = async (values: MatriculaForm) => {
     if (!pack) return;
