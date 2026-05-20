@@ -142,7 +142,10 @@ export default function DashboardSecretaria() {
     | "phone"
     | "city"
     | "pack_name"
-    | "status"
+    | "precio"
+    | "estado_matricula"
+    | "estado_pago"
+    | "fecha_pago"
     | "created_at";
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
