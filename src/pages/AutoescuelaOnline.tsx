@@ -3,6 +3,7 @@ import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
+import tuAulaImg from "@/assets/online-tu-aula.png";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -29,6 +30,7 @@ const features = [
       "Aprende a tu ritmo, cuándo y dónde quieras",
     ],
     imageLabel: "Imagen Tu aula",
+    image: tuAulaImg,
   },
   {
     title: "Cada pregunta, un vídeo",
@@ -131,8 +133,12 @@ export default function AutoescuelaOnline() {
                     transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
                     whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
                   >
-                    <div className="aspect-[4/3] rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">
-                      <span className="text-primary font-semibold text-lg">{feat.imageLabel}</span>
+                    <div className="aspect-[4/3] rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center overflow-hidden">
+                      {(feat as any).image ? (
+                        <img src={(feat as any).image} alt={feat.title} loading="lazy" className="w-full h-full object-contain" />
+                      ) : (
+                        <span className="text-primary font-semibold text-lg">{feat.imageLabel}</span>
+                      )}
                     </div>
                   </motion.div>
                 </motion.div>
