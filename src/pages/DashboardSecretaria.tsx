@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,6 +26,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   Briefcase,
   Search,
@@ -50,6 +59,12 @@ import {
   Twitter,
   Phone,
   Clock,
+  Eye,
+  Download,
+  FileText,
+  Calendar,
+  CreditCard,
+  Loader2,
 } from "lucide-react";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
@@ -59,12 +74,24 @@ interface Matricula {
   dni: string;
   email: string;
   phone: string;
+  address: string;
+  postal_code: string;
+  date_of_birth: string | null;
   city: string;
   pack_name: string;
   pack_id: string | null;
+  precio: number | null;
   status: string;
+  estado_matricula: string;
+  estado_pago: string;
+  contrato_asociado: string | null;
+  contrato_firmado_url: string | null;
+  dni_anverso_url: string | null;
+  dni_reverso_url: string | null;
+  fecha_pago: string | null;
   created_at: string;
 }
+
 
 export default function DashboardSecretaria() {
   const { user, profile, isSecretaria, isAdmin, loading, signOut } = useAuth();
@@ -80,13 +107,18 @@ export default function DashboardSecretaria() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("matriculas")
-        .select("id, full_name, dni, email, phone, city, pack_name, pack_id, status, created_at")
+        .select(
+          "id, full_name, dni, email, phone, address, postal_code, date_of_birth, city, pack_name, pack_id, precio, status, estado_matricula, estado_pago, contrato_asociado, contrato_firmado_url, dni_anverso_url, dni_reverso_url, fecha_pago, created_at"
+        )
         .order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Matricula[];
     },
     enabled: !!user && (isSecretaria || isAdmin),
   });
+
+  const [detail, setDetail] = useState<Matricula | null>(null);
+
 
   const { data: packs } = useQuery({
     queryKey: ["packs-matricula-active"],
@@ -110,7 +142,10 @@ export default function DashboardSecretaria() {
     | "phone"
     | "city"
     | "pack_name"
-    | "status"
+    | "precio"
+    | "estado_matricula"
+    | "estado_pago"
+    | "fecha_pago"
     | "created_at";
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
@@ -142,9 +177,12 @@ export default function DashboardSecretaria() {
     arr.sort((a, b) => {
       let av: string | number = (a[sortKey] ?? "") as string;
       let bv: string | number = (b[sortKey] ?? "") as string;
-      if (sortKey === "created_at") {
-        av = new Date(a.created_at).getTime();
-        bv = new Date(b.created_at).getTime();
+      if (sortKey === "created_at" || sortKey === "fecha_pago") {
+        av = a[sortKey] ? new Date(a[sortKey] as string).getTime() : 0;
+        bv = b[sortKey] ? new Date(b[sortKey] as string).getTime() : 0;
+      } else if (sortKey === "precio") {
+        av = a.precio ?? 0;
+        bv = b.precio ?? 0;
       } else {
         av = String(av).toLowerCase();
         bv = String(bv).toLowerCase();
@@ -155,6 +193,7 @@ export default function DashboardSecretaria() {
     });
     return arr;
   }, [filtered, sortKey, sortDir]);
+
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
   const currentPage = Math.min(page, totalPages);
@@ -383,11 +422,14 @@ export default function DashboardSecretaria() {
                           <SortableHead label="Nombre y apellidos" colKey="full_name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="DNI" colKey="dni" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="Email" colKey="email" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
-                          <SortableHead label="Teléfono" colKey="phone" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="Población" colKey="city" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="Pack" colKey="pack_name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
-                          <SortableHead label="Estado" colKey="status" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
-                          <SortableHead label="Fecha" colKey="created_at" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Precio" colKey="precio" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Matrícula" colKey="estado_matricula" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Pago" colKey="estado_pago" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Creada" colKey="created_at" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Pagada" colKey="fecha_pago" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <TableHead className="text-right">Acciones</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -396,7 +438,6 @@ export default function DashboardSecretaria() {
                             <TableCell className="font-medium">{m.full_name}</TableCell>
                             <TableCell className="font-mono text-xs">{m.dni || "—"}</TableCell>
                             <TableCell className="text-sm">{m.email}</TableCell>
-                            <TableCell className="text-sm">{m.phone || "—"}</TableCell>
                             <TableCell className="text-sm">{m.city || "—"}</TableCell>
                             <TableCell>
                               {m.pack_name ? (
@@ -405,20 +446,31 @@ export default function DashboardSecretaria() {
                                 <span className="text-muted-foreground text-sm">—</span>
                               )}
                             </TableCell>
+                            <TableCell className="text-sm whitespace-nowrap">
+                              {m.precio != null ? formatEuro(m.precio) : "—"}
+                            </TableCell>
                             <TableCell>
-                              <StatusBadge status={m.status} />
+                              <EstadoMatriculaBadge estado={m.estado_matricula} />
+                            </TableCell>
+                            <TableCell>
+                              <EstadoPagoBadge estado={m.estado_pago} />
                             </TableCell>
                             <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
-                              {new Date(m.created_at).toLocaleDateString("es-ES", {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                              })}
+                              {formatDate(m.created_at)}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                              {m.fecha_pago ? formatDate(m.fecha_pago) : "—"}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Button size="sm" variant="outline" onClick={() => setDetail(m)}>
+                                <Eye className="w-4 h-4 mr-1" /> Ver
+                              </Button>
                             </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
+
                   </div>
 
                   {/* Pagination */}
@@ -476,6 +528,9 @@ export default function DashboardSecretaria() {
           </Card>
         </motion.div>
       </main>
+
+      <MatriculaDetailDialog matricula={detail} onClose={() => setDetail(null)} />
+
 
       {/* Compact Footer */}
       <footer className="relative bg-foreground text-background/80 py-10 overflow-hidden">
@@ -685,5 +740,265 @@ function SortableHead({
         <Icon className={`w-3.5 h-3.5 ${active ? "opacity-100" : "opacity-50"}`} />
       </button>
     </TableHead>
+  );
+}
+
+function formatEuro(n: number) {
+  return new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(n);
+}
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
+
+function formatDateTime(iso: string) {
+  return new Date(iso).toLocaleString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function EstadoMatriculaBadge({ estado }: { estado: string }) {
+  const map: Record<string, { label: string; className: string }> = {
+    pendiente_datos: { label: "Pendiente datos", className: "bg-yellow-500/15 text-yellow-700 border-yellow-500/30" },
+    pendiente_pago: { label: "Pendiente pago", className: "bg-orange-500/15 text-orange-700 border-orange-500/30" },
+    pagada: { label: "Pagada", className: "bg-green-500/15 text-green-700 border-green-500/30" },
+    completada: { label: "Completada", className: "bg-blue-500/15 text-blue-700 border-blue-500/30" },
+    cancelada: { label: "Cancelada", className: "bg-red-500/15 text-red-700 border-red-500/30" },
+  };
+  const item = map[estado] ?? { label: estado || "—", className: "" };
+  return <Badge variant="outline" className={item.className}>{item.label}</Badge>;
+}
+
+function EstadoPagoBadge({ estado }: { estado: string }) {
+  const map: Record<string, { label: string; className: string }> = {
+    pendiente: { label: "Pendiente", className: "bg-yellow-500/15 text-yellow-700 border-yellow-500/30" },
+    pagado: { label: "Pagado", className: "bg-green-500/15 text-green-700 border-green-500/30" },
+    fallido: { label: "Fallido", className: "bg-red-500/15 text-red-700 border-red-500/30" },
+    reembolsado: { label: "Reembolsado", className: "bg-purple-500/15 text-purple-700 border-purple-500/30" },
+  };
+  const item = map[estado] ?? { label: estado || "—", className: "" };
+  return <Badge variant="outline" className={item.className}>{item.label}</Badge>;
+}
+
+function MatriculaDetailDialog({
+  matricula,
+  onClose,
+}: {
+  matricula: Matricula | null;
+  onClose: () => void;
+}) {
+  const [downloading, setDownloading] = useState<string | null>(null);
+
+  const handleDownload = async (path: string | null, label: string) => {
+    if (!path) {
+      toast({ title: "Archivo no disponible", description: `No hay ${label} subido.`, variant: "destructive" });
+      return;
+    }
+    try {
+      setDownloading(path);
+      const { data, error } = await supabase.storage
+        .from("matriculas")
+        .createSignedUrl(path, 60 * 5); // 5 min
+      if (error || !data?.signedUrl) throw error ?? new Error("URL no generada");
+      window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "No se pudo descargar el archivo",
+        description: (err as Error)?.message ?? "Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setDownloading(null);
+    }
+  };
+
+  return (
+    <Dialog open={!!matricula} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        {matricula && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-primary" />
+                {matricula.full_name}
+              </DialogTitle>
+              <DialogDescription>
+                Detalle completo de la matrícula registrada el {formatDateTime(matricula.created_at)}.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-6 pt-2">
+              {/* Estados */}
+              <div className="flex flex-wrap gap-2">
+                <EstadoMatriculaBadge estado={matricula.estado_matricula} />
+                <EstadoPagoBadge estado={matricula.estado_pago} />
+              </div>
+
+              {/* Datos personales */}
+              <section>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Datos personales
+                </h3>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                  <InfoItem icon={<Users className="w-4 h-4" />} label="Nombre" value={matricula.full_name} />
+                  <InfoItem icon={<IdCard className="w-4 h-4" />} label="DNI" value={matricula.dni || "—"} mono />
+                  <InfoItem icon={<Mail className="w-4 h-4" />} label="Email" value={matricula.email} />
+                  <InfoItem icon={<Phone className="w-4 h-4" />} label="Teléfono" value={matricula.phone || "—"} />
+                  <InfoItem
+                    icon={<Calendar className="w-4 h-4" />}
+                    label="Fecha de nacimiento"
+                    value={matricula.date_of_birth ? formatDate(matricula.date_of_birth) : "—"}
+                  />
+                  <InfoItem icon={<MapPin className="w-4 h-4" />} label="Población" value={matricula.city || "—"} />
+                  <InfoItem
+                    icon={<MapPin className="w-4 h-4" />}
+                    label="Dirección"
+                    value={matricula.address || "—"}
+                    wide
+                  />
+                  <InfoItem icon={<MapPin className="w-4 h-4" />} label="Código postal" value={matricula.postal_code || "—"} />
+                </dl>
+              </section>
+
+              {/* Pack y contrato */}
+              <section>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Pack y contrato
+                </h3>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                  <InfoItem icon={<Package className="w-4 h-4" />} label="Pack elegido" value={matricula.pack_name || "—"} />
+                  <InfoItem
+                    icon={<CreditCard className="w-4 h-4" />}
+                    label="Precio"
+                    value={matricula.precio != null ? formatEuro(matricula.precio) : "—"}
+                  />
+                  <InfoItem
+                    icon={<FileText className="w-4 h-4" />}
+                    label="Contrato asociado"
+                    value={matricula.contrato_asociado || "—"}
+                    wide
+                  />
+                  <InfoItem
+                    icon={<Calendar className="w-4 h-4" />}
+                    label="Fecha de creación"
+                    value={formatDateTime(matricula.created_at)}
+                  />
+                  <InfoItem
+                    icon={<Calendar className="w-4 h-4" />}
+                    label="Fecha de pago"
+                    value={matricula.fecha_pago ? formatDateTime(matricula.fecha_pago) : "—"}
+                  />
+                </dl>
+              </section>
+
+              {/* Documentos */}
+              <section>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Documentación
+                </h3>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Los enlaces son temporales (5 minutos) y respetan los permisos del almacenamiento privado.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <DocButton
+                    label="Contrato firmado"
+                    path={matricula.contrato_firmado_url}
+                    downloading={downloading}
+                    onClick={() => handleDownload(matricula.contrato_firmado_url, "contrato firmado")}
+                  />
+                  <DocButton
+                    label="DNI anverso"
+                    path={matricula.dni_anverso_url}
+                    downloading={downloading}
+                    onClick={() => handleDownload(matricula.dni_anverso_url, "DNI anverso")}
+                  />
+                  <DocButton
+                    label="DNI reverso"
+                    path={matricula.dni_reverso_url}
+                    downloading={downloading}
+                    onClick={() => handleDownload(matricula.dni_reverso_url, "DNI reverso")}
+                  />
+                </div>
+              </section>
+            </div>
+
+            <DialogFooter>
+              <Button variant="outline" onClick={onClose}>Cerrar</Button>
+            </DialogFooter>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function InfoItem({
+  icon,
+  label,
+  value,
+  mono,
+  wide,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  mono?: boolean;
+  wide?: boolean;
+}) {
+  return (
+    <div className={wide ? "sm:col-span-2" : ""}>
+      <dt className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-muted-foreground mb-0.5">
+        {icon}
+        {label}
+      </dt>
+      <dd className={`text-sm font-medium ${mono ? "font-mono" : ""}`}>{value}</dd>
+    </div>
+  );
+}
+
+function DocButton({
+  label,
+  path,
+  downloading,
+  onClick,
+}: {
+  label: string;
+  path: string | null;
+  downloading: string | null;
+  onClick: () => void;
+}) {
+  const isLoading = downloading === path;
+  const missing = !path;
+  return (
+    <Button
+      type="button"
+      variant={missing ? "outline" : "default"}
+      disabled={missing || isLoading}
+      onClick={onClick}
+      className="h-auto py-3 flex-col gap-1.5"
+    >
+      {isLoading ? (
+        <Loader2 className="w-4 h-4 animate-spin" />
+      ) : (
+        <Download className="w-4 h-4" />
+      )}
+      <span className="text-xs font-semibold">{label}</span>
+      <span className="text-[10px] opacity-80">
+        {missing ? "No disponible" : "Descargar / ver"}
+      </span>
+    </Button>
   );
 }
