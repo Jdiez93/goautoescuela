@@ -742,3 +742,263 @@ function SortableHead({
     </TableHead>
   );
 }
+
+function formatEuro(n: number) {
+  return new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(n);
+}
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
+
+function formatDateTime(iso: string) {
+  return new Date(iso).toLocaleString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function EstadoMatriculaBadge({ estado }: { estado: string }) {
+  const map: Record<string, { label: string; className: string }> = {
+    pendiente_datos: { label: "Pendiente datos", className: "bg-yellow-500/15 text-yellow-700 border-yellow-500/30" },
+    pendiente_pago: { label: "Pendiente pago", className: "bg-orange-500/15 text-orange-700 border-orange-500/30" },
+    pagada: { label: "Pagada", className: "bg-green-500/15 text-green-700 border-green-500/30" },
+    completada: { label: "Completada", className: "bg-blue-500/15 text-blue-700 border-blue-500/30" },
+    cancelada: { label: "Cancelada", className: "bg-red-500/15 text-red-700 border-red-500/30" },
+  };
+  const item = map[estado] ?? { label: estado || "—", className: "" };
+  return <Badge variant="outline" className={item.className}>{item.label}</Badge>;
+}
+
+function EstadoPagoBadge({ estado }: { estado: string }) {
+  const map: Record<string, { label: string; className: string }> = {
+    pendiente: { label: "Pendiente", className: "bg-yellow-500/15 text-yellow-700 border-yellow-500/30" },
+    pagado: { label: "Pagado", className: "bg-green-500/15 text-green-700 border-green-500/30" },
+    fallido: { label: "Fallido", className: "bg-red-500/15 text-red-700 border-red-500/30" },
+    reembolsado: { label: "Reembolsado", className: "bg-purple-500/15 text-purple-700 border-purple-500/30" },
+  };
+  const item = map[estado] ?? { label: estado || "—", className: "" };
+  return <Badge variant="outline" className={item.className}>{item.label}</Badge>;
+}
+
+function MatriculaDetailDialog({
+  matricula,
+  onClose,
+}: {
+  matricula: Matricula | null;
+  onClose: () => void;
+}) {
+  const [downloading, setDownloading] = useState<string | null>(null);
+
+  const handleDownload = async (path: string | null, label: string) => {
+    if (!path) {
+      toast({ title: "Archivo no disponible", description: `No hay ${label} subido.`, variant: "destructive" });
+      return;
+    }
+    try {
+      setDownloading(path);
+      const { data, error } = await supabase.storage
+        .from("matriculas")
+        .createSignedUrl(path, 60 * 5); // 5 min
+      if (error || !data?.signedUrl) throw error ?? new Error("URL no generada");
+      window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "No se pudo descargar el archivo",
+        description: (err as Error)?.message ?? "Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setDownloading(null);
+    }
+  };
+
+  return (
+    <Dialog open={!!matricula} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        {matricula && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-primary" />
+                {matricula.full_name}
+              </DialogTitle>
+              <DialogDescription>
+                Detalle completo de la matrícula registrada el {formatDateTime(matricula.created_at)}.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-6 pt-2">
+              {/* Estados */}
+              <div className="flex flex-wrap gap-2">
+                <EstadoMatriculaBadge estado={matricula.estado_matricula} />
+                <EstadoPagoBadge estado={matricula.estado_pago} />
+              </div>
+
+              {/* Datos personales */}
+              <section>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Datos personales
+                </h3>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                  <InfoItem icon={<Users className="w-4 h-4" />} label="Nombre" value={matricula.full_name} />
+                  <InfoItem icon={<IdCard className="w-4 h-4" />} label="DNI" value={matricula.dni || "—"} mono />
+                  <InfoItem icon={<Mail className="w-4 h-4" />} label="Email" value={matricula.email} />
+                  <InfoItem icon={<Phone className="w-4 h-4" />} label="Teléfono" value={matricula.phone || "—"} />
+                  <InfoItem
+                    icon={<Calendar className="w-4 h-4" />}
+                    label="Fecha de nacimiento"
+                    value={matricula.date_of_birth ? formatDate(matricula.date_of_birth) : "—"}
+                  />
+                  <InfoItem icon={<MapPin className="w-4 h-4" />} label="Población" value={matricula.city || "—"} />
+                  <InfoItem
+                    icon={<MapPin className="w-4 h-4" />}
+                    label="Dirección"
+                    value={matricula.address || "—"}
+                    wide
+                  />
+                  <InfoItem icon={<MapPin className="w-4 h-4" />} label="Código postal" value={matricula.postal_code || "—"} />
+                </dl>
+              </section>
+
+              {/* Pack y contrato */}
+              <section>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Pack y contrato
+                </h3>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                  <InfoItem icon={<Package className="w-4 h-4" />} label="Pack elegido" value={matricula.pack_name || "—"} />
+                  <InfoItem
+                    icon={<CreditCard className="w-4 h-4" />}
+                    label="Precio"
+                    value={matricula.precio != null ? formatEuro(matricula.precio) : "—"}
+                  />
+                  <InfoItem
+                    icon={<FileText className="w-4 h-4" />}
+                    label="Contrato asociado"
+                    value={matricula.contrato_asociado || "—"}
+                    wide
+                  />
+                  <InfoItem
+                    icon={<Calendar className="w-4 h-4" />}
+                    label="Fecha de creación"
+                    value={formatDateTime(matricula.created_at)}
+                  />
+                  <InfoItem
+                    icon={<Calendar className="w-4 h-4" />}
+                    label="Fecha de pago"
+                    value={matricula.fecha_pago ? formatDateTime(matricula.fecha_pago) : "—"}
+                  />
+                </dl>
+              </section>
+
+              {/* Documentos */}
+              <section>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Documentación
+                </h3>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Los enlaces son temporales (5 minutos) y respetan los permisos del almacenamiento privado.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <DocButton
+                    label="Contrato firmado"
+                    path={matricula.contrato_firmado_url}
+                    downloading={downloading}
+                    onClick={() => handleDownload(matricula.contrato_firmado_url, "contrato firmado")}
+                  />
+                  <DocButton
+                    label="DNI anverso"
+                    path={matricula.dni_anverso_url}
+                    downloading={downloading}
+                    onClick={() => handleDownload(matricula.dni_anverso_url, "DNI anverso")}
+                  />
+                  <DocButton
+                    label="DNI reverso"
+                    path={matricula.dni_reverso_url}
+                    downloading={downloading}
+                    onClick={() => handleDownload(matricula.dni_reverso_url, "DNI reverso")}
+                  />
+                </div>
+              </section>
+            </div>
+
+            <DialogFooter>
+              <Button variant="outline" onClick={onClose}>Cerrar</Button>
+            </DialogFooter>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function InfoItem({
+  icon,
+  label,
+  value,
+  mono,
+  wide,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  mono?: boolean;
+  wide?: boolean;
+}) {
+  return (
+    <div className={wide ? "sm:col-span-2" : ""}>
+      <dt className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-muted-foreground mb-0.5">
+        {icon}
+        {label}
+      </dt>
+      <dd className={`text-sm font-medium ${mono ? "font-mono" : ""}`}>{value}</dd>
+    </div>
+  );
+}
+
+function DocButton({
+  label,
+  path,
+  downloading,
+  onClick,
+}: {
+  label: string;
+  path: string | null;
+  downloading: string | null;
+  onClick: () => void;
+}) {
+  const isLoading = downloading === path;
+  const missing = !path;
+  return (
+    <Button
+      type="button"
+      variant={missing ? "outline" : "default"}
+      disabled={missing || isLoading}
+      onClick={onClick}
+      className="h-auto py-3 flex-col gap-1.5"
+    >
+      {isLoading ? (
+        <Loader2 className="w-4 h-4 animate-spin" />
+      ) : (
+        <Download className="w-4 h-4" />
+      )}
+      <span className="text-xs font-semibold">{label}</span>
+      <span className="text-[10px] opacity-80">
+        {missing ? "No disponible" : "Descargar / ver"}
+      </span>
+    </Button>
+  );
+}
