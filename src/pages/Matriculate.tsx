@@ -291,10 +291,13 @@ export default function Matriculate() {
                     </ul>
 
                     <Button
+                      asChild
                       className="w-full rounded-xl font-semibold"
                       variant={pack.highlight ? "default" : "outline"}
                     >
-                      {pack.cta || `Elegir ${pack.name.replace("Pack ", "")}`}
+                      <Link to={`/matricula?pack=pack_${pack.id}`}>
+                        {pack.cta || `Elegir ${pack.name.replace("Pack ", "")}`}
+                      </Link>
                     </Button>
                   </Card>
                 </motion.div>
