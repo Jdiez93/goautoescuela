@@ -198,10 +198,17 @@ export type Database = {
         Row: {
           address: string
           city: string
+          contrato_asociado: string | null
+          contrato_firmado_url: string | null
           created_at: string
           date_of_birth: string | null
           dni: string
+          dni_anverso_url: string | null
+          dni_reverso_url: string | null
           email: string
+          estado_matricula: string
+          estado_pago: string
+          fecha_pago: string | null
           full_name: string
           id: string
           notes: string
@@ -209,16 +216,27 @@ export type Database = {
           pack_name: string
           phone: string
           postal_code: string
+          precio: number | null
           status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           address?: string
           city?: string
+          contrato_asociado?: string | null
+          contrato_firmado_url?: string | null
           created_at?: string
           date_of_birth?: string | null
           dni?: string
+          dni_anverso_url?: string | null
+          dni_reverso_url?: string | null
           email: string
+          estado_matricula?: string
+          estado_pago?: string
+          fecha_pago?: string | null
           full_name: string
           id?: string
           notes?: string
@@ -226,16 +244,27 @@ export type Database = {
           pack_name?: string
           phone?: string
           postal_code?: string
+          precio?: number | null
           status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           address?: string
           city?: string
+          contrato_asociado?: string | null
+          contrato_firmado_url?: string | null
           created_at?: string
           date_of_birth?: string | null
           dni?: string
+          dni_anverso_url?: string | null
+          dni_reverso_url?: string | null
           email?: string
+          estado_matricula?: string
+          estado_pago?: string
+          fecha_pago?: string | null
           full_name?: string
           id?: string
           notes?: string
@@ -243,8 +272,12 @@ export type Database = {
           pack_name?: string
           phone?: string
           postal_code?: string
+          precio?: number | null
           status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
