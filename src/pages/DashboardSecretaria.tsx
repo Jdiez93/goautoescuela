@@ -529,6 +529,9 @@ export default function DashboardSecretaria() {
         </motion.div>
       </main>
 
+      <MatriculaDetailDialog matricula={detail} onClose={() => setDetail(null)} />
+
+
       {/* Compact Footer */}
       <footer className="relative bg-foreground text-background/80 py-10 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
