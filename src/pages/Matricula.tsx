@@ -170,7 +170,10 @@ export default function Matricula() {
     const createdId =
       typeof crypto !== "undefined" && "randomUUID" in crypto
         ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+            (Number(c) ^ (Math.random() * 16) >> (Number(c) / 4)).toString(16)
+          );
+    const uploadedPaths: string[] = [];
     try {
       // 1. Create matricula row (with client-side id, no RETURNING to avoid SELECT RLS)
       const { error } = await supabase.from("matriculas").insert({
@@ -209,6 +212,7 @@ export default function Matricula() {
           .from("matriculas")
           .upload(path, u.file, { contentType: u.file.type, upsert: false });
         if (upErr) throw upErr;
+        uploadedPaths.push(path);
         updatePayload[u.column] = path;
       }
 
@@ -228,6 +232,10 @@ export default function Matricula() {
       navigate(`/matricula?pack=${packParam}&saved=${createdId}`, { replace: true });
     } catch (err) {
       console.error("Error guardando matrícula:", err);
+      if (uploadedPaths.length > 0) {
+        await supabase.storage.from("matriculas").remove(uploadedPaths);
+      }
+      await supabase.from("matriculas").delete().eq("id", createdId);
       toast({
         title: "No se pudo completar la matrícula",
         description:
