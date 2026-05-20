@@ -304,8 +304,14 @@ export default function Matricula() {
                 </Field>
 
                 <Field label="Fecha de nacimiento *" error={errors.date_of_birth?.message}>
-                  <Input type="date" {...register("date_of_birth")} />
+                  <DateOfBirthPicker
+                    value={watch("date_of_birth")}
+                    onChange={(iso) =>
+                      setValue("date_of_birth", iso, { shouldValidate: true, shouldDirty: true })
+                    }
+                  />
                 </Field>
+
 
                 <Field label="Correo electrónico *" error={errors.email?.message}>
                   <Input
