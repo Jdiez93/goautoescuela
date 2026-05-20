@@ -3,7 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Info, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Download, FileText, Info, Loader2 } from "lucide-react";
 
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -24,6 +24,26 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const POBLACIONES = ["Villanueva del Pardillo", "Valdemorillo"] as const;
+
+// Mapeo contrato según pack + población. null = aún no disponible.
+const CONTRATOS: Record<string, Record<string, { file: string; label: string } | null>> = {
+  basico: {
+    "Villanueva del Pardillo": { file: "/contratos/pack_basico_pardillo.pdf", label: "Contrato Pack Básico - Villanueva del Pardillo" },
+    Valdemorillo: { file: "/contratos/pack_basico_valdemorillo.pdf", label: "Contrato Pack Básico - Valdemorillo" },
+  },
+  avanzado: {
+    "Villanueva del Pardillo": { file: "/contratos/pack_avanzado_pardillo.pdf", label: "Contrato Pack Avanzado - Villanueva del Pardillo" },
+    Valdemorillo: { file: "/contratos/pack_avanzado_valdemorillo.pdf", label: "Contrato Pack Avanzado - Valdemorillo" },
+  },
+  completo: {
+    "Villanueva del Pardillo": { file: "/contratos/pack_completo_pardillo.pdf", label: "Contrato Pack Completo - Villanueva del Pardillo" },
+    Valdemorillo: { file: "/contratos/pack_completo_valdemorillo.pdf", label: "Contrato Pack Completo - Valdemorillo" },
+  },
+  premium: {
+    "Villanueva del Pardillo": null,
+    Valdemorillo: null,
+  },
+};
 
 const matriculaSchema = z.object({
   full_name: z.string().trim().min(3, "Introduce nombre y apellidos").max(120),
@@ -126,6 +146,12 @@ export default function Matricula() {
     }).format(pack.price);
   }, [pack]);
 
+  const contrato = useMemo(() => {
+    if (!slug || !cityValue) return undefined;
+    return CONTRATOS[slug]?.[cityValue] ?? undefined;
+  }, [slug, cityValue]);
+  const contratoPendiente = !!slug && !!cityValue && CONTRATOS[slug]?.[cityValue] === null;
+
   const onSubmit = async (values: MatriculaForm) => {
     if (!pack) return;
     setSubmitting(true);
@@ -147,6 +173,7 @@ export default function Matricula() {
           estado_matricula: "pendiente_pago",
           estado_pago: "pendiente",
           status: "pendiente_pago",
+          contrato_asociado: contrato?.label ?? "",
         })
         .select("id")
         .single();
@@ -349,6 +376,42 @@ export default function Matricula() {
                   )}
                 </div>
 
+                {/* Contrato según pack + población */}
+                {cityValue && (
+                  <div className="md:col-span-2">
+                    {contrato ? (
+                      <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-5 space-y-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+                            <FileText className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs uppercase tracking-wider text-primary font-semibold">
+                              Contrato asociado
+                            </p>
+                            <p className="font-semibold text-foreground mt-0.5">{contrato.label}</p>
+                            <p className="text-sm text-muted-foreground mt-2">
+                              Descarga el contrato, léelo detenidamente, fírmalo y súbelo firmado antes de continuar.
+                            </p>
+                          </div>
+                        </div>
+                        <Button asChild variant="default" className="w-full sm:w-auto">
+                          <a href={contrato.file} download target="_blank" rel="noopener noreferrer">
+                            <Download className="w-4 h-4 mr-2" /> Descargar contrato
+                          </a>
+                        </Button>
+                      </div>
+                    ) : contratoPendiente ? (
+                      <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          El contrato para este pack y población aún no está disponible. Por favor, contacta con la autoescuela.
+                        </AlertDescription>
+                      </Alert>
+                    ) : null}
+                  </div>
+                )}
+
                 {/* Submit row */}
                 <div className="md:col-span-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 pt-4 border-t">
                   <p className="text-xs text-muted-foreground">
@@ -357,7 +420,7 @@ export default function Matricula() {
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={!isValid || submitting || !pack || !!packError}
+                    disabled={!isValid || submitting || !pack || !!packError || contratoPendiente}
                     className="sm:ml-auto"
                   >
                     {submitting ? (
