@@ -133,8 +133,12 @@ export default function AutoescuelaOnline() {
                     transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
                     whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
                   >
-                    <div className="aspect-[4/3] rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">
-                      <span className="text-primary font-semibold text-lg">{feat.imageLabel}</span>
+                    <div className="aspect-[4/3] rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center overflow-hidden">
+                      {(feat as any).image ? (
+                        <img src={(feat as any).image} alt={feat.title} loading="lazy" className="w-full h-full object-contain" />
+                      ) : (
+                        <span className="text-primary font-semibold text-lg">{feat.imageLabel}</span>
+                      )}
                     </div>
                   </motion.div>
                 </motion.div>
