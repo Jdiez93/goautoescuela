@@ -173,6 +173,7 @@ export default function Matricula() {
           estado_matricula: "pendiente_pago",
           estado_pago: "pendiente",
           status: "pendiente_pago",
+          contrato_asociado: contrato?.label ?? "",
         })
         .select("id")
         .single();
@@ -375,6 +376,42 @@ export default function Matricula() {
                   )}
                 </div>
 
+                {/* Contrato según pack + población */}
+                {cityValue && (
+                  <div className="md:col-span-2">
+                    {contrato ? (
+                      <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-5 space-y-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+                            <FileText className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs uppercase tracking-wider text-primary font-semibold">
+                              Contrato asociado
+                            </p>
+                            <p className="font-semibold text-foreground mt-0.5">{contrato.label}</p>
+                            <p className="text-sm text-muted-foreground mt-2">
+                              Descarga el contrato, léelo detenidamente, fírmalo y súbelo firmado antes de continuar.
+                            </p>
+                          </div>
+                        </div>
+                        <Button asChild variant="default" className="w-full sm:w-auto">
+                          <a href={contrato.file} download target="_blank" rel="noopener noreferrer">
+                            <Download className="w-4 h-4 mr-2" /> Descargar contrato
+                          </a>
+                        </Button>
+                      </div>
+                    ) : contratoPendiente ? (
+                      <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          El contrato para este pack y población aún no está disponible. Por favor, contacta con la autoescuela.
+                        </AlertDescription>
+                      </Alert>
+                    ) : null}
+                  </div>
+                )}
+
                 {/* Submit row */}
                 <div className="md:col-span-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 pt-4 border-t">
                   <p className="text-xs text-muted-foreground">
@@ -383,7 +420,7 @@ export default function Matricula() {
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={!isValid || submitting || !pack || !!packError}
+                    disabled={!isValid || submitting || !pack || !!packError || contratoPendiente}
                     className="sm:ml-auto"
                   >
                     {submitting ? (
