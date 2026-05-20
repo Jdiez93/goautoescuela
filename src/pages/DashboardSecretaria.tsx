@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,6 +26,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   Briefcase,
   Search,
@@ -50,6 +59,12 @@ import {
   Twitter,
   Phone,
   Clock,
+  Eye,
+  Download,
+  FileText,
+  Calendar,
+  CreditCard,
+  Loader2,
 } from "lucide-react";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
@@ -59,12 +74,24 @@ interface Matricula {
   dni: string;
   email: string;
   phone: string;
+  address: string;
+  postal_code: string;
+  date_of_birth: string | null;
   city: string;
   pack_name: string;
   pack_id: string | null;
+  precio: number | null;
   status: string;
+  estado_matricula: string;
+  estado_pago: string;
+  contrato_asociado: string | null;
+  contrato_firmado_url: string | null;
+  dni_anverso_url: string | null;
+  dni_reverso_url: string | null;
+  fecha_pago: string | null;
   created_at: string;
 }
+
 
 export default function DashboardSecretaria() {
   const { user, profile, isSecretaria, isAdmin, loading, signOut } = useAuth();
