@@ -20,6 +20,7 @@ import AutoescuelaOnline from "./pages/AutoescuelaOnline";
 import PracticasVirtuales from "./pages/PracticasVirtuales";
 import Consejos from "./pages/Consejos";
 import Matriculate from "./pages/Matriculate";
+import Matricula from "./pages/Matricula";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
