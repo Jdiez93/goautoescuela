@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { motion } from "framer-motion";
@@ -290,10 +291,13 @@ export default function Matriculate() {
                     </ul>
 
                     <Button
+                      asChild
                       className="w-full rounded-xl font-semibold"
                       variant={pack.highlight ? "default" : "outline"}
                     >
-                      {pack.cta || `Elegir ${pack.name.replace("Pack ", "")}`}
+                      <Link to={`/matricula?pack=pack_${pack.id}`}>
+                        {pack.cta || `Elegir ${pack.name.replace("Pack ", "")}`}
+                      </Link>
                     </Button>
                   </Card>
                 </motion.div>

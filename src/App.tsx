@@ -20,6 +20,7 @@ import AutoescuelaOnline from "./pages/AutoescuelaOnline";
 import PracticasVirtuales from "./pages/PracticasVirtuales";
 import Consejos from "./pages/Consejos";
 import Matriculate from "./pages/Matriculate";
+import Matricula from "./pages/Matricula";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="/autoescuelas-ready2go/valdemorillo" element={<AutoescuelaValdemorillo />} />
             <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
             <Route path="/matriculate" element={<Matriculate />} />
+            <Route path="/matricula" element={<Matricula />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />
             <Route path="/recuperar-password" element={<ForgotPassword />} />
