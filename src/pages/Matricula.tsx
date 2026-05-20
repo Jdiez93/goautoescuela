@@ -167,61 +167,30 @@ export default function Matricula() {
       return;
     }
     setSubmitting(true);
-    const createdId =
-      typeof crypto !== "undefined" && "randomUUID" in crypto
-        ? crypto.randomUUID()
-        : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
-            (Number(c) ^ (Math.random() * 16) >> (Number(c) / 4)).toString(16)
-          );
-    const uploadedPaths: string[] = [];
     try {
-      // 1. Create matricula row (with client-side id, no RETURNING to avoid SELECT RLS)
-      const { error } = await supabase.from("matriculas").insert({
-        id: createdId,
-        full_name: values.full_name,
-        dni: values.dni.toUpperCase(),
-        date_of_birth: values.date_of_birth,
-        email: values.email.toLowerCase(),
-        phone: values.phone,
-        address: values.address,
-        postal_code: values.postal_code,
-        city: values.city,
-        pack_id: pack.id,
-        pack_name: pack.name,
-        precio: pack.price,
-        estado_matricula: "pendiente_pago",
-        estado_pago: "pendiente",
-        status: "pendiente_pago",
-        contrato_asociado: contrato?.label ?? "",
+      const formData = new FormData();
+      formData.append("full_name", values.full_name);
+      formData.append("dni", values.dni.toUpperCase());
+      formData.append("date_of_birth", values.date_of_birth);
+      formData.append("email", values.email.toLowerCase());
+      formData.append("phone", values.phone);
+      formData.append("address", values.address);
+      formData.append("postal_code", values.postal_code);
+      formData.append("city", values.city);
+      formData.append("pack_id", pack.id);
+      formData.append("contrato_asociado", contrato?.label ?? "");
+      formData.append("contrato_firmado", contratoFirmado!);
+      formData.append("dni_anverso", dniAnverso!);
+      formData.append("dni_reverso", dniReverso!);
+
+      const { data, error } = await supabase.functions.invoke("submit-matricula", {
+        body: formData,
       });
 
       if (error) throw error;
-
-      // 2. Upload files to private bucket
-      const uploads: Array<{ file: File; folder: string; column: string }> = [
-        { file: contratoFirmado!, folder: "contrato_firmado", column: "contrato_firmado_url" },
-        { file: dniAnverso!, folder: "dni_anverso", column: "dni_anverso_url" },
-        { file: dniReverso!, folder: "dni_reverso", column: "dni_reverso_url" },
-      ];
-
-      const updatePayload: Record<string, string> = {};
-      for (const u of uploads) {
-        const ext = u.file.name.split(".").pop()?.toLowerCase() ?? "bin";
-        const path = `${createdId}/${u.folder}/${Date.now()}.${ext}`;
-        const { error: upErr } = await supabase.storage
-          .from("matriculas")
-          .upload(path, u.file, { contentType: u.file.type, upsert: false });
-        if (upErr) throw upErr;
-        uploadedPaths.push(path);
-        updatePayload[u.column] = path;
+      if (!data?.id || !data?.contrato_firmado_url || !data?.dni_anverso_url || !data?.dni_reverso_url) {
+        throw new Error("La matrícula no devolvió las rutas de los documentos.");
       }
-
-      // 3. Save private paths in matricula row
-      const { error: updErr } = await supabase
-        .from("matriculas")
-        .update(updatePayload)
-        .eq("id", createdId);
-      if (updErr) throw updErr;
 
 
       toast({
@@ -229,13 +198,9 @@ export default function Matricula() {
         description:
           "Hemos guardado tus datos y documentos. El siguiente paso será el pago.",
       });
-      navigate(`/matricula?pack=${packParam}&saved=${createdId}`, { replace: true });
+      navigate(`/matricula?pack=${packParam}&saved=${data.id}`, { replace: true });
     } catch (err) {
       console.error("Error guardando matrícula:", err);
-      if (uploadedPaths.length > 0) {
-        await supabase.storage.from("matriculas").remove(uploadedPaths);
-      }
-      await supabase.from("matriculas").delete().eq("id", createdId);
       toast({
         title: "No se pudo completar la matrícula",
         description:
