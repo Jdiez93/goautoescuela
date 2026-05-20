@@ -422,11 +422,14 @@ export default function DashboardSecretaria() {
                           <SortableHead label="Nombre y apellidos" colKey="full_name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="DNI" colKey="dni" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="Email" colKey="email" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
-                          <SortableHead label="Teléfono" colKey="phone" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="Población" colKey="city" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="Pack" colKey="pack_name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
-                          <SortableHead label="Estado" colKey="status" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
-                          <SortableHead label="Fecha" colKey="created_at" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Precio" colKey="precio" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Matrícula" colKey="estado_matricula" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Pago" colKey="estado_pago" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Creada" colKey="created_at" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <SortableHead label="Pagada" colKey="fecha_pago" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
+                          <TableHead className="text-right">Acciones</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -435,7 +438,6 @@ export default function DashboardSecretaria() {
                             <TableCell className="font-medium">{m.full_name}</TableCell>
                             <TableCell className="font-mono text-xs">{m.dni || "—"}</TableCell>
                             <TableCell className="text-sm">{m.email}</TableCell>
-                            <TableCell className="text-sm">{m.phone || "—"}</TableCell>
                             <TableCell className="text-sm">{m.city || "—"}</TableCell>
                             <TableCell>
                               {m.pack_name ? (
@@ -444,20 +446,31 @@ export default function DashboardSecretaria() {
                                 <span className="text-muted-foreground text-sm">—</span>
                               )}
                             </TableCell>
+                            <TableCell className="text-sm whitespace-nowrap">
+                              {m.precio != null ? formatEuro(m.precio) : "—"}
+                            </TableCell>
                             <TableCell>
-                              <StatusBadge status={m.status} />
+                              <EstadoMatriculaBadge estado={m.estado_matricula} />
+                            </TableCell>
+                            <TableCell>
+                              <EstadoPagoBadge estado={m.estado_pago} />
                             </TableCell>
                             <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
-                              {new Date(m.created_at).toLocaleDateString("es-ES", {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                              })}
+                              {formatDate(m.created_at)}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                              {m.fecha_pago ? formatDate(m.fecha_pago) : "—"}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Button size="sm" variant="outline" onClick={() => setDetail(m)}>
+                                <Eye className="w-4 h-4 mr-1" /> Ver
+                              </Button>
                             </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
+
                   </div>
 
                   {/* Pagination */}
