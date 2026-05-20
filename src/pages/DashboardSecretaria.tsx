@@ -980,7 +980,7 @@ function DocButton({
   downloading: string | null;
   onClick: () => void;
 }) {
-  const isLoading = downloading === path;
+  const isLoading = !!path && downloading === path;
   const missing = !path;
   return (
     <Button

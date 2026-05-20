@@ -539,6 +539,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_manage_matricula_document: { Args: never; Returns: boolean }
+      can_upload_matricula_document: {
+        Args: { _object_name: string }
+        Returns: boolean
+      }
+      can_view_matricula_document: {
+        Args: { _object_name: string }
+        Returns: boolean
+      }
       deduct_classes: {
         Args: { _num_classes: number; _user_id: string }
         Returns: undefined
