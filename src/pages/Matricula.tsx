@@ -458,6 +458,52 @@ export default function Matricula() {
                   </div>
                 )}
 
+                {/* Subida de documentos */}
+                <div className="md:col-span-2 space-y-4 pt-2">
+                  <div>
+                    <h3 className="text-lg font-semibold font-['Space_Grotesk']">Documentación</h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Formatos admitidos: JPG, PNG o PDF. Tamaño máximo 10 MB por archivo.
+                    </p>
+                  </div>
+
+                  <FileDropper
+                    label="Contrato firmado *"
+                    description="Súbelo en PDF o foto una vez firmado."
+                    file={contratoFirmado}
+                    onChange={setContratoFirmado}
+                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                  />
+
+                  <Alert className="border-primary/30 bg-primary/5">
+                    <Info className="h-4 w-4 text-primary" />
+                    <AlertDescription className="text-xs">
+                      Las imágenes del DNI deben verse de forma clara, completa y legible.
+                    </AlertDescription>
+                  </Alert>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FileDropper
+                      label="DNI - Anverso *"
+                      description="Cara frontal del DNI."
+                      file={dniAnverso}
+                      onChange={setDniAnverso}
+                      accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    />
+                    <FileDropper
+                      label="DNI - Reverso *"
+                      description="Cara posterior del DNI."
+                      file={dniReverso}
+                      onChange={setDniReverso}
+                      accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    />
+                  </div>
+
+                  {fileError && (
+                    <p className="text-xs text-destructive">{fileError}</p>
+                  )}
+                </div>
+
                 {/* Submit row */}
                 <div className="md:col-span-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 pt-4 border-t">
                   <p className="text-xs text-muted-foreground">
@@ -466,7 +512,7 @@ export default function Matricula() {
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={!isValid || submitting || !pack || !!packError || contratoPendiente}
+                    disabled={!isValid || submitting || !pack || !!packError || contratoPendiente || !allFilesPresent}
                     className="sm:ml-auto"
                   >
                     {submitting ? (
