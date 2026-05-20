@@ -23,11 +23,12 @@ type CookieConsentContextValue = {
 };
 
 const ANON_COOKIE_NAME = "ago_anon_id";
+const CONSENT_LS_KEY = "ago_cookie_consent";
 const POLICY_VERSION = "v1";
 
 const CookieConsentContext = createContext<CookieConsentContextValue | undefined>(undefined);
 
-// --- Helpers cookie (solo para el anon_id, que es técnico/necesario) ---
+// --- Helpers cookie (solo para el anon_id, que es tecnico/necesario) ---
 function getCookie(name: string): string | null {
   if (typeof document === "undefined") return null;
   const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
@@ -55,6 +56,45 @@ function getOrCreateAnonId(): string {
   return id;
 }
 
+// --- localStorage helpers para consentimiento ---
+function readLocalConsent(): CookieCategories | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(CONSENT_LS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object" && parsed.necessary === true) {
+      return {
+        necessary: true,
+        preferences: !!parsed.preferences,
+        analytics: !!parsed.analytics,
+        marketing: !!parsed.marketing,
+      };
+    }
+  } catch {
+    // ignore corrupt localStorage
+  }
+  return null;
+}
+
+function writeLocalConsent(value: CookieCategories) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(CONSENT_LS_KEY, JSON.stringify(value));
+  } catch {
+    // ignore localStorage errors
+  }
+}
+
+function deleteLocalConsent() {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.removeItem(CONSENT_LS_KEY);
+  } catch {
+    // ignore
+  }
+}
+
 export function CookieConsentProvider({ children }: { children: ReactNode }) {
   const [consent, setConsent] = useState<CookieCategories | null>(null);
   const [hasDecided, setHasDecided] = useState(false);
@@ -63,7 +103,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [anonId, setAnonId] = useState<string>("");
 
-  // Cargar consentimiento desde la base de datos al iniciar
+  // Cargar consentimiento: primero localStorage (instantaneo), luego sincroniza con BD
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -71,6 +111,45 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
       if (cancelled) return;
       setAnonId(id);
 
+      // 1. Comprobar localStorage primero para evitar parpadeo del banner
+      const local = readLocalConsent();
+      if (local) {
+        setConsent(local);
+        setHasDecided(true);
+        setShowBanner(false);
+        setLoading(false);
+        // Sincronizar con BD en segundo plano
+        try {
+          const { data: userData } = await supabase.auth.getUser();
+          const userId = userData?.user?.id ?? null;
+          const { data: existing } = await supabase
+            .from("cookie_consents")
+            .select("id")
+            .eq("anon_id", id)
+            .maybeSingle();
+          const payload = {
+            anon_id: id,
+            user_id: userId,
+            necessary: true,
+            preferences: local.preferences,
+            analytics: local.analytics,
+            marketing: local.marketing,
+            policy_version: POLICY_VERSION,
+            user_agent: navigator.userAgent.slice(0, 500),
+            source_url: window.location.pathname,
+          };
+          if (existing) {
+            await supabase.from("cookie_consents").update(payload).eq("anon_id", id);
+          } else {
+            await supabase.from("cookie_consents").insert(payload);
+          }
+        } catch {
+          // ignorar errores de sincronizacion en segundo plano
+        }
+        return;
+      }
+
+      // 2. Si no hay localStorage, consultar BD
       try {
         const { data, error } = await supabase
           .from("cookie_consents")
@@ -81,12 +160,14 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
         if (cancelled) return;
 
         if (!error && data) {
-          setConsent({
+          const value: CookieCategories = {
             necessary: true,
             preferences: data.preferences,
             analytics: data.analytics,
             marketing: data.marketing,
-          });
+          };
+          setConsent(value);
+          writeLocalConsent(value);
           setHasDecided(true);
         } else {
           setShowBanner(true);
@@ -106,10 +187,11 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
     async (value: CookieCategories) => {
       if (!anonId) return;
 
-      // Optimistic UI
+      // Optimistic UI + localStorage
       setConsent(value);
       setHasDecided(true);
       setShowBanner(false);
+      writeLocalConsent(value);
 
       try {
         const { data: userData } = await supabase.auth.getUser();
@@ -191,6 +273,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
       }
     }
     deleteCookie(ANON_COOKIE_NAME);
+    deleteLocalConsent();
     setConsent(null);
     setHasDecided(false);
     setShowSettings(false);
