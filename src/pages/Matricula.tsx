@@ -157,10 +157,19 @@ export default function Matricula() {
   }, [slug, cityValue]);
   const contratoPendiente = !!slug && !!cityValue && CONTRATOS[slug]?.[cityValue] === null;
 
+  const allFilesPresent = !!contratoFirmado && !!dniAnverso && !!dniReverso;
+
   const onSubmit = async (values: MatriculaForm) => {
     if (!pack) return;
+    setFileError(null);
+    if (!allFilesPresent) {
+      setFileError("Debes subir el contrato firmado y las dos caras del DNI.");
+      return;
+    }
     setSubmitting(true);
+    let createdId: string | null = null;
     try {
+      // 1. Create matricula row
       const { data, error } = await supabase
         .from("matriculas")
         .insert({
@@ -184,19 +193,45 @@ export default function Matricula() {
         .single();
 
       if (error) throw error;
+      createdId = data!.id as string;
+
+      // 2. Upload files to private bucket
+      const uploads: Array<{ file: File; folder: string; column: string }> = [
+        { file: contratoFirmado!, folder: "contrato_firmado", column: "contrato_firmado_url" },
+        { file: dniAnverso!, folder: "dni_anverso", column: "dni_anverso_url" },
+        { file: dniReverso!, folder: "dni_reverso", column: "dni_reverso_url" },
+      ];
+
+      const updatePayload: Record<string, string> = {};
+      for (const u of uploads) {
+        const ext = u.file.name.split(".").pop()?.toLowerCase() ?? "bin";
+        const path = `${createdId}/${u.folder}/${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage
+          .from("matriculas")
+          .upload(path, u.file, { contentType: u.file.type, upsert: false });
+        if (upErr) throw upErr;
+        updatePayload[u.column] = path;
+      }
+
+      // 3. Save private paths in matricula row
+      const { error: updErr } = await supabase
+        .from("matriculas")
+        .update(updatePayload)
+        .eq("id", createdId);
+      if (updErr) throw updErr;
 
       toast({
-        title: "Datos guardados",
+        title: "Matrícula registrada",
         description:
-          "Tu matrícula se ha registrado correctamente. El siguiente paso será el pago.",
+          "Hemos guardado tus datos y documentos. El siguiente paso será el pago.",
       });
-      // Próxima fase: redirigir a subida de documentos / pago con el id
-      navigate(`/matricula?pack=${packParam}&saved=${data?.id ?? ""}`, { replace: true });
+      navigate(`/matricula?pack=${packParam}&saved=${createdId}`, { replace: true });
     } catch (err) {
       console.error("Error guardando matrícula:", err);
       toast({
-        title: "No se pudo guardar la matrícula",
-        description: "Inténtalo de nuevo en unos segundos.",
+        title: "No se pudo completar la matrícula",
+        description:
+          (err as Error)?.message ?? "Inténtalo de nuevo en unos segundos.",
         variant: "destructive",
       });
     } finally {
