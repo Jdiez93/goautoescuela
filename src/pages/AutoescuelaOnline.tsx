@@ -30,6 +30,7 @@ const features = [
       "Aprende a tu ritmo, cuándo y dónde quieras",
     ],
     imageLabel: "Imagen Tu aula",
+    image: tuAulaImg,
   },
   {
     title: "Cada pregunta, un vídeo",
