@@ -107,13 +107,18 @@ export default function DashboardSecretaria() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("matriculas")
-        .select("id, full_name, dni, email, phone, city, pack_name, pack_id, status, created_at")
+        .select(
+          "id, full_name, dni, email, phone, address, postal_code, date_of_birth, city, pack_name, pack_id, precio, status, estado_matricula, estado_pago, contrato_asociado, contrato_firmado_url, dni_anverso_url, dni_reverso_url, fecha_pago, created_at"
+        )
         .order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Matricula[];
     },
     enabled: !!user && (isSecretaria || isAdmin),
   });
+
+  const [detail, setDetail] = useState<Matricula | null>(null);
+
 
   const { data: packs } = useQuery({
     queryKey: ["packs-matricula-active"],
