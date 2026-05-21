@@ -66,7 +66,7 @@ export default function Login() {
       } else if (userRoles.includes("teacher") || userRoles.includes("admin")) {
         navigate("/dashboard-profesor");
       } else {
-        navigate("/dashboard");
+        navigate("/dashboard-alumno");
       }
     }
   };
