@@ -21,6 +21,8 @@ import PracticasVirtuales from "./pages/PracticasVirtuales";
 import Consejos from "./pages/Consejos";
 import Matriculate from "./pages/Matriculate";
 import Matricula from "./pages/Matricula";
+import MatriculaExito from "./pages/MatriculaExito";
+import MatriculaCancelada from "./pages/MatriculaCancelada";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -64,6 +66,8 @@ const App = () => (
             <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
             <Route path="/matriculate" element={<Matriculate />} />
             <Route path="/matricula" element={<Matricula />} />
+            <Route path="/matricula-exito" element={<MatriculaExito />} />
+            <Route path="/matricula-cancelada" element={<MatriculaCancelada />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />
             <Route path="/recuperar-password" element={<ForgotPassword />} />
