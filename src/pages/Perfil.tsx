@@ -62,12 +62,24 @@ const cardVariants = {
   },
 };
 
+interface MatriculaInfo {
+  id: string;
+  pack_name: string | null;
+  precio: number | null;
+  estado_pago: string;
+  estado_matricula: string;
+  fecha_pago: string | null;
+  created_at: string;
+  num_practice_classes?: number | null;
+}
+
 export default function Perfil() {
   const { user, profile: authProfile, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [matricula, setMatricula] = useState<MatriculaInfo | null>(null);
   const [form, setForm] = useState<ProfileForm>({
     full_name: "",
     email: "",
@@ -95,26 +107,72 @@ export default function Perfil() {
 
   useEffect(() => {
     if (!user) return;
-    supabase
-      .from("profiles")
-      .select("full_name, email, phone, dni, date_of_birth, residence, city, postal_code")
-      .eq("user_id", user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) {
-          setForm({
-            full_name: data.full_name || "",
-            email: data.email || "",
-            phone: data.phone || "",
-            dni: (data as any).dni || "",
-            date_of_birth: (data as any).date_of_birth || "",
-            residence: (data as any).residence || "",
-            city: (data as any).city || "",
-            postal_code: (data as any).postal_code || "",
-          });
-        }
-        setLoading(false);
+    let cancelled = false;
+
+    (async () => {
+      // Profile + matricula del propio usuario (RLS garantiza que sólo ve la suya)
+      const [profileRes, matriculaRes] = await Promise.all([
+        supabase
+          .from("profiles")
+          .select("full_name, email, phone, dni, date_of_birth, residence, city, postal_code")
+          .eq("user_id", user.id)
+          .maybeSingle(),
+        supabase
+          .from("matriculas")
+          .select("id, pack_id, pack_name, precio, estado_pago, estado_matricula, fecha_pago, created_at, full_name, phone, dni, date_of_birth, address, city, postal_code")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+      ]);
+
+      if (cancelled) return;
+
+      const profileData: any = profileRes.data;
+      const matriculaData: any = matriculaRes.data;
+
+      // Si hay matrícula, traemos las clases del pack para mostrar info
+      let packClasses: number | null = null;
+      if (matriculaData?.pack_id) {
+        const { data: pack } = await supabase
+          .from("packs_matricula")
+          .select("num_practice_classes")
+          .eq("id", matriculaData.pack_id)
+          .maybeSingle();
+        packClasses = pack?.num_practice_classes ?? null;
+      }
+
+      if (matriculaData) {
+        setMatricula({
+          id: matriculaData.id,
+          pack_name: matriculaData.pack_name,
+          precio: matriculaData.precio,
+          estado_pago: matriculaData.estado_pago,
+          estado_matricula: matriculaData.estado_matricula,
+          fecha_pago: matriculaData.fecha_pago,
+          created_at: matriculaData.created_at,
+          num_practice_classes: packClasses,
+        });
+      }
+
+      // Pre-rellenamos campos vacíos del perfil con los de la matrícula
+      setForm({
+        full_name: profileData?.full_name || matriculaData?.full_name || "",
+        email: profileData?.email || user.email || "",
+        phone: profileData?.phone || matriculaData?.phone || "",
+        dni: profileData?.dni || matriculaData?.dni || "",
+        date_of_birth: profileData?.date_of_birth || matriculaData?.date_of_birth || "",
+        residence: profileData?.residence || matriculaData?.address || "",
+        city: profileData?.city || matriculaData?.city || "",
+        postal_code: profileData?.postal_code || matriculaData?.postal_code || "",
       });
+
+      setLoading(false);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [user]);
 
   if (authLoading || loading) {
