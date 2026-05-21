@@ -55,23 +55,47 @@ export default function Register() {
       return;
     }
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: fullName },
-        emailRedirectTo: `${window.location.origin}/login`,
-      },
-    });
-    setLoading(false);
-    if (error) {
-      toast({ title: "Error al registrarse", description: error.message, variant: "destructive" });
-    } else {
-      toast({
-        title: "¡Registro exitoso!",
-        description: "Revisa tu email para confirmar tu cuenta antes de iniciar sesión.",
+    try {
+      // 1) Validar matrícula + crear cuenta en backend
+      const { data, error } = await supabase.functions.invoke("register-alumno", {
+        body: { email: email.trim().toLowerCase(), password, full_name: fullName },
       });
-      navigate("/login");
+
+      if (error || (data as any)?.error) {
+        const msg = (data as any)?.error ?? error?.message ?? "No se pudo crear la cuenta.";
+        toast({ title: "Registro no permitido", description: msg, variant: "destructive" });
+        setLoading(false);
+        return;
+      }
+
+      // 2) Login automático
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: email.trim().toLowerCase(),
+        password,
+      });
+
+      if (signInError) {
+        toast({
+          title: "Cuenta creada",
+          description: "Inicia sesión para continuar.",
+        });
+        navigate("/login");
+        return;
+      }
+
+      toast({
+        title: "¡Bienvenido/a!",
+        description: "Tu cuenta de alumno está lista.",
+      });
+      navigate("/dashboard");
+    } catch (err: any) {
+      toast({
+        title: "Error inesperado",
+        description: err?.message ?? "Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
