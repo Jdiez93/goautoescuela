@@ -11,6 +11,8 @@ import CookieSettingsModal from "@/components/cookies/CookieSettingsModal";
 import ChatWidget from "@/components/ChatWidget";
 import PoliticaCookies from "./pages/PoliticaCookies";
 import Home from "./pages/Home";
+import Splash from "./pages/Splash";
+import CentroEstudios from "./pages/CentroEstudios";
 import Index from "./pages/Index";
 import LaTeorica from "./pages/LaTeorica";
 import LasPracticas from "./pages/LasPracticas";
@@ -53,7 +55,9 @@ const App = () => (
             <ScrollToTop />
             <PageTitle />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Splash />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/centro-estudios" element={<CentroEstudios />} />
             <Route path="/inicio" element={<Home />} />
             <Route path="/plataforma" element={<Index />} />
             <Route path="/la-teorica" element={<LaTeorica />} />
