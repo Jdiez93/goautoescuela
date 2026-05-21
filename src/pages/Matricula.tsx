@@ -339,8 +339,7 @@ export default function Matricula() {
               </CardContent>
             </Card>
           ) : (
-
-
+            <>
           {/* Form */}
           <Card>
             <CardContent className="p-6 md:p-8">
@@ -571,6 +570,7 @@ export default function Matricula() {
               </form>
             </CardContent>
           </Card>
+            </>
           )}
         </div>
       </main>
