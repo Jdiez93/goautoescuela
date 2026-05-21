@@ -4,8 +4,11 @@ import { createClient } from "npm:@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, stripe-signature",
 };
+
+const log = (...args: unknown[]) => console.log("[stripe-webhook]", ...args);
+const errLog = (...args: unknown[]) => console.error("[stripe-webhook]", ...args);
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -29,8 +32,8 @@ serve(async (req) => {
       Deno.env.get("STRIPE_WEBHOOK_SECRET") || ""
     );
   } catch (err) {
-    console.error("Webhook signature verification failed:", err.message);
-    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
+    errLog("Signature verification failed:", (err as Error).message);
+    return new Response(`Webhook Error: ${(err as Error).message}`, { status: 400 });
   }
 
   const supabaseAdmin = createClient(
@@ -38,72 +41,193 @@ serve(async (req) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
 
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
-    const metadata = session.metadata || {};
-    const amountTotal = (session.amount_total || 0) / 100;
+  log("Event received:", event.type, event.id);
 
-    // === Flujo MATRÍCULA ===
-    if (metadata.matricula_id) {
-      const matriculaId = metadata.matricula_id;
-      console.log("checkout.session.completed (matricula)", { matriculaId, amountTotal });
+  try {
+    switch (event.type) {
+      // ============================================================
+      // PAGO COMPLETADO (Checkout)
+      // ============================================================
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const metadata = session.metadata || {};
+        const amountTotal = (session.amount_total || 0) / 100;
 
-      const { error } = await supabaseAdmin
-        .from("matriculas")
-        .update({
-          estado_pago: "pagada",
-          estado_matricula: "pagada",
-          status: "pagada",
-          stripe_payment_intent_id: session.payment_intent as string,
-          stripe_session_id: session.id,
-          fecha_pago: new Date().toISOString(),
-        })
-        .eq("id", matriculaId);
+        // --- Flujo MATRÍCULA ---
+        if (metadata.matricula_id) {
+          const matriculaId = metadata.matricula_id;
+          log("checkout.session.completed (matricula)", { matriculaId, amountTotal });
 
-      if (error) {
-        console.error("Error actualizando matrícula:", error);
-        return new Response("Database error", { status: 500 });
+          // Idempotencia: si ya está pagada no hacemos nada
+          const { data: existing } = await supabaseAdmin
+            .from("matriculas")
+            .select("id, estado_pago")
+            .eq("id", matriculaId)
+            .maybeSingle();
+
+          if (!existing) {
+            errLog("Matrícula no encontrada:", matriculaId);
+            return new Response("Matricula not found", { status: 200 });
+          }
+          if (existing.estado_pago === "pagada") {
+            log("Matrícula ya estaba pagada, ignorando (idempotente)");
+            return new Response(JSON.stringify({ received: true, idempotent: true }), {
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+              status: 200,
+            });
+          }
+
+          const { error } = await supabaseAdmin
+            .from("matriculas")
+            .update({
+              estado_pago: "pagada",
+              estado_matricula: "completada",
+              status: "pagada",
+              stripe_payment_intent_id: session.payment_intent as string,
+              stripe_session_id: session.id,
+              fecha_pago: new Date().toISOString(),
+            })
+            .eq("id", matriculaId);
+
+          if (error) {
+            errLog("Error actualizando matrícula:", error);
+            return new Response("Database error", { status: 500 });
+          }
+          log("Matrícula marcada como pagada");
+          break;
+        }
+
+        // --- Flujo BONOS DE CLASES ---
+        const userId = metadata.user_id;
+        const packId = metadata.pack_id;
+        const classes = parseInt(metadata.classes || "0", 10);
+        log("checkout.session.completed (bono)", { userId, packId, classes, amountTotal });
+
+        if (!userId || !classes) {
+          errLog("Missing user_id or classes en metadata");
+          return new Response("Missing metadata", { status: 400 });
+        }
+
+        // Idempotencia: ¿ya existe un payment con este payment_intent?
+        const piId = session.payment_intent as string;
+        if (piId) {
+          const { data: existingPay } = await supabaseAdmin
+            .from("payments")
+            .select("id")
+            .eq("stripe_payment_id", piId)
+            .maybeSingle();
+          if (existingPay) {
+            log("Pago de bono ya registrado, ignorando");
+            break;
+          }
+        }
+
+        const { error } = await supabaseAdmin.from("payments").insert({
+          user_id: userId,
+          pack_id: packId || null,
+          amount: amountTotal,
+          classes_purchased: classes,
+          classes_remaining: classes,
+          status: "completed",
+          stripe_payment_id: piId,
+        });
+        if (error) {
+          errLog("Error insertando payment:", error);
+          return new Response("Database error", { status: 500 });
+        }
+        log("Bono registrado");
+        break;
       }
 
-      console.log("Matrícula marcada como pagada");
-      return new Response(JSON.stringify({ received: true }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
+      // ============================================================
+      // SESIÓN EXPIRADA (no se completó el pago en 30 min)
+      // ============================================================
+      case "checkout.session.expired": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const matriculaId = session.metadata?.matricula_id;
+        if (!matriculaId) break;
+
+        log("checkout.session.expired (matricula)", matriculaId);
+
+        // Solo actualizamos si seguía pendiente (idempotencia)
+        const { error } = await supabaseAdmin
+          .from("matriculas")
+          .update({ estado_pago: "pendiente" })
+          .eq("id", matriculaId)
+          .neq("estado_pago", "pagada");
+
+        if (error) errLog("Error en expired:", error);
+        break;
+      }
+
+      // ============================================================
+      // PAYMENT INTENT - éxito (redundante con checkout.session.completed
+      // pero útil si falla esa entrega)
+      // ============================================================
+      case "payment_intent.succeeded": {
+        const pi = event.data.object as Stripe.PaymentIntent;
+        const matriculaId = pi.metadata?.matricula_id;
+        if (!matriculaId) break;
+
+        log("payment_intent.succeeded (matricula)", matriculaId);
+
+        const { data: existing } = await supabaseAdmin
+          .from("matriculas")
+          .select("estado_pago")
+          .eq("id", matriculaId)
+          .maybeSingle();
+
+        if (!existing || existing.estado_pago === "pagada") {
+          log("Ya pagada o no encontrada, ignorando");
+          break;
+        }
+
+        const { error } = await supabaseAdmin
+          .from("matriculas")
+          .update({
+            estado_pago: "pagada",
+            estado_matricula: "completada",
+            status: "pagada",
+            stripe_payment_intent_id: pi.id,
+            fecha_pago: new Date().toISOString(),
+          })
+          .eq("id", matriculaId);
+        if (error) errLog("Error en PI succeeded:", error);
+        break;
+      }
+
+      // ============================================================
+      // PAYMENT INTENT - fallido
+      // ============================================================
+      case "payment_intent.payment_failed": {
+        const pi = event.data.object as Stripe.PaymentIntent;
+        const matriculaId = pi.metadata?.matricula_id;
+        if (!matriculaId) break;
+
+        log("payment_intent.payment_failed (matricula)", matriculaId, pi.last_payment_error?.message);
+
+        const { error } = await supabaseAdmin
+          .from("matriculas")
+          .update({
+            estado_pago: "fallido",
+            stripe_payment_intent_id: pi.id,
+          })
+          .eq("id", matriculaId)
+          .neq("estado_pago", "pagada");
+        if (error) errLog("Error en PI failed:", error);
+        break;
+      }
+
+      default:
+        log("Evento no gestionado:", event.type);
     }
 
-    // === Flujo BONOS DE CLASES (existente) ===
-    const userId = metadata.user_id;
-    const packId = metadata.pack_id;
-    const classes = parseInt(metadata.classes || "0", 10);
-
-    console.log("checkout.session.completed (bono clases)", { userId, packId, classes, amountTotal });
-
-    if (!userId || !classes) {
-      console.error("Missing user_id or classes in metadata");
-      return new Response("Missing metadata", { status: 400 });
-    }
-
-    const { error } = await supabaseAdmin.from("payments").insert({
-      user_id: userId,
-      pack_id: packId || null,
-      amount: amountTotal,
-      classes_purchased: classes,
-      classes_remaining: classes,
-      status: "completed",
-      stripe_payment_id: session.payment_intent as string,
+    return new Response(JSON.stringify({ received: true }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 200,
     });
-
-    if (error) {
-      console.error("Error inserting payment:", error);
-      return new Response("Database error", { status: 500 });
-    }
-
-    console.log("Payment recorded successfully");
+  } catch (err) {
+    errLog("Handler error:", err);
+    return new Response("Internal error", { status: 500 });
   }
-
-  return new Response(JSON.stringify({ received: true }), {
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
-    status: 200,
-  });
 });
