@@ -216,7 +216,7 @@ export default function Matricula() {
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
 
-      <main className="flex-1 px-4 md:px-8 pt-32 md:pt-40 pb-16 md:pb-24">
+      <main className="flex-1 px-4 md:px-8 pt-24 md:pt-32 pb-16 md:pb-24">
         <div className="max-w-7xl mx-auto">
           {/* Compact header: pack + stepper */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-border">
