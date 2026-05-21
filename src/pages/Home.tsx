@@ -1,9 +1,5 @@
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
-import ScrollExpansionHero from "@/components/ScrollExpansionHero";
-import introCarBg from "@/assets/intro-car-bg.png";
-import introSurprised from "@/assets/intro-surprised-guy.png";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
