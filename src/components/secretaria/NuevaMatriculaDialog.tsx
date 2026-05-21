@@ -77,12 +77,6 @@ export default function NuevaMatriculaDialog() {
   const [fileError, setFileError] = useState<string | null>(null);
 
   const selectedPack = useMemo(() => packs?.find((p) => p.id === packId) ?? null, [packs, packId]);
-  const contrato = useMemo(() => {
-    if (!selectedPack || !city) return undefined;
-    return CONTRATOS[selectedPack.slug]?.[city] ?? undefined;
-  }, [selectedPack, city]);
-  const contratoPendiente =
-    !!selectedPack && !!city && CONTRATOS[selectedPack.slug]?.[city] === null;
 
   const reset = () => {
     setFullName("");
@@ -113,8 +107,7 @@ export default function NuevaMatriculaDialog() {
     !!packId &&
     !!contratoFirmado &&
     !!dniAnverso &&
-    !!dniReverso &&
-    !contratoPendiente;
+    !!dniReverso;
 
   const submit = async (force = false) => {
     setFileError(null);
