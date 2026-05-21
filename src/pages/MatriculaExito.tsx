@@ -5,7 +5,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
+
 
 type Status = "checking" | "paid" | "pending";
 
@@ -21,17 +21,20 @@ export default function MatriculaExito() {
       return;
     }
     setStatus("checking");
-    // El webhook de Stripe actualiza la matrícula. Hacemos polling unas veces.
+    const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/check-matricula-payment?session_id=${encodeURIComponent(sessionId)}`;
     for (let i = 0; i < 10; i++) {
-      const { data } = await supabase
-        .from("matriculas")
-        .select("email, estado_pago")
-        .eq("stripe_session_id", sessionId)
-        .maybeSingle();
-      if (data?.estado_pago === "pagada") {
-        setEmail(data.email);
-        setStatus("paid");
-        return;
+      try {
+        const res = await fetch(url, {
+          headers: { apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+        });
+        const json = await res.json();
+        if (json?.estado_pago === "pagada") {
+          setEmail(json.email);
+          setStatus("paid");
+          return;
+        }
+      } catch (e) {
+        console.error("check-matricula-payment error", e);
       }
       await new Promise((r) => setTimeout(r, 1500));
     }
