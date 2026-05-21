@@ -39,7 +39,7 @@ serve(async (req) => {
     // 1) Buscar matrícula válida para este email
     const { data: matriculas, error: matErr } = await admin
       .from("matriculas")
-      .select("id, user_id, estado_pago, estado_matricula, full_name")
+      .select("id, user_id, estado_pago, estado_matricula, full_name, pack_id, pack_name, precio")
       .ilike("email", normalizedEmail)
       .order("created_at", { ascending: false })
       .limit(1);
