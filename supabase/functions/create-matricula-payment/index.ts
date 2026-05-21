@@ -59,18 +59,22 @@ serve(async (req) => {
 
     const origin = req.headers.get("origin") || "";
 
+    const metadata = {
+      matricula_id: matricula.id,
+      pack_id: matricula.pack_id ?? "",
+      email: matricula.email ?? "",
+    };
+
     const session = await stripe.checkout.sessions.create({
       customer_email: matricula.email,
       line_items: [{ price: priceId, quantity: 1 }],
       mode: "payment",
       payment_method_types: ["card"],
+      expires_at: Math.floor(Date.now() / 1000) + 60 * 30, // 30 min
       success_url: `${origin}/matricula-exito?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/matricula-cancelada?matricula_id=${matricula.id}`,
-      metadata: {
-        matricula_id: matricula.id,
-        pack_id: matricula.pack_id,
-        email: matricula.email,
-      },
+      metadata,
+      payment_intent_data: { metadata },
     });
 
     return new Response(JSON.stringify({ url: session.url }), {
