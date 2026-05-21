@@ -31,7 +31,7 @@ serve(async (req) => {
 
     const { data: matricula, error: mErr } = await admin
       .from("matriculas")
-      .select("id, email, pack_id, estado_pago, packs_matricula:pack_id(slug, name, price)")
+      .select("id, email, pack_id, estado_pago")
       .eq("id", matricula_id)
       .maybeSingle();
 
@@ -41,8 +41,13 @@ serve(async (req) => {
       throw new Error("Esta matrícula ya está pagada");
     }
 
-    // @ts-ignore relación
-    const pack = matricula.packs_matricula as { slug: string; name: string; price: number } | null;
+    const { data: pack, error: pErr } = await admin
+      .from("packs_matricula")
+      .select("slug, name, price")
+      .eq("id", matricula.pack_id)
+      .maybeSingle();
+
+    if (pErr) throw pErr;
     if (!pack) throw new Error("Pack asociado no encontrado");
 
     const priceId = PRICE_IDS[pack.slug];
