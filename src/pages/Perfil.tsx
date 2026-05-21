@@ -296,7 +296,69 @@ export default function Perfil() {
         </div>
       </div>
 
-      <main className="container mx-auto px-4 max-w-2xl -mt-16 relative z-10 pb-16">
+      <main className="container mx-auto px-4 max-w-2xl -mt-16 relative z-10 pb-16 space-y-6">
+        {matricula && (
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ type: "spring", stiffness: 220, damping: 24 }}
+          >
+            <Card className="border-border/50 overflow-hidden">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <GraduationCap className="w-5 h-5 text-primary" />
+                  </div>
+                  Mi matrícula
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Pack contratado</p>
+                    <p className="font-semibold">{matricula.pack_name || "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Importe</p>
+                    <p className="font-semibold">{matricula.precio != null ? `${Number(matricula.precio).toFixed(2)} €` : "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Estado del pago</p>
+                    <Badge
+                      variant={matricula.estado_pago === "pagada" ? "default" : "secondary"}
+                      className={matricula.estado_pago === "pagada" ? "bg-green-600 hover:bg-green-600" : ""}
+                    >
+                      {matricula.estado_pago === "pagada" ? (
+                        <><CheckCircle2 className="w-3 h-3 mr-1" /> Pagada</>
+                      ) : (
+                        <><ClockIcon className="w-3 h-3 mr-1" /> {matricula.estado_pago}</>
+                      )}
+                    </Badge>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Estado matrícula</p>
+                    <Badge variant="outline">{matricula.estado_matricula}</Badge>
+                  </div>
+                  {matricula.num_practice_classes != null && matricula.num_practice_classes > 0 && (
+                    <div className="sm:col-span-2 rounded-lg bg-accent/50 border border-border/50 px-4 py-3">
+                      <p className="text-sm">
+                        Tu pack incluye{" "}
+                        <span className="font-bold text-primary">{matricula.num_practice_classes} clases prácticas</span>{" "}
+                        que se han añadido automáticamente a tu saldo.
+                      </p>
+                    </div>
+                  )}
+                  {matricula.fecha_pago && (
+                    <div className="sm:col-span-2 text-xs text-muted-foreground">
+                      Pago confirmado el {new Date(matricula.fecha_pago).toLocaleDateString("es-ES", { day: "2-digit", month: "long", year: "numeric" })}
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
         <motion.div variants={cardVariants} initial="hidden" animate="visible">
           <Card className="border-border/50 overflow-hidden">
             <CardHeader>
