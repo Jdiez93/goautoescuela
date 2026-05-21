@@ -218,63 +218,50 @@ export default function Matricula() {
 
       <main className="flex-1 px-4 md:px-8 pt-32 md:pt-40 pb-16 md:pb-24">
         <div className="max-w-7xl mx-auto">
-          {/* Top row: pack card + stepper */}
-          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 mb-8">
-            {/* Pack card */}
-            <Card className="border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-background">
-              <CardContent className="p-5">
-                {loadingPack ? (
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Loader2 className="w-4 h-4 animate-spin" /> Cargando pack…
+          {/* Compact header: pack + stepper */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-border">
+            {loadingPack ? (
+              <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                <Loader2 className="w-4 h-4 animate-spin" /> Cargando pack…
+              </div>
+            ) : packError ? (
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-destructive text-sm">
+                  <AlertCircle className="w-4 h-4" />
+                  <span className="font-semibold">Pack no válido</span>
+                </div>
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/matriculate">
+                    <ArrowLeft className="w-3 h-3 mr-1" /> Volver
+                  </Link>
+                </Button>
+              </div>
+            ) : pack ? (
+              <div className="flex items-center gap-3">
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-tight">
+                    Pack elegido
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-base font-bold font-['Space_Grotesk']">{pack.name}</span>
+                    <span className="text-sm font-bold text-primary">{formattedPrice}</span>
                   </div>
-                ) : packError ? (
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-destructive">
-                      <AlertCircle className="w-5 h-5" />
-                      <span className="font-semibold">Pack no válido</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{packError}</p>
-                    <Button asChild variant="outline" size="sm">
-                      <Link to="/matriculate">
-                        <ArrowLeft className="w-4 h-4 mr-1" /> Volver a los packs
-                      </Link>
-                    </Button>
-                  </div>
-                ) : pack ? (
-                  <div className="space-y-2">
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
-                      Pack elegido
-                    </p>
-                    <h2 className="text-2xl font-bold font-['Space_Grotesk'] text-foreground">
-                      {pack.name}
-                    </h2>
-                    {pack.tagline && (
-                      <p className="text-sm text-muted-foreground">{pack.tagline}</p>
-                    )}
-                    <div className="flex items-baseline gap-1 pt-2">
-                      <span className="text-3xl font-bold text-primary">{formattedPrice}</span>
-                    </div>
-                    <Link
-                      to="/matriculate"
-                      className="inline-flex items-center text-xs text-muted-foreground hover:text-primary transition-colors pt-2"
-                    >
-                      <ArrowLeft className="w-3 h-3 mr-1" /> Cambiar de pack
-                    </Link>
-                  </div>
-                ) : null}
-              </CardContent>
-            </Card>
+                </div>
+                <Link
+                  to="/matriculate"
+                  className="text-[11px] text-muted-foreground hover:text-primary transition-colors underline underline-offset-2"
+                >
+                  Cambiar
+                </Link>
+              </div>
+            ) : null}
 
             {/* Stepper */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <Step number={1} label="Matrícula" active />
-                  <div className="flex-1 h-[2px] bg-border" />
-                  <Step number={2} label="Pago" />
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex items-center gap-3">
+              <Step number={1} label="Matrícula" active />
+              <div className="w-6 sm:w-10 h-[2px] bg-border" />
+              <Step number={2} label="Pago" />
+            </div>
           </div>
 
           {/* Form */}
