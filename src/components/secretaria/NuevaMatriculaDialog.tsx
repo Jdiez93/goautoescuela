@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { AlertCircle, Download, FileText, Info, Loader2, Plus, Upload, X } from "lucide-react";
+import { AlertCircle, FileText, Info, Loader2, Plus, Upload, X } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -28,25 +28,6 @@ import {
 
 const POBLACIONES = ["Villanueva del Pardillo", "Valdemorillo"] as const;
 type Poblacion = (typeof POBLACIONES)[number];
-
-const CONTRATOS: Record<string, Record<Poblacion, { file: string; label: string } | null>> = {
-  basico: {
-    "Villanueva del Pardillo": { file: "/contratos/pack_basico_pardillo.pdf", label: "Contrato Pack Básico - Villanueva del Pardillo" },
-    Valdemorillo: { file: "/contratos/pack_basico_valdemorillo.pdf", label: "Contrato Pack Básico - Valdemorillo" },
-  },
-  avanzado: {
-    "Villanueva del Pardillo": { file: "/contratos/pack_avanzado_pardillo.pdf", label: "Contrato Pack Avanzado - Villanueva del Pardillo" },
-    Valdemorillo: { file: "/contratos/pack_avanzado_valdemorillo.pdf", label: "Contrato Pack Avanzado - Valdemorillo" },
-  },
-  completo: {
-    "Villanueva del Pardillo": { file: "/contratos/pack_completo_pardillo.pdf", label: "Contrato Pack Completo - Villanueva del Pardillo" },
-    Valdemorillo: { file: "/contratos/pack_completo_valdemorillo.pdf", label: "Contrato Pack Completo - Valdemorillo" },
-  },
-  premium: {
-    "Villanueva del Pardillo": null,
-    Valdemorillo: null,
-  },
-};
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
@@ -96,12 +77,6 @@ export default function NuevaMatriculaDialog() {
   const [fileError, setFileError] = useState<string | null>(null);
 
   const selectedPack = useMemo(() => packs?.find((p) => p.id === packId) ?? null, [packs, packId]);
-  const contrato = useMemo(() => {
-    if (!selectedPack || !city) return undefined;
-    return CONTRATOS[selectedPack.slug]?.[city] ?? undefined;
-  }, [selectedPack, city]);
-  const contratoPendiente =
-    !!selectedPack && !!city && CONTRATOS[selectedPack.slug]?.[city] === null;
 
   const reset = () => {
     setFullName("");
@@ -132,8 +107,7 @@ export default function NuevaMatriculaDialog() {
     !!packId &&
     !!contratoFirmado &&
     !!dniAnverso &&
-    !!dniReverso &&
-    !contratoPendiente;
+    !!dniReverso;
 
   const submit = async (force = false) => {
     setFileError(null);
@@ -151,7 +125,7 @@ export default function NuevaMatriculaDialog() {
       fd.append("city", city);
       fd.append("pack_id", selectedPack.id);
       fd.append("estado_pago", estadoPago);
-      fd.append("contrato_asociado", contrato?.label ?? "");
+      fd.append("contrato_asociado", "");
       fd.append("contrato_firmado", contratoFirmado!);
       fd.append("dni_anverso", dniAnverso!);
       fd.append("dni_reverso", dniReverso!);
@@ -291,35 +265,6 @@ export default function NuevaMatriculaDialog() {
               <span className="font-semibold text-foreground">
                 {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(selectedPack.price)}
               </span>
-            </div>
-          )}
-
-          {/* Contrato */}
-          {selectedPack && city && (
-            <div className="md:col-span-2">
-              {contrato ? (
-                <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-4 flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs uppercase tracking-wider text-primary font-semibold">Contrato asociado</p>
-                    <p className="font-semibold text-foreground mt-0.5">{contrato.label}</p>
-                    <Button asChild variant="outline" size="sm" className="mt-2">
-                      <a href={contrato.file} download target="_blank" rel="noopener noreferrer">
-                        <Download className="w-4 h-4 mr-1" /> Descargar contrato
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              ) : contratoPendiente ? (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    El contrato para este pack y población aún no está disponible.
-                  </AlertDescription>
-                </Alert>
-              ) : null}
             </div>
           )}
 
