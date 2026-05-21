@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
@@ -44,6 +44,13 @@ import PageTitle from "./components/PageTitle";
 
 const queryClient = new QueryClient();
 
+const ChatWidgetRenderer = () => {
+  const { pathname } = useLocation();
+  const showOn = ["/home", "/inicio"];
+  if (!showOn.includes(pathname)) return null;
+  return <ChatWidget />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -54,46 +61,46 @@ const App = () => (
           <CookieConsentProvider>
             <ScrollToTop />
             <PageTitle />
-          <Routes>
-            <Route path="/" element={<Splash />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/centro-estudios" element={<CentroEstudios />} />
-            <Route path="/inicio" element={<Home />} />
-            <Route path="/plataforma" element={<Index />} />
-            <Route path="/la-teorica" element={<LaTeorica />} />
-            <Route path="/las-practicas" element={<LasPracticas />} />
-            <Route path="/actualidad" element={<PracticasVirtuales />} />
-            <Route path="/practicas-virtuales" element={<PracticasVirtuales />} />
-            <Route path="/consejos" element={<Consejos />} />
-            <Route path="/autoescuelas-ready2go/villanueva-del-pardillo" element={<AutoescuelaPardillo />} />
-            <Route path="/autoescuelas-ready2go/valdemorillo" element={<AutoescuelaValdemorillo />} />
-            <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
-            <Route path="/matriculate" element={<Matriculate />} />
-            <Route path="/matricula" element={<Matricula />} />
-            <Route path="/matricula-exito" element={<MatriculaExito />} />
-            <Route path="/matricula-cancelada" element={<MatriculaCancelada />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Register />} />
-            <Route path="/recuperar-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard-alumno" element={<Dashboard />} />
-            <Route path="/dashboard-profesor" element={<DashboardProfesor />} />
-            <Route path="/dashboard-secretaria" element={<DashboardSecretaria />} />
-            <Route path="/pagos" element={<Pagos />} />
-            <Route path="/reservas" element={<Reservas />} />
-            <Route path="/perfil" element={<Perfil />} />
-            
-            <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
-            <Route path="/aviso-legal" element={<AvisoLegal />} />
-            <Route path="/condiciones-contratacion" element={<CondicionesContratacion />} />
-            <Route path="/cookies" element={<PoliticaCookies />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <CookieBanner />
-          <CookieSettingsModal />
-          <ChatWidget />
+            <Routes>
+              <Route path="/" element={<Splash />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/centro-estudios" element={<CentroEstudios />} />
+              <Route path="/inicio" element={<Home />} />
+              <Route path="/plataforma" element={<Index />} />
+              <Route path="/la-teorica" element={<LaTeorica />} />
+              <Route path="/las-practicas" element={<LasPracticas />} />
+              <Route path="/actualidad" element={<PracticasVirtuales />} />
+              <Route path="/practicas-virtuales" element={<PracticasVirtuales />} />
+              <Route path="/consejos" element={<Consejos />} />
+              <Route path="/autoescuelas-ready2go/villanueva-del-pardillo" element={<AutoescuelaPardillo />} />
+              <Route path="/autoescuelas-ready2go/valdemorillo" element={<AutoescuelaValdemorillo />} />
+              <Route path="/autoescuela-online" element={<AutoescuelaOnline />} />
+              <Route path="/matriculate" element={<Matriculate />} />
+              <Route path="/matricula" element={<Matricula />} />
+              <Route path="/matricula-exito" element={<MatriculaExito />} />
+              <Route path="/matricula-cancelada" element={<MatriculaCancelada />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/registro" element={<Register />} />
+              <Route path="/recuperar-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard-alumno" element={<Dashboard />} />
+              <Route path="/dashboard-profesor" element={<DashboardProfesor />} />
+              <Route path="/dashboard-secretaria" element={<DashboardSecretaria />} />
+              <Route path="/pagos" element={<Pagos />} />
+              <Route path="/reservas" element={<Reservas />} />
+              <Route path="/perfil" element={<Perfil />} />
+              
+              <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+              <Route path="/aviso-legal" element={<AvisoLegal />} />
+              <Route path="/condiciones-contratacion" element={<CondicionesContratacion />} />
+              <Route path="/cookies" element={<PoliticaCookies />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <CookieBanner />
+            <CookieSettingsModal />
+            <ChatWidgetRenderer />
           </CookieConsentProvider>
         </AuthProvider>
       </BrowserRouter>
