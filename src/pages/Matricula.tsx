@@ -219,7 +219,7 @@ export default function Matricula() {
       <main className="flex-1 px-4 md:px-8 pt-32 md:pt-40 pb-16 md:pb-24">
         <div className="max-w-7xl mx-auto">
           {/* Top row: pack card + compact stepper */}
-          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 mb-8 items-start">
             {/* Pack card */}
             <Card className="border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-background">
               <CardContent className="p-5">
@@ -265,14 +265,12 @@ export default function Matricula() {
               </CardContent>
             </Card>
 
-            {/* Compact stepper card */}
-            <Card>
-              <CardContent className="p-4 flex items-center gap-3">
-                <Step number={1} label="Matrícula" active />
-                <div className="flex-1 h-[2px] bg-border" />
-                <Step number={2} label="Pago" />
-              </CardContent>
-            </Card>
+            {/* Compact stepper — minimal bar */}
+            <div className="flex items-center gap-2 bg-muted/40 rounded-lg px-4 py-2.5 border border-border/60">
+              <Step number={1} label="Matrícula" active />
+              <div className="flex-1 h-[2px] bg-border" />
+              <Step number={2} label="Pago" />
+            </div>
           </div>
 
 
