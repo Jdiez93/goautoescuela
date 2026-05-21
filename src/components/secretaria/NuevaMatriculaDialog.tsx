@@ -125,7 +125,7 @@ export default function NuevaMatriculaDialog() {
       fd.append("city", city);
       fd.append("pack_id", selectedPack.id);
       fd.append("estado_pago", estadoPago);
-      fd.append("contrato_asociado", contrato?.label ?? "");
+      fd.append("contrato_asociado", "");
       fd.append("contrato_firmado", contratoFirmado!);
       fd.append("dni_anverso", dniAnverso!);
       fd.append("dni_reverso", dniReverso!);
@@ -265,35 +265,6 @@ export default function NuevaMatriculaDialog() {
               <span className="font-semibold text-foreground">
                 {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(selectedPack.price)}
               </span>
-            </div>
-          )}
-
-          {/* Contrato */}
-          {selectedPack && city && (
-            <div className="md:col-span-2">
-              {contrato ? (
-                <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-4 flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs uppercase tracking-wider text-primary font-semibold">Contrato asociado</p>
-                    <p className="font-semibold text-foreground mt-0.5">{contrato.label}</p>
-                    <Button asChild variant="outline" size="sm" className="mt-2">
-                      <a href={contrato.file} download target="_blank" rel="noopener noreferrer">
-                        <Download className="w-4 h-4 mr-1" /> Descargar contrato
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              ) : contratoPendiente ? (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    El contrato para este pack y población aún no está disponible.
-                  </AlertDescription>
-                </Alert>
-              ) : null}
             </div>
           )}
 
