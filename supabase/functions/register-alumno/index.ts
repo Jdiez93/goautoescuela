@@ -39,7 +39,7 @@ serve(async (req) => {
     // 1) Buscar matrícula válida para este email
     const { data: matriculas, error: matErr } = await admin
       .from("matriculas")
-      .select("id, user_id, estado_pago, estado_matricula, full_name")
+      .select("id, user_id, estado_pago, estado_matricula, full_name, pack_id, pack_name, precio")
       .ilike("email", normalizedEmail)
       .order("created_at", { ascending: false })
       .limit(1);
@@ -159,6 +159,43 @@ serve(async (req) => {
       .from("profiles")
       .update({ full_name, email: normalizedEmail })
       .eq("user_id", newUserId);
+
+    // 7) Acreditar clases prácticas del pack al saldo del alumno (idempotente)
+    try {
+      let classesIncluded = 0;
+      if (matricula.pack_id) {
+        const { data: pack } = await admin
+          .from("packs_matricula")
+          .select("num_practice_classes, name")
+          .eq("id", matricula.pack_id)
+          .maybeSingle();
+        classesIncluded = pack?.num_practice_classes ?? 0;
+      }
+
+      if (classesIncluded > 0) {
+        const stripeRef = `matricula:${matricula.id}`;
+        const { data: existingCredit } = await admin
+          .from("payments")
+          .select("id")
+          .eq("stripe_payment_id", stripeRef)
+          .maybeSingle();
+
+        if (!existingCredit) {
+          await admin.from("payments").insert({
+            user_id: newUserId,
+            pack_id: null,
+            amount: 0,
+            classes_purchased: classesIncluded,
+            classes_remaining: classesIncluded,
+            status: "completed",
+            stripe_payment_id: stripeRef,
+          });
+        }
+      }
+    } catch (creditErr) {
+      console.error("[register-alumno] Error acreditando clases del pack:", creditErr);
+      // No bloqueamos el registro si falla el saldo, secretaría puede ajustarlo.
+    }
 
     console.log("[register-alumno] OK", { user_id: newUserId, matricula_id: matricula.id });
 

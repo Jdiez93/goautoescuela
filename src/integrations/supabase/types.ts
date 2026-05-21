@@ -326,6 +326,7 @@ export type Database = {
           id: string
           is_active: boolean
           name: string
+          num_practice_classes: number
           price: number
           slug: string
           sort_order: number
@@ -338,6 +339,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           name: string
+          num_practice_classes?: number
           price?: number
           slug: string
           sort_order?: number
@@ -350,6 +352,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           name?: string
+          num_practice_classes?: number
           price?: number
           slug?: string
           sort_order?: number
