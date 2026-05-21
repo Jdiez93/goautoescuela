@@ -54,9 +54,9 @@ serve(async (req) => {
           estado_pago: "pagada",
           estado_matricula: "pagada",
           status: "pagada",
-          stripe_payment_id: session.payment_intent as string,
+          stripe_payment_intent_id: session.payment_intent as string,
           stripe_session_id: session.id,
-          paid_at: new Date().toISOString(),
+          fecha_pago: new Date().toISOString(),
         })
         .eq("id", matriculaId);
 
