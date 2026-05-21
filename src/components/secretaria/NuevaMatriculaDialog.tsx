@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { AlertCircle, Download, FileText, Info, Loader2, Plus, Upload, X } from "lucide-react";
+import { AlertCircle, FileText, Info, Loader2, Plus, Upload, X } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -28,25 +28,6 @@ import {
 
 const POBLACIONES = ["Villanueva del Pardillo", "Valdemorillo"] as const;
 type Poblacion = (typeof POBLACIONES)[number];
-
-const CONTRATOS: Record<string, Record<Poblacion, { file: string; label: string } | null>> = {
-  basico: {
-    "Villanueva del Pardillo": { file: "/contratos/pack_basico_pardillo.pdf", label: "Contrato Pack Básico - Villanueva del Pardillo" },
-    Valdemorillo: { file: "/contratos/pack_basico_valdemorillo.pdf", label: "Contrato Pack Básico - Valdemorillo" },
-  },
-  avanzado: {
-    "Villanueva del Pardillo": { file: "/contratos/pack_avanzado_pardillo.pdf", label: "Contrato Pack Avanzado - Villanueva del Pardillo" },
-    Valdemorillo: { file: "/contratos/pack_avanzado_valdemorillo.pdf", label: "Contrato Pack Avanzado - Valdemorillo" },
-  },
-  completo: {
-    "Villanueva del Pardillo": { file: "/contratos/pack_completo_pardillo.pdf", label: "Contrato Pack Completo - Villanueva del Pardillo" },
-    Valdemorillo: { file: "/contratos/pack_completo_valdemorillo.pdf", label: "Contrato Pack Completo - Valdemorillo" },
-  },
-  premium: {
-    "Villanueva del Pardillo": null,
-    Valdemorillo: null,
-  },
-};
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
