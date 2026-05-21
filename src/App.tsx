@@ -44,8 +44,6 @@ import PageTitle from "./components/PageTitle";
 
 const queryClient = new QueryClient();
 
-const queryClient = new QueryClient();
-
 const ChatWidgetRenderer = () => {
   const { pathname } = useLocation();
   const showOn = ["/home", "/inicio"];
