@@ -73,6 +73,7 @@ const App = () => (
             <Route path="/recuperar-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard-alumno" element={<Dashboard />} />
             <Route path="/dashboard-profesor" element={<DashboardProfesor />} />
             <Route path="/dashboard-secretaria" element={<DashboardSecretaria />} />
             <Route path="/pagos" element={<Pagos />} />
