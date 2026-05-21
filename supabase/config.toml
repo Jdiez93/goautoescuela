@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.submit-matricula]
 verify_jwt = false
+
+[functions.create-matricula-payment]
+verify_jwt = false

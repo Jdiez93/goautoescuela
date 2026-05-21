@@ -17,9 +17,7 @@ serve(async (req) => {
   });
 
   const signature = req.headers.get("stripe-signature");
-  if (!signature) {
-    return new Response("No signature", { status: 400 });
-  }
+  if (!signature) return new Response("No signature", { status: 400 });
 
   const body = await req.text();
 
@@ -42,12 +40,44 @@ serve(async (req) => {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    const userId = session.metadata?.user_id;
-    const packId = session.metadata?.pack_id;
-    const classes = parseInt(session.metadata?.classes || "0", 10);
+    const metadata = session.metadata || {};
     const amountTotal = (session.amount_total || 0) / 100;
 
-    console.log("checkout.session.completed", { userId, packId, classes, amountTotal });
+    // === Flujo MATRÍCULA ===
+    if (metadata.matricula_id) {
+      const matriculaId = metadata.matricula_id;
+      console.log("checkout.session.completed (matricula)", { matriculaId, amountTotal });
+
+      const { error } = await supabaseAdmin
+        .from("matriculas")
+        .update({
+          estado_pago: "pagada",
+          estado_matricula: "pagada",
+          status: "pagada",
+          stripe_payment_id: session.payment_intent as string,
+          stripe_session_id: session.id,
+          paid_at: new Date().toISOString(),
+        })
+        .eq("id", matriculaId);
+
+      if (error) {
+        console.error("Error actualizando matrícula:", error);
+        return new Response("Database error", { status: 500 });
+      }
+
+      console.log("Matrícula marcada como pagada");
+      return new Response(JSON.stringify({ received: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
+
+    // === Flujo BONOS DE CLASES (existente) ===
+    const userId = metadata.user_id;
+    const packId = metadata.pack_id;
+    const classes = parseInt(metadata.classes || "0", 10);
+
+    console.log("checkout.session.completed (bono clases)", { userId, packId, classes, amountTotal });
 
     if (!userId || !classes) {
       console.error("Missing user_id or classes in metadata");
