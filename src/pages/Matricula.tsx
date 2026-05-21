@@ -269,11 +269,76 @@ export default function Matricula() {
 
             {/* Compact stepper — minimal bar */}
             <div className="flex items-center gap-2 bg-muted/40 rounded-lg px-4 py-2.5 border border-border/60">
-              <Step number={1} label="Matrícula" active />
+              <Step number={1} label="Matrícula" active={!savedId} done={!!savedId} />
               <div className="flex-1 h-[2px] bg-border" />
-              <Step number={2} label="Pago" />
+              <Step number={2} label="Pago" active={!!savedId} />
             </div>
           </div>
+
+          {savedId ? (
+            <Card className="border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-background">
+              <CardContent className="p-6 md:p-10 text-center space-y-5">
+                <div className="w-14 h-14 rounded-full bg-primary/15 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-8 h-8 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">
+                    Datos guardados correctamente
+                  </h1>
+                  <p className="text-muted-foreground mt-2 max-w-lg mx-auto">
+                    Tu matrícula está registrada y pendiente de pago. Continúa para completar el
+                    pago de forma segura con Stripe.
+                  </p>
+                </div>
+                {pack && (
+                  <div className="inline-flex items-baseline gap-2 bg-background/60 rounded-lg px-4 py-2 border border-border/60">
+                    <span className="text-sm text-muted-foreground">Importe:</span>
+                    <span className="text-xl font-bold text-primary">{formattedPrice}</span>
+                  </div>
+                )}
+                <div>
+                  <Button
+                    size="lg"
+                    disabled={redirectingToPay}
+                    onClick={async () => {
+                      setRedirectingToPay(true);
+                      try {
+                        const { data, error } = await supabase.functions.invoke(
+                          "create-matricula-payment",
+                          { body: { matricula_id: savedId } }
+                        );
+                        if (error) throw error;
+                        if (!data?.url) throw new Error("No se recibió la URL de pago");
+                        window.location.href = data.url;
+                      } catch (err) {
+                        console.error(err);
+                        toast({
+                          title: "No se pudo iniciar el pago",
+                          description:
+                            (err as Error)?.message ?? "Inténtalo de nuevo en unos segundos.",
+                          variant: "destructive",
+                        });
+                        setRedirectingToPay(false);
+                      }
+                    }}
+                  >
+                    {redirectingToPay ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Redirigiendo a Stripe…
+                      </>
+                    ) : (
+                      <>
+                        Continuar al pago <ArrowRight className="w-4 h-4 ml-1" />
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Serás redirigido a la pasarela segura de Stripe para completar el pago.
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
 
 
           {/* Form */}
