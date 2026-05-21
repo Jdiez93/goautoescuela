@@ -327,10 +327,11 @@ export default function Matricula() {
                     placeholder="tu@email.com"
                     autoComplete="email"
                   />
-                  <p className="text-[11px] text-muted-foreground mt-1.5 flex items-center gap-1">
-                    <Mail className="w-3 h-3 shrink-0" />
-                    Usa el mismo correo con el que te registrarás en la plataforma online.
+                  <p className="text-[11px] text-amber-600 dark:text-amber-500 mt-1.5 flex items-start gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-px" />
+                    <span>El correo que utilice para la matrícula es con el que deberá registrarse posteriormente en la plataforma online.</span>
                   </p>
+
                 </Field>
 
                 <Field label="Teléfono *" error={errors.phone?.message}>
