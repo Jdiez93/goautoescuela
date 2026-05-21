@@ -96,7 +96,7 @@ export default function Splash() {
   const handleSelect = (side: Side, path: string) => {
     if (selected) return;
     setSelected(side);
-    window.setTimeout(() => navigate(path), 950);
+    window.setTimeout(() => navigate(path), 1050);
   };
 
   return (
