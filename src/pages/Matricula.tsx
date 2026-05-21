@@ -600,9 +600,9 @@ function Step({
   done?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold border-2 transition-colors ${
+        className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border-2 transition-colors ${
           active
             ? "bg-primary text-primary-foreground border-primary"
             : done
@@ -610,10 +610,10 @@ function Step({
             : "bg-muted text-muted-foreground border-border"
         }`}
       >
-        {done ? <CheckCircle2 className="w-5 h-5" /> : number}
+        {done ? <CheckCircle2 className="w-3.5 h-3.5" /> : number}
       </div>
       <span
-        className={`text-sm font-semibold uppercase tracking-wide ${
+        className={`text-xs font-semibold uppercase tracking-wide ${
           active ? "text-foreground" : "text-muted-foreground"
         }`}
       >
