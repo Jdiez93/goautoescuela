@@ -67,6 +67,7 @@ import {
   Loader2,
 } from "lucide-react";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
+import NuevaMatriculaDialog from "@/components/secretaria/NuevaMatriculaDialog";
 
 interface Matricula {
   id: string;
@@ -289,17 +290,20 @@ export default function DashboardSecretaria() {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="grid grid-cols-1 gap-4"
         >
-          <Card className="border-l-4 border-l-primary max-w-md">
-            <CardContent className="p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Users className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Total matrículas</p>
-                <p className="text-2xl font-bold">{matriculas?.length ?? 0}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <Card className="border-l-4 border-l-primary max-w-md flex-1 min-w-[260px]">
+              <CardContent className="p-5 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Users className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">Total matrículas</p>
+                  <p className="text-2xl font-bold">{matriculas?.length ?? 0}</p>
+                </div>
+              </CardContent>
+            </Card>
+            <NuevaMatriculaDialog />
+          </div>
         </motion.div>
 
         {/* Filters */}
