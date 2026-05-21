@@ -103,7 +103,7 @@ export default function Splash() {
     <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-black flex flex-col md:flex-row">
       {/* Left / Top half */}
       <div
-        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[450ms] ease-out ${
           selected === "left"
             ? "md:w-full h-full"
             : selected === "right"
@@ -131,7 +131,7 @@ export default function Splash() {
 
       {/* Right / Bottom half */}
       <div
-        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[450ms] ease-out ${
           selected === "right"
             ? "md:w-full h-full"
             : selected === "left"
