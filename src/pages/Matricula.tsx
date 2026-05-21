@@ -80,12 +80,14 @@ export default function Matricula() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const packParam = params.get("pack") ?? "";
+  const savedId = params.get("saved");
   const slug = packParam.startsWith(PACK_PREFIX) ? packParam.slice(PACK_PREFIX.length) : packParam;
 
   const [pack, setPack] = useState<Pack | null>(null);
   const [loadingPack, setLoadingPack] = useState(true);
   const [packError, setPackError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [redirectingToPay, setRedirectingToPay] = useState(false);
 
   const [contratoFirmado, setContratoFirmado] = useState<File | null>(null);
   const [dniAnverso, setDniAnverso] = useState<File | null>(null);
