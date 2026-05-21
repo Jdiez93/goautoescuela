@@ -571,6 +571,7 @@ export default function Matricula() {
               </form>
             </CardContent>
           </Card>
+          )}
         </div>
       </main>
 
