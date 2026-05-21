@@ -46,8 +46,8 @@ const queryClient = new QueryClient();
 
 const ChatWidgetRenderer = () => {
   const { pathname } = useLocation();
-  const showOn = ["/home", "/inicio"];
-  if (!showOn.includes(pathname)) return null;
+  const hideOn = ["/"];
+  if (hideOn.includes(pathname)) return null;
   return <ChatWidget />;
 };
 
