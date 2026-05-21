@@ -87,7 +87,7 @@ export default function Register() {
         title: "¡Bienvenido/a!",
         description: "Tu cuenta de alumno está lista.",
       });
-      navigate("/dashboard");
+      navigate("/dashboard-alumno");
     } catch (err: any) {
       toast({
         title: "Error inesperado",
