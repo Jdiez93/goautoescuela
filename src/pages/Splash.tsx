@@ -42,34 +42,37 @@ function Half({ image, label, ariaLabel, side, selected, onActivate }: HalfProps
       className="relative w-full h-full overflow-hidden cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#78FEE1]"
     >
       <div
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="absolute inset-0 bg-cover bg-center transition-transform ease-[cubic-bezier(0.7,0,0.84,0)]"
         style={{
           backgroundImage: `url(${image})`,
           transform: isSelected
-            ? "scale(1.15)"
+            ? "scale(2.6)"
             : isOther
-            ? "scale(1)"
+            ? "scale(0.9)"
             : hover
             ? "scale(1.05)"
             : "scale(1)",
+          transitionDuration: selected ? "1100ms" : "500ms",
         }}
       />
       <div
-        className={`absolute inset-0 transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isSelected ? "bg-black/0" : isOther ? "bg-black/80" : hover ? "bg-black/20" : "bg-black/40"
+        className={`absolute inset-0 transition-all ease-out ${
+          isSelected ? "bg-black/0" : isOther ? "bg-black/90" : hover ? "bg-black/20" : "bg-black/40"
         }`}
+        style={{ transitionDuration: selected ? "900ms" : "500ms" }}
       />
       <div className="relative z-10 flex h-full w-full items-center justify-center px-6 text-center">
         <span
-          className={`inline-block font-sans font-bold uppercase tracking-wider text-white text-4xl md:text-6xl lg:text-7xl border-b-2 transition-all duration-[900ms] ease-out pb-2 ${
+          className={`inline-block font-sans font-bold uppercase tracking-wider text-white text-4xl md:text-6xl lg:text-7xl border-b-2 pb-2 transition-all ease-out ${
             isSelected
-              ? "border-[#78FEE1] scale-110 opacity-100"
+              ? "border-[#78FEE1] scale-[2] opacity-0"
               : isOther
-              ? "border-transparent opacity-0 scale-95"
+              ? "border-transparent opacity-0 scale-90"
               : hover
               ? "border-[#78FEE1]"
               : "border-transparent"
           }`}
+          style={{ transitionDuration: selected ? "1100ms" : "500ms" }}
         >
           {label}
         </span>
@@ -77,6 +80,7 @@ function Half({ image, label, ariaLabel, side, selected, onActivate }: HalfProps
     </div>
   );
 }
+
 
 export default function Splash() {
   const navigate = useNavigate();
@@ -92,14 +96,14 @@ export default function Splash() {
   const handleSelect = (side: Side, path: string) => {
     if (selected) return;
     setSelected(side);
-    window.setTimeout(() => navigate(path), 950);
+    window.setTimeout(() => navigate(path), 1050);
   };
 
   return (
     <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-black flex flex-col md:flex-row">
       {/* Left / Top half */}
       <div
-        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[450ms] ease-out ${
           selected === "left"
             ? "md:w-full h-full"
             : selected === "right"
@@ -127,7 +131,7 @@ export default function Splash() {
 
       {/* Right / Bottom half */}
       <div
-        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[450ms] ease-out ${
           selected === "right"
             ? "md:w-full h-full"
             : selected === "left"
