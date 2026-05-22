@@ -499,7 +499,7 @@ export default function DashboardProfesor() {
                   <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70" />
                   <div className="opacity-70">
                     <p className="font-medium text-background/90">V. del Pardillo</p>
-                    <p className="text-xs opacity-80">C/ Concepción, 61 — 28229</p>
+                    <p className="text-xs opacity-80">Calle Santa Ana, 1 — 28229</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
