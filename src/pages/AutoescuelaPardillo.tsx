@@ -18,9 +18,9 @@ const fadeUp = {
 
 export default function AutoescuelaPardillo() {
   const name = "Villanueva del Pardillo";
-  const address = "C/ Concepción, 61, 28229 Villanueva del Pardillo (Madrid)";
+  const address = "Calle Santa Ana, 1, 28229 Villanueva del Pardillo (Madrid)";
   const mapSrc =
-    "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=C.+Concepción+61+Local+9+28229+Villanueva+del+Pardillo+Madrid+Spain&zoom=17";
+    "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=Calle+Santa+Ana+1+28229+Villanueva+del+Pardillo+Madrid+Spain&zoom=17";
 
   return (
     <div className="min-h-screen bg-background">
