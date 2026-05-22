@@ -141,8 +141,8 @@ export default function Splash() {
       >
         <Half
           image={IMG_CENTRO}
-          label="Centro de Estudios y Formación"
-          ariaLabel="Ir a Centro de Estudios y Formación"
+          label="Centro de Estudio y Formación"
+          ariaLabel="Ir a Centro de Estudio y Formación"
           side="right"
           selected={selected}
           onActivate={() => handleSelect("right", "/centro-estudios")}
