@@ -525,7 +525,7 @@ export default function Tests() {
             <section>
               <h2 className="text-2xl font-bold font-['Space_Grotesk'] mb-6">Tests disponibles</h2>
               {testsLoading ? (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {Array.from({ length: 6 }).map((_, i) => (
                     <Card key={i} className="border-border/50">
                       <CardContent className="pt-6">
@@ -544,7 +544,7 @@ export default function Tests() {
                     <p className="text-lg font-semibold">Próximamente disponibles los tests oficiales</p>
                     <p className="text-sm text-muted-foreground mt-1">Estamos preparando el contenido para ti.</p>
                   </div>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {Array.from({ length: 6 }).map((_, i) => (
                       <Card key={i} className="border-border/50">
                         <CardContent className="pt-6">
@@ -558,7 +558,7 @@ export default function Tests() {
                   </div>
                 </div>
               ) : (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {tests.map((t) => (
                     <motion.div
                       key={t.id}
