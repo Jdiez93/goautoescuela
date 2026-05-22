@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, Navigate } from "react-router-dom";
-import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp, AlertTriangle, Instagram, Facebook, Youtube, Music2, Twitter } from "lucide-react";
+import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp, AlertTriangle, Instagram, Facebook, Youtube, Music2, Twitter, FileText } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -115,6 +115,7 @@ export default function Dashboard() {
   const studentCards = [
     { icon: Calendar, title: "Mis Reservas", desc: "Ver y gestionar tus clases programadas", href: "/reservas", accent: "primary" as const, borderClass: "border-l-4 border-l-primary" },
     { icon: CreditCard, title: "Mis Pagos", desc: "Historial de pagos, compra y saldo de clases", href: "/pagos", accent: "destructive" as const, borderClass: "border-l-4 border-l-destructive" },
+    { icon: FileText, title: "Tests", desc: "Practica tests y mide tu nivel", href: "/dashboard/tests", accent: "primary" as const, borderClass: "border-l-4 border-l-primary" },
     { icon: User, title: "Mi Perfil", desc: "Editar tus datos personales", href: "/perfil", accent: "primary" as const, borderClass: "border-l-4 border-l-primary" },
   ];
 
