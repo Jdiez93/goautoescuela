@@ -25,7 +25,7 @@ const navLinks = [
       {
         label: "Villanueva del Pardillo",
         to: "/autoescuelas-ready2go/villanueva-del-pardillo",
-        description: "C/ Concepción, 61 · Madrid",
+        description: "Calle Santa Ana, 1 · Madrid",
       },
       {
         label: "Valdemorillo",
