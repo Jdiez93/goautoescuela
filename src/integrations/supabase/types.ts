@@ -516,6 +516,78 @@ export type Database = {
         }
         Relationships: []
       }
+      test_attempts: {
+        Row: {
+          correct_answers: number
+          created_at: string
+          duration_seconds: number
+          errors: number
+          id: string
+          passed: boolean
+          score_percentage: number
+          test_id: string
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          correct_answers: number
+          created_at?: string
+          duration_seconds?: number
+          errors: number
+          id?: string
+          passed: boolean
+          score_percentage: number
+          test_id: string
+          total_questions: number
+          user_id: string
+        }
+        Update: {
+          correct_answers?: number
+          created_at?: string
+          duration_seconds?: number
+          errors?: number
+          id?: string
+          passed?: boolean
+          score_percentage?: number
+          test_id?: string
+          total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tests: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          is_active: boolean
+          pass_threshold: number
+          questions: Json
+          title: string
+          total_questions: number
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          pass_threshold?: number
+          questions?: Json
+          title: string
+          total_questions?: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          pass_threshold?: number
+          questions?: Json
+          title?: string
+          total_questions?: number
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -562,6 +634,7 @@ export type Database = {
           start_time: string
         }[]
       }
+      get_test_for_attempt: { Args: { _test_id: string }; Returns: Json }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
@@ -573,8 +646,22 @@ export type Database = {
         }
         Returns: boolean
       }
+      list_available_tests: {
+        Args: never
+        Returns: {
+          category: string
+          id: string
+          pass_threshold: number
+          title: string
+          total_questions: number
+        }[]
+      }
       owns_matricula: { Args: { _matricula_id: string }; Returns: boolean }
       refund_class: { Args: { _user_id: string }; Returns: undefined }
+      submit_test_attempt: {
+        Args: { _answers: Json; _duration_seconds?: number; _test_id: string }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "student" | "teacher" | "admin" | "secretaria"

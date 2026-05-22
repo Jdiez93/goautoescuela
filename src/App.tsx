@@ -35,6 +35,7 @@ import DashboardSecretaria from "./pages/DashboardSecretaria";
 import Pagos from "./pages/Pagos";
 import Reservas from "./pages/Reservas";
 import Perfil from "./pages/Perfil";
+import Tests from "./pages/Tests";
 
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import AvisoLegal from "./pages/AvisoLegal";
@@ -90,6 +91,7 @@ const App = () => (
               <Route path="/pagos" element={<Pagos />} />
               <Route path="/reservas" element={<Reservas />} />
               <Route path="/perfil" element={<Perfil />} />
+              <Route path="/dashboard/tests" element={<Tests />} />
               
               <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
               <Route path="/aviso-legal" element={<AvisoLegal />} />
