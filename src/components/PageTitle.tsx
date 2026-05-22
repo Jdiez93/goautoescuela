@@ -21,6 +21,7 @@ const titleMap: Record<string, string> = {
   "/dashboard-profesor": "Panel de profesor",
   "/dashboard-secretaria": "Panel de secretaría",
   "/pagos": "Pagos",
+  "/dashboard/tests": "Tests",
   "/reservas": "Reservas",
   "/perfil": "Mi perfil",
   "/politica-privacidad": "Política de privacidad",
