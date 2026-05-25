@@ -1065,3 +1065,116 @@ function DocButton({
     </Button>
   );
 }
+
+function AddSaldoDialog({
+  matricula,
+  onClose,
+  onSuccess,
+}: {
+  matricula: Matricula | null;
+  onClose: () => void;
+  onSuccess: () => void;
+}) {
+  const [numClasses, setNumClasses] = useState<string>("1");
+  const [amount, setAmount] = useState<string>("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!matricula?.user_id) return;
+    const n = parseInt(numClasses, 10);
+    if (!Number.isFinite(n) || n <= 0) {
+      toast({ title: "Número de clases inválido", variant: "destructive" });
+      return;
+    }
+    const a = amount.trim() === "" ? 0 : Number(amount);
+    if (!Number.isFinite(a) || a < 0) {
+      toast({ title: "Importe inválido", variant: "destructive" });
+      return;
+    }
+    try {
+      setSubmitting(true);
+      const { error } = await supabase.rpc("secretaria_add_classes", {
+        _user_id: matricula.user_id,
+        _num_classes: n,
+        _amount: a,
+        _note: `Efectivo en local - ${matricula.full_name}`,
+      });
+      if (error) throw error;
+      toast({
+        title: "Saldo añadido",
+        description: `Se han añadido ${n} clases a ${matricula.full_name}.`,
+      });
+      onSuccess();
+      onClose();
+      setNumClasses("1");
+      setAmount("");
+    } catch (err) {
+      toast({
+        title: "No se pudo añadir el saldo",
+        description: (err as Error)?.message ?? "Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Dialog open={!!matricula} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-md">
+        {matricula && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Wallet className="w-5 h-5 text-primary" />
+                Añadir saldo en efectivo
+              </DialogTitle>
+              <DialogDescription>
+                Alumno: <span className="font-medium text-foreground">{matricula.full_name}</span>
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-2">
+              <div className="space-y-1.5">
+                <Label htmlFor="num-classes">Número de clases</Label>
+                <Input
+                  id="num-classes"
+                  type="number"
+                  min={1}
+                  value={numClasses}
+                  onChange={(e) => setNumClasses(e.target.value)}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="amount">Importe cobrado (€) — opcional</Label>
+                <Input
+                  id="amount"
+                  type="number"
+                  min={0}
+                  step="0.01"
+                  placeholder="0"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Estas clases se sumarán al saldo del alumno y podrá usarlas inmediatamente para reservar prácticas.
+              </p>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={onClose} disabled={submitting}>
+                Cancelar
+              </Button>
+              <Button onClick={handleSubmit} disabled={submitting}>
+                {submitting ? (
+                  <><Loader2 className="w-4 h-4 mr-1 animate-spin" /> Guardando…</>
+                ) : (
+                  <><Plus className="w-4 h-4 mr-1" /> Añadir saldo</>
+                )}
+              </Button>
+            </DialogFooter>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
