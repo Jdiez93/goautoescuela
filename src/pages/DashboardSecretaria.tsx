@@ -119,7 +119,30 @@ export default function DashboardSecretaria() {
     enabled: !!user && (isSecretaria || isAdmin),
   });
 
+  const queryClient = useQueryClient();
+
+  const userIds = useMemo(
+    () => Array.from(new Set((matriculas ?? []).map((m) => m.user_id).filter((id): id is string => !!id))),
+    [matriculas]
+  );
+
+  const { data: balances } = useQuery({
+    queryKey: ["matriculas-balances", userIds],
+    queryFn: async () => {
+      if (userIds.length === 0) return {} as Record<string, number>;
+      const { data, error } = await supabase.rpc("secretaria_get_user_balances", { _user_ids: userIds });
+      if (error) throw error;
+      const map: Record<string, number> = {};
+      (data ?? []).forEach((row: { user_id: string; balance: number }) => {
+        map[row.user_id] = row.balance;
+      });
+      return map;
+    },
+    enabled: !!user && (isSecretaria || isAdmin) && userIds.length > 0,
+  });
+
   const [detail, setDetail] = useState<Matricula | null>(null);
+  const [saldoTarget, setSaldoTarget] = useState<Matricula | null>(null);
 
 
   const { data: packs } = useQuery({
