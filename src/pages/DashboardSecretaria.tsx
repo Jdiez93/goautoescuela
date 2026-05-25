@@ -368,13 +368,22 @@ export default function DashboardSecretaria() {
                   onChange={setFDni}
                   placeholder="12345678A"
                 />
-                <FilterField
-                  label="Población"
-                  icon={<MapPin className="w-4 h-4" />}
-                  value={fCity}
-                  onChange={setFCity}
-                  placeholder="Villanueva del Pardillo"
-                />
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4" />
+                    Población
+                  </Label>
+                  <Select value={fCity || "all"} onValueChange={(v) => setFCity(v === "all" ? "" : v)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Todas las poblaciones" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas las poblaciones</SelectItem>
+                      <SelectItem value="Villanueva del Pardillo">Villanueva del Pardillo</SelectItem>
+                      <SelectItem value="Valdemorillo">Valdemorillo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <FilterField
                   label="Correo electrónico"
                   icon={<Mail className="w-4 h-4" />}
