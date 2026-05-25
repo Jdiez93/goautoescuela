@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { Plus, Wallet } from "lucide-react";
 import { Navigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
