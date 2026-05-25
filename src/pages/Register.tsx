@@ -42,6 +42,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -50,6 +51,7 @@ export default function Register() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     if (password.length < 6) {
       toast({ title: "Contraseña muy corta", description: "Mínimo 6 caracteres", variant: "destructive" });
       return;
@@ -63,7 +65,12 @@ export default function Register() {
 
       if (error || (data as any)?.error) {
         const msg = (data as any)?.error ?? error?.message ?? "No se pudo crear la cuenta.";
-        toast({ title: "Registro no permitido", description: msg, variant: "destructive" });
+        const noMatricula = /matr[ií]cula/i.test(msg) && /pagad/i.test(msg);
+        const friendly = noMatricula
+          ? "Correo no encontrado con matrícula pagada. Revisa por favor, debes registrarte con un correo que haya pagado una matrícula."
+          : msg;
+        setFormError(friendly);
+        toast({ title: "Registro no permitido", description: friendly, variant: "destructive" });
         setLoading(false);
         return;
       }
@@ -253,6 +260,16 @@ export default function Register() {
                   Crear cuenta
                 </Button>
               </motion.div>
+              {formError && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  role="alert"
+                  className="rounded-md border-2 border-destructive bg-destructive/10 p-3 text-sm font-semibold text-destructive text-center"
+                >
+                  {formError}
+                </motion.div>
+              )}
             </form>
             <motion.p
               initial={{ opacity: 0 }}
