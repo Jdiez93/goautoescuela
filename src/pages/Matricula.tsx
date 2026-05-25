@@ -40,8 +40,8 @@ const CONTRATOS: Record<string, Record<string, { file: string; label: string } |
     Valdemorillo: { file: "/contratos/pack_completo_valdemorillo.pdf", label: "Contrato Pack Completo - Valdemorillo" },
   },
   premium: {
-    "Villanueva del Pardillo": null,
-    Valdemorillo: null,
+    "Villanueva del Pardillo": { file: "/contratos/pack_premium_pardillo.pdf", label: "Contrato Pack Premium - Villanueva del Pardillo" },
+    Valdemorillo: { file: "/contratos/pack_premium_valdemorillo.pdf", label: "Contrato Pack Premium - Valdemorillo" },
   },
 };
 
