@@ -63,12 +63,27 @@ export default function Register() {
         body: { email: email.trim().toLowerCase(), password, full_name: fullName },
       });
 
-      if (error || (data as any)?.error) {
-        const msg = (data as any)?.error ?? error?.message ?? "No se pudo crear la cuenta.";
-        const noMatricula = /matr[ií]cula/i.test(msg) && /pagad/i.test(msg);
+      // Extraer mensaje real (también en respuestas non-2xx)
+      let backendMsg: string | null = (data as any)?.error ?? null;
+      if (!backendMsg && error) {
+        try {
+          const ctx: any = (error as any).context;
+          if (ctx && typeof ctx.json === "function") {
+            const body = await ctx.json();
+            backendMsg = body?.error ?? null;
+          } else if (ctx && typeof ctx.text === "function") {
+            const txt = await ctx.text();
+            try { backendMsg = JSON.parse(txt)?.error ?? null; } catch { backendMsg = txt || null; }
+          }
+        } catch { /* noop */ }
+        if (!backendMsg) backendMsg = error.message;
+      }
+
+      if (backendMsg) {
+        const noMatricula = /matr[ií]cula/i.test(backendMsg) && /pagad/i.test(backendMsg);
         const friendly = noMatricula
           ? "Correo no encontrado con matrícula pagada. Revisa por favor, debes registrarte con un correo que haya pagado una matrícula."
-          : msg;
+          : backendMsg;
         setFormError(friendly);
         toast({ title: "Registro no permitido", description: friendly, variant: "destructive" });
         setLoading(false);
