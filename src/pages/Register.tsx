@@ -260,6 +260,16 @@ export default function Register() {
                   Crear cuenta
                 </Button>
               </motion.div>
+              {formError && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  role="alert"
+                  className="rounded-md border-2 border-destructive bg-destructive/10 p-3 text-sm font-semibold text-destructive text-center"
+                >
+                  {formError}
+                </motion.div>
+              )}
             </form>
             <motion.p
               initial={{ opacity: 0 }}
