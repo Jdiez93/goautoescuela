@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, LogOut, UserCircle, ChevronDown, MapPin, ArrowRight } from "lucide-react";
+import { Menu, X, LogOut, UserCircle } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,28 +14,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Teórica", to: "/la-teorica" },
-  { label: "Prácticas", to: "/las-practicas" },
-  {
-    label: "Autoescuelas Ready2Go",
-    to: "/autoescuelas-ready2go",
-    children: [
-      {
-        label: "Villanueva del Pardillo",
-        to: "/autoescuelas-ready2go/villanueva-del-pardillo",
-        description: "Calle Santa Ana, 1 · Madrid",
-      },
-      {
-        label: "Valdemorillo",
-        to: "/autoescuelas-ready2go/valdemorillo",
-        description: "C/ Covachuelas, 18 · Madrid",
-      },
-    ],
-  },
-  { label: "Autoescuela Online", to: "/autoescuela-online" },
+  { label: "Centro de estudio", to: "/consejos" },
+  { label: "Centro de formación", to: "/actualidad" },
 ];
 
-export default function Navbar() {
+export default function CentroNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { user, signOut, isTeacher } = useAuth();
@@ -75,8 +58,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-3 sm:px-4">
         <div className="flex items-center justify-between h-[72px] md:h-24">
-          {/* Logo */}
-          <Link to="/" state={{ skipIntro: true }} className="flex items-center gap-2 group shrink-0 min-w-0">
+          <Link to="/centro-estudios" className="flex items-center gap-2 group shrink-0 min-w-0">
             <motion.img
               src={logoReady2Go}
               alt="Ready2Go"
@@ -89,86 +71,9 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Center nav links — desktop */}
           <div className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => {
-              const isActive =
-                location.pathname === link.to ||
-                (link.children && location.pathname.startsWith(link.to + "/"));
-              if (link.children) {
-                return (
-                  <div key={link.to} className="relative group">
-                    <span
-                      className={cn(
-                        "relative px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer inline-flex items-center gap-1",
-                        isActive
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground"
-                      )}
-                    >
-                      {link.label}
-                      <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        />
-                      )}
-                    </span>
-                    {/* Dropdown */}
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-50">
-                      <div className="relative w-[420px] rounded-2xl border border-border/60 bg-background/90 backdrop-blur-2xl shadow-[0_20px_60px_-15px_hsl(var(--foreground)/0.25)] overflow-hidden">
-                        {/* Decorative gradient top */}
-                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0" />
-                        {/* Header */}
-                        <div className="px-5 pt-5 pb-3">
-                          <p className="text-[10px] uppercase tracking-[0.18em] font-semibold text-primary mb-1">
-                            Nuestros centros
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            Elige la autoescuela más cercana
-                          </p>
-                        </div>
-                        <div className="h-px bg-border/40" />
-                        {/* Items */}
-                        <div className="p-2">
-                          {link.children.map((child) => {
-                            const childActive = location.pathname === child.to;
-                            return (
-                              <Link key={child.to} to={child.to} className="block">
-                                <div
-                                  className={cn(
-                                    "group/item relative flex items-start gap-3 p-3 rounded-xl transition-all duration-200",
-                                    childActive
-                                      ? "bg-primary/10"
-                                      : "hover:bg-muted/70"
-                                  )}
-                                >
-                                  <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-200">
-                                    <MapPin className="w-5 h-5" />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-semibold text-foreground leading-tight">
-                                      {child.label}
-                                    </p>
-                                    {child.description && (
-                                      <p className="text-xs text-muted-foreground mt-0.5 truncate">
-                                        {child.description}
-                                      </p>
-                                    )}
-                                  </div>
-                                  <ArrowRight className="w-4 h-4 text-muted-foreground self-center shrink-0 opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200" />
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
+              const isActive = location.pathname === link.to;
               return (
                 <Link key={link.to} to={link.to}>
                   <span
@@ -182,7 +87,7 @@ export default function Navbar() {
                     {link.label}
                     {isActive && (
                       <motion.span
-                        layoutId="nav-underline"
+                        layoutId="nav-underline-centro"
                         className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
@@ -193,13 +98,7 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Right actions — desktop */}
           <div className="hidden md:flex items-center gap-2 shrink-0">
-            <Link to="/matriculate" className="hidden lg:inline-block">
-              <span className="relative px-3 py-2 text-xs xl:text-sm font-bold rounded-lg text-[#78fee1] hover:text-[hsl(170,98%,80%)] transition-all duration-300 hover:[text-shadow:0_0_12px_hsl(170_98%_73%/0.9),0_0_24px_hsl(170_98%_73%/0.6)]">
-                Matricúlate
-              </span>
-            </Link>
             {user ? (
               <>
                 <Link to={panelHref}>
@@ -228,7 +127,6 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile toggle */}
           <motion.button
             className="lg:hidden p-2 rounded-xl hover:bg-muted transition-colors"
             onClick={() => setIsOpen(!isOpen)}
@@ -249,7 +147,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -262,24 +159,6 @@ export default function Navbar() {
             <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.to;
-                if (link.children) {
-                  return (
-                    <div key={link.to} className="flex flex-col">
-                      <div className="px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground">
-                        {link.label}
-                      </div>
-                      <div className="flex flex-col gap-1 pl-4">
-                        {link.children.map((child) => (
-                          <Link key={child.to} to={child.to} onClick={() => setIsOpen(false)}>
-                            <div className="px-4 py-2 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-                              {child.label}
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                }
                 return (
                   <Link key={link.to} to={link.to} onClick={() => setIsOpen(false)}>
                     <div
@@ -295,11 +174,6 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <Link to="/matriculate" onClick={() => setIsOpen(false)}>
-                <div className="px-4 py-2.5 rounded-xl text-sm font-bold text-[#78fee1] hover:[text-shadow:0_0_12px_hsl(170_98%_73%/0.9)] transition-all">
-                  Matricúlate
-                </div>
-              </Link>
               <div className="h-px bg-border/60 my-2" />
               {user ? (
                 <>
