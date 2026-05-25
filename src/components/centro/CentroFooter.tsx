@@ -69,27 +69,34 @@ export default function CentroFooter() {
           {/* Contacto */}
           <div>
             <h4 className="font-semibold text-background mb-5 text-xs uppercase tracking-[0.2em]">Contacto</h4>
-            <ul className="space-y-3.5 text-sm">
-              <li className="flex items-start gap-3 group">
-                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
-                <div className="opacity-70 group-hover:opacity-100 transition-opacity">
-                  <p className="font-medium text-background/90">Villanueva del Pardillo</p>
-                  <p className="text-xs opacity-80">Calle Santa Ana, 1 — 28229 Madrid</p>
-                </div>
-              </li>
-              <li className="flex items-center gap-3 group">
-                <Phone className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
-                <a href="tel:+34645343117" className="opacity-70 group-hover:opacity-100 transition-opacity">
-                  645 34 31 17
-                </a>
-              </li>
-              <li className="flex items-center gap-3 group">
-                <Mail className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
-                <a href="mailto:info@autoescuelago.es" className="opacity-70 group-hover:opacity-100 transition-opacity">
-                  info@autoescuelago.es
-                </a>
-              </li>
-            </ul>
+          <ul className="space-y-3.5 text-sm">
+            <li className="flex items-start gap-3 group">
+              <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
+              <div className="opacity-70 group-hover:opacity-100 transition-opacity">
+                <p className="font-medium text-background/90">Villanueva del Pardillo</p>
+                <p className="text-xs opacity-80">Calle Santa Ana, 1 — 28229 Madrid</p>
+              </div>
+            </li>
+            <li className="flex items-start gap-3 group">
+              <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
+              <div className="opacity-70 group-hover:opacity-100 transition-opacity">
+                <p className="font-medium text-background/90">Valdemorillo</p>
+                <p className="text-xs opacity-80">C. Covachuelas, 18 — 28210 Madrid</p>
+              </div>
+            </li>
+            <li className="flex items-center gap-3 group">
+              <Phone className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
+              <a href="tel:+34645343117" className="opacity-70 group-hover:opacity-100 transition-opacity">
+                645 34 31 17
+              </a>
+            </li>
+            <li className="flex items-center gap-3 group">
+              <Mail className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
+              <a href="mailto:info@autoescuelago.es" className="opacity-70 group-hover:opacity-100 transition-opacity">
+                info@autoescuelago.es
+              </a>
+            </li>
+          </ul>
           </div>
 
           {/* Horarios */}
