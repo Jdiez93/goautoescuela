@@ -72,6 +72,7 @@ import NuevaMatriculaDialog from "@/components/secretaria/NuevaMatriculaDialog";
 
 interface Matricula {
   id: string;
+  user_id: string | null;
   full_name: string;
   dni: string;
   email: string;
