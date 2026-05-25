@@ -505,6 +505,23 @@ export default function DashboardSecretaria() {
                                 <Eye className="w-4 h-4 mr-1" /> Ver
                               </Button>
                             </TableCell>
+                            <TableCell className="text-right whitespace-nowrap">
+                              <div className="inline-flex items-center gap-2">
+                                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 font-semibold">
+                                  <Wallet className="w-3.5 h-3.5 mr-1" />
+                                  {m.user_id ? (balances?.[m.user_id] ?? 0) : 0} clases
+                                </Badge>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  disabled={!m.user_id}
+                                  onClick={() => setSaldoTarget(m)}
+                                  title={m.user_id ? "Añadir saldo" : "El alumno aún no tiene cuenta"}
+                                >
+                                  <Plus className="w-4 h-4 mr-1" /> Añadir
+                                </Button>
+                              </div>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
