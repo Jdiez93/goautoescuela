@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
+import { Plus, Wallet } from "lucide-react";
 import { Navigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -71,6 +72,7 @@ import NuevaMatriculaDialog from "@/components/secretaria/NuevaMatriculaDialog";
 
 interface Matricula {
   id: string;
+  user_id: string | null;
   full_name: string;
   dni: string;
   email: string;
@@ -109,7 +111,7 @@ export default function DashboardSecretaria() {
       const { data, error } = await supabase
         .from("matriculas")
         .select(
-          "id, full_name, dni, email, phone, address, postal_code, date_of_birth, city, pack_name, pack_id, precio, status, estado_matricula, estado_pago, contrato_asociado, contrato_firmado_url, dni_anverso_url, dni_reverso_url, fecha_pago, created_at"
+          "id, user_id, full_name, dni, email, phone, address, postal_code, date_of_birth, city, pack_name, pack_id, precio, status, estado_matricula, estado_pago, contrato_asociado, contrato_firmado_url, dni_anverso_url, dni_reverso_url, fecha_pago, created_at"
         )
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -118,7 +120,30 @@ export default function DashboardSecretaria() {
     enabled: !!user && (isSecretaria || isAdmin),
   });
 
+  const queryClient = useQueryClient();
+
+  const userIds = useMemo(
+    () => Array.from(new Set((matriculas ?? []).map((m) => m.user_id).filter((id): id is string => !!id))),
+    [matriculas]
+  );
+
+  const { data: balances } = useQuery({
+    queryKey: ["matriculas-balances", userIds],
+    queryFn: async () => {
+      if (userIds.length === 0) return {} as Record<string, number>;
+      const { data, error } = await supabase.rpc("secretaria_get_user_balances", { _user_ids: userIds });
+      if (error) throw error;
+      const map: Record<string, number> = {};
+      (data ?? []).forEach((row: { user_id: string; balance: number }) => {
+        map[row.user_id] = row.balance;
+      });
+      return map;
+    },
+    enabled: !!user && (isSecretaria || isAdmin) && userIds.length > 0,
+  });
+
   const [detail, setDetail] = useState<Matricula | null>(null);
+  const [saldoTarget, setSaldoTarget] = useState<Matricula | null>(null);
 
 
   const { data: packs } = useQuery({
@@ -343,13 +368,22 @@ export default function DashboardSecretaria() {
                   onChange={setFDni}
                   placeholder="12345678A"
                 />
-                <FilterField
-                  label="Población"
-                  icon={<MapPin className="w-4 h-4" />}
-                  value={fCity}
-                  onChange={setFCity}
-                  placeholder="Villanueva del Pardillo"
-                />
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4" />
+                    Población
+                  </Label>
+                  <Select value={fCity || "all"} onValueChange={(v) => setFCity(v === "all" ? "" : v)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Todas las poblaciones" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas las poblaciones</SelectItem>
+                      <SelectItem value="Villanueva del Pardillo">Villanueva del Pardillo</SelectItem>
+                      <SelectItem value="Valdemorillo">Valdemorillo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <FilterField
                   label="Correo electrónico"
                   icon={<Mail className="w-4 h-4" />}
@@ -434,6 +468,7 @@ export default function DashboardSecretaria() {
                           <SortableHead label="Creada" colKey="created_at" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <SortableHead label="Pagada" colKey="fecha_pago" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <TableHead className="text-right">Acciones</TableHead>
+                          <TableHead className="text-right">Saldo</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -469,6 +504,23 @@ export default function DashboardSecretaria() {
                               <Button size="sm" variant="outline" onClick={() => setDetail(m)}>
                                 <Eye className="w-4 h-4 mr-1" /> Ver
                               </Button>
+                            </TableCell>
+                            <TableCell className="text-right whitespace-nowrap">
+                              <div className="inline-flex items-center gap-2">
+                                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 font-semibold">
+                                  <Wallet className="w-3.5 h-3.5 mr-1" />
+                                  {m.user_id ? (balances?.[m.user_id] ?? 0) : 0} clases
+                                </Badge>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  disabled={!m.user_id}
+                                  onClick={() => setSaldoTarget(m)}
+                                  title={m.user_id ? "Añadir saldo" : "El alumno aún no tiene cuenta"}
+                                >
+                                  <Plus className="w-4 h-4 mr-1" /> Añadir
+                                </Button>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -534,6 +586,13 @@ export default function DashboardSecretaria() {
       </main>
 
       <MatriculaDetailDialog matricula={detail} onClose={() => setDetail(null)} />
+      <AddSaldoDialog
+        matricula={saldoTarget}
+        onClose={() => setSaldoTarget(null)}
+        onSuccess={() => {
+          queryClient.invalidateQueries({ queryKey: ["matriculas-balances"] });
+        }}
+      />
 
 
       {/* Compact Footer */}
@@ -1004,5 +1063,118 @@ function DocButton({
         {missing ? "No disponible" : "Descargar / ver"}
       </span>
     </Button>
+  );
+}
+
+function AddSaldoDialog({
+  matricula,
+  onClose,
+  onSuccess,
+}: {
+  matricula: Matricula | null;
+  onClose: () => void;
+  onSuccess: () => void;
+}) {
+  const [numClasses, setNumClasses] = useState<string>("1");
+  const [amount, setAmount] = useState<string>("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!matricula?.user_id) return;
+    const n = parseInt(numClasses, 10);
+    if (!Number.isFinite(n) || n <= 0) {
+      toast({ title: "Número de clases inválido", variant: "destructive" });
+      return;
+    }
+    const a = amount.trim() === "" ? 0 : Number(amount);
+    if (!Number.isFinite(a) || a < 0) {
+      toast({ title: "Importe inválido", variant: "destructive" });
+      return;
+    }
+    try {
+      setSubmitting(true);
+      const { error } = await supabase.rpc("secretaria_add_classes", {
+        _user_id: matricula.user_id,
+        _num_classes: n,
+        _amount: a,
+        _note: `Efectivo en local - ${matricula.full_name}`,
+      });
+      if (error) throw error;
+      toast({
+        title: "Saldo añadido",
+        description: `Se han añadido ${n} clases a ${matricula.full_name}.`,
+      });
+      onSuccess();
+      onClose();
+      setNumClasses("1");
+      setAmount("");
+    } catch (err) {
+      toast({
+        title: "No se pudo añadir el saldo",
+        description: (err as Error)?.message ?? "Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Dialog open={!!matricula} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-md">
+        {matricula && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Wallet className="w-5 h-5 text-primary" />
+                Añadir saldo en efectivo
+              </DialogTitle>
+              <DialogDescription>
+                Alumno: <span className="font-medium text-foreground">{matricula.full_name}</span>
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-2">
+              <div className="space-y-1.5">
+                <Label htmlFor="num-classes">Número de clases</Label>
+                <Input
+                  id="num-classes"
+                  type="number"
+                  min={1}
+                  value={numClasses}
+                  onChange={(e) => setNumClasses(e.target.value)}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="amount">Importe cobrado (€) — opcional</Label>
+                <Input
+                  id="amount"
+                  type="number"
+                  min={0}
+                  step="0.01"
+                  placeholder="0"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Estas clases se sumarán al saldo del alumno y podrá usarlas inmediatamente para reservar prácticas.
+              </p>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={onClose} disabled={submitting}>
+                Cancelar
+              </Button>
+              <Button onClick={handleSubmit} disabled={submitting}>
+                {submitting ? (
+                  <><Loader2 className="w-4 h-4 mr-1 animate-spin" /> Guardando…</>
+                ) : (
+                  <><Plus className="w-4 h-4 mr-1" /> Añadir saldo</>
+                )}
+              </Button>
+            </DialogFooter>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }

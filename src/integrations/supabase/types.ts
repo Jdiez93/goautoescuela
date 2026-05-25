@@ -658,6 +658,22 @@ export type Database = {
       }
       owns_matricula: { Args: { _matricula_id: string }; Returns: boolean }
       refund_class: { Args: { _user_id: string }; Returns: undefined }
+      secretaria_add_classes: {
+        Args: {
+          _amount?: number
+          _note?: string
+          _num_classes: number
+          _user_id: string
+        }
+        Returns: string
+      }
+      secretaria_get_user_balances: {
+        Args: { _user_ids: string[] }
+        Returns: {
+          balance: number
+          user_id: string
+        }[]
+      }
       submit_test_attempt: {
         Args: { _answers: Json; _duration_seconds?: number; _test_id: string }
         Returns: Json
