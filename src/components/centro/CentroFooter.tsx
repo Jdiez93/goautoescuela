@@ -103,13 +103,34 @@ export default function CentroFooter() {
           <div>
             <h4 className="font-semibold text-background mb-5 text-xs uppercase tracking-[0.2em]">Horarios</h4>
             <div className="space-y-4 text-sm">
+              {/* Pardillo */}
               <div className="rounded-xl border border-background/10 bg-background/[0.03] p-3.5">
                 <div className="flex items-center gap-2 mb-2">
-                  <Clock className="w-3.5 h-3.5 text-primary/70" />
-                  <p className="font-semibold text-background/90 text-xs uppercase tracking-wider">Lunes a viernes</p>
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <p className="font-semibold text-background/90 text-xs uppercase tracking-wider">V. del Pardillo</p>
                 </div>
-                <p className="text-xs opacity-70">10:00 – 13:00 / 16:00 – 20:00</p>
+                <div className="space-y-1 text-xs opacity-70">
+                  <div className="flex justify-between gap-2">
+                    <span>Mar y Jue</span>
+                    <span className="font-medium text-background/85">10–13 / 16:00–20:00</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Valdemorillo */}
+              <div className="rounded-xl border border-background/10 bg-background/[0.03] p-3.5">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <p className="font-semibold text-background/90 text-xs uppercase tracking-wider">Valdemorillo</p>
+                </div>
+                <div className="space-y-1 text-xs opacity-70">
+                  <div className="flex justify-between gap-2">
+                    <span>Lun, Mié y Vie</span>
+                    <span className="font-medium text-background/85">10–13 / 16:00–20:00</span>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex items-center gap-2 text-xs opacity-60 pl-1">
                 <span>Sáb y Dom:</span>
                 <span className="text-red-400 font-semibold">Cerrado</span>
