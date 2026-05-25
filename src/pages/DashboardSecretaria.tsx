@@ -586,6 +586,13 @@ export default function DashboardSecretaria() {
       </main>
 
       <MatriculaDetailDialog matricula={detail} onClose={() => setDetail(null)} />
+      <AddSaldoDialog
+        matricula={saldoTarget}
+        onClose={() => setSaldoTarget(null)}
+        onSuccess={() => {
+          queryClient.invalidateQueries({ queryKey: ["matriculas-balances"] });
+        }}
+      />
 
 
       {/* Compact Footer */}
