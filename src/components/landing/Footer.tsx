@@ -79,14 +79,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/actualidad" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
-                  Centro de formación
-                  <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/consejos" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
-                  Centro de estudios
+                <Link to="/autoescuela-online" className="opacity-70 hover:opacity-100 hover:text-primary transition-all inline-flex items-center gap-1.5 group">
+                  Autoescuela Online
                   <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                 </Link>
               </li>

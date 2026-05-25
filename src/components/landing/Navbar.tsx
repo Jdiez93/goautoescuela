@@ -16,8 +16,6 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "Teórica", to: "/la-teorica" },
   { label: "Prácticas", to: "/las-practicas" },
-  { label: "Centro de formación", to: "/actualidad" },
-  { label: "Centro de estudios", to: "/consejos" },
   {
     label: "Autoescuelas Ready2Go",
     to: "/autoescuelas-ready2go",
