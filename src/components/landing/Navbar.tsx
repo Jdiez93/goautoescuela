@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
+  { label: "Inicio", to: "/home" },
   { label: "Teórica", to: "/la-teorica" },
   { label: "Prácticas", to: "/las-practicas" },
   {
