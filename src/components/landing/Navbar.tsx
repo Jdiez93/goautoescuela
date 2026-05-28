@@ -91,7 +91,7 @@ export default function Navbar() {
           </Link>
 
           {/* Center nav links — desktop */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-4">
             {navLinks.map((link) => {
               const isActive =
                 location.pathname === link.to ||
@@ -101,7 +101,8 @@ export default function Navbar() {
                   <div key={link.to} className="relative group">
                     <span
                       className={cn(
-                        "relative px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer inline-flex items-center gap-1",
+                        "relative px-3 py-2 text-sm xl:text-base font-medium rounded-lg transition-colors duration-200 cursor-pointer inline-flex items-center gap-1",
+
                         isActive
                           ? "text-foreground"
                           : "text-muted-foreground hover:text-foreground"
@@ -174,7 +175,7 @@ export default function Navbar() {
                 <Link key={link.to} to={link.to}>
                   <span
                     className={cn(
-                      "relative px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium rounded-lg transition-colors duration-200",
+                      "relative px-3 py-2 text-sm xl:text-base font-medium rounded-lg transition-colors duration-200",
                       isActive
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground"
