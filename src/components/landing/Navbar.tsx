@@ -91,7 +91,7 @@ export default function Navbar() {
           </Link>
 
           {/* Center nav links — desktop */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-4">
             {navLinks.map((link) => {
               const isActive =
                 location.pathname === link.to ||
