@@ -10,7 +10,7 @@ import WeeklyCalendarCard from "./WeeklyCalendarCard";
 // Names used everywhere in the app to identify teachers (must match bookings.notes)
 const TEACHERS = [
   { name: "Valentín", initial: "V" },
-  { name: "Joaquín", initial: "J" },
+  { name: "Miguel", initial: "M" },
   { name: "Natalia", initial: "N" },
 ];
 

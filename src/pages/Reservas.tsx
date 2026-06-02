@@ -47,7 +47,7 @@ const ALL_SLOTS = (() => {
 
 const TEACHERS = [
   { name: "Valentín", id: "valentin", avatar: "V" },
-  { name: "Joaquín", id: "joaquin", avatar: "J" },
+  { name: "Miguel", id: "miguel", avatar: "M" },
   { name: "Natalia", id: "natalia", avatar: "N" },
 ];
 
