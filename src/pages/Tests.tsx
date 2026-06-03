@@ -512,7 +512,20 @@ export default function Tests() {
       .sort((a, b) => b.fails - a.fails || b.total - a.total)
       .slice(0, 5);
 
-    return { total, passed, failed, errorsTotal, hitsTotal, questionsTotal, avgPct, last, best, barometer, lineData, mostFailed };
+    // Per-test best attempt
+    const byTest = new Map<string, { best: Attempt; count: number; lastDate: string }>();
+    list.forEach((a) => {
+      const cur = byTest.get(a.test_id);
+      if (!cur) {
+        byTest.set(a.test_id, { best: a, count: 1, lastDate: a.created_at });
+      } else {
+        cur.count += 1;
+        if (Number(a.score_percentage) > Number(cur.best.score_percentage)) cur.best = a;
+        if (a.created_at > cur.lastDate) cur.lastDate = a.created_at;
+      }
+    });
+
+    return { total, passed, failed, errorsTotal, hitsTotal, questionsTotal, avgPct, last, best, barometer, lineData, mostFailed, byTest };
   }, [attempts, answersData]);
 
   const handleStart = async (testId: string, mode: Mode) => {
@@ -631,22 +644,45 @@ export default function Tests() {
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="grid sm:grid-cols-2 gap-3 pb-2">
-                      {g.items.map((t) => (
-                        <Card key={t.id} className="border-border/50">
+                      {g.items.map((t) => {
+                        const info = stats.byTest.get(t.id);
+                        const done = !!info;
+                        const bestPct = info ? Math.round(Number(info.best.score_percentage)) : 0;
+                        const passed = info?.best.passed;
+                        return (
+                        <Card key={t.id} className={`border-border/50 relative ${done ? "ring-1 ring-primary/30" : ""}`}>
                           <CardContent className="p-4">
-                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-0.5">{t.category}</p>
-                            <h3 className="font-bold text-base mb-3">{t.title}</h3>
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.category}</p>
+                              {done && (
+                                <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${passed ? "bg-accent text-primary" : "bg-destructive/10 text-destructive"}`}>
+                                  {passed ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+                                  Realizado
+                                </span>
+                              )}
+                            </div>
+                            <h3 className="font-bold text-base mb-2">{t.title}</h3>
+                            {done && (
+                              <div className="flex items-center justify-between text-xs mb-3 p-2 rounded-lg bg-muted/50">
+                                <span className="text-muted-foreground">Mejor resultado</span>
+                                <span className="font-bold" style={{ color: getBarometerColor(bestPct) }}>
+                                  {bestPct}% · {info!.best.correct_answers}/{info!.best.total_questions}
+                                  {info!.count > 1 && <span className="ml-1 text-muted-foreground font-normal">({info!.count} intentos)</span>}
+                                </span>
+                              </div>
+                            )}
                             <div className="grid grid-cols-2 gap-2">
                               <Button size="sm" variant="outline" onClick={() => handleStart(t.id, "study")} className="gap-1.5">
-                                <BookOpen className="w-3.5 h-3.5" /> Estudio
+                                <BookOpen className="w-3.5 h-3.5" /> {done ? "Repetir estudio" : "Estudio"}
                               </Button>
                               <Button size="sm" className="bg-primary hover:bg-primary/90 gap-1.5" onClick={() => handleStart(t.id, "exam")}>
-                                <Timer className="w-3.5 h-3.5" /> Examen
+                                <Timer className="w-3.5 h-3.5" /> {done ? "Repetir examen" : "Examen"}
                               </Button>
                             </div>
                           </CardContent>
                         </Card>
-                      ))}
+                        );
+                      })}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
