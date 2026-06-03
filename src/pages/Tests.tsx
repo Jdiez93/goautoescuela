@@ -512,7 +512,20 @@ export default function Tests() {
       .sort((a, b) => b.fails - a.fails || b.total - a.total)
       .slice(0, 5);
 
-    return { total, passed, failed, errorsTotal, hitsTotal, questionsTotal, avgPct, last, best, barometer, lineData, mostFailed };
+    // Per-test best attempt
+    const byTest = new Map<string, { best: Attempt; count: number; lastDate: string }>();
+    list.forEach((a) => {
+      const cur = byTest.get(a.test_id);
+      if (!cur) {
+        byTest.set(a.test_id, { best: a, count: 1, lastDate: a.created_at });
+      } else {
+        cur.count += 1;
+        if (Number(a.score_percentage) > Number(cur.best.score_percentage)) cur.best = a;
+        if (a.created_at > cur.lastDate) cur.lastDate = a.created_at;
+      }
+    });
+
+    return { total, passed, failed, errorsTotal, hitsTotal, questionsTotal, avgPct, last, best, barometer, lineData, mostFailed, byTest };
   }, [attempts, answersData]);
 
   const handleStart = async (testId: string, mode: Mode) => {
