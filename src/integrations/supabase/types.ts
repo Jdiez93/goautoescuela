@@ -516,6 +516,53 @@ export type Database = {
         }
         Relationships: []
       }
+      test_attempt_answers: {
+        Row: {
+          attempt_id: string
+          correct_index: number
+          created_at: string
+          id: string
+          is_correct: boolean
+          question_id: string
+          question_text: string
+          selected_index: number | null
+          test_id: string
+          user_id: string
+        }
+        Insert: {
+          attempt_id: string
+          correct_index: number
+          created_at?: string
+          id?: string
+          is_correct: boolean
+          question_id: string
+          question_text: string
+          selected_index?: number | null
+          test_id: string
+          user_id: string
+        }
+        Update: {
+          attempt_id?: string
+          correct_index?: number
+          created_at?: string
+          id?: string
+          is_correct?: boolean
+          question_id?: string
+          question_text?: string
+          selected_index?: number | null
+          test_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_attempt_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "test_attempts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       test_attempts: {
         Row: {
           correct_answers: number
@@ -635,6 +682,7 @@ export type Database = {
         }[]
       }
       get_test_for_attempt: { Args: { _test_id: string }; Returns: Json }
+      get_test_for_study: { Args: { _test_id: string }; Returns: Json }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
