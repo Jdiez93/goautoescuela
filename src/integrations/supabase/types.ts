@@ -516,6 +516,53 @@ export type Database = {
         }
         Relationships: []
       }
+      test_attempt_answers: {
+        Row: {
+          attempt_id: string
+          correct_index: number
+          created_at: string
+          id: string
+          is_correct: boolean
+          question_id: string
+          question_text: string
+          selected_index: number | null
+          test_id: string
+          user_id: string
+        }
+        Insert: {
+          attempt_id: string
+          correct_index: number
+          created_at?: string
+          id?: string
+          is_correct: boolean
+          question_id: string
+          question_text: string
+          selected_index?: number | null
+          test_id: string
+          user_id: string
+        }
+        Update: {
+          attempt_id?: string
+          correct_index?: number
+          created_at?: string
+          id?: string
+          is_correct?: boolean
+          question_id?: string
+          question_text?: string
+          selected_index?: number | null
+          test_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_attempt_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "test_attempts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       test_attempts: {
         Row: {
           correct_answers: number
