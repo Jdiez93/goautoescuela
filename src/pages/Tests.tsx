@@ -730,27 +730,6 @@ export default function Tests() {
             </Card>
           </div>
 
-          {/* Row 4: Preguntas más falladas */}
-          <Card className="border-border/50">
-            <CardHeader><CardTitle className="text-base">Preguntas que más fallas</CardTitle></CardHeader>
-            <CardContent>
-              {stats.mostFailed.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-6">Aún no hay fallos registrados. ¡Sigue así!</p>
-              ) : (
-                <ol className="space-y-2">
-                  {stats.mostFailed.map((q, i) => (
-                    <li key={i} className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
-                      <span className="w-7 h-7 rounded-full bg-destructive/10 text-destructive font-bold text-xs flex items-center justify-center shrink-0">{i + 1}</span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium line-clamp-2">{q.text}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">{q.fails} fallo{q.fails === 1 ? "" : "s"} de {q.total} intento{q.total === 1 ? "" : "s"}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              )}
-            </CardContent>
-          </Card>
         </section>
       </main>
 
