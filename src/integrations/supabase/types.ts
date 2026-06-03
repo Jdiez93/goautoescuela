@@ -682,6 +682,7 @@ export type Database = {
         }[]
       }
       get_test_for_attempt: { Args: { _test_id: string }; Returns: Json }
+      get_test_for_study: { Args: { _test_id: string }; Returns: Json }
       get_user_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
