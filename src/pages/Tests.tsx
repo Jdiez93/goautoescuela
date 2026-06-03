@@ -186,7 +186,8 @@ function StudyRunner({ test, onFinish }: { test: StudyTest; onFinish: (r: Attemp
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4 pr-8">
+
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2">
             <BookOpen className="w-3.5 h-3.5" /> Modo estudio · {test.category}
