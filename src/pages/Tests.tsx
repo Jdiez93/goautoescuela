@@ -862,35 +862,87 @@ function ExamRunnerWithCapture({ test, onAnswersChange, onFinish }: { test: Safe
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [startedAt] = useState(() => Date.now());
+  const [started, setStarted] = useState(false);
+  const [startedAt, setStartedAt] = useState<number | null>(null);
+  const [remaining, setRemaining] = useState(EXAM_DURATION_SECONDS);
   const { toast } = useToast();
   const q = test.questions[idx];
   const answeredCount = Object.keys(answers).length;
 
   useEffect(() => { onAnswersChange(answers); }, [answers, onAnswersChange]);
 
-  const submit = async () => {
+  const submit = async (auto = false) => {
+    if (submitting) return;
     setSubmitting(true);
     try {
-      const duration = Math.round((Date.now() - startedAt) / 1000);
+      const duration = startedAt ? Math.round((Date.now() - startedAt) / 1000) : EXAM_DURATION_SECONDS;
       const { data, error } = await supabase.rpc("submit_test_attempt", { _test_id: test.id, _answers: answers, _duration_seconds: duration });
       if (error) throw error;
+      if (auto) toast({ title: "Tiempo agotado", description: "Se ha entregado el examen automáticamente." });
       onFinish(data as unknown as AttemptResult);
     } catch (err: any) {
       toast({ title: "Error", description: err.message ?? "No se pudo enviar el test", variant: "destructive" });
-    } finally { setSubmitting(false); }
+      setSubmitting(false);
+    }
   };
+
+  useEffect(() => {
+    if (!started || startedAt === null) return;
+    const tick = () => {
+      const left = EXAM_DURATION_SECONDS - Math.floor((Date.now() - startedAt) / 1000);
+      setRemaining(left);
+      if (left <= 0) submit(true);
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [started, startedAt]);
+
+  if (!started) {
+    return (
+      <div className="text-center py-6 space-y-6">
+        <div className="mx-auto w-20 h-20 rounded-full bg-accent flex items-center justify-center">
+          <Timer className="w-10 h-10 text-primary" />
+        </div>
+        <div>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">Modo examen · {test.category}</p>
+          <h3 className="text-2xl font-bold font-['Space_Grotesk']">{test.title}</h3>
+        </div>
+        <div className="max-w-md mx-auto bg-muted/50 rounded-xl p-5 text-left space-y-2 text-sm">
+          <p className="flex items-center gap-2"><Timer className="w-4 h-4 text-primary" /> Tiempo: <span className="font-bold">30 minutos</span> (igual que el examen oficial DGT)</p>
+          <p className="flex items-center gap-2"><FileQuestion className="w-4 h-4 text-primary" /> Preguntas: <span className="font-bold">{test.questions.length}</span></p>
+          <p className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Aprueba con 3 fallos o menos</p>
+          <p className="text-xs text-muted-foreground pt-2">Una vez iniciado el temporizador no se puede pausar. Si se acaba el tiempo, el examen se entregará automáticamente.</p>
+        </div>
+        <Button size="lg" onClick={() => { setStarted(true); setStartedAt(Date.now()); }} className="bg-primary hover:bg-primary/90">
+          <Timer className="w-4 h-4 mr-2" /> Iniciar examen
+        </Button>
+      </div>
+    );
+  }
+
+  const mm = Math.max(0, Math.floor(remaining / 60));
+  const ss = Math.max(0, remaining % 60);
+  const timeLow = remaining <= 60;
+  const timeMid = remaining <= 5 * 60 && !timeLow;
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4 pr-8">
+      <div className="flex items-center justify-between gap-4 pr-8 flex-wrap">
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2"><Timer className="w-3.5 h-3.5" /> Modo examen · {test.category}</p>
           <h3 className="text-xl font-bold font-['Space_Grotesk']">{test.title}</h3>
         </div>
-        <div className="text-right">
-          <p className="text-xs text-muted-foreground">Respondidas</p>
-          <p className="text-lg font-bold text-primary">{answeredCount}/{test.questions.length}</p>
+        <div className="flex items-center gap-4">
+          <div className={`px-3 py-1.5 rounded-lg font-mono text-lg font-bold tabular-nums flex items-center gap-2 ${timeLow ? "bg-destructive/10 text-destructive animate-pulse" : timeMid ? "bg-amber-500/10 text-amber-600" : "bg-accent text-primary"}`}>
+            <Timer className="w-4 h-4" />
+            {String(mm).padStart(2, "0")}:{String(ss).padStart(2, "0")}
+          </div>
+          <div className="text-right">
+            <p className="text-xs text-muted-foreground">Respondidas</p>
+            <p className="text-lg font-bold text-primary">{answeredCount}/{test.questions.length}</p>
+          </div>
         </div>
       </div>
       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -925,7 +977,7 @@ function ExamRunnerWithCapture({ test, onAnswersChange, onFinish }: { test: Safe
         <Button variant="outline" disabled={idx === 0} onClick={() => setIdx((i) => i - 1)}>Anterior</Button>
         <div className="flex gap-2">
           {idx < test.questions.length - 1 && (<Button variant="outline" onClick={() => setIdx((i) => i + 1)}>Siguiente</Button>)}
-          <Button onClick={submit} disabled={submitting} className="bg-primary hover:bg-primary/90">
+          <Button onClick={() => submit(false)} disabled={submitting} className="bg-primary hover:bg-primary/90">
             {submitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Enviar test
           </Button>
