@@ -401,7 +401,7 @@ function ExamRunner({ test, onFinish }: { test: SafeTest; onFinish: (r: AttemptR
           {idx < test.questions.length - 1 && (
             <Button variant="outline" onClick={() => setIdx((i) => i + 1)}>Siguiente</Button>
           )}
-          <Button onClick={submit} disabled={submitting} className="bg-primary hover:bg-primary/90">
+          <Button onClick={() => submit(false)} disabled={submitting} className="bg-primary hover:bg-primary/90">
             {submitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Enviar test
           </Button>
