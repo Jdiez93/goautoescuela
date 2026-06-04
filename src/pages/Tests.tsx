@@ -350,7 +350,7 @@ function ExamRunner({ test, onFinish }: { test: SafeTest; onFinish: (r: AttemptR
           <h3 className="text-xl font-bold font-['Space_Grotesk']">{test.title}</h3>
         </div>
         <div className="flex items-center gap-4">
-          <div className={`px-3 py-1.5 rounded-lg font-mono text-lg font-bold tabular-nums flex items-center gap-2 ${timeLow ? "bg-destructive/10 text-destructive animate-pulse" : timeMid ? "bg-amber-500/10 text-amber-600" : "bg-accent text-primary"}`}>
+          <div className={`px-3 py-1.5 rounded-lg font-mono text-lg font-bold tabular-nums flex items-center gap-2 ${timeLow ? "bg-destructive text-white animate-pulse" : timeMid ? "bg-amber-500 text-white" : "bg-primary text-white"}`}>
             <Timer className="w-4 h-4" />
             {String(mm).padStart(2, "0")}:{String(ss).padStart(2, "0")}
           </div>
@@ -935,7 +935,7 @@ function ExamRunnerWithCapture({ test, onAnswersChange, onFinish }: { test: Safe
           <h3 className="text-xl font-bold font-['Space_Grotesk']">{test.title}</h3>
         </div>
         <div className="flex items-center gap-4">
-          <div className={`px-3 py-1.5 rounded-lg font-mono text-lg font-bold tabular-nums flex items-center gap-2 ${timeLow ? "bg-destructive/10 text-destructive animate-pulse" : timeMid ? "bg-amber-500/10 text-amber-600" : "bg-accent text-primary"}`}>
+          <div className={`px-3 py-1.5 rounded-lg font-mono text-lg font-bold tabular-nums flex items-center gap-2 ${timeLow ? "bg-destructive text-white animate-pulse" : timeMid ? "bg-amber-500 text-white" : "bg-primary text-white"}`}>
             <Timer className="w-4 h-4" />
             {String(mm).padStart(2, "0")}:{String(ss).padStart(2, "0")}
           </div>
