@@ -142,6 +142,24 @@ export default function DashboardSecretaria() {
     enabled: !!user && (isSecretaria || isAdmin) && userIds.length > 0,
   });
 
+  type ReadinessRow = { user_id: string; readiness: number; attempts_count: number; tests_count: number };
+  const { data: readiness } = useQuery({
+    queryKey: ["matriculas-test-readiness", userIds],
+    queryFn: async () => {
+      if (userIds.length === 0) return {} as Record<string, ReadinessRow>;
+      const { data, error } = await (supabase.rpc as any)("secretaria_get_test_readiness", { _user_ids: userIds });
+      if (error) throw error;
+      const map: Record<string, ReadinessRow> = {};
+      (data ?? []).forEach((row: ReadinessRow) => {
+        map[row.user_id] = row;
+      });
+      return map;
+    },
+    enabled: !!user && (isSecretaria || isAdmin) && userIds.length > 0,
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+  });
+
   const [detail, setDetail] = useState<Matricula | null>(null);
   const [saldoTarget, setSaldoTarget] = useState<Matricula | null>(null);
 
@@ -469,6 +487,7 @@ export default function DashboardSecretaria() {
                           <SortableHead label="Pagada" colKey="fecha_pago" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <TableHead className="text-right">Acciones</TableHead>
                           <TableHead className="text-right">Saldo</TableHead>
+                          <TableHead className="text-right min-w-[180px]">Preparación tests</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -521,6 +540,41 @@ export default function DashboardSecretaria() {
                                   <Plus className="w-4 h-4 mr-1" /> Añadir
                                 </Button>
                               </div>
+                            </TableCell>
+                            <TableCell className="text-right whitespace-nowrap">
+                              {(() => {
+                                const r = m.user_id ? readiness?.[m.user_id] : undefined;
+                                const value = r ? Number(r.readiness) : 0;
+                                const attempts = r?.attempts_count ?? 0;
+                                const color =
+                                  attempts === 0
+                                    ? "bg-muted-foreground/40"
+                                    : value >= 80
+                                    ? "bg-green-500"
+                                    : value >= 50
+                                    ? "bg-amber-500"
+                                    : "bg-destructive";
+                                return (
+                                  <div className="flex flex-col items-end gap-1 min-w-[160px]">
+                                    <div className="flex items-center gap-2 w-full">
+                                      <div className="flex-1 h-2 rounded-full bg-secondary overflow-hidden">
+                                        <div
+                                          className={`h-full ${color} transition-all`}
+                                          style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-semibold tabular-nums w-10 text-right">
+                                        {attempts === 0 ? "—" : `${Math.round(value)}%`}
+                                      </span>
+                                    </div>
+                                    <span className="text-[10px] text-muted-foreground">
+                                      {attempts === 0
+                                        ? "Sin tests"
+                                        : `${attempts} intento${attempts === 1 ? "" : "s"} · ${r?.tests_count ?? 0} test${(r?.tests_count ?? 0) === 1 ? "" : "s"}`}
+                                    </span>
+                                  </div>
+                                );
+                              })()}
                             </TableCell>
                           </TableRow>
                         ))}
