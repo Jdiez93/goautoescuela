@@ -157,7 +157,10 @@ export default function DashboardSecretaria() {
     },
     enabled: !!user && (isSecretaria || isAdmin) && userIds.length > 0,
     refetchInterval: 30000,
+    refetchIntervalInBackground: true,
+    refetchOnMount: "always",
     refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 
   const [detail, setDetail] = useState<Matricula | null>(null);
