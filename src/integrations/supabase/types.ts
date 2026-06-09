@@ -715,6 +715,15 @@ export type Database = {
         }
         Returns: string
       }
+      secretaria_get_test_readiness: {
+        Args: { _user_ids: string[] }
+        Returns: {
+          attempts_count: number
+          readiness: number
+          tests_count: number
+          user_id: string
+        }[]
+      }
       secretaria_get_user_balances: {
         Args: { _user_ids: string[] }
         Returns: {
