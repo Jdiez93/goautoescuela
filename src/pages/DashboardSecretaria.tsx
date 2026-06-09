@@ -487,6 +487,7 @@ export default function DashboardSecretaria() {
                           <SortableHead label="Pagada" colKey="fecha_pago" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} />
                           <TableHead className="text-right">Acciones</TableHead>
                           <TableHead className="text-right">Saldo</TableHead>
+                          <TableHead className="text-right min-w-[180px]">Preparación tests</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
