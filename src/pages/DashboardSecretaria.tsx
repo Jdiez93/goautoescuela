@@ -541,6 +541,41 @@ export default function DashboardSecretaria() {
                                 </Button>
                               </div>
                             </TableCell>
+                            <TableCell className="text-right whitespace-nowrap">
+                              {(() => {
+                                const r = m.user_id ? readiness?.[m.user_id] : undefined;
+                                const value = r ? Number(r.readiness) : 0;
+                                const attempts = r?.attempts_count ?? 0;
+                                const color =
+                                  attempts === 0
+                                    ? "bg-muted-foreground/40"
+                                    : value >= 80
+                                    ? "bg-green-500"
+                                    : value >= 50
+                                    ? "bg-amber-500"
+                                    : "bg-destructive";
+                                return (
+                                  <div className="flex flex-col items-end gap-1 min-w-[160px]">
+                                    <div className="flex items-center gap-2 w-full">
+                                      <div className="flex-1 h-2 rounded-full bg-secondary overflow-hidden">
+                                        <div
+                                          className={`h-full ${color} transition-all`}
+                                          style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
+                                        />
+                                      </div>
+                                      <span className="text-xs font-semibold tabular-nums w-10 text-right">
+                                        {attempts === 0 ? "—" : `${Math.round(value)}%`}
+                                      </span>
+                                    </div>
+                                    <span className="text-[10px] text-muted-foreground">
+                                      {attempts === 0
+                                        ? "Sin tests"
+                                        : `${attempts} intento${attempts === 1 ? "" : "s"} · ${r?.tests_count ?? 0} test${(r?.tests_count ?? 0) === 1 ? "" : "s"}`}
+                                    </span>
+                                  </div>
+                                );
+                              })()}
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
