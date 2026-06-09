@@ -142,6 +142,24 @@ export default function DashboardSecretaria() {
     enabled: !!user && (isSecretaria || isAdmin) && userIds.length > 0,
   });
 
+  type ReadinessRow = { user_id: string; readiness: number; attempts_count: number; tests_count: number };
+  const { data: readiness } = useQuery({
+    queryKey: ["matriculas-test-readiness", userIds],
+    queryFn: async () => {
+      if (userIds.length === 0) return {} as Record<string, ReadinessRow>;
+      const { data, error } = await (supabase.rpc as any)("secretaria_get_test_readiness", { _user_ids: userIds });
+      if (error) throw error;
+      const map: Record<string, ReadinessRow> = {};
+      (data ?? []).forEach((row: ReadinessRow) => {
+        map[row.user_id] = row;
+      });
+      return map;
+    },
+    enabled: !!user && (isSecretaria || isAdmin) && userIds.length > 0,
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+  });
+
   const [detail, setDetail] = useState<Matricula | null>(null);
   const [saldoTarget, setSaldoTarget] = useState<Matricula | null>(null);
 
