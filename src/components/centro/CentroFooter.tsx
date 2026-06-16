@@ -31,17 +31,16 @@ export default function CentroFooter() {
                   { Icon: Music2, label: "TikTok", href: "#" },
                   { Icon: Youtube, label: "YouTube", href: "#" },
                   { Icon: Twitter, label: "X", href: "#" },
-                ].map(({ Icon, label, href }) => (
-                  <a
+                ].map(({ Icon, label }) => (
+                  <button
                     key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    type="button"
+                    onClick={(e) => e.preventDefault()}
                     aria-label={label}
-                    className="w-9 h-9 rounded-xl border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all"
+                    className="w-9 h-9 rounded-xl border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all cursor-pointer"
                   >
                     <Icon className="w-4 h-4" />
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
