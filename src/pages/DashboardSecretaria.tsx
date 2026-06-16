@@ -675,17 +675,16 @@ export default function DashboardSecretaria() {
                     { Icon: Music2, label: "TikTok", href: "#" },
                     { Icon: Youtube, label: "YouTube", href: "#" },
                     { Icon: Twitter, label: "X", href: "#" },
-                  ].map(({ Icon, label, href }) => (
-                    <a
+                  ].map(({ Icon, label }) => (
+                    <button
                       key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      type="button"
+                      onClick={(e) => e.preventDefault()}
                       aria-label={label}
-                      className="w-8 h-8 rounded-lg border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all"
+                      className="w-8 h-8 rounded-lg border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all cursor-pointer"
                     >
                       <Icon className="w-3.5 h-3.5" />
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>

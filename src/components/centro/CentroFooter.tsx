@@ -40,7 +40,7 @@ export default function CentroFooter() {
                     className="w-9 h-9 rounded-xl border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all cursor-pointer"
                   >
                     <Icon className="w-4 h-4" />
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
