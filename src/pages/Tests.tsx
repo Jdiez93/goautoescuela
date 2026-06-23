@@ -807,7 +807,7 @@ export default function Tests() {
               <h2 className="text-2xl font-bold font-['Space_Grotesk']">Empieza ya con el teórico</h2>
               <p className="text-sm text-muted-foreground mt-1">{tests?.length ?? 0} tests oficiales · 30 preguntas cada uno · Apruebas con 3 fallos o menos</p>
             </div>
-            <Sparkles className="w-6 h-6 text-primary" />
+            <StreakBadge attempts={attempts} />
           </div>
 
           {testsLoading ? (
