@@ -223,7 +223,7 @@ function StreakBadge({ attempts }: { attempts: { created_at: string }[] | undefi
                 className="inline-flex"
               >
                 <Flame
-                  className={`w-4.5 h-4.5 ${active ? "text-white" : "text-muted-foreground"}`}
+                  className={`w-4 h-4 ${active ? "text-white" : "text-muted-foreground"}`}
                   strokeWidth={2.4}
                   fill={active ? "currentColor" : "none"}
                 />
