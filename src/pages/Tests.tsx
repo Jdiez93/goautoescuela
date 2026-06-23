@@ -17,7 +17,9 @@ import {
   BookOpen,
   Sparkles,
   Target,
+  Flame,
 } from "lucide-react";
+import { Tooltip as UITooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -144,8 +146,136 @@ function BarometerGauge({ value }: { value: number }) {
 }
 
 // ============================================================
-// STUDY MODE RUNNER
+// STREAK (3 tests/día → 1 día de racha)
 // ============================================================
+const DAILY_GOAL = 3;
+
+function localDayKey(iso: string) {
+  const d = new Date(iso);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function computeStreak(attempts: { created_at: string }[]) {
+  const counts = new Map<string, number>();
+  attempts.forEach((a) => {
+    const k = localDayKey(a.created_at);
+    counts.set(k, (counts.get(k) ?? 0) + 1);
+  });
+  const todayKey = localDayKey(new Date().toISOString());
+  const todayCount = counts.get(todayKey) ?? 0;
+  const todayQualifies = todayCount >= DAILY_GOAL;
+
+  // Count back consecutive qualifying days from today (or yesterday if today not yet qualified)
+  let streak = 0;
+  const cursor = new Date();
+  if (!todayQualifies) cursor.setDate(cursor.getDate() - 1);
+  while (true) {
+    const k = localDayKey(cursor.toISOString());
+    if ((counts.get(k) ?? 0) >= DAILY_GOAL) {
+      streak += 1;
+      cursor.setDate(cursor.getDate() - 1);
+    } else break;
+  }
+  return { streak, todayCount, todayQualifies };
+}
+
+function StreakBadge({ attempts }: { attempts: { created_at: string }[] | undefined }) {
+  const { streak, todayCount, todayQualifies } = useMemo(
+    () => computeStreak(attempts ?? []),
+    [attempts],
+  );
+  const active = streak > 0;
+  const progress = Math.min(todayCount, DAILY_GOAL);
+  const remaining = Math.max(0, DAILY_GOAL - todayCount);
+  const tip = active
+    ? todayQualifies
+      ? `¡Racha activa! Llevas ${streak} día${streak === 1 ? "" : "s"} seguido${streak === 1 ? "" : "s"} cumpliendo tu objetivo de ${DAILY_GOAL} tests al día.`
+      : `Tu racha de ${streak} día${streak === 1 ? "" : "s"} sigue viva. Haz ${remaining} test${remaining === 1 ? "" : "s"} más hoy para mantenerla.`
+    : `Haz ${DAILY_GOAL} tests hoy para empezar tu racha. ¡Llevas ${todayCount}/${DAILY_GOAL}!`;
+
+  return (
+    <TooltipProvider delayDuration={150}>
+      <UITooltip>
+        <TooltipTrigger asChild>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
+            className={`relative inline-flex items-center gap-2.5 rounded-full pl-2 pr-3.5 py-1.5 border cursor-help select-none transition-all ${
+              active
+                ? "bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-red-500/15 border-orange-400/50 shadow-[0_0_18px_-4px_rgba(249,115,22,0.5)]"
+                : "bg-muted/60 border-border/60"
+            }`}
+          >
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                active
+                  ? "bg-gradient-to-br from-amber-400 to-red-500 shadow-md"
+                  : "bg-muted-foreground/20"
+              }`}
+            >
+              <motion.span
+                animate={active ? { scale: [1, 1.12, 1], rotate: [0, -4, 4, 0] } : {}}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="inline-flex"
+              >
+                <Flame
+                  className={`w-4 h-4 ${active ? "text-white" : "text-muted-foreground"}`}
+                  strokeWidth={2.4}
+                  fill={active ? "currentColor" : "none"}
+                />
+              </motion.span>
+            </div>
+            <div className="flex flex-col leading-tight">
+              <div className="flex items-baseline gap-1">
+                <span
+                  className={`font-bold font-['Space_Grotesk'] text-lg tabular-nums ${
+                    active ? "text-orange-600" : "text-foreground"
+                  }`}
+                >
+                  {streak}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  {streak === 1 ? "día" : "días"}
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: DAILY_GOAL }).map((_, i) => (
+                    <span
+                      key={i}
+                      className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                        i < progress
+                          ? active
+                            ? "bg-orange-500"
+                            : "bg-primary"
+                          : "bg-muted-foreground/25"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-[10px] font-medium text-muted-foreground">
+                  hoy {progress}/{DAILY_GOAL}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </TooltipTrigger>
+        <TooltipContent side="bottom" className="max-w-[240px] text-xs leading-relaxed">
+          <p className="font-semibold mb-1 flex items-center gap-1">
+            <Flame className="w-3.5 h-3.5 text-orange-500" fill="currentColor" /> Racha de estudio
+          </p>
+          <p>{tip}</p>
+        </TooltipContent>
+      </UITooltip>
+    </TooltipProvider>
+  );
+}
+
+
 function StudyRunner({ test, onFinish }: { test: StudyTest; onFinish: (r: AttemptResult) => void }) {
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -677,7 +807,7 @@ export default function Tests() {
               <h2 className="text-2xl font-bold font-['Space_Grotesk']">Empieza ya con el teórico</h2>
               <p className="text-sm text-muted-foreground mt-1">{tests?.length ?? 0} tests oficiales · 30 preguntas cada uno · Apruebas con 3 fallos o menos</p>
             </div>
-            <Sparkles className="w-6 h-6 text-primary" />
+            <StreakBadge attempts={attempts} />
           </div>
 
           {testsLoading ? (
