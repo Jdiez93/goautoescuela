@@ -17,7 +17,9 @@ import {
   BookOpen,
   Sparkles,
   Target,
+  Flame,
 } from "lucide-react";
+import { Tooltip as UITooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
