@@ -4,6 +4,8 @@ import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 import tuAulaImg from "@/assets/online-tu-aula.png";
+import metodo85Img from "@/assets/metodo85.png.asset.json";
+import tuEspacioImg from "@/assets/tu-espacio.png.asset.json";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -56,6 +58,7 @@ const features = [
       "Consigue al menos el 85% en el barómetro general y, si no apruebas a la primera, te reembolsamos el curso teórico",
     ],
     imageLabel: "Imagen Método 85",
+    image: metodo85Img.url,
   },
   {
     title: "Tu espacio, todo lo que necesitas",
@@ -64,6 +67,7 @@ const features = [
       "Llévate la autoescuela contigo",
     ],
     imageLabel: "Imagen Tu espacio",
+    image: tuEspacioImg.url,
   },
 ];
 
