@@ -58,9 +58,17 @@ const features = [
       "Consigue al menos el 85% en el barómetro general y, si no apruebas a la primera, te reembolsamos el curso teórico",
     ],
     imageLabel: "Imagen Método 85",
+    image: metodo85Img.url,
   },
   {
     title: "Tu espacio, todo lo que necesitas",
+    bullets: [
+      "Matricúlate, estudia, haz test, mira vídeos y gestiona todo desde la web",
+      "Llévate la autoescuela contigo",
+    ],
+    imageLabel: "Imagen Tu espacio",
+    image: tuEspacioImg.url,
+  },
     bullets: [
       "Matricúlate, estudia, haz test, mira vídeos y gestiona todo desde la web",
       "Llévate la autoescuela contigo",
