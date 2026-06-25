@@ -69,12 +69,6 @@ const features = [
     imageLabel: "Imagen Tu espacio",
     image: tuEspacioImg.url,
   },
-    bullets: [
-      "Matricúlate, estudia, haz test, mira vídeos y gestiona todo desde la web",
-      "Llévate la autoescuela contigo",
-    ],
-    imageLabel: "Imagen Tu espacio",
-  },
 ];
 
 export default function AutoescuelaOnline() {
