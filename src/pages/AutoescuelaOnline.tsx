@@ -44,6 +44,7 @@ const features = [
     ],
     imageLabel: "Imagen Pregunta video",
     image: preguntaVideoImg.url,
+  },
   {
     title: "Tu profe, siempre contigo",
     bullets: [
