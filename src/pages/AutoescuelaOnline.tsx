@@ -6,6 +6,7 @@ import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 import tuAulaImg from "@/assets/online-tu-aula.png";
 import metodo85Img from "@/assets/metodo85.png.asset.json";
 import tuEspacioImg from "@/assets/tu-espacio.png.asset.json";
+import preguntaVideoImg from "@/assets/cada-pregunta-video.png.asset.json";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
