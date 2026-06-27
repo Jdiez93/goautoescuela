@@ -43,7 +43,7 @@ const features = [
       "Así aprendes de verdad y no memorizas al azar",
     ],
     imageLabel: "Imagen Pregunta video",
-  },
+    image: preguntaVideoImg.url,
   {
     title: "Tu profe, siempre contigo",
     bullets: [
