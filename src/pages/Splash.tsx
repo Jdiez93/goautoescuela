@@ -1,8 +1,10 @@
 import { useEffect, useState, KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import autoescuelaAsset from "@/assets/splash-autoescuela.jpg.asset.json";
+import formacionAsset from "@/assets/splash-formacion.jpg.asset.json";
 
-const IMG_AUTOESCUELA = "/placeholder-autoescuela.jpg";
-const IMG_CENTRO = "/placeholder-centro-estudios.jpg";
+const IMG_AUTOESCUELA = autoescuelaAsset.url;
+const IMG_CENTRO = formacionAsset.url;
 
 type Side = "left" | "right";
 
