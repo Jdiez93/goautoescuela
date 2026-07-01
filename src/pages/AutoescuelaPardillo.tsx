@@ -6,6 +6,7 @@ import { MapPin, Clock, Car } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
+import pardilloImg from "@/assets/pardillo-fachada.jpg.asset.json";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -44,11 +45,14 @@ export default function AutoescuelaPardillo() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: easeCurve }}
-              className="rounded-3xl overflow-hidden bg-primary/80 aspect-[21/9] flex items-center justify-center shadow-2xl"
+              className="rounded-3xl overflow-hidden aspect-[21/9] shadow-2xl"
             >
-              <span className="text-primary-foreground font-semibold text-2xl">
-                Imagen Pardillo
-              </span>
+              <img
+                src={pardilloImg.url}
+                alt="Fachada de la autoescuela Ready2Go en Villanueva del Pardillo"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </motion.div>
           </div>
         </section>
