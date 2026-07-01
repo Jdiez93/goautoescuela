@@ -1,8 +1,10 @@
 import { useEffect, useState, KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import autoescuelaAsset from "@/assets/splash-autoescuela.jpg.asset.json";
+import formacionAsset from "@/assets/splash-formacion.jpg.asset.json";
 
-const IMG_AUTOESCUELA = "/placeholder-autoescuela.jpg";
-const IMG_CENTRO = "/placeholder-centro-estudios.jpg";
+const IMG_AUTOESCUELA = autoescuelaAsset.url;
+const IMG_CENTRO = formacionAsset.url;
 
 type Side = "left" | "right";
 
@@ -57,13 +59,32 @@ function Half({ image, label, ariaLabel, side, selected, onActivate }: HalfProps
       />
       <div
         className={`absolute inset-0 transition-all ease-out ${
-          isSelected ? "bg-black/0" : isOther ? "bg-black/90" : hover ? "bg-black/20" : "bg-black/40"
+          isSelected
+            ? "bg-black/0"
+            : isOther
+            ? "bg-black/90"
+            : hover
+            ? "bg-gradient-to-t from-black/80 via-black/30 to-black/40"
+            : "bg-gradient-to-t from-black/85 via-black/45 to-black/55"
         }`}
         style={{ transitionDuration: selected ? "900ms" : "500ms" }}
       />
+      {/* Mint accent glow on hover */}
+      <div
+        className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${
+          hover && !selected ? "opacity-100" : "opacity-0"
+        }`}
+        style={{
+          background:
+            side === "left"
+              ? "radial-gradient(circle at 30% 50%, rgba(120,254,225,0.18), transparent 60%)"
+              : "radial-gradient(circle at 70% 50%, rgba(120,254,225,0.18), transparent 60%)",
+        }}
+        aria-hidden="true"
+      />
       <div className="relative z-10 flex h-full w-full items-center justify-center px-6 text-center">
         <span
-          className={`inline-block font-sans font-bold uppercase tracking-wider text-white text-4xl md:text-6xl lg:text-7xl border-b-2 pb-2 transition-all ease-out ${
+          className={`inline-block font-sans font-black uppercase tracking-[0.15em] text-white text-3xl md:text-5xl lg:text-6xl xl:text-7xl border-b-2 pb-3 transition-all ease-out ${
             isSelected
               ? "border-[#78FEE1] scale-[2] opacity-0"
               : isOther
@@ -72,7 +93,11 @@ function Half({ image, label, ariaLabel, side, selected, onActivate }: HalfProps
               ? "border-[#78FEE1]"
               : "border-transparent"
           }`}
-          style={{ transitionDuration: selected ? "1100ms" : "500ms" }}
+          style={{
+            transitionDuration: selected ? "1100ms" : "500ms",
+            textShadow:
+              "0 2px 20px rgba(0,0,0,0.85), 0 4px 40px rgba(0,0,0,0.6), 0 0 60px rgba(120,254,225,0.15)",
+          }}
         >
           {label}
         </span>
