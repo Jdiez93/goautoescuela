@@ -45,7 +45,7 @@ export default function AutoescuelaPardillo() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: easeCurve }}
-              className="rounded-3xl overflow-hidden aspect-[21/9] shadow-2xl"
+              className="rounded-3xl overflow-hidden aspect-[16/9] shadow-2xl border border-border/40"
             >
               <img
                 src={pardilloImg.url}
