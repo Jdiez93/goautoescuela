@@ -6,6 +6,7 @@ import { MapPin, Clock, Car } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
+import pardilloImg from "@/assets/pardillo-fachada.jpg.asset.json";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
