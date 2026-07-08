@@ -76,6 +76,12 @@ export default function CentroFooter() {
                 <p className="text-xs opacity-80">Calle Santa Ana, 1 — 28229 Madrid</p>
               </div>
             </li>
+            <li className="flex items-center gap-3 group">
+              <Phone className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
+              <a href="tel:+34658474814" className="opacity-70 group-hover:opacity-100 transition-opacity">
+                658 47 48 14
+              </a>
+            </li>
             <li className="flex items-start gap-3 group">
               <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
               <div className="opacity-70 group-hover:opacity-100 transition-opacity">
@@ -110,7 +116,7 @@ export default function CentroFooter() {
                 </div>
                 <div className="space-y-1 text-xs opacity-70">
                   <div className="flex justify-between gap-2">
-                    <span>Mar y Jue</span>
+                    <span>Lun a Vie</span>
                     <span className="font-medium text-background/85">10–13 / 16:00–20:00</span>
                   </div>
                 </div>
@@ -124,7 +130,7 @@ export default function CentroFooter() {
                 </div>
                 <div className="space-y-1 text-xs opacity-70">
                   <div className="flex justify-between gap-2">
-                    <span>Lun, Mié y Vie</span>
+                    <span>Lun a Vie</span>
                     <span className="font-medium text-background/85">10–13 / 16:00–20:00</span>
                   </div>
                 </div>
