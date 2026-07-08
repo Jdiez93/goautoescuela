@@ -2,7 +2,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ContactForm from "@/components/landing/ContactForm";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Car } from "lucide-react";
+import { MapPin, Clock, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
@@ -77,19 +77,21 @@ export default function AutoescuelaPardillo() {
                 </motion.div>
               </motion.div>
               <h3 className="text-lg font-bold font-['Space_Grotesk'] mb-2">Horario presencial</h3>
-              <p className="text-sm text-foreground font-semibold mb-1">Martes y Jueves</p>
+              <p className="text-sm text-foreground font-semibold mb-1">Lunes a Viernes</p>
               <p className="text-sm text-muted-foreground">11:00 - 13:00 / 17:00 - 20:00</p>
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.2, ease: easeCurve }} className="rounded-3xl border border-border/40 bg-card/30 backdrop-blur-sm p-6 hover:border-primary/50 transition-all">
               <motion.div whileHover={{ y: -10, scale: 1.2, rotate: -8 }} transition={{ type: "spring", stiffness: 400, damping: 10 }} className="inline-block mb-3 cursor-pointer">
                 <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-                  <Car className="w-8 h-8 text-primary" />
+                  <Phone className="w-8 h-8 text-primary" />
                 </motion.div>
               </motion.div>
-              <h3 className="text-lg font-bold font-['Space_Grotesk'] mb-2">Prácticas</h3>
-              <p className="text-sm text-foreground font-semibold mb-1">Lunes a Viernes</p>
-              <p className="text-sm text-muted-foreground">8:00 - 22:00</p>
+              <h3 className="text-lg font-bold font-['Space_Grotesk'] mb-2">Teléfono</h3>
+              <p className="text-sm text-foreground font-semibold mb-1">Villanueva del Pardillo</p>
+              <a href="tel:+34658474814" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                658 47 48 14
+              </a>
             </motion.div>
           </div>
         </section>

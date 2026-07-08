@@ -501,6 +501,10 @@ export default function DashboardProfesor() {
                     <p className="text-xs opacity-80">Calle Santa Ana, 1 — 28229</p>
                   </div>
                 </li>
+                <li className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 shrink-0 text-primary/70" />
+                  <a href="tel:+34658474814" className="opacity-70 hover:opacity-100 transition-opacity">658 47 48 14</a>
+                </li>
                 <li className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary/70" />
                   <div className="opacity-70">
@@ -528,7 +532,7 @@ export default function DashboardProfesor() {
                     <p className="font-semibold text-background/90 text-xs uppercase tracking-wider">V. del Pardillo</p>
                   </div>
                   <div className="flex justify-between text-xs opacity-70">
-                    <span>Mar y Jue</span>
+                    <span>Lun a Vie</span>
                     <span className="font-medium text-background/85">11–13 / 17:00–20:00</span>
                   </div>
                 </div>
@@ -538,7 +542,7 @@ export default function DashboardProfesor() {
                     <p className="font-semibold text-background/90 text-xs uppercase tracking-wider">Valdemorillo</p>
                   </div>
                   <div className="flex justify-between text-xs opacity-70">
-                    <span>Lun, Mié y Vie</span>
+                    <span>Lun a Vie</span>
                     <span className="font-medium text-background/85">11–13 / 17:00–20:00</span>
                   </div>
                 </div>
