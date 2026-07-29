@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Centro de estudio", to: "/consejos" },
-  { label: "Centro de formación", to: "/actualidad" },
+  { label: "Robótica y programación de videojuegos", to: "/actualidad" },
 ];
 
 export default function CentroNavbar() {
