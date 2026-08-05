@@ -204,7 +204,7 @@ export default function LasPracticas() {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-white/10 rounded-full px-4 h-8 text-xs font-medium backdrop-blur-sm border border-white/15"
+                    className="text-foreground/80 hover:text-foreground hover:bg-foreground/10 rounded-full px-4 h-8 text-xs font-medium backdrop-blur-sm border border-foreground/15"
                   >
                     Ver packs
                   </Button>
