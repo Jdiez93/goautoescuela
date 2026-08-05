@@ -7,6 +7,7 @@ import tuAulaImg from "@/assets/online-tu-aula.png";
 import metodo85Img from "@/assets/metodo85.png.asset.json";
 import tuEspacioImg from "@/assets/tu-espacio.png.asset.json";
 import preguntaVideoImg from "@/assets/cada-pregunta-video.png.asset.json";
+import chicosMovilImg from "@/assets/chicos-movil.png.asset.json";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -44,14 +45,6 @@ const features = [
     ],
     imageLabel: "Imagen Pregunta video",
     image: preguntaVideoImg.url,
-  },
-  {
-    title: "Tu profe, siempre contigo",
-    bullets: [
-      "Accede a clases grabadas para repasar los temas más importantes, las veces que quieras",
-      "Nuestro método te guía paso a paso hasta alcanzar el nivel ideal para aprobar",
-    ],
-    imageLabel: "Imagen Tu profe",
   },
   {
     title: "Si alcanzas el 85% en el barómetro general y no apruebas, te devolvemos el dinero",
