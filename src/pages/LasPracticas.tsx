@@ -15,6 +15,7 @@ import { AnimatedCardBg } from "@/components/ui/animated-card-bg";
 import { RandomLetterSwapPingPong } from "@/components/ui/random-letter-swap";
 import { Tilt3D } from "@/components/ui/tilt-3d";
 import practicasHero from "@/assets/practicas-hero.png";
+import practicasChicos from "@/assets/practicas-chicos.png.asset.json";
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -186,12 +187,15 @@ export default function LasPracticas() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
-            className="mt-16 rounded-3xl bg-[hsl(220,30%,15%)] aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] relative overflow-hidden"
+            className="mt-16 rounded-3xl bg-background aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] relative overflow-hidden"
           >
-            {/* Placeholder text */}
-            <span className="absolute inset-0 flex items-center justify-center text-primary-foreground/60 text-sm pointer-events-none">
-              Imagen chicos práctica
-            </span>
+            <img
+              src={practicasChicos.url}
+              alt="Conduce hacia tu libertad: aprende con confianza, flexibilidad y profesores con vocación"
+              className="absolute inset-0 w-full h-full object-contain"
+              loading="lazy"
+            />
+
 
             {/* Button inside image - discreet */}
             <div className="absolute inset-0 flex items-end justify-end p-6 sm:p-8">
@@ -200,7 +204,7 @@ export default function LasPracticas() {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-white/10 rounded-full px-4 h-8 text-xs font-medium backdrop-blur-sm border border-white/15"
+                    className="text-foreground/80 hover:text-foreground hover:bg-foreground/10 rounded-full px-4 h-8 text-xs font-medium backdrop-blur-sm border border-foreground/15"
                   >
                     Ver packs
                   </Button>
