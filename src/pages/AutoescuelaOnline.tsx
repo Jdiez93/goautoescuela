@@ -193,8 +193,13 @@ export default function AutoescuelaOnline() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
             >
-              <div className="aspect-square rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center">
-                <span className="text-primary font-semibold text-lg">Imagen chicos móvil</span>
+              <div className="aspect-square rounded-2xl bg-primary/10 border border-primary/20 overflow-hidden">
+                <img
+                  src={chicosMovilImg.url}
+                  alt="Alumnos consultando la app de Ready2Go Autoescuela en el móvil"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </motion.div>
           </motion.div>
