@@ -35,21 +35,19 @@ export default function Footer() {
               <h4 className="font-semibold text-background mb-3 text-xs uppercase tracking-[0.2em]">Síguenos</h4>
               <div className="flex items-center gap-2.5">
                 {[
-                  { Icon: Instagram, label: "Instagram", href: "#" },
-                  { Icon: Facebook, label: "Facebook", href: "#" },
-                  { Icon: Music2, label: "TikTok", href: "#" },
-                  { Icon: Youtube, label: "YouTube", href: "#" },
-                  { Icon: Twitter, label: "X", href: "#" },
-                ].map(({ Icon, label }) => (
-                  <button
+                  { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com/campus.ready2go" },
+                  { Icon: Music2, label: "TikTok", href: "https://www.tiktok.com/@campus.ready2go" },
+                ].map(({ Icon, label, href }) => (
+                  <a
                     key={label}
-                    type="button"
-                    onClick={(e) => e.preventDefault()}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={label}
                     className="w-9 h-9 rounded-xl border border-background/10 bg-background/[0.03] flex items-center justify-center text-background/70 hover:text-primary hover:border-primary/40 hover:bg-primary/10 transition-all cursor-pointer"
                   >
                     <Icon className="w-4 h-4" />
-                  </button>
+                  </a>
                 ))}
               </div>
             </div>
