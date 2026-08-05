@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, ArrowUpRight, Instagram, Facebook, Youtube, Music2, Twitter } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowUpRight, Instagram, Music2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, Navigate } from "react-router-dom";
-import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp, AlertTriangle, Instagram, Facebook, Youtube, Music2, Twitter, FileText } from "lucide-react";
+import { Car, Calendar, CreditCard, User, LogOut, BookOpen, ChevronRight, Shield, MapPin, Phone, Mail, Clock, Timer, ShoppingCart, TrendingUp, AlertTriangle, Instagram, Music2, FileText } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";

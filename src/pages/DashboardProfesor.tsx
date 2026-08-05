@@ -34,10 +34,7 @@ import {
   XCircle,
   GraduationCap,
   Instagram,
-  Facebook,
-  Youtube,
   Music2,
-  Twitter,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
