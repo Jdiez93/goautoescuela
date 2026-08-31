@@ -511,10 +511,6 @@ export default function DashboardProfesor() {
                   <Phone className="w-4 h-4 shrink-0 text-primary/70" />
                   <a href="tel:+34645343117" className="opacity-70 hover:opacity-100 transition-opacity">645 34 31 17</a>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 shrink-0 text-primary/70" />
-                  <a href="mailto:info@autoescuelago.es" className="opacity-70 hover:opacity-100 transition-opacity">info@autoescuelago.es</a>
-                </li>
               </ul>
             </div>
 

@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, ArrowUpRight, Instagram, Music2 } from "lucide-react";
+import { MapPin, Phone, Clock, ArrowUpRight, Instagram, Music2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoReady2Go from "@/assets/logo-ready2go-oficial.png";
 
@@ -91,12 +91,6 @@ export default function CentroFooter() {
               <Phone className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
               <a href="tel:+34645343117" className="opacity-70 group-hover:opacity-100 transition-opacity">
                 645 34 31 17
-              </a>
-            </li>
-            <li className="flex items-center gap-3 group">
-              <Mail className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
-              <a href="mailto:info@autoescuelago.es" className="opacity-70 group-hover:opacity-100 transition-opacity">
-                info@autoescuelago.es
               </a>
             </li>
           </ul>
