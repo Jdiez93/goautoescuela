@@ -269,7 +269,7 @@ function CoursesSection() {
             >
               <img
                 src={course.img}
-                alt={course.title}
+                alt={`Curso ${course.title} en la autoescuela Ready2Go`}
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="lazy"
               />
