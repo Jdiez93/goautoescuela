@@ -102,7 +102,6 @@ function HeroCarousel() {
               alt={carouselSlides[current].alt}
               fetchPriority="high"
 
-              fetchPriority="high"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
 
