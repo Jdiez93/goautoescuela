@@ -20,9 +20,18 @@ import slide2 from "@/assets/carrusel-todoen1.jpeg";
 import cocheRotulado from "@/assets/coche-rotulado.png";
 
 const carouselSlides = [
-  { id: 1, image: slide1 },
-  { id: 2, image: slide2 },
+  {
+    id: 1,
+    image: slide1,
+    alt: "Promoción Ready2Go: si no apruebas el teórico a la primera, te devolvemos el dinero",
+  },
+  {
+    id: 2,
+    image: slide2,
+    alt: "Autoescuela Ready2Go: teórico, prácticas y gestión del carnet todo en una sola app",
+  },
 ];
+
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
