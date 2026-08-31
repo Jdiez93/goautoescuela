@@ -71,22 +71,9 @@ export default function AutoescuelaOnline() {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Hero banner */}
-      <section className="pt-20">
-        <motion.div
-          initial={{ opacity: 0, scale: 1.03 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: easeCurve }}
-          className="w-full bg-[hsl(var(--foreground))] flex items-center justify-center min-h-[280px] md:min-h-[360px]"
-        >
-          <span className="text-primary-foreground/60 text-lg font-semibold tracking-widest uppercase">
-            Imagen Autoescuela Online
-          </span>
-        </motion.div>
-      </section>
 
       {/* Content */}
-      <section className="py-20 md:py-28">
+      <section className="pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.h2
             {...fadeUp}
