@@ -84,9 +84,11 @@ function HeroCarousel() {
           >
             <img
               src={carouselSlides[current].image}
-              alt=""
+              alt="Promoción de la autoescuela Ready2Go: si no apruebas, te devolvemos el dinero del curso teórico"
+              fetchPriority="high"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
+
             <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 z-10">
               <Link to="/matriculate">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
