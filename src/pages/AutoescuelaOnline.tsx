@@ -73,7 +73,7 @@ export default function AutoescuelaOnline() {
 
 
       {/* Content */}
-      <section className="py-20 md:py-28">
+      <section className="pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.h2
             {...fadeUp}
