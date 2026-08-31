@@ -81,6 +81,12 @@ function HeroCarousel() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
     >
+      <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-2">
+        Autoescuela online Ready2Go
+      </h1>
+      <p className="text-muted-foreground text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl">
+        Teórico online con vídeos, clases prácticas y matrícula en Villanueva del Pardillo y Valdemorillo.
+      </p>
       <div className="relative overflow-hidden rounded-3xl aspect-[16/9]">
         <AnimatePresence mode="wait">
           <motion.div
@@ -93,7 +99,9 @@ function HeroCarousel() {
           >
             <img
               src={carouselSlides[current].image}
-              alt="Promoción de la autoescuela Ready2Go: si no apruebas, te devolvemos el dinero del curso teórico"
+              alt={carouselSlides[current].alt}
+              fetchPriority="high"
+
               fetchPriority="high"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
