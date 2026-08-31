@@ -2,7 +2,7 @@
 
 Plataforma web integral para la gestión digital de una autoescuela. El proyecto combina una web pública orientada a captación de alumnos con un área privada para gestionar matrículas, pagos, clases prácticas, usuarios y seguimiento del alumno.
 
-🌐 **Web:** [autoescuelago.com](https://autoescuelago.com/)
+🌐 **Web:** [campusready2go.com](https://campusready2go.com/)
 
 ---
 

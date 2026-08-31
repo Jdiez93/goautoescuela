@@ -20,9 +20,18 @@ import slide2 from "@/assets/carrusel-todoen1.jpeg";
 import cocheRotulado from "@/assets/coche-rotulado.png";
 
 const carouselSlides = [
-  { id: 1, image: slide1 },
-  { id: 2, image: slide2 },
+  {
+    id: 1,
+    image: slide1,
+    alt: "Promoción Ready2Go: si no apruebas el teórico a la primera, te devolvemos el dinero",
+  },
+  {
+    id: 2,
+    image: slide2,
+    alt: "Autoescuela Ready2Go: teórico, prácticas y gestión del carnet todo en una sola app",
+  },
 ];
+
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -72,6 +81,12 @@ function HeroCarousel() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
     >
+      <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight text-foreground mb-2">
+        Autoescuela online Ready2Go
+      </h1>
+      <p className="text-muted-foreground text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl">
+        Teórico online con vídeos, clases prácticas y matrícula en Villanueva del Pardillo y Valdemorillo.
+      </p>
       <div className="relative overflow-hidden rounded-3xl aspect-[16/9]">
         <AnimatePresence mode="wait">
           <motion.div
@@ -84,9 +99,12 @@ function HeroCarousel() {
           >
             <img
               src={carouselSlides[current].image}
-              alt=""
+              alt={carouselSlides[current].alt}
+              fetchPriority="high"
+
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
+
             <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 z-10">
               <Link to="/matriculate">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
@@ -250,7 +268,7 @@ function CoursesSection() {
             >
               <img
                 src={course.img}
-                alt={course.title}
+                alt={`Curso ${course.title} en la autoescuela Ready2Go`}
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="lazy"
               />
