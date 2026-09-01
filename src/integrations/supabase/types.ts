@@ -785,6 +785,7 @@ export type Database = {
         Args: { _num_classes: number; _user_id: string }
         Returns: undefined
       }
+      delete_cookie_consent: { Args: { p_anon_id: string }; Returns: undefined }
       delete_email: {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
@@ -793,6 +794,15 @@ export type Database = {
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
         Returns: number
+      }
+      get_cookie_consent: {
+        Args: { p_anon_id: string }
+        Returns: {
+          analytics: boolean
+          marketing: boolean
+          necessary: boolean
+          preferences: boolean
+        }[]
       }
       get_taken_slots: {
         Args: { _booking_date: string; _teacher_name: string }
@@ -871,6 +881,18 @@ export type Database = {
       submit_test_attempt: {
         Args: { _answers: Json; _duration_seconds?: number; _test_id: string }
         Returns: Json
+      }
+      upsert_cookie_consent: {
+        Args: {
+          p_analytics: boolean
+          p_anon_id: string
+          p_marketing: boolean
+          p_policy_version?: string
+          p_preferences: boolean
+          p_source_url?: string
+          p_user_agent?: string
+        }
+        Returns: undefined
       }
     }
     Enums: {
