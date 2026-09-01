@@ -558,7 +558,7 @@ function ExamResult({ test, answers, result, onClose }: { test: StudyTest; answe
           <h3 className="text-lg font-bold">Revisión · {test.title}</h3>
           <Button size="sm" variant="outline" onClick={() => setReviewing(false)}>Volver al resultado</Button>
         </div>
-        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+        <div className="space-y-4 max-h-[60dvh] overflow-y-auto pr-2">
           {test.questions.map((q, qi) => {
             const sel = answers[q.id];
             const correct = q.correct_index;
@@ -963,7 +963,7 @@ export default function Tests() {
 
       {/* Test runner dialog overlay */}
       <Dialog open={!!runner} onOpenChange={(o) => { if (!o) setRunner(null); }}>
-        <DialogContent className="max-w-3xl max-h-[92vh] overflow-y-auto">
+        <DialogContent className="max-w-3xl max-h-[92dvh] overflow-y-auto">
           <DialogTitle className="sr-only">Test</DialogTitle>
           <DialogDescription className="sr-only">Ventana de realización del test.</DialogDescription>
           {runner?.kind === "loading" && (
