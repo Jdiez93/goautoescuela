@@ -334,7 +334,7 @@ function PromoBanner() {
 export default function Home() {
   return (
     <motion.div
-      className="min-h-screen bg-background"
+      className="min-h-screen min-h-[100dvh] bg-background"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: easeCurve }}

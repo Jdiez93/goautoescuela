@@ -177,7 +177,7 @@ export default function Perfil() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen min-h-[100dvh] flex items-center justify-center">
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
       </div>
     );
@@ -226,7 +226,7 @@ export default function Perfil() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-h-[100dvh] bg-background">
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}

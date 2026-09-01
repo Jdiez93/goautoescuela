@@ -56,12 +56,12 @@ const scrollTo = (id: string) => {
 export default function Consejos() {
   const [zoomOpen, setZoomOpen] = useState(false);
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-h-[100dvh] bg-background">
       <Navbar />
       <main className="pt-24 pb-20">
         <div className="max-w-6xl mx-auto px-4">
           {/* HERO */}
-          <section className="grid md:grid-cols-5 gap-10 md:gap-14 items-center min-h-[calc(100vh-8rem)]">
+          <section className="grid md:grid-cols-5 gap-10 md:gap-14 items-center min-h-[calc(100dvh-8rem)]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -385,7 +385,7 @@ export default function Consejos() {
               src={centroEstudios}
               alt="Centro de Estudios Ready2Go ampliado"
               onClick={(e) => e.stopPropagation()}
-              className="max-w-[95vw] max-h-[90vh] w-auto h-auto rounded-2xl shadow-2xl object-contain animate-scale-in"
+              className="max-w-[95vw] max-h-[90dvh] w-auto h-auto rounded-2xl shadow-2xl object-contain animate-scale-in"
               style={{ willChange: "transform, opacity" }}
             />
           </motion.div>

@@ -273,7 +273,7 @@ export default function DashboardSecretaria() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen min-h-[100dvh] flex items-center justify-center">
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
       </div>
     );
@@ -283,7 +283,7 @@ export default function DashboardSecretaria() {
   if (!isSecretaria && !isAdmin) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen min-h-[100dvh] bg-background flex flex-col">
       {/* Header */}
       <header className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-3 sm:px-4 flex items-center justify-between h-14 sm:h-16 gap-2">
@@ -941,7 +941,7 @@ function MatriculaDetailDialog({
 
   return (
     <Dialog open={!!matricula} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl max-h-[90dvh] overflow-y-auto">
         {matricula && (
           <>
             <DialogHeader>

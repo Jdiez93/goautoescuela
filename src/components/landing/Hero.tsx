@@ -48,7 +48,7 @@ const FloatingOrb = ({ className }: { className: string; delay?: number }) => (
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+    <section className="relative min-h-screen min-h-[100dvh] flex items-center overflow-hidden pt-20">
       {/* Mesh gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-background to-secondary/[0.03]" />
       

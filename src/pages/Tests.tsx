@@ -558,7 +558,7 @@ function ExamResult({ test, answers, result, onClose }: { test: StudyTest; answe
           <h3 className="text-lg font-bold">Revisión · {test.title}</h3>
           <Button size="sm" variant="outline" onClick={() => setReviewing(false)}>Volver al resultado</Button>
         </div>
-        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+        <div className="space-y-4 max-h-[60dvh] overflow-y-auto pr-2">
           {test.questions.map((q, qi) => {
             const sel = answers[q.id];
             const correct = q.correct_index;
@@ -745,7 +745,7 @@ export default function Tests() {
     handleFinish(result);
   };
 
-  if (authLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
+  if (authLoading) return <div className="min-h-screen min-h-[100dvh] flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
   if (!user) return <Navigate to="/login" replace />;
   if (role && role !== "student") return <Navigate to="/dashboard" replace />;
 
@@ -771,7 +771,7 @@ export default function Tests() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-h-[100dvh] bg-background">
       <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <Link to="/dashboard" className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors">
@@ -963,7 +963,7 @@ export default function Tests() {
 
       {/* Test runner dialog overlay */}
       <Dialog open={!!runner} onOpenChange={(o) => { if (!o) setRunner(null); }}>
-        <DialogContent className="max-w-3xl max-h-[92vh] overflow-y-auto">
+        <DialogContent className="max-w-3xl max-h-[92dvh] overflow-y-auto">
           <DialogTitle className="sr-only">Test</DialogTitle>
           <DialogDescription className="sr-only">Ventana de realización del test.</DialogDescription>
           {runner?.kind === "loading" && (

@@ -72,7 +72,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4 relative overflow-hidden">
+    <div className="min-h-screen min-h-[100dvh] flex items-center justify-center bg-muted/30 px-4 relative overflow-hidden">
       {/* Decorative background shapes */}
       <div className="absolute top-[-120px] right-[-80px] w-[300px] h-[300px] rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute bottom-[-100px] left-[-60px] w-[250px] h-[250px] rounded-full bg-accent/30 blur-3xl" />

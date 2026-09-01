@@ -86,7 +86,7 @@ export default function CookieSettingsModal() {
             aria-modal="true"
             aria-label="Configuración de cookies"
           >
-            <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-2xl border border-primary/30 bg-card shadow-2xl overflow-hidden pointer-events-auto">
+            <div className="relative w-full max-w-2xl max-h-[90dvh] flex flex-col rounded-2xl border border-primary/30 bg-card shadow-2xl overflow-hidden pointer-events-auto">
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
               {/* Header */}

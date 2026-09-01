@@ -137,7 +137,7 @@ export default function Matriculate() {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen min-h-[100dvh] bg-background overflow-x-hidden">
       <Navbar />
 
       {/* HERO + PACKS PEEK */}

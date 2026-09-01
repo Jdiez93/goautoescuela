@@ -68,7 +68,7 @@ const features = [
 
 export default function AutoescuelaOnline() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-h-[100dvh] bg-background">
       <Navbar />
 
 

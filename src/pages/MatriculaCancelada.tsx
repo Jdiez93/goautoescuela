@@ -34,7 +34,7 @@ export default function MatriculaCancelada() {
   const canRetry = matriculaId && !isPaid;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen min-h-[100dvh] flex flex-col bg-background">
       <Navbar />
       <main className="flex-1 px-4 md:px-8 pt-32 md:pt-40 pb-16 md:pb-24">
         <div className="max-w-2xl mx-auto">

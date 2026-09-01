@@ -100,7 +100,7 @@ export default function PoliticaCookies() {
   const { openSettings, revokeConsent, consent, hasDecided } = useCookieConsent();
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen min-h-[100dvh] flex flex-col bg-background">
       <Navbar />
 
       <main className="flex-1 pt-28 pb-20">

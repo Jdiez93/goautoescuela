@@ -190,7 +190,7 @@ export default function NuevaMatriculaDialog() {
           <Plus className="w-4 h-4 mr-1" /> Nueva matrícula presencial
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl max-h-[92vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl max-h-[92dvh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Nueva matrícula presencial</DialogTitle>
           <DialogDescription>

@@ -140,7 +140,7 @@ function FeatureCard({ icon, title, bullets, index, iconScale = 1 }: { icon: str
 
 export default function LasPracticas() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-h-[100dvh] bg-background">
       <Navbar />
       <main className="pt-24 pb-20">
         <div className="max-w-6xl mx-auto px-4">
