@@ -177,36 +177,15 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
       writeLocalConsent(value);
 
       try {
-        const { data: userData } = await supabase.auth.getUser();
-        const userId = userData?.user?.id ?? null;
-
-        // Comprobar si ya existe para hacer update vs insert
-        const { data: existing } = await supabase
-          .from("cookie_consents")
-          .select("id")
-          .eq("anon_id", anonId)
-          .maybeSingle();
-
-        const payload = {
-          anon_id: anonId,
-          user_id: userId,
-          necessary: true,
-          preferences: value.preferences,
-          analytics: value.analytics,
-          marketing: value.marketing,
-          policy_version: POLICY_VERSION,
-          user_agent: navigator.userAgent.slice(0, 500),
-          source_url: window.location.pathname,
-        };
-
-        if (existing) {
-          await supabase
-            .from("cookie_consents")
-            .update(payload)
-            .eq("anon_id", anonId);
-        } else {
-          await supabase.from("cookie_consents").insert(payload);
-        }
+        await supabase.rpc("upsert_cookie_consent", {
+          p_anon_id: anonId,
+          p_preferences: value.preferences,
+          p_analytics: value.analytics,
+          p_marketing: value.marketing,
+          p_policy_version: POLICY_VERSION,
+          p_user_agent: navigator.userAgent.slice(0, 500),
+          p_source_url: window.location.pathname,
+        });
       } catch (err) {
         console.error("Error guardando consentimiento de cookies", err);
       }
@@ -238,18 +217,17 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   const revokeConsent = useCallback(async () => {
     if (anonId) {
       try {
-        await supabase.from("cookie_consents").delete().eq("anon_id", anonId);
+        await supabase.rpc("delete_cookie_consent", { p_anon_id: anonId });
       } catch {
-        // los visitantes no admin no pueden borrar; lo desactivamos en BD igualmente
+        // si no se puede borrar, lo desactivamos en BD igualmente
         try {
-          await supabase
-            .from("cookie_consents")
-            .update({
-              preferences: false,
-              analytics: false,
-              marketing: false,
-            })
-            .eq("anon_id", anonId);
+          await supabase.rpc("upsert_cookie_consent", {
+            p_anon_id: anonId,
+            p_preferences: false,
+            p_analytics: false,
+            p_marketing: false,
+            p_policy_version: POLICY_VERSION,
+          });
         } catch {
           // ignore
         }
