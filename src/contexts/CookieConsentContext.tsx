@@ -118,44 +118,27 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
         setHasDecided(true);
         setShowBanner(false);
         setLoading(false);
-        // Sincronizar con BD en segundo plano
+        // Sincronizar con BD en segundo plano (via RPC segura)
         try {
-          const { data: userData } = await supabase.auth.getUser();
-          const userId = userData?.user?.id ?? null;
-          const { data: existing } = await supabase
-            .from("cookie_consents")
-            .select("id")
-            .eq("anon_id", id)
-            .maybeSingle();
-          const payload = {
-            anon_id: id,
-            user_id: userId,
-            necessary: true,
-            preferences: local.preferences,
-            analytics: local.analytics,
-            marketing: local.marketing,
-            policy_version: POLICY_VERSION,
-            user_agent: navigator.userAgent.slice(0, 500),
-            source_url: window.location.pathname,
-          };
-          if (existing) {
-            await supabase.from("cookie_consents").update(payload).eq("anon_id", id);
-          } else {
-            await supabase.from("cookie_consents").insert(payload);
-          }
+          await supabase.rpc("upsert_cookie_consent", {
+            p_anon_id: id,
+            p_preferences: local.preferences,
+            p_analytics: local.analytics,
+            p_marketing: local.marketing,
+            p_policy_version: POLICY_VERSION,
+            p_user_agent: navigator.userAgent.slice(0, 500),
+            p_source_url: window.location.pathname,
+          });
         } catch {
           // ignorar errores de sincronizacion en segundo plano
         }
         return;
       }
 
-      // 2. Si no hay localStorage, consultar BD
+      // 2. Si no hay localStorage, consultar BD (via RPC segura)
       try {
-        const { data, error } = await supabase
-          .from("cookie_consents")
-          .select("necessary, preferences, analytics, marketing")
-          .eq("anon_id", id)
-          .maybeSingle();
+        const { data: rows, error } = await supabase.rpc("get_cookie_consent", { p_anon_id: id });
+        const data = rows?.[0] ?? null;
 
         if (cancelled) return;
 
