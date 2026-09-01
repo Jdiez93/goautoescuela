@@ -745,7 +745,7 @@ export default function Tests() {
     handleFinish(result);
   };
 
-  if (authLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
+  if (authLoading) return <div className="min-h-screen min-h-[100dvh] flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
   if (!user) return <Navigate to="/login" replace />;
   if (role && role !== "student") return <Navigate to="/dashboard" replace />;
 
@@ -771,7 +771,7 @@ export default function Tests() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-h-[100dvh] bg-background">
       <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 flex items-center justify-between h-16">
           <Link to="/dashboard" className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors">

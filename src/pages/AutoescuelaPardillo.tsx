@@ -24,7 +24,7 @@ export default function AutoescuelaPardillo() {
     "https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=Calle+Santa+Ana+1+28229+Villanueva+del+Pardillo+Madrid+Spain&zoom=17";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen min-h-[100dvh] bg-background">
       <Navbar />
       <main className="pt-24 sm:pt-32 pb-20 sm:pb-24">
         {/* Hero */}

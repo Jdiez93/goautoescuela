@@ -125,7 +125,7 @@ export default function Splash() {
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-black flex flex-col md:flex-row">
+    <div className="fixed inset-0 w-screen h-screen h-[100dvh] overflow-hidden bg-black flex flex-col md:flex-row">
       {/* Left / Top half */}
       <div
         className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[450ms] ease-out ${

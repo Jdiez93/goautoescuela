@@ -59,7 +59,7 @@ const behaviorSkills = ["Trabajo cooperativo", "Aprendizaje significativo", "Ges
 
 export default function PracticasVirtuales() {
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen min-h-[100dvh] bg-background overflow-hidden">
       <Navbar />
       <main className="pt-24 pb-20">
         {/* HERO with banner */}

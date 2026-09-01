@@ -352,7 +352,7 @@ export default function Reservas() {
   });
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen min-h-[100dvh] flex items-center justify-center bg-background">
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
       </div>
     );
@@ -368,7 +368,7 @@ export default function Reservas() {
   const currentStep = !selectedTeacherName ? 1 : !selectedDate ? 2 : 3;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen min-h-[100dvh] bg-background flex flex-col">
       {/* Header */}
       <header className="bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_hsl(215_80%_60%_/_0.3),_transparent_50%)]" />

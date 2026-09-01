@@ -143,7 +143,7 @@ export default function ResetPassword() {
 
   if (!sessionReady) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
+      <div className="min-h-screen min-h-[100dvh] flex items-center justify-center bg-muted/30 px-4">
         <Card className="w-full max-w-md shadow-[var(--card-shadow)]">
           <CardContent className="py-12">
             {sessionError ? (
@@ -171,7 +171,7 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
+    <div className="min-h-screen min-h-[100dvh] flex items-center justify-center bg-muted/30 px-4">
       <Card className="w-full max-w-md shadow-[var(--card-shadow)]">
         <CardHeader className="text-center">
           <Link to="/" state={{ skipIntro: true }} className="inline-flex items-center gap-2 mx-auto mb-4">
