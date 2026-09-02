@@ -1,0 +1,14 @@
+{
+  "name": "Ready2Go — Autoescuela y Centro de Formación",
+  "short_name": "Ready2Go",
+  "description": "Autoescuela en Villanueva del Pardillo y Valdemorillo: teórico online con vídeos, tests, clases prácticas y matrícula. Centro de estudio con robótica y programación de videojuegos.",
+  "lang": "es",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#14b8a6",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
