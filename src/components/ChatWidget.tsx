@@ -211,7 +211,7 @@ export default function ChatWidget() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             aria-label="Abrir chat de asistencia"
-            className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-2xl shadow-primary/40 flex items-center justify-center hover:shadow-primary/60 transition-shadow"
+            className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-5 sm:bottom-6 sm:right-6 z-[60] h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-2xl shadow-primary/40 flex items-center justify-center hover:shadow-primary/60 transition-shadow"
           >
             <Bot className="h-6 w-6" />
             <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-background animate-pulse" />
@@ -283,7 +283,7 @@ export default function ChatWidget() {
             </div>
 
             {/* Input */}
-            <form onSubmit={onSubmit} className="border-t border-border p-3 bg-background">
+            <form onSubmit={onSubmit} className="border-t border-border p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:pb-3 bg-background">
               <div className="flex items-end gap-2">
                 <input
                   ref={inputRef}

@@ -15,7 +15,7 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 120, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed bottom-3 left-3 right-3 sm:left-6 sm:right-6 md:left-auto md:right-6 md:bottom-6 md:max-w-md z-[100]"
+          className="fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom))] left-3 right-3 sm:left-6 sm:right-6 md:left-auto md:right-6 md:bottom-6 md:max-w-md z-[100]"
           role="dialog"
           aria-live="polite"
           aria-label="Aviso de cookies"
