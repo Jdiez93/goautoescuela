@@ -31,7 +31,7 @@ export default function AutoescuelaValdemorillo() {
         <section className="px-4 mb-16">
           <div className="max-w-6xl mx-auto">
             <motion.div {...fadeUp} className="text-center mb-10">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-['Space_Grotesk'] text-foreground mb-4 inline-flex justify-center">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-['Space_Grotesk'] text-foreground mb-4 text-center">
                 <RandomLetterSwapPingPong label={name} />
               </h1>
               <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto">

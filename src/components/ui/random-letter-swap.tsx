@@ -62,9 +62,19 @@ export function RandomLetterSwapPingPong({
     { leading: true, trailing: true }
   )
 
+  // Split into words so wrapping only happens between words, never mid-word.
+  // Each letter keeps its global index so the stagger animation is unchanged.
+  const words: { letter: string; index: number }[][] = []
+  label.split(" ").reduce((offset, word, wi) => {
+    words.push(
+      word.split("").map((letter, li) => ({ letter, index: offset + li }))
+    )
+    return offset + word.length + 1 // +1 for the space
+  }, 0)
+
   return (
     <motion.span
-      className={`inline-flex flex-wrap justify-center items-baseline relative ${className ?? ""}`}
+      className={`inline relative ${className ?? ""}`}
       onHoverStart={hoverStart}
       onHoverEnd={hoverEnd}
       onClick={onClick}
@@ -72,18 +82,28 @@ export function RandomLetterSwapPingPong({
       {...props}
     >
       <span className="sr-only">{label}</span>
-      {label.split("").map((letter, i) => (
-        <span className="whitespace-pre relative inline-block overflow-hidden leading-[1.08] align-baseline" key={i} aria-hidden="true">
-          <motion.span className={`relative block letter-${i}`} style={{ y: "0%" }}>
-            {letter}
-          </motion.span>
-          <motion.span
-            className={`absolute left-0 top-0 block pointer-events-none letter-secondary-${i}`}
-            aria-hidden
-            style={{ y: reverse ? "-110%" : "110%", opacity: 0 }}
-          >
-            {letter}
-          </motion.span>
+      {words.map((word, wi) => (
+        <span key={wi}>
+          <span className="inline-block whitespace-nowrap" aria-hidden="true">
+            {word.map(({ letter, index }) => (
+              <span
+                className="whitespace-pre relative inline-block overflow-hidden leading-[1.08] align-baseline"
+                key={index}
+              >
+                <motion.span className={`relative block letter-${index}`} style={{ y: "0%" }}>
+                  {letter}
+                </motion.span>
+                <motion.span
+                  className={`absolute left-0 top-0 block pointer-events-none letter-secondary-${index}`}
+                  aria-hidden
+                  style={{ y: reverse ? "-110%" : "110%", opacity: 0 }}
+                >
+                  {letter}
+                </motion.span>
+              </span>
+            ))}
+          </span>
+          {wi < words.length - 1 ? " " : null}
         </span>
       ))}
     </motion.span>
