@@ -102,7 +102,7 @@ function HeroCarousel() {
               alt={carouselSlides[current].alt}
               fetchPriority="high"
 
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              className="absolute inset-0 w-full h-full object-contain sm:object-cover object-center"
             />
 
             <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 z-10">
@@ -310,12 +310,12 @@ function PromoBanner() {
         <motion.div
           {...scaleIn}
           whileHover={{ scale: 1.005, transition: { duration: 0.3 } }}
-          className="relative rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] flex items-end justify-center"
+          className="relative rounded-3xl overflow-hidden aspect-[16/9] md:aspect-[21/9] flex items-end justify-center"
         >
           <img
             src={cocheRotulado}
             alt="Coche rotulado Ready2Go - Conduce hacia tu libertad"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-contain sm:object-cover object-center"
             loading="lazy"
           />
           <div className="relative z-10 mb-6 sm:mb-8">
