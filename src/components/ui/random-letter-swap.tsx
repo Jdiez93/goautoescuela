@@ -83,25 +83,27 @@ export function RandomLetterSwapPingPong({
     >
       <span className="sr-only">{label}</span>
       {words.map((word, wi) => (
-        <span key={wi} className="inline-block whitespace-nowrap" aria-hidden="true">
-          {word.map(({ letter, index }) => (
-            <span
-              className="whitespace-pre relative inline-block overflow-hidden leading-[1.08] align-baseline"
-              key={index}
-            >
-              <motion.span className={`relative block letter-${index}`} style={{ y: "0%" }}>
-                {letter}
-              </motion.span>
-              <motion.span
-                className={`absolute left-0 top-0 block pointer-events-none letter-secondary-${index}`}
-                aria-hidden
-                style={{ y: reverse ? "-110%" : "110%", opacity: 0 }}
+        <span key={wi}>
+          <span className="inline-block whitespace-nowrap" aria-hidden="true">
+            {word.map(({ letter, index }) => (
+              <span
+                className="whitespace-pre relative inline-block overflow-hidden leading-[1.08] align-baseline"
+                key={index}
               >
-                {letter}
-              </motion.span>
-            </span>
-          ))}
-          {wi < words.length - 1 && <span> </span>}
+                <motion.span className={`relative block letter-${index}`} style={{ y: "0%" }}>
+                  {letter}
+                </motion.span>
+                <motion.span
+                  className={`absolute left-0 top-0 block pointer-events-none letter-secondary-${index}`}
+                  aria-hidden
+                  style={{ y: reverse ? "-110%" : "110%", opacity: 0 }}
+                >
+                  {letter}
+                </motion.span>
+              </span>
+            ))}
+          </span>
+          {wi < words.length - 1 ? " " : null}
         </span>
       ))}
     </motion.span>
