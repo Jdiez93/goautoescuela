@@ -77,7 +77,7 @@ export default function AutoescuelaOnline() {
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.h2
             {...fadeUp}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-16 flex"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-16"
           >
             <RandomLetterSwapPingPong label="Qué es ready2Go Online" />
           </motion.h2>

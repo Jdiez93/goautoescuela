@@ -155,8 +155,8 @@ export default function Matriculate() {
             transition={{ duration: 0.7, ease: easeCurve }}
             className="max-w-3xl mx-auto text-center mb-10 md:mb-14"
           >
-            <h1 className="text-4xl md:text-6xl font-bold font-['Space_Grotesk'] tracking-tight mb-5 leading-[1.05] flex flex-wrap justify-center gap-x-3">
-              <RandomLetterSwapPingPong label="Matricúlate y empieza" />
+            <h1 className="text-4xl md:text-6xl font-bold font-['Space_Grotesk'] tracking-tight mb-5 leading-[1.05] text-center">
+              <RandomLetterSwapPingPong label="Matricúlate y empieza" />{" "}
               <RandomLetterSwapPingPong label="tu carnet hoy" className="text-primary" />
             </h1>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
