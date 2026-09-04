@@ -172,12 +172,12 @@ export default function LaTeorica() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: easeCurve }}
-            className="mt-10 relative rounded-3xl bg-white aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] overflow-hidden border border-border/40 shadow-sm"
+            className="mt-10 relative rounded-3xl bg-white aspect-[16/9] md:aspect-[21/9] overflow-hidden border border-border/40 shadow-sm"
           >
             <img
               src={chicaPortatil}
               alt="Tú pones el ritmo, nosotros el método"
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              className="absolute inset-0 w-full h-full object-contain md:object-cover object-center"
               loading="lazy"
             />
             <div className="absolute inset-x-0 bottom-4 sm:bottom-6 z-10 flex justify-center">
