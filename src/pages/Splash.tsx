@@ -126,7 +126,11 @@ export default function Splash() {
 
   return (
     <div className="fixed inset-0 w-screen h-screen h-[100dvh] overflow-hidden bg-black flex flex-col md:flex-row">
+      <h1 className="sr-only">
+        Ready2Go: autoescuela y centro de estudio y formación en Villanueva del Pardillo y Valdemorillo
+      </h1>
       {/* Left / Top half */}
+
       <div
         className={`relative w-full h-1/2 md:h-full transition-[width,height,flex] duration-[450ms] ease-out ${
           selected === "left"
