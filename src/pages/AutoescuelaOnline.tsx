@@ -75,12 +75,13 @@ export default function AutoescuelaOnline() {
       {/* Content */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4 max-w-5xl">
-          <motion.h2
+          <motion.h1
             {...fadeUp}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Space_Grotesk'] tracking-tight mb-16"
           >
             <RandomLetterSwapPingPong label="Qué es ready2Go Online" />
-          </motion.h2>
+          </motion.h1>
+
 
           <div className="space-y-16 md:space-y-24">
             {features.map((feat, i) => {
