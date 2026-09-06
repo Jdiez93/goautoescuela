@@ -160,7 +160,36 @@ const routeMeta: Record<string, RouteMeta> = {
     title: "Matricúlate en tu autoescuela",
     description:
       "Elige tu pack de matrícula Ready2Go (básico, avanzado, completo o premium) y empieza hoy tu carnet en Villanueva del Pardillo o Valdemorillo.",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Packs de matrícula Ready2Go",
+      itemListElement: [
+        { name: "Pack Básico", price: "69" },
+        { name: "Pack Avanzado", price: "229" },
+        { name: "Pack Completo", price: "944" },
+        { name: "Pack Premium (Ávila)", price: "1350" },
+      ].map((pack, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Product",
+          name: `Ready2Go ${pack.name}`,
+          description: `Pack de matrícula ${pack.name} de la autoescuela Ready2Go.`,
+          brand: { "@type": "Brand", name: "Ready2Go" },
+          url: `${SITE}/matriculate`,
+          offers: {
+            "@type": "Offer",
+            price: pack.price,
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+            url: `${SITE}/matriculate`,
+          },
+        },
+      })),
+    },
   },
+
   "/matricula": {
     title: "Matrícula",
     description: "Completa tu matrícula en Ready2Go y empieza tu formación de conducción.",
