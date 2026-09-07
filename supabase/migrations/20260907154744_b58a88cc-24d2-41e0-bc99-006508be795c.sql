@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Anon update orphan matricula" ON public.matriculas;
