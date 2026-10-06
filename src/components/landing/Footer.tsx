@@ -120,6 +120,15 @@ export default function Footer() {
                   645 34 31 17
                 </a>
               </li>
+              <li className="flex items-center gap-3 group">
+                <Mail className="w-4 h-4 shrink-0 text-primary/70 group-hover:text-primary transition-colors" />
+                <a
+                  href="mailto:formulario.ready2go@gmail.com"
+                  className="opacity-70 group-hover:opacity-100 transition-opacity break-all"
+                >
+                  formulario.ready2go@gmail.com
+                </a>
+              </li>
             </ul>
           </div>
 
